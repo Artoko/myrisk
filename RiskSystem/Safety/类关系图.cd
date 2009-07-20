@@ -7,7 +7,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IBHAyADADgwQAQgiBQAAQEgE7gQQBBEEABAwAUEAEzA=</HashCode>
+      <HashCode>IBFAiADADgwQAQggAQAAQEgE7gQQBIEEABAwAUEAEhA=</HashCode>
       <FileName>Dis.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -16,6 +16,14 @@
   </Class>
   <Class Name="DisPuff.Results">
     <Position X="3.5" Y="1" Width="1.5" />
+    <Members>
+      <Field Name="m_AllCalMount" Hidden="true" />
+      <Field Name="m_AllCareResult" Hidden="true" />
+      <Field Name="m_AllGridResult" Hidden="true" />
+      <Field Name="m_AllProgress" Hidden="true" />
+      <Field Name="m_MetResults" Hidden="true" />
+      <Field Name="m_Status2" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>CAAAAAAAAiAQAgGAAAAAIAAAkAAAAAJAAAAAAAAAAAA=</HashCode>
       <FileName>计算结果类\Results.vb</FileName>
@@ -28,9 +36,6 @@
   </Class>
   <Class Name="DisPuff.MetResult">
     <Position X="6.25" Y="1" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAABABgAAA=</HashCode>
       <FileName>计算结果类\MetResult.vb</FileName>
@@ -47,7 +52,7 @@
       <FileName>计算结果类\ForeTimeResult.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DisPuff.SlipClass" Collapsed="true">
+  <Class Name="DisPuff.SlipClass">
     <Position X="6.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAQAAAQAAAAAAAAAAAAAAAAAAAEEAAAEA=</HashCode>
@@ -55,9 +60,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DisPuff.AllGridResult">
-    <Position X="5.5" Y="4.25" Width="1.5" />
+    <Position X="7.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAAEAAAAAAAAAAAAAAAQAAQAAAAAAFABAIAAAA=</HashCode>
+      <HashCode>AAAgKEAAEAEEAAAACAAAAAAAQAAQAAAAAAFABAIAAAA=</HashCode>
       <FileName>计算结果类\AllGridResult.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -72,7 +77,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DisPuff.Slippage" Collapsed="true">
-    <Position X="9" Y="4.25" Width="1.5" />
+    <Position X="10.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>计算结果类\Slippage.vb</FileName>
