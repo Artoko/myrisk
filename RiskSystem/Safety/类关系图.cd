@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DisPuff.Dis">
+    <Position X="1" Y="0.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IBHAyADADgwQAQgiBQAAQEgE7gQQBBEEABAwAUEAEzA=</HashCode>
+      <FileName>Dis.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Results" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.Results">
+    <Position X="3.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAiAQAgGAAAAAIAAAkAAAAAJAAAAAAAAAAAA=</HashCode>
+      <FileName>计算结果类\Results.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MetResults" />
+      <Property Name="AllGridResult" />
+      <Property Name="AllCareResult" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.MetResult">
+    <Position X="6.25" Y="1" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAABABgAAA=</HashCode>
+      <FileName>计算结果类\MetResult.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ForeTimeResults" />
+      <Property Name="Slip" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.ForeTimeResult">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAACgAgQAAAAAAAAAAAAAAAAQAAAEABAAAA=</HashCode>
+      <FileName>计算结果类\ForeTimeResult.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.SlipClass" Collapsed="true">
+    <Position X="6.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAQAAAQAAAAAAAAAAAAAAAAAAAEEAAAEA=</HashCode>
+      <FileName>计算结果类\SlipClass.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.AllGridResult">
+    <Position X="5.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAEAAAAAAAAAAAAAAAQAAQAAAAAAFABAIAAAA=</HashCode>
+      <FileName>计算结果类\AllGridResult.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SlipGrid" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.AllCareResult">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAACAAAAAACAAQAAQQAAEgAEQBAAAABA=</HashCode>
+      <FileName>计算结果类\AllCareResult.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.Slippage" Collapsed="true">
+    <Position X="9" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>计算结果类\Slippage.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="宋体" Size="9" />
+</ClassDiagram>

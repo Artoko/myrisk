@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>DrawContour</RootNamespace>
+    <AssemblyName>DrawContour</AssemblyName>
+    <MyType>Windows</MyType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>DrawContour.xml</DocumentationFile>
+    <DefineConstants>_MYFORMS=True</DefineConstants>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>DrawContour.xml</DocumentationFile>
+    <DefineConstants>_MYFORMS=True</DefineConstants>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="C1.Win.C1FlexGrid.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1SuperTooltip.2, Version=2.0.20071.31, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="ColorButton, Version=1.0.2849.40560, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ColorButton\bin\Release\ColorButton.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="绘图\绘图类\PannelSettingClass.vb" />
+    <Compile Include="绘图\公共声明及函数\Declaration.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="绘图\图形控件\ContourPaintForm.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="绘图\图形控件\ContourPaintForm.Designer.vb">
+      <DependentUpon>ContourPaintForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="绘图\公共声明及函数\PublicFun.vb" />
+    <Compile Include="帮助\AboutBox1.Designer.vb">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="帮助\AboutBox1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="绘图\ContourPorpertyForm.Designer.vb">
+      <DependentUpon>ContourPorpertyForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="绘图\ContourPorpertyForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="绘图\dlgGradient.Designer.vb">
+      <DependentUpon>dlgGradient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="绘图\dlgGradient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="绘图\dlgInitialContour.Designer.vb">
+      <DependentUpon>dlgInitialContour.vb</DependentUpon>
+    </Compile>
+    <Compile Include="绘图\dlgInitialContour.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="绘图\FillStyleEditor.Designer.vb">
+      <DependentUpon>FillStyleEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="绘图\FillStyleEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="绘图\LineStyleEditor.Designer.vb">
+      <DependentUpon>LineStyleEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="绘图\LineStyleEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="绘图\PublicFuction.vb" />
+    <Compile Include="绘图\图形控件\publicVar.vb" />
+    <Compile Include="绘图\图形控件\ContourPaintSetting.vb" />
+    <Compile Include="绘图\复制EMF图形\ClipboardMetafile.vb" />
+    <Compile Include="绘图\绘图类\Pannel.vb" />
+    <Compile Include="绘图\绘图类\PenProperty.vb" />
+    <Compile Include="绘图\绘图类\公共类\Foursquare.vb" />
+    <Compile Include="绘图\绘图类\公共类\PaintText.vb" />
+    <Compile Include="绘图\绘图类\图例\Legend.vb" />
+    <Compile Include="绘图\绘图类\数轴\AsesSide.vb" />
+    <Compile Include="绘图\绘图类\数轴\Axes.vb" />
+    <Compile Include="绘图\绘图类\数轴\Axis.vb" />
+    <Compile Include="绘图\绘图类\数轴\AxisGridding.vb" />
+    <Compile Include="绘图\绘图类\数轴\AxisLabel.vb" />
+    <Compile Include="绘图\绘图类\数轴\AxisLine.vb" />
+    <Compile Include="绘图\绘图类\数轴\AxisScale.vb" />
+    <Compile Include="绘图\绘图类\数轴\AxisTitle.vb" />
+    <Compile Include="绘图\绘图类\标志\Building.vb" />
+    <Compile Include="绘图\绘图类\标志\CareSymbols.vb" />
+    <Compile Include="绘图\绘图类\标志\NameAndPoints.vb" />
+    <Compile Include="绘图\绘图类\标志\SourceSymbols.vb" />
+    <Compile Include="绘图\绘图类\标志\PolluteSymbos.vb" />
+    <Compile Include="绘图\绘图类\标志\Symbol.vb" />
+    <Compile Include="绘图\绘图类\标志\Symbols.vb" />
+    <Compile Include="绘图\绘图类\标志\SymbolShape.vb" />
+    <Compile Include="绘图\绘图类\标志\SymbolSign.vb" />
+    <Compile Include="绘图\绘图类\标志\SymbolText.vb" />
+    <Compile Include="绘图\绘图类\等值线\Contour.vb" />
+    <Compile Include="绘图\绘图类\等值线\ContourFill.vb" />
+    <Compile Include="绘图\绘图类\等值线\ContourLine.vb" />
+    <Compile Include="绘图\绘图类\等值线\Contours.vb" />
+    <Compile Include="绘图\绘图类\背景图\BackImage.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="绘图\图形控件\ContourPaintForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ContourPaintForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="帮助\AboutBox1.resx">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="绘图\ContourPorpertyForm.resx">
+      <DependentUpon>ContourPorpertyForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="绘图\dlgGradient.resx">
+      <DependentUpon>dlgGradient.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="绘图\dlgInitialContour.resx">
+      <DependentUpon>dlgInitialContour.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="绘图\FillStyleEditor.resx">
+      <DependentUpon>FillStyleEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="绘图\LineStyleEditor.resx">
+      <DependentUpon>LineStyleEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="绘图\绘图类\ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Chart\Chart.vbproj">
+      <Project>{9291C805-8854-439F-A6FB-C8B9B7DEEC12}</Project>
+      <Name>Chart</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contour\ContourDLL.vbproj">
+      <Project>{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}</Project>
+      <Name>ContourDLL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="绘图\绘图类\污染源\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
