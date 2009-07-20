@@ -348,11 +348,11 @@ Imports System.Xml.Serialization
             CalculateGeneral(SN)   '计算概述
             '泄漏量计算
             CalLeakSource(SN) '计算泄漏量
-            'CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
+            CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
             If Me.Forecast.Grid.IsCalGrid = True Then
                 CalculateGrid(SN) '计算网格点
             End If
-            'CalculateVane(SN) '计算下风向
+            CalculateVane(SN) '计算下风向
 
             CalculateCare(SN) '计算关心点
 

@@ -4,7 +4,7 @@
    
     Private m_Vane As New Vane '下风向类
     Private m_Grid As New Grid '预测网格
-    Private m_Met(0 To 0) As Met '气象条件数组
+    Private m_Met(-1) As Met '气象条件数组
     
     Private m_Ta As Double = 16 '环境温度，摄氏度
     Private m_Pa As Double = 101325 '大气压力,Pa
@@ -135,20 +135,14 @@
 #End Region
 #Region "方法"
     Public Sub New()
-        ReDim Me.m_Met(0 To 1)
+        ReDim Me.m_Met(0)
         Me.m_Met(0) = New Met
         Me.m_Met(0).Vane = "N"
         Me.m_Met(0).WindSpeed = 1.8
         Me.m_Met(0).Stab = "D"
 
-        Me.m_Met(1) = New Met
-        Me.m_Met(1).Vane = "N"
-        Me.m_Met(1).WindSpeed = 2.4
-        Me.m_Met(1).Stab = "E"
 
-
-
-        ReDim Me.m_HurtConcentration(0 To 1)
+        ReDim Me.m_HurtConcentration(1)
         For i As Integer = 0 To Me.m_HurtConcentration.Length - 1
             Me.m_HurtConcentration(i) = New HurtConcentration
         Next
