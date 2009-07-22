@@ -137,7 +137,7 @@
     Public Sub New()
         ReDim Me.m_Met(0)
         Me.m_Met(0) = New Met
-        Me.m_Met(0).Vane = "N"
+        Me.m_Met(0).Vane = "W"
         Me.m_Met(0).WindSpeed = 1.8
         Me.m_Met(0).Stab = "D"
 

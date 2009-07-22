@@ -120,352 +120,6 @@
   <metadata name="C1SuperTooltip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="txtDurationT.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;泄漏持续时间&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  泄漏持续时间是指从泄漏开始到泄漏基本得到控制的&lt;br&gt;
-时间或物料全部泄漏完毕的时间，单位min。如果泄漏&lt;br&gt;
-速率大，或贮存量较小，在指定时间内就已经泄漏完&lt;br&gt;
-毕，软件会自动按全部物料泄漏所需的时间进行计算。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtAngle.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;泄漏喷射角度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  对于气体泄漏而言，喷射角会影响到气体的抬升高度，&lt;br&gt;
-从而影响地面的浓度，取值范围为[0,90]度。一般按不&lt;br&gt;
-利情况取0度。
-
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtH.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;裂口高度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  泄漏口距离地面的垂直高度，单位m。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtLeakGasA.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;裂口面积&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  指泄漏口的面积，单位为平方米。对于容器泄漏而&lt;br&gt;
-言，泄漏口往往出现在连接容器的管道或阀门上，&lt;br&gt;
-因此，一般按管道或阀门的直径来计算裂口面积，&lt;br&gt;
-在实际计算时，也可按20%-100%来取。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtLeakTwoCd.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;两相流泄漏系数&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  两相流泄漏系数一般可取0.8。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="cmbLeakGasShape.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;裂口形状&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  泄漏口的形状，一般有圆形、方形和三角形三种，在&lt;br&gt;
-计算时，往往圆形的泄漏速率最大，如果按不利情况&lt;br&gt;
-考虑，可取圆形作为计算选项。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtLeakLiquidCd.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;液体泄漏系数&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  液体泄漏系数一般取0.6-0.64。详细的取值方法可见帮助。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtLeakLiquidHeight.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;裂口之上液位高度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  裂口之上液位高度是指从泄漏口到泄漏液体容器内液&lt;br&gt;
-面之间的距离，高度越高压力越大，泄漏速率越大。&lt;br&gt;
-但对于压力液化气容器，这个数据往往对压力的影响&lt;br&gt;
-较小，可以不考虑，取0。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="chkAutoCalLeakP.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;自动计算容器压力&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  对于压力液化气容器，在缺少容器的实际压力数据的&lt;br&gt;
-时候，用户可选择自动计算容器压力，软件会根据用&lt;br&gt;
-户设置的物质的物化性质和容器内的温度，采用安托&lt;br&gt;
-因公式计算该物质的蒸汽压作为容器内的压力。&lt;br&gt;
-
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtLeakGasP.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;容器压力&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  容器内的实际压力，单位Pa。对于压力容器，容器内&lt;br&gt;
-的压力往往与容器内的温度有关。如果是压力液化气&lt;br&gt;
-容器，用户在缺少容器实际压力的情况下，也可采用&lt;br&gt;
-本软件数据库自动计算的压力代替。如果是压缩气体&lt;br&gt;
-容器，则不能采用数据库自动计算的压力代替。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtInT.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;容器内温度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  容器内物料的温度，单位℃。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtQ.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;贮存量&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  泄漏容器中总的物质的量
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtQ0.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;排放速率&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  如果用户自行输入排放速率，该速率应为泄漏液体&lt;br&gt;
-闪蒸的速率，或液池的蒸发速率。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtS_S.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;面源面积或体源的底面积&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  面源面积或体源的底面积，对于实际的泄漏，面源的&lt;br&gt;
-面积可取液池的面积，体源的面积则按体源的体积除&lt;br&gt;
-以体源上、下底之间的高度。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtThickness.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;体源的高度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  体源上、下底之间的高度。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="chkAutoCalVapP.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;自动计算液体表面蒸气压&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  对于常压液体泄漏，在缺少实测的表面蒸汽压数据时，&lt;br&gt;
-用户可选择自动计算液体表面蒸气压，软件会根据用&lt;br&gt;
-户设置的物质的物化性质和环境温度，采用安托因公&lt;br&gt;
-式计算该物质的蒸汽压作为环境温度下液体表面蒸气&lt;br&gt;
-压。&lt;br&gt;
-
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtLeakEvaporationP.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;液体表面蒸气压&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  泄漏后形成液池的液体的表面蒸气压。对于常温常压&lt;br&gt;
-液体，其表面蒸汽压与环境的温度有关，温度高，表&lt;br&gt;
-面蒸气压大，可采用安托因公式计算得到。对于压力&lt;br&gt;
-液化气的液体和冷冻液化气的液体泄漏形成的液池，&lt;br&gt;
-其表面蒸气压按环境压力取值。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtSHe.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;面源的有效高度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  对于面源的有效高度，到目前为止也没有一种科学的&lt;br&gt;
-估算方法，用户一般可取液池上1m作为面源的有效&lt;br&gt;
-高度。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtVolatilizationT.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;蒸发时间&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  指泄漏至地面的液体从开始蒸发到蒸发基本得到控制的&lt;br&gt;
-时间或全部物料蒸发完毕的时间。如果全部物料蒸发完&lt;br&gt;
-毕的时间小于用户指定的处理时间，软件会按物料全部&lt;br&gt;
-蒸发完毕的时间来计算。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <data name="txtS.ToolTip" xml:space="preserve">
-    <value>&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;围堰面积&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
-&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
-&lt;div style='margin:1 12'&gt;&lt;parm&gt;
-  对于有围堰或防火堤的容器，可直接取围堰或防火堤的&lt;br&gt;
-面积。对于没有围堰或防火堤的容器，取能阻挡泄漏液&lt;br&gt;
-体外流的空间的面积，如环形沟围成的面积。如果液体&lt;br&gt;
-在地面漫流过程确无任何的阻档，也可取0，软件会自&lt;br&gt;
-动计算漫流过程的面积。
-&lt;/parm&gt;&lt;/div&gt;
-&lt;parm&gt;&lt;/parm&gt;
-&lt;table&gt;&lt;tr&gt;
-  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
-  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;</value>
-  </data>
-  <metadata name="C1SuperTooltip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="C1SuperTooltip1.Images" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -4472,5 +4126,354 @@
         AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
         AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ==
 </value>
+  </data>
+  <data name="txtDurationT.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;泄漏持续时间&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  泄漏持续时间是指从泄漏开始到泄漏基本得到控制的&lt;br&gt;
+时间或物料全部泄漏完毕的时间，单位min。如果泄漏&lt;br&gt;
+速率大，或贮存量较小，在指定时间内就已经泄漏完&lt;br&gt;
+毕，软件会自动按全部物料泄漏所需的时间进行计算。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtAngle.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;泄漏喷射角度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  对于气体泄漏而言，喷射角会影响到气体的抬升高度，&lt;br&gt;
+从而影响地面的浓度，取值范围为[0,90]度。一般按不&lt;br&gt;
+利情况取0度。
+
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtH.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;裂口高度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  泄漏口距离地面的垂直高度，单位m。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtLeakGasA.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;裂口面积&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  指泄漏口的面积，单位为平方米。对于容器泄漏而&lt;br&gt;
+言，泄漏口往往出现在连接容器的管道或阀门上，&lt;br&gt;
+因此，一般按管道或阀门的直径来计算裂口面积，&lt;br&gt;
+在实际计算时，也可按20%-100%来取。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtLeakTwoCd.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;两相流泄漏系数&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  两相流泄漏系数一般可取0.8。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="cmbLeakGasShape.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;裂口形状&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  泄漏口的形状，一般有圆形、方形和三角形三种，在&lt;br&gt;
+计算时，往往圆形的泄漏速率最大，如果按不利情况&lt;br&gt;
+考虑，可取圆形作为计算选项。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtLeakLiquidCd.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;液体泄漏系数&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  液体泄漏系数一般取0.6-0.64。详细的取值方法可见帮助。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtLeakLiquidHeight.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;裂口之上液位高度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  裂口之上液位高度是指从泄漏口到泄漏液体容器内液&lt;br&gt;
+面之间的距离，高度越高压力越大，泄漏速率越大。&lt;br&gt;
+但对于压力液化气容器，这个数据往往对压力的影响&lt;br&gt;
+较小，可以不考虑，取0。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="chkAutoCalLeakP.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;自动计算容器压力&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  对于压力液化气容器，在缺少容器的实际压力数据的&lt;br&gt;
+时候，用户可选择自动计算容器压力，软件会根据用&lt;br&gt;
+户设置的物质的物化性质和容器内的温度，采用安托&lt;br&gt;
+因公式计算该物质的蒸汽压作为容器内的压力。&lt;br&gt;
+
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtLeakGasP.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;容器压力&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  容器内的实际压力，单位Pa。对于压力容器，容器内&lt;br&gt;
+的压力往往与容器内的温度有关。如果是压力液化气&lt;br&gt;
+容器，用户在缺少容器实际压力的情况下，也可采用&lt;br&gt;
+本软件数据库自动计算的压力代替。如果是压缩气体&lt;br&gt;
+容器，则不能采用数据库自动计算的压力代替。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtInT.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;容器内温度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  容器内物料的温度，单位℃。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtQ.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;贮存量&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  泄漏容器中总的物质的量
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtQ0.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;排放速率&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  如果用户自行输入排放速率，该速率应为泄漏液体&lt;br&gt;
+闪蒸的速率，或液池的蒸发速率。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtS_S.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;面源面积或体源的底面积&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  面源面积或体源的底面积，对于实际的泄漏，面源的&lt;br&gt;
+面积可取液池的面积，体源的面积则按体源的体积除&lt;br&gt;
+以体源上、下底之间的高度。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtThickness.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;体源的高度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  体源上、下底之间的高度。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="chkAutoCalVapP.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;自动计算液体表面蒸气压&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  对于常压液体泄漏，在缺少实测的表面蒸汽压数据时，&lt;br&gt;
+用户可选择自动计算液体表面蒸气压，软件会根据用&lt;br&gt;
+户设置的物质的物化性质和环境温度，采用安托因公&lt;br&gt;
+式计算该物质的蒸汽压作为环境温度下液体表面蒸气&lt;br&gt;
+压。&lt;br&gt;
+
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtLeakEvaporationP.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;液体表面蒸气压&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  泄漏后形成液池的液体的表面蒸气压。对于常温常压&lt;br&gt;
+液体，其表面蒸汽压与环境的温度有关，温度高，表&lt;br&gt;
+面蒸气压大，可采用安托因公式计算得到。对于压力&lt;br&gt;
+液化气的液体和冷冻液化气的液体泄漏形成的液池，&lt;br&gt;
+其表面蒸气压按环境压力取值。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtSHe.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;面源的有效高度&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  对于面源的有效高度，到目前为止也没有一种科学的&lt;br&gt;
+估算方法，用户一般可取液池上1m作为面源的有效&lt;br&gt;
+高度。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtVolatilizationT.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;蒸发时间&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  指泄漏至地面的液体从开始蒸发到蒸发基本得到控制的&lt;br&gt;
+时间或全部物料蒸发完毕的时间。如果全部物料蒸发完&lt;br&gt;
+毕的时间小于用户指定的处理时间，软件会按物料全部&lt;br&gt;
+蒸发完毕的时间来计算。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="txtS.ToolTip" xml:space="preserve">
+    <value>&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;围堰面积&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;parm&gt;&lt;hr noshade size=1 style='margin:2' color=Darker&gt;&lt;/parm&gt;
+&lt;div style='margin:1 12'&gt;&lt;parm&gt;
+  对于有围堰或防火堤的容器，可直接取围堰或防火堤的&lt;br&gt;
+面积。对于没有围堰或防火堤的容器，取能阻挡泄漏液&lt;br&gt;
+体外流的空间的面积，如环形沟围成的面积。如果液体&lt;br&gt;
+在地面漫流过程确无任何的阻档，也可取0，软件会自&lt;br&gt;
+动计算漫流过程的面积。
+&lt;/parm&gt;&lt;/div&gt;
+&lt;parm&gt;&lt;/parm&gt;
+&lt;table&gt;&lt;tr&gt;
+  &lt;td&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;b&gt;&lt;parm&gt;&lt;/parm&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;</value>
+  </data>
+  <data name="EFlexHurt.ColumnInfo" xml:space="preserve">
+    <value>3,1,0,0,0,0,Columns:0{Width:50;AllowSorting:False;Caption:"序号";AllowDragging:False;AllowResizing:False;AllowEditing:False;Style:"DataType:System.Int32;TextAlign:RightCenter;";}	1{Width:150;AllowSorting:False;Caption:"浓度值名称";AllowDragging:False;AllowResizing:False;Style:"DataType:System.String;TextAlign:LeftCenter;";}	2{Width:100;AllowSorting:False;Caption:"浓度[mg/m^3]";AllowDragging:False;AllowResizing:False;Style:"DataType:System.Double;TextAlign:RightCenter;";}	</value>
+  </data>
+  <data name="EFlexHurt.StyleInfo" xml:space="preserve">
+    <value>Normal{Font:宋体, 9pt;Border:Flat,1,ControlDark,Both;}	Alternate{BackColor:InactiveCaptionText;}	Fixed{BackColor:Control;ForeColor:ControlText;BackgroundImageLayout:Hide;}	Highlight{BackColor:Highlight;ForeColor:HighlightText;}	Focus{}	Editor{}	Search{BackColor:Highlight;ForeColor:HighlightText;}	Frozen{BackColor:Beige;}	NewRow{}	EmptyArea{BackColor:AppWorkspace;Border:Flat,1,ControlDarkDark,Both;}	SelectedColumnHeader{}	SelectedRowHeader{}	GrandTotal{BackColor:Black;ForeColor:White;}	Subtotal0{BackColor:ControlDarkDark;ForeColor:White;}	Subtotal1{BackColor:ControlDarkDark;ForeColor:White;}	Subtotal2{BackColor:ControlDarkDark;ForeColor:White;}	Subtotal3{BackColor:ControlDarkDark;ForeColor:White;}	Subtotal4{BackColor:ControlDarkDark;ForeColor:White;}	Subtotal5{BackColor:ControlDarkDark;ForeColor:White;}	</value>
   </data>
 </root>

@@ -1,7 +1,7 @@
 ﻿<Serializable()> Public Class OutPut
     Private m_GroundCharacter As String = "平原地区农村及城市远郊区"  '地面特征。
-    Private m_ForeStart As Integer = 2 '预测开始时间。min
-    Private m_ForeInterval As Integer = 2 '预测时间间隔。min
+    Private m_ForeStart As Double = 2 '预测开始时间。min
+    Private m_ForeInterval As Double = 2 '预测时间间隔。min
     Private m_ForeCount As Integer = 10 '预测时间个数。
     Private m_Model As Integer = 0 '预测模型
     Private m_IntervalTime As Integer = 10 '烟团间隔时间,s
@@ -44,11 +44,11 @@
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Property ForeStart() As Integer
+    Property ForeStart() As Double
         Get
             Return Me.m_ForeStart
         End Get
-        Set(ByVal value As Integer)
+        Set(ByVal value As Double)
             Me.m_ForeStart = value
         End Set
     End Property
@@ -58,11 +58,11 @@
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Property ForeInterval() As Integer
+    Property ForeInterval() As Double
         Get
             Return Me.m_ForeInterval
         End Get
-        Set(ByVal value As Integer)
+        Set(ByVal value As Double)
             Me.m_ForeInterval = value
         End Set
     End Property

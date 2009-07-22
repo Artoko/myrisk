@@ -7,12 +7,12 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IBFAiADADgwQAQggAQAAQEgE7gQQBIEEABAwAUEAEhA=</HashCode>
+      <HashCode>IBFAmADADgwQAQghgQAAQEgE7gQUBIEEABAwAUEAEhA=</HashCode>
       <FileName>Dis.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Results" />
       <Property Name="Forecast" />
+      <Property Name="Results" />
     </ShowAsAssociation>
   </Class>
   <Class Name="DisPuff.Results">
@@ -47,7 +47,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="DisPuff.ForeTimeResult">
-    <Position X="9.75" Y="5" Width="1.5" />
+    <Position X="9.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAACgAgQAAAAAAAAAAAAAAAAQAAAEABAAAA=</HashCode>
       <FileName>计算结果类\ForeTimeResult.vb</FileName>
@@ -85,20 +85,38 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DisPuff.Forecast">
-    <Position X="3.5" Y="2" Width="1.5" />
+    <Position X="3.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAgAACAAwAgEBAAAIAgAECAAAAGAAAAAAAAEAAAA=</HashCode>
       <FileName>预测类\Forecast.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Met" />
+      <Property Name="CareReceptor" />
     </ShowAsAssociation>
   </Class>
   <Class Name="DisPuff.Met">
-    <Position X="7" Y="2" Width="1.5" />
+    <Position X="7" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAKAAAAAAAMAAAEAAEAKAIAIAAAAAAAAIAAAg=</HashCode>
       <FileName>气象\Met.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.CareReceptor">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAIAAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>预测类\CareReceptor.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_Point3D" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.Point3D" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAQAAAAA=</HashCode>
+      <FileName>声明\Declaration.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="宋体" Size="9" />

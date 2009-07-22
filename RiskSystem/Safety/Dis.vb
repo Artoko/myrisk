@@ -348,15 +348,16 @@ Imports System.Xml.Serialization
             CalculateGeneral(SN)   '计算概述
             '泄漏量计算
             CalLeakSource(SN) '计算泄漏量
-            CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
-            If Me.Forecast.Grid.IsCalGrid = True Then
-                CalculateGrid(SN) '计算网格点
-            End If
-            CalculateVane(SN) '计算下风向
+            'CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
+            'If Me.Forecast.Grid.IsCalGrid = True Then
+            '    CalculateGrid(SN) '计算网格点
+            'End If
+            'CalculateVane(SN) '计算下风向
 
             CalculateCare(SN) '计算关心点
 
         Next SN
+        Return True
     End Function
     ''' <summary>
     ''' 概述结果
@@ -2891,6 +2892,74 @@ Imports System.Xml.Serialization
         Return s2 / 60 '转成min
     End Function
 
+#End Region
+
+#Region "提供给宇图的接口方法"
+
+    ''' <summary>
+    ''' 初始化泄漏源的名称和坐标。如果以污染源作为原点，可把X和Y分别设置为0。
+    ''' </summary>
+    ''' <param name="strName">泄漏源的名称</param>
+    ''' <param name="x">X轴坐标</param>
+    ''' <param name="y">Y轴坐标</param>
+    ''' <remarks></remarks>
+    Public Sub SetSourceNameAndLocation(ByVal strName As String, ByVal x As Double, ByVal y As Double)
+        Me.m_IntialSource.LeakSourceName = strName
+        Me.m_IntialSource.Coordinate.x = x
+        Me.m_IntialSource.Coordinate.y = y
+    End Sub
+
+
+    ''' <summary>
+    ''' 自定义泄漏量的类型为点源泄漏。
+    ''' </summary>
+    ''' <param name="Q0">污染物泄漏到空气中的速率，单位kg/s。</param>
+    ''' <param name="DurationT">污染物泄漏到空气中持续的时间，单位min。</param>
+    ''' <remarks></remarks>
+    Public Sub SetLeakCustomPoint(ByVal Q0 As Double, ByVal DurationT As Double)
+        Me.m_IntialSource.LeakType = 0 '泄漏类型设置为自定义类型
+        Me.m_IntialSource.SourceType = 0 '设置为点源
+        Me.m_IntialSource.Q0 = Q0 '泄漏到空气中的速率
+        Me.m_IntialSource.DurationT = DurationT  '泄漏到空气中持续的时间
+    End Sub
+    ''' <summary>
+    ''' 设置预测的时刻。可以设备等间距的多个时刻
+    ''' </summary>
+    ''' <param name="ForeStartTime">预测的起始时刻，单位min</param>
+    ''' <param name="ForeIntervalTime">预测的时间步长，单位min</param>
+    ''' <param name="ForeCount">预测时刻的个数</param>
+    ''' <remarks></remarks>
+    Public Sub SetForecastTime(ByVal ForeStartTime As Double, ByVal ForeIntervalTime As Double, ByVal ForeCount As Integer)
+        Me.m_ForeCast.OutPut.ForeStart = ForeStartTime
+        Me.m_ForeCast.OutPut.ForeInterval = ForeIntervalTime
+        Me.m_ForeCast.OutPut.ForeCount = ForeCount
+    End Sub
+
+    Public Function GetVaneData() As Boolean
+
+    End Function
+    ''' <summary>
+    ''' 获取多个预测刻的多个关心点的浓度值
+    ''' </summary>
+    ''' <param name="CareReceptor">关心点数组</param>
+    ''' <param name="OutPutCareData">输出的关心点浓度值的数组，二维数组，第一维是对应的预测时刻，第二维时对应关心点的浓度</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetCareData(ByVal CareReceptor As CareReceptor(), ByRef OutPutCareData As Double(,)) As Boolean
+        Me.m_ForeCast.CareReceptor = CareReceptor
+
+        If Me.Cal() = True Then
+            Dim OutPut(Me.m_ForeCast.OutPut.ForeCount - 1, CareReceptor.Length - 1) As Double
+            For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+                For j As Integer = 0 To CareReceptor.Length - 1
+                    OutPut(i, j) = Me.m_Results.AllCareResult.InstantaneousCareC(0, i, j)
+                Next
+            Next
+            OutPutCareData = OutPut
+            Return True
+        End If
+        Return False
+    End Function
 #End Region
     Public Function Clone() As Dis
         Try

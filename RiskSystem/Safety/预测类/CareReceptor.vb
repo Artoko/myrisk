@@ -4,7 +4,7 @@
 ''' <remarks></remarks>
 <Serializable()> Public Class CareReceptor
     Private m_Name As String = "" '预测点名称
-    Private m_Point3D As Point3D '预测点的坐标
+    Private m_Point3D As New Point3D '预测点的坐标
     ''' <summary>
     ''' 预测点的名称
     ''' </summary>
