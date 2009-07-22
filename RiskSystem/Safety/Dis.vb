@@ -2,6 +2,7 @@
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Xml.Serialization
+Imports Sunmast.Hardware
 ''' <summary>
 ''' 泄漏源参数
 ''' </summary>
@@ -232,11 +233,48 @@ Imports System.Xml.Serialization
 #End Region
 
 #Region "方法"
+    Private Function reg() As Boolean
+
+        Try
+            '先判断用户是否已经注册
+            If My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value2", Nothing) Is Nothing Or My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value3", Nothing) Is Nothing Then
+                '提示注册 
+                Dim a As New dlgRegedit
+                If a.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+                    Return False
+                End If
+            Else
+                Dim reg2 As String = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value2", Nothing)
+                '根据用户的注册信息进行比较，确定是不是合法用户
+                Dim reg3 As String = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value3", Nothing)
+                Dim jm As New Comon.KeyCryp
+                Dim strjm As String = jm.Encrypto(reg2) '显示给用户的字符串是三次加密的
+                Dim CalStr As String = ""
+                Dim strName As String = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Name", Nothing)
+                Dim dhh As HardDiskInfo
+                dhh = AtapiDevice.GetHddInfo(0)
+                CalStr = dhh.SerialNumber & strName & strjmCode '取得硬盘号并加一个字符串用于加密
+
+                If strjm <> reg3 Or jm.Encrypto(jm.Encrypto(jm.Encrypto(CalStr))) <> reg3 Then '如果注册信息不正确则提示注册
+                    Dim a As New dlgRegedit
+                    If a.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+                        Return False
+                    End If
+                End If
+            End If
+        Catch
+            Return False
+        End Try
+        Return True
+    End Function
+
+
     ''' <summary>
     ''' 计算结果
     ''' </summary>
     ''' <remarks></remarks>
     Public Function Cal() As Boolean
+
         '初始化泄漏源的参数
         If m_IntialSource.IntialPara(m_Chemical, m_ForeCast.Ta, m_ForeCast.Pa) = False Then
             Return False
@@ -367,6 +405,10 @@ Imports System.Xml.Serialization
     ''' <param name="Sn">气象条件的序号</param>
     ''' <remarks></remarks>
     Public Sub CalculateGeneral(ByVal Sn As Integer)
+        If reg() = False Then
+            Exit Sub
+        End If
+
         '清空表格
 
         '按预测的序号进行计算
@@ -2648,7 +2690,7 @@ Imports System.Xml.Serialization
     ''' <returns>返回给定的浓度值出现的时间,s</returns>
     ''' <remarks></remarks>
     Private Function CarePointCandT(ByVal Sn As Integer, ByVal dblx As Double, ByVal dbly As Double, ByVal dblz As Double, ByVal LowT As Double, ByVal HeighT As Double, ByVal SpecifyC As Double) As Double
-        
+
         Dim TCenter, F1, F2, FCenter As Double
         '根据上面求出的数组，从后向前找出浓度值的范围。再用二分法求出给定的值
         F1 = ResultC(Sn, LowT, dblx, dbly, dblz)
@@ -2808,7 +2850,7 @@ Imports System.Xml.Serialization
 
 
         Dim F1 As Double
-        
+
         F1 = ResultC(Sn, a, dblx, dbly, dblz)
 
         Dim F2 As Double
