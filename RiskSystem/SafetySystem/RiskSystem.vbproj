@@ -183,7 +183,6 @@
     <Compile Include="工具\frmPS.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="工具\tools.vb" />
     <Compile Include="数据库\气压数据\SelectDrang.Designer.vb">
       <DependentUpon>SelectDrang.vb</DependentUpon>
     </Compile>

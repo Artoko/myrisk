@@ -1,4 +1,4 @@
-Module tools
+Public Module tools
 
     '计算太阳高度角
     Public Function SunHight(ByVal dnDayOfYear As Integer, ByVal dblTimeOfDay As Double, ByVal dblLongDeg As Double, ByVal dblLatDeg As Double) As Double
@@ -101,4 +101,41 @@ Module tools
         End If
 
     End Function
+    ''' <summary>
+    ''' 计算稳定度
+    ''' </summary>
+    ''' <param name="dblLongDeg">经度，单位用度表示</param>
+    ''' <param name="dblLatDeg">纬度，单位用度表示</param>
+    ''' <param name="dblU10">10米处风速，单位m/s</param>
+    ''' <param name="nCloudAll">总云量，十分制云量</param>
+    ''' <param name="nCloudPart">低云量，十分制云量</param>
+    ''' <param name="LeakDateTime">泄漏时的时刻</param>
+    ''' <param name="DateTimeMorning">日出时刻</param>
+    ''' <param name="DateTimeNight">日落时刻</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetPs(ByVal dblLongDeg As Double, ByVal dblLatDeg As Double, ByVal dblU10 As Double, ByVal nCloudAll As Integer, ByVal nCloudPart As Integer _
+                          , ByVal LeakDateTime As DateTime, ByVal DateTimeMorning As DateTime, ByVal DateTimeNight As DateTime) As String
+
+        Dim n_DayOfYear As Integer '一年中的第几天
+        n_DayOfYear = LeakDateTime.DayOfYear() - 1
+
+        Dim dbl_TimeOfDay As Double '将文本中的时间转换为小时表示
+        dbl_TimeOfDay = LeakDateTime.Hour() + LeakDateTime.Minute() / 60
+
+        Dim dbl_Morning As Double '将文本中的时间转换为小时表示
+        dbl_Morning = DateTimeMorning.Hour() + DateTimeMorning.Minute() / 60
+
+        Dim dbl_Night As Double '将文本中的时间转换为小时表示
+        dbl_Night = DateTimeNight.Hour() + DateTimeNight.Minute() / 60
+
+        Dim h0 As Double '太阳高度角
+        h0 = SunHight(n_DayOfYear, dbl_TimeOfDay, dblLongDeg, dblLatDeg)
+        Dim RadDeg As Integer '太阳辐射等级
+        RadDeg = RadiateDeg(nCloudAll, nCloudPart, h0, dbl_Morning, dbl_Night, dbl_TimeOfDay)
+        Dim PS As String
+        PS = Pasquill(dblU10, RadDeg)
+        Return PS
+    End Function
+
 End Module
