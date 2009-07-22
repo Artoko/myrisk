@@ -337,7 +337,7 @@ Imports System.Xml.Serialization
             End If
         Next
         '设置总的计算量
-        If Me.m_ForeCast.Grid.IsCalGrid = True Then
+        If Me.m_ForeCast.IsCalGrid = True Then
             Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 3 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * Me.m_ForeCast.Met.Length
         Else
             Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 2 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * Me.m_ForeCast.Met.Length
@@ -348,11 +348,13 @@ Imports System.Xml.Serialization
             CalculateGeneral(SN)   '计算概述
             '泄漏量计算
             CalLeakSource(SN) '计算泄漏量
-            'CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
-            'If Me.Forecast.Grid.IsCalGrid = True Then
-            '    CalculateGrid(SN) '计算网格点
-            'End If
-            'CalculateVane(SN) '计算下风向
+            CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
+            If Me.Forecast.IsCalGrid = True Then
+                CalculateGrid(SN) '计算网格点
+            End If
+            If Me.Forecast.IsCalVane Then
+                CalculateVane(SN) '计算下风向
+            End If
 
             CalculateCare(SN) '计算关心点
 
@@ -368,7 +370,7 @@ Imports System.Xml.Serialization
         '清空表格
 
         '按预测的序号进行计算
-        vane = Me.m_ForeCast.Met(Sn).Vane  '第0行第1列,风向
+        'vane = Me.m_ForeCast.Met(Sn).Vane  '第0行第1列,风向
         u10 = Me.m_ForeCast.Met(Sn).WindSpeed  '第0行第2列，风速
         stab = Me.m_ForeCast.Met(Sn).Stab  '第0行第3列，风速稳定度
 
@@ -1683,8 +1685,8 @@ Imports System.Xml.Serialization
                 dblz = Me.m_ForeCast.Grid.WGH
                 '开始按网格点来计算预测浓度--------------------------------------------------------------
                 '是绝对坐标系统，需转换坐标
-                dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-                dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+                dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
 
 
                 '以下开始按网格点计算浓度分布-------------------------------------------------------------------
@@ -1700,8 +1702,8 @@ Imports System.Xml.Serialization
                         dblx = MinX / 1.0#
                         dbly = MaxY / 1.0#
                         'If OptionCoordinate2.Checked = True Then
-                        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-                        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+                        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
                         'End If
 
                         Result = 0 '将结果置0
@@ -1712,8 +1714,8 @@ Imports System.Xml.Serialization
                     dblx = MinX / 1.0#
                     dbly = MaxY / 1.0#
                     '转换坐标
-                    dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-                    dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+                    dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                    dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
                 Next i
                 '设置计算进度
                 Me.m_Results.AllProgress += 1
@@ -1730,8 +1732,8 @@ Imports System.Xml.Serialization
         dblz = Me.m_ForeCast.Grid.WGH
         '开始按网格点来计算预测浓度--------------------------------------------------------------
         '是绝对坐标系统，需转换坐标
-        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
 
         Dim nToxinConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
 
@@ -1759,8 +1761,8 @@ Imports System.Xml.Serialization
                 dblx = MinX / 1.0#
                 dbly = MaxY / 1.0#
                 'If OptionCoordinate2.Checked = True Then
-                dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-                dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+                dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
                 'End If
                 Result = 0 '将结果置0
                 '修改进度
@@ -1774,8 +1776,8 @@ Imports System.Xml.Serialization
             dbly = MaxY / 1.0#
             '转换坐标
             'If OptionCoordinate2.Checked = True Then
-            dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-            dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+            dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+            dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
             'End If
         Next i
 
@@ -1928,8 +1930,8 @@ Imports System.Xml.Serialization
         For i = 0 To Me.m_ForeCast.CareReceptor.Length - 1 Step 1 '按关心点计算
             dblz = Me.m_ForeCast.CareReceptor(i).Point3D.z
             '如果是绝对坐标系统，需转换坐标
-            dblx = CoordinateX(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-            dbly = CoordinateY(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+            dblx = CoordinateX(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+            dbly = CoordinateY(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
 
 
             '计算某一关心点的最大浓度出现时间
@@ -1972,8 +1974,8 @@ Imports System.Xml.Serialization
 
                 dblz = Me.m_ForeCast.CareReceptor(i).Point3D.z
                 '如果是绝对坐标系统，需转换坐标
-                dblx = CoordinateX(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-                dbly = CoordinateY(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+                dblx = CoordinateX(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                dbly = CoordinateY(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
                 Result = ResultC(Sn, dblForecastTime, dblx, dbly, dblz) '计算给定时间和坐标的浓度值
                 '将计算结果存入关心数组中
                 Me.m_Results.AllCareResult.InstantaneousCareC(Sn, nCount, i) = Result
@@ -1985,8 +1987,8 @@ Imports System.Xml.Serialization
 
             dblz = Me.m_ForeCast.CareReceptor(i).Point3D.z
             '如果是绝对坐标系统，需转换坐标
-            dblx = CoordinateX(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-            dbly = CoordinateY(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
+            dblx = CoordinateX(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+            dbly = CoordinateY(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
             dblCnt = ToxinCharge(Sn, dblx, dbly, dblz, Me.m_Results.AllCareResult.CarePointMaxCT(Sn, i).maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, Me.m_Results.AllCareResult.CarePointMaxCT(Sn, i).maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2) '用变步长求得毒性负荷的积分
             Me.m_Results.AllCareResult.Pr(Sn, i) = m_Chemical.PrA + m_Chemical.PrB * Math.Log(dblCnt) '计算概率值
             If Me.m_Results.AllCareResult.Pr(Sn, i) < 0 Then
@@ -2923,7 +2925,7 @@ Imports System.Xml.Serialization
         Me.m_IntialSource.DurationT = DurationT  '泄漏到空气中持续的时间
     End Sub
     ''' <summary>
-    ''' 设置预测的时刻。可以设备等间距的多个时刻
+    ''' 设置预测的时刻。可以设置等间距的多个时刻
     ''' </summary>
     ''' <param name="ForeStartTime">预测的起始时刻，单位min</param>
     ''' <param name="ForeIntervalTime">预测的时间步长，单位min</param>
@@ -2934,32 +2936,109 @@ Imports System.Xml.Serialization
         Me.m_ForeCast.OutPut.ForeInterval = ForeIntervalTime
         Me.m_ForeCast.OutPut.ForeCount = ForeCount
     End Sub
+    ''' <summary>
+    ''' 计算稳定度
+    ''' </summary>
+    ''' <param name="dblLongDeg">经度，单位用度表示</param>
+    ''' <param name="dblLatDeg">纬度，单位用度表示</param>
+    ''' <param name="WindDer">风向，单位度。以正北为0度，顺时针旋转，共360度</param>
+    ''' <param name="dblU10">10米处风速，单位m/s</param>
+    ''' <param name="nCloudAll">总云量，十分制云量</param>
+    ''' <param name="nCloudPart">低云量，十分制云量</param>
+    ''' <param name="LeakDateTime">泄漏时的时刻</param>
+    ''' <param name="DateTimeMorning">日出时刻</param>
+    ''' <param name="DateTimeNight">日落时刻</param>
+    ''' <param name="Ta">环境温度，单位摄氏度</param>
+    ''' <param name="Pa">环境压力，单位Pa</param>
+    ''' <remarks></remarks>
+    Public Sub SetMet(ByVal dblLongDeg As Double, ByVal dblLatDeg As Double, ByVal WindDer As Double, ByVal dblU10 As Double, ByVal nCloudAll As Integer, ByVal nCloudPart As Integer _
+                          , ByVal LeakDateTime As DateTime, ByVal DateTimeMorning As DateTime, ByVal DateTimeNight As DateTime, ByVal Ta As Double, ByVal Pa As Double)
 
-    Public Function GetVaneData() As Boolean
 
-    End Function
+
+
+        Dim stab As String = GetPs(dblLongDeg, dblLatDeg, dblU10, nCloudAll, nCloudPart, LeakDateTime, DateTimeMorning, DateTimeNight)
+
+        ReDim Me.m_ForeCast.Met(0)
+        Me.m_ForeCast.Met(0) = New Met
+        Me.m_ForeCast.Met(0).WindType = 1 '风的类型设置为1
+        Me.m_ForeCast.Met(0).WindDer = WindDer
+        Me.m_ForeCast.Met(0).WindSpeed = dblU10
+        Me.m_ForeCast.Met(0).Stab = stab
+        Me.m_ForeCast.Ta = Ta
+        Me.m_ForeCast.Pa = Pa
+    End Sub
+    ''' <summary>
+    ''' 设置关心点数组
+    ''' </summary>
+    ''' <param name="CareReceptor"></param>
+    ''' <remarks></remarks>
+    Public Sub SetCare(ByVal CareReceptor As CareReceptor())
+        Me.m_ForeCast.IsCalCare = True
+        Me.m_ForeCast.CareReceptor = CareReceptor
+    End Sub
+    ''' <summary>
+    ''' 设置网格点
+    ''' </summary>
+    ''' <param name="MinX">X轴的起始坐标,m</param>
+    ''' <param name="StepX">X轴的步长,m</param>
+    ''' <param name="CountX">X轴的网格数</param>
+    ''' <param name="MinY">Y轴的起始坐标,m</param>
+    ''' <param name="StepY">Y轴的步长,m</param>
+    ''' <param name="CountY">Y轴的网格数</param>
+    ''' <param name="Height">Z轴的高度,m</param>
+    ''' <remarks></remarks>
+    Public Sub SetGrid(ByVal MinX As Integer, ByVal StepX As Integer, ByVal CountX As Integer _
+                     , ByVal MinY As Integer, ByVal StepY As Integer, ByVal CountY As Integer, ByVal Height As Double)
+        Me.m_ForeCast.IsCalGrid = True
+        Me.m_ForeCast.Grid.MinX = MinX
+        Me.m_ForeCast.Grid.StepX = StepX
+        Me.m_ForeCast.Grid.CountX = CountX
+        Me.m_ForeCast.Grid.MinY = MinY
+        Me.m_ForeCast.Grid.StepY = StepY
+        Me.m_ForeCast.Grid.CountY = CountY
+        Me.m_ForeCast.Grid.WGH = Height
+    End Sub
+
     ''' <summary>
     ''' 获取多个预测刻的多个关心点的浓度值
     ''' </summary>
-    ''' <param name="CareReceptor">关心点数组</param>
     ''' <param name="OutPutCareData">输出的关心点浓度值的数组，二维数组，第一维是对应的预测时刻，第二维时对应关心点的浓度</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function GetCareData(ByVal CareReceptor As CareReceptor(), ByRef OutPutCareData As Double(,)) As Boolean
-        Me.m_ForeCast.CareReceptor = CareReceptor
+    Public Function GetCareData(ByRef OutPutCareData As Double(,)) As Boolean
 
-        If Me.Cal() = True Then
-            Dim OutPut(Me.m_ForeCast.OutPut.ForeCount - 1, CareReceptor.Length - 1) As Double
-            For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
-                For j As Integer = 0 To CareReceptor.Length - 1
-                    OutPut(i, j) = Me.m_Results.AllCareResult.InstantaneousCareC(0, i, j)
+        Dim OutPut(Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.CareReceptor.Length - 1) As Double
+        For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+            For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
+                OutPut(i, j) = Me.m_Results.AllCareResult.InstantaneousCareC(0, i, j)
+            Next
+        Next
+        OutPutCareData = OutPut
+        If Me.m_ForeCast.IsCalCare = True Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function GetGridData(ByRef OutPutGridData As Double(,,))
+        Dim OutPut(Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double
+        For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+            For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
+                For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
+                    OutPut(i, j, k) = Me.m_Results.AllGridResult.InstantaneousGridC(0, i, j, k)
                 Next
             Next
-            OutPutCareData = OutPut
+        Next
+        OutPutGridData = OutPut
+        If Me.m_ForeCast.IsCalGrid = True Then
             Return True
+        Else
+            Return False
         End If
-        Return False
     End Function
+
 #End Region
     Public Function Clone() As Dis
         Try

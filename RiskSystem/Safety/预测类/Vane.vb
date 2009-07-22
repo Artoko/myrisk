@@ -4,6 +4,8 @@
     Private m_VaneCount As Integer = 50 '步长的个数，m。
     Private m_VaneA() As Integer = {10, 20, 30} '自定义步长数组
     Private m_VaneDistance As Integer = 2000 '距离
+   
+
     ''' <summary>
     ''' 预测类型。0为自定义步长，1为等步长
     ''' </summary>

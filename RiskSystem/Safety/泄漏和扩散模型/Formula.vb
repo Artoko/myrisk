@@ -621,88 +621,105 @@ Public Module Formula
         rSamplingTime = r1 * (t2 / t1) ^ Q
     End Function
 
-    '将绝对坐标转换为相对坐标，X轴转换
-    Public Function CoordinateX(ByVal x As Double, ByVal y As Double, ByVal Direction As String, ByVal x0 As Double, ByVal y0 As Double) As Double
+    ''' <summary>
+    ''' 将绝对坐标转换为相对坐标，X轴转换
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="Direction"></param>
+    ''' <param name="x0"></param>
+    ''' <param name="y0"></param>
+    ''' <param name="Angle360"></param>
+    ''' <param name="WindType"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function CoordinateX(ByVal x As Double, ByVal y As Double, ByVal Direction As String, ByVal x0 As Double, ByVal y0 As Double, ByVal Angle360 As Double, ByVal WindType As Integer) As Double
         Dim Angle As Double
-        If Direction = "N" Then
-            Angle = 12 / 16 * 2 * PI
-        ElseIf Direction = "NNE" Then
-            Angle = 11 / 16 * 2 * PI
-        ElseIf Direction = "NE" Then
-            Angle = 10 / 16 * 2 * PI
-        ElseIf Direction = "ENE" Then
-            Angle = 9 / 16 * 2 * PI
-        ElseIf Direction = "E" Then
-            Angle = 8 / 16 * 2 * PI
-        ElseIf Direction = "ESE" Then
-            Angle = 7 / 16 * 2 * PI
-        ElseIf Direction = "SE" Then
-            Angle = 6 / 16 * 2 * PI
-        ElseIf Direction = "SSE" Then
-            Angle = 5 / 16 * 2 * PI
-        ElseIf Direction = "S" Then
-            Angle = 4 / 16 * 2 * PI
-        ElseIf Direction = "SSW" Then
-            Angle = 3 / 16 * 2 * PI
-        ElseIf Direction = "SW" Then
-            Angle = 2 / 16 * 2 * PI
-        ElseIf Direction = "WSW" Then
-            Angle = 1 / 16 * 2 * PI
-        ElseIf Direction = "W" Then
-            Angle = 0 / 16 * 2 * PI
-        ElseIf Direction = "WNW" Then
-            Angle = 15 / 16 * 2 * PI
-        ElseIf Direction = "NW" Then
-            Angle = 14 / 16 * 2 * PI
-        ElseIf Direction = "NNW" Then
-            Angle = 13 / 16 * 2 * PI
+        If WindType = 0 Then
+            If Direction = "N" Then
+                Angle = 12 / 16 * 2 * PI
+            ElseIf Direction = "NNE" Then
+                Angle = 11 / 16 * 2 * PI
+            ElseIf Direction = "NE" Then
+                Angle = 10 / 16 * 2 * PI
+            ElseIf Direction = "ENE" Then
+                Angle = 9 / 16 * 2 * PI
+            ElseIf Direction = "E" Then
+                Angle = 8 / 16 * 2 * PI
+            ElseIf Direction = "ESE" Then
+                Angle = 7 / 16 * 2 * PI
+            ElseIf Direction = "SE" Then
+                Angle = 6 / 16 * 2 * PI
+            ElseIf Direction = "SSE" Then
+                Angle = 5 / 16 * 2 * PI
+            ElseIf Direction = "S" Then
+                Angle = 4 / 16 * 2 * PI
+            ElseIf Direction = "SSW" Then
+                Angle = 3 / 16 * 2 * PI
+            ElseIf Direction = "SW" Then
+                Angle = 2 / 16 * 2 * PI
+            ElseIf Direction = "WSW" Then
+                Angle = 1 / 16 * 2 * PI
+            ElseIf Direction = "W" Then
+                Angle = 0 / 16 * 2 * PI
+            ElseIf Direction = "WNW" Then
+                Angle = 15 / 16 * 2 * PI
+            ElseIf Direction = "NW" Then
+                Angle = 14 / 16 * 2 * PI
+            ElseIf Direction = "NNW" Then
+                Angle = 13 / 16 * 2 * PI
+            End If
+        ElseIf WindType = 1 Then
+            Angle = Angle360 / 360 * 2 * PI
         End If
+
         CoordinateX = (x - x0) * System.Math.Cos(Angle) + (y - y0) * System.Math.Sin(Angle)
 
     End Function
 
+
     '将绝对坐标转换为相对坐标，Y轴转换
-    Public Function CoordinateY(ByVal x As Double, ByVal y As Double, ByVal Direction As String, ByVal x0 As Double, ByVal y0 As Double) As Double
+    Public Function CoordinateY(ByVal x As Double, ByVal y As Double, ByVal Direction As String, ByVal x0 As Double, ByVal y0 As Double, ByVal Angle360 As Double, ByVal WindType As Integer) As Double
         Dim Angle As Double
-        If Direction = "N" Then
-            Angle = 12 / 16 * 2 * PI
-        ElseIf Direction = "NNE" Then
-            Angle = 11 / 16 * 2 * PI
-        ElseIf Direction = "NE" Then
-            Angle = 10 / 16 * 2 * PI
-        ElseIf Direction = "ENE" Then
-            Angle = 9 / 16 * 2 * PI
-        ElseIf Direction = "E" Then
-            Angle = 8 / 16 * 2 * PI
-        ElseIf Direction = "ESE" Then
-            Angle = 7 / 16 * 2 * PI
-        ElseIf Direction = "SE" Then
-            Angle = 6 / 16 * 2 * PI
-        ElseIf Direction = "SSE" Then
-            Angle = 5 / 16 * 2 * PI
-        ElseIf Direction = "S" Then
-            Angle = 4 / 16 * 2 * PI
-        ElseIf Direction = "SSW" Then
-            Angle = 3 / 16 * 2 * PI
-        ElseIf Direction = "SW" Then
-            Angle = 2 / 16 * 2 * PI
-        ElseIf Direction = "WSW" Then
-            Angle = 1 / 16 * 2 * PI
-        ElseIf Direction = "W" Then
-            Angle = 0 / 16 * 2 * PI
-        ElseIf Direction = "WNW" Then
-            Angle = 15 / 16 * 2 * PI
-        ElseIf Direction = "NW" Then
-            Angle = 14 / 16 * 2 * PI
-        ElseIf Direction = "NNW" Then
-            Angle = 13 / 16 * 2 * PI
+        If WindType = 0 Then
+            If Direction = "N" Then
+                Angle = 12 / 16 * 2 * PI
+            ElseIf Direction = "NNE" Then
+                Angle = 11 / 16 * 2 * PI
+            ElseIf Direction = "NE" Then
+                Angle = 10 / 16 * 2 * PI
+            ElseIf Direction = "ENE" Then
+                Angle = 9 / 16 * 2 * PI
+            ElseIf Direction = "E" Then
+                Angle = 8 / 16 * 2 * PI
+            ElseIf Direction = "ESE" Then
+                Angle = 7 / 16 * 2 * PI
+            ElseIf Direction = "SE" Then
+                Angle = 6 / 16 * 2 * PI
+            ElseIf Direction = "SSE" Then
+                Angle = 5 / 16 * 2 * PI
+            ElseIf Direction = "S" Then
+                Angle = 4 / 16 * 2 * PI
+            ElseIf Direction = "SSW" Then
+                Angle = 3 / 16 * 2 * PI
+            ElseIf Direction = "SW" Then
+                Angle = 2 / 16 * 2 * PI
+            ElseIf Direction = "WSW" Then
+                Angle = 1 / 16 * 2 * PI
+            ElseIf Direction = "W" Then
+                Angle = 0 / 16 * 2 * PI
+            ElseIf Direction = "WNW" Then
+                Angle = 15 / 16 * 2 * PI
+            ElseIf Direction = "NW" Then
+                Angle = 14 / 16 * 2 * PI
+            ElseIf Direction = "NNW" Then
+                Angle = 13 / 16 * 2 * PI
+            End If
+        ElseIf WindType = 1 Then
+            Angle = Angle360 / 360 * 2 * PI
         End If
         CoordinateY = (y - y0) * System.Math.Cos(Angle) - (x - x0) * System.Math.Sin(Angle)
-
     End Function
-
-
-
     '变天条件下，多烟团模式,第i个烟团在tw时刻在(x,y,z)处的浓度，mg/m3；
     Public Function Cwi(ByVal Qi As Double, ByVal axeff As Double, ByVal ayeff As Double, ByVal azeff As Double, ByVal x As Double, ByVal y As Double, ByVal z As Double, ByVal xwi As Double, ByVal ywi As Double, ByVal He As Double)
         Dim dblx As Double '储存x轴向计算结果
@@ -1382,91 +1399,6 @@ Public Module Formula
         'End While
         'MultiFlogPSV = CZ
     End Function
-
-    '将绝对坐标转换为相对坐标，X轴转换。应为将相对坐标转换为绝对坐标？
-    Public Function CoordinateX360(ByVal x As Double, ByVal y As Double, ByVal Direction As String) As Double
-        Dim Angle As Double
-        Dim Angle360 As Double
-        If Direction = "N" Then
-            Angle = 12 / 16 * 2 * PI
-        ElseIf Direction = "NNE" Then
-            Angle = 11 / 16 * 2 * PI
-        ElseIf Direction = "NE" Then
-            Angle = 10 / 16 * 2 * PI
-        ElseIf Direction = "ENE" Then
-            Angle = 9 / 16 * 2 * PI
-        ElseIf Direction = "E" Then
-            Angle = 8 / 16 * 2 * PI
-        ElseIf Direction = "ESE" Then
-            Angle = 7 / 16 * 2 * PI
-        ElseIf Direction = "SE" Then
-            Angle = 6 / 16 * 2 * PI
-        ElseIf Direction = "SSE" Then
-            Angle = 5 / 16 * 2 * PI
-        ElseIf Direction = "S" Then
-            Angle = 4 / 16 * 2 * PI
-        ElseIf Direction = "SSW" Then
-            Angle = 3 / 16 * 2 * PI
-        ElseIf Direction = "SW" Then
-            Angle = 2 / 16 * 2 * PI
-        ElseIf Direction = "WSW" Then
-            Angle = 1 / 16 * 2 * PI
-        ElseIf Direction = "W" Then
-            Angle = 0 / 16 * 2 * PI
-        ElseIf Direction = "WNW" Then
-            Angle = 15 / 16 * 2 * PI
-        ElseIf Direction = "NW" Then
-            Angle = 14 / 16 * 2 * PI
-        ElseIf Direction = "NNW" Then
-            Angle = 13 / 16 * 2 * PI
-        End If
-        Angle360 = 2 * PI - Angle
-        CoordinateX360 = x * System.Math.Cos(Angle360) + y * System.Math.Sin(Angle360)
-
-    End Function
-
-    '将绝对坐标转换为相对坐标，Y轴转换。应为将相对坐标转换为绝对坐标？
-    Public Function CoordinateY360(ByVal x As Double, ByVal y As Double, ByVal Direction As String) As Double
-        Dim Angle As Double
-        Dim Angle360 As Double
-        If Direction = "N" Then
-            Angle = 12 / 16 * 2 * PI
-        ElseIf Direction = "NNE" Then
-            Angle = 11 / 16 * 2 * PI
-        ElseIf Direction = "NE" Then
-            Angle = 10 / 16 * 2 * PI
-        ElseIf Direction = "ENE" Then
-            Angle = 9 / 16 * 2 * PI
-        ElseIf Direction = "E" Then
-            Angle = 8 / 16 * 2 * PI
-        ElseIf Direction = "ESE" Then
-            Angle = 7 / 16 * 2 * PI
-        ElseIf Direction = "SE" Then
-            Angle = 6 / 16 * 2 * PI
-        ElseIf Direction = "SSE" Then
-            Angle = 5 / 16 * 2 * PI
-        ElseIf Direction = "S" Then
-            Angle = 4 / 16 * 2 * PI
-        ElseIf Direction = "SSW" Then
-            Angle = 3 / 16 * 2 * PI
-        ElseIf Direction = "SW" Then
-            Angle = 2 / 16 * 2 * PI
-        ElseIf Direction = "WSW" Then
-            Angle = 1 / 16 * 2 * PI
-        ElseIf Direction = "W" Then
-            Angle = 0 / 16 * 2 * PI
-        ElseIf Direction = "WNW" Then
-            Angle = 15 / 16 * 2 * PI
-        ElseIf Direction = "NW" Then
-            Angle = 14 / 16 * 2 * PI
-        ElseIf Direction = "NNW" Then
-            Angle = 13 / 16 * 2 * PI
-        End If
-        Angle360 = 2 * PI - Angle
-        CoordinateY360 = y * System.Math.Cos(Angle360) - x * System.Math.Sin(Angle360)
-
-    End Function
-
 
 
     ''' <summary>

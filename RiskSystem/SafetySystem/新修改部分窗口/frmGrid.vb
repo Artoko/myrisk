@@ -17,7 +17,7 @@
     End Property
     Private Sub frmGrid_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         '计算网格点标志
-        chkGrid.Checked = Me.m_Dis.Forecast.Grid.IsCalGrid
+        chkGrid.Checked = Me.m_Dis.Forecast.IsCalGrid
         '设置网格
         txtMinX.Value = Me.m_Dis.Forecast.Grid.MinX
         txtStepX.Value = Me.m_Dis.Forecast.Grid.StepX
@@ -75,7 +75,7 @@
     End Sub
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
-        Me.m_Dis.Forecast.Grid.IsCalGrid = chkGrid.Checked
+        Me.m_Dis.Forecast.IsCalGrid = chkGrid.Checked
         Me.m_Dis.Forecast.Grid.MinX = txtMinX.Value
         Me.m_Dis.Forecast.Grid.StepX = txtStepX.Value
         Me.m_Dis.Forecast.Grid.CountX = txtCountX.Value
@@ -97,6 +97,7 @@
     End Sub
 
     Private Sub chkGrid_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkGrid.CheckedChanged
+        Me.m_Dis.Forecast.IsCalGrid = chkGrid.Checked
     End Sub
     Private Sub txtMinX_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtMinX.Validating
         ReSetFlexGrid()

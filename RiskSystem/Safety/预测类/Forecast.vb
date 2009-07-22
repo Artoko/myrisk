@@ -1,7 +1,10 @@
 ﻿<Serializable()> Public Class Forecast
 #Region "属性"
    
-   
+    Private m_IsCalVane As Boolean = False
+    Private m_IsCalGrid As Boolean = False
+    Private m_IsCalCare As Boolean = False
+
     Private m_Vane As New Vane '下风向类
     Private m_Grid As New Grid '预测网格
     Private m_Met(-1) As Met '气象条件数组
@@ -13,7 +16,50 @@
 
     Private m_OutPut As New OutPut '输出控制选项
 
-    
+    ''' <summary>
+    ''' 是否计算下风向
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property IsCalVane() As Boolean
+        Get
+            Return Me.m_IsCalVane
+        End Get
+        Set(ByVal value As Boolean)
+            Me.m_IsCalVane = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 是否计算网格点的标志
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property IsCalGrid() As Boolean
+        Get
+            Return Me.m_IsCalGrid
+        End Get
+        Set(ByVal value As Boolean)
+            Me.m_IsCalGrid = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 是否计算关心点的标志
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property IsCalCare() As Boolean
+        Get
+            Return Me.m_IsCalCare
+        End Get
+        Set(ByVal value As Boolean)
+            Me.m_IsCalCare = value
+        End Set
+    End Property
+
+
     ''' <summary>
     ''' 下风向类
     ''' </summary>

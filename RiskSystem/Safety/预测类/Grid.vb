@@ -3,7 +3,6 @@
     ''' 是否计算网格点的标志
     ''' </summary>
     ''' <remarks></remarks>
-    Private m_IsCalGrid As Boolean = True
     Private m_MinX As Integer = -1000 'X轴的起始坐标,m
     Private m_StepX As Integer = 20 'X轴的步长,m
     Private m_CountX As Integer = 101 'X轴的网格数
@@ -13,20 +12,7 @@
     Private m_WGH As Double 'Z轴的高度,m
     Private m_GridPopulation(-1, -1) As Double '人口分布网格
     Private m_Population As Double '人口密度
-    ''' <summary>
-    ''' 是否计算网格点的标志
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Property IsCalGrid() As Boolean
-        Get
-            Return Me.m_IsCalGrid
-        End Get
-        Set(ByVal value As Boolean)
-            Me.m_IsCalGrid = value
-        End Set
-    End Property
+   
     ''' <summary>
     ''' X轴的起始坐标,m
     ''' </summary>
