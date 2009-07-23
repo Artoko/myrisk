@@ -393,9 +393,9 @@ Imports Sunmast.Hardware
             If Me.Forecast.IsCalVane Then
                 CalculateVane(SN) '计算下风向
             End If
-
-            CalculateCare(SN) '计算关心点
-
+            If Me.Forecast.IsCalCare = True Then
+                CalculateCare(SN) '计算关心点
+            End If
         Next SN
         Return True
     End Function

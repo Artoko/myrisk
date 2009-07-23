@@ -3,7 +3,7 @@
    
     Private m_IsCalVane As Boolean = False
     Private m_IsCalGrid As Boolean = False
-    Private m_IsCalCare As Boolean = False
+    Private m_IsCalCare As Boolean = True
 
     Private m_Vane As New Vane '下风向类
     Private m_Grid As New Grid '预测网格

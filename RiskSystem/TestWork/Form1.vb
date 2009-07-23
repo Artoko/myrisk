@@ -24,7 +24,7 @@ Public Class Form1
         Dim LeakTime As New DateTime(2009, 7, 20, 9, 30, 0)
         Dim SunriseTime As New DateTime(2009, 7, 20, 6, 0, 0)
         Dim SunsetTime As New DateTime(2009, 7, 20, 20, 0, 0)
-        mydis.SetMet(114, 34, 45, 3, 8, 2, LeakTime, SunriseTime, SunsetTime, 16, 101325) '设置事故发生的位置及气象数据
+        mydis.SetMet(114, 34, 270, 3, 8, 2, LeakTime, SunriseTime, SunsetTime, 16, 101325) '设置事故发生的位置及气象数据
 
         '预测的起始时刻、步长和预测时刻的个数
         Dim startTime As Double = 1 '起始时刻为泄漏发生后的1分钟
@@ -37,21 +37,21 @@ Public Class Form1
 
         '实例化每个关心点。并设置名称和坐标
         myCareReceptor(0) = New CareReceptor
-        myCareReceptor(0).Name = "宋村"
+        myCareReceptor(0).Name = "荣村"
         myCareReceptor(0).Point3D.x = 200
         myCareReceptor(0).Point3D.y = 0
         myCareReceptor(0).Point3D.z = 0
 
         myCareReceptor(1) = New CareReceptor
-        myCareReceptor(1).Name = "良村"
+        myCareReceptor(1).Name = "孙村"
         myCareReceptor(1).Point3D.x = 500
         myCareReceptor(1).Point3D.y = 0
         myCareReceptor(1).Point3D.z = 0
 
         myCareReceptor(2) = New CareReceptor
-        myCareReceptor(2).Name = "孙村"
-        myCareReceptor(2).Point3D.x = 400
-        myCareReceptor(2).Point3D.y = 150
+        myCareReceptor(2).Name = "大帐"
+        myCareReceptor(2).Point3D.x = 600
+        myCareReceptor(2).Point3D.y = 100
         myCareReceptor(2).Point3D.z = 0
 
         mydis.SetCare(myCareReceptor)
@@ -102,7 +102,7 @@ Public Class Form1
         If ComboBox1.Items.Count > 0 Then
             For i As Integer = 0 To 21 - 1
                 For j As Integer = 0 To 21 - 1
-                    Me.C1FlexGrid1.SetData(j + 1, i + 1, FormatNumber(Me.GridData(Me.ComboBox1.SelectedIndex, i, j).ToString, 4))
+                    Me.C1FlexGrid1.SetData(i + 1, j + 1, FormatNumber(Me.GridData(Me.ComboBox1.SelectedIndex, i, j).ToString, 4))
                 Next
             Next
         End If

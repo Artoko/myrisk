@@ -670,7 +670,7 @@ Public Module Formula
                 Angle = 13 / 16 * 2 * PI
             End If
         ElseIf WindType = 1 Then
-            Angle = Angle360 / 360 * 2 * PI
+            Angle = (270 - Angle360) / 360 * 2 * PI
         End If
 
         CoordinateX = (x - x0) * System.Math.Cos(Angle) + (y - y0) * System.Math.Sin(Angle)
@@ -716,7 +716,7 @@ Public Module Formula
                 Angle = 13 / 16 * 2 * PI
             End If
         ElseIf WindType = 1 Then
-            Angle = Angle360 / 360 * 2 * PI
+            Angle = (270 - Angle360) / 360 * 2 * PI
         End If
         CoordinateY = (y - y0) * System.Math.Cos(Angle) - (x - x0) * System.Math.Sin(Angle)
     End Function
