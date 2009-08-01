@@ -52,7 +52,7 @@ Public Module tools
         If i <> -1 And j <> -1 Then
             RadiateDeg = aRadiate(i, j)
         Else
-            MsgBox("太阳辐射等级数有错！")
+            'MsgBox("太阳辐射等级数有错！")
         End If
     End Function
 
@@ -97,7 +97,7 @@ Public Module tools
             Pasquill = SP(i, j)
         Else
             Pasquill = ""
-            MsgBox("大气稳定度等级有错！")
+            'MsgBox("大气稳定度等级有错！")
         End If
 
     End Function

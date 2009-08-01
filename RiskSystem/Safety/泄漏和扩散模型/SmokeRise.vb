@@ -104,7 +104,7 @@ Module SmokeRise
             FdTz = 0.01
         Else
             FdTz = 0
-            MsgBox("温度梯度出错")
+            'MsgBox("温度梯度出错")
         End If
 
     End Function

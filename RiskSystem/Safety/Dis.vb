@@ -239,10 +239,7 @@ Imports Sunmast.Hardware
             '先判断用户是否已经注册
             If My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value2", Nothing) Is Nothing Or My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value3", Nothing) Is Nothing Then
                 '提示注册 
-                Dim a As New dlgRegedit
-                If a.ShowDialog() <> Windows.Forms.DialogResult.OK Then
-                    Return False
-                End If
+                Return False
             Else
                 Dim reg2 As String = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value2", Nothing)
                 '根据用户的注册信息进行比较，确定是不是合法用户
@@ -256,10 +253,7 @@ Imports Sunmast.Hardware
                 CalStr = dhh.SerialNumber & strName & strjmCode '取得硬盘号并加一个字符串用于加密
 
                 If strjm <> reg3 Or jm.Encrypto(jm.Encrypto(jm.Encrypto(CalStr))) <> reg3 Then '如果注册信息不正确则提示注册
-                    Dim a As New dlgRegedit
-                    If a.ShowDialog() <> Windows.Forms.DialogResult.OK Then
-                        Return False
-                    End If
+                    Return False
                 End If
             End If
         Catch
@@ -3041,6 +3035,23 @@ Imports Sunmast.Hardware
         Me.m_ForeCast.Grid.CountY = CountY
         Me.m_ForeCast.Grid.WGH = Height
     End Sub
+    ''' <summary>
+    ''' 设置地表特征
+    ''' </summary>
+    ''' <param name="Index">地表特征的序号：0--平原地区农村及城市远郊区；1--工业区或城区；2--丘陵山区的农村或城市</param>
+    ''' <remarks></remarks>
+    Public Sub SetGround(ByVal Index As Integer)
+        Select Case Index
+            Case 0
+                Me.m_ForeCast.OutPut.GroundCharacter = "平原地区农村及城市远郊区"
+            Case 1
+                Me.m_ForeCast.OutPut.GroundCharacter = "工业区或城区"
+
+            Case 2
+                Me.m_ForeCast.OutPut.GroundCharacter = "丘陵山区的农村或城市"
+
+        End Select
+    End Sub
 
     ''' <summary>
     ''' 获取多个预测刻的多个关心点的浓度值
@@ -3097,7 +3108,7 @@ Imports Sunmast.Hardware
             ' All done
             fileStr.Close()
         Catch ex As Exception
-            MsgBox("写dis文件错误!")
+            'MsgBox("写dis文件错误!")
             Return Nothing
         End Try
 
@@ -3115,7 +3126,7 @@ Imports Sunmast.Hardware
             fileStr.Close()
             Return sdis
         Catch ex As Exception
-            MsgBox("读dis文件错误!")
+            'MsgBox("读dis文件错误!")
             Return Nothing
         End Try
 

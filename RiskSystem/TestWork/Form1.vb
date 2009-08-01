@@ -5,6 +5,16 @@ Public Class Form1
     '设置一个三维数组，用于储存网格点的计算结果
     Private GridData(-1, -1, -1) As Double
 
+
+
+    '设置网格点：X轴的开始坐标为-2000米，步长200米，个数31个；Y轴的开始坐标为-2000米，步长200米，个数31个；预测网格离地高度0米
+    Private m_MinX As Integer = -2000
+    Private m_StepX As Integer = 200
+    Private m_ContX As Integer = 31
+
+    Private m_MinY As Integer = -2000
+    Private m_StepY As Integer = 200
+    Private m_ContY As Integer = 31
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
     End Sub
@@ -14,7 +24,7 @@ Public Class Form1
 
         Dim mydis As New Dis '实例化一个预测对象
 
-        mydis.SetSourceNameAndLocation("氯气管断裂", 0, 0) '设置泄漏源的名称和坐标
+        mydis.SetSourceNameAndLocation("氯气管断裂", 0, 0) '设置泄漏源的名称和坐标。一般来说，泄漏源做为坐标的原点。
 
         mydis.SetLeakCustomPoint(5.0, 10) '设置事故类型为自定义类型中的点源泄漏。挥发到空气中的泄漏量为5.0kg/s，挥发持续的时间为10分种
 
@@ -56,11 +66,16 @@ Public Class Form1
 
         mydis.SetCare(myCareReceptor)
 
-        '设置网格点：X轴的开始坐标为-1000米，步长100米，个数21个；Y轴的开始坐标为-1000米，步长100米，个数21个；预测网格离地高度0米
-        mydis.SetGrid(-1000, 100, 21, -1000, 100, 21, 0)
+        '设置网格点：预测网格离地高度0米
+        mydis.SetGrid(m_MinX, m_StepX, m_ContX, m_MinY, m_StepY, m_ContY, 0)
 
-        '计算污染物扩散
-        mydis.Cal()
+        '设置地表参数：地表特征的序号：0--平原地区农村及城市远郊区；1--工业区或城区；2--丘陵山区的农村或城市
+        mydis.SetGround(0)
+
+        '计算污染物扩散。如果没有注册软件，将返回false
+        If mydis.Cal() = False Then
+            Exit Sub
+        End If
 
         '获取计算结果
         mydis.GetCareData(CareData)
@@ -89,19 +104,19 @@ Public Class Form1
         Me.C1FlexGrid1.Clear()
         Me.C1FlexGrid1.Rows.Count = 1
         Me.C1FlexGrid1.Cols.Count = 1
-        Me.C1FlexGrid1.Rows.Count = 21 + 1
-        Me.C1FlexGrid1.Cols.Count = 21 + 1
+        Me.C1FlexGrid1.Rows.Count = Me.m_ContY + 1
+        Me.C1FlexGrid1.Cols.Count = Me.m_ContX + 1
         Me.C1FlexGrid1.SetData(0, 0, "Y\X")
 
-        For i As Integer = 0 To 21 - 1
-            Me.C1FlexGrid1.SetData(0, i + 1, -1000 + i * 100)
+        For i As Integer = 0 To Me.m_ContX - 1
+            Me.C1FlexGrid1.SetData(0, i + 1, Me.m_MinX + i * Me.m_StepX)
         Next
-        For i As Integer = 0 To 21 - 1
-            Me.C1FlexGrid1.SetData(Me.C1FlexGrid1.Rows.Count - (i + 1), 0, -1000 + i * 100)
+        For i As Integer = 0 To Me.m_ContY - 1
+            Me.C1FlexGrid1.SetData(Me.C1FlexGrid1.Rows.Count - (i + 1), 0, Me.m_MinY + i * Me.m_StepY)
         Next
         If ComboBox1.Items.Count > 0 Then
-            For i As Integer = 0 To 21 - 1
-                For j As Integer = 0 To 21 - 1
+            For i As Integer = 0 To Me.m_ContY - 1
+                For j As Integer = 0 To Me.m_ContX - 1
                     Me.C1FlexGrid1.SetData(i + 1, j + 1, FormatNumber(Me.GridData(Me.ComboBox1.SelectedIndex, i, j).ToString, 4))
                 Next
             Next

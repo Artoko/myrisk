@@ -16,11 +16,11 @@ Public Module Leak
     ''' <remarks></remarks>
     Public Function CalculateLeakTwo(ByVal LeakTwoCP As Double, ByVal LeakTwoTLG As Double, ByVal LeakTwoTC As Double, ByVal LeakTwoH As Double, ByVal LeakTwoPg As Double, ByVal LeakTwoPl As Double, ByVal LeakTwoCd As Double, ByVal LeakTwoA As Double, ByVal LeakTwoP As Double, ByVal LeakTwoPC As Double) As Double
         If LeakTwoH = 0 Then
-            MsgBox("请设置物质的液体的气化热!", MsgBoxStyle.OkOnly, "物质性质出错!")
+            'MsgBox("请设置物质的液体的气化热!", MsgBoxStyle.OkOnly, "物质性质出错!")
             Return ErrorValue
         End If
         If LeakTwoCP = 0 Then
-            MsgBox("请设置物质的液体的定压比热!", MsgBoxStyle.OkOnly, "物质性质出错!")
+            'MsgBox("请设置物质的液体的定压比热!", MsgBoxStyle.OkOnly, "物质性质出错!")
             Return ErrorValue
         End If
         '在计算前应根据常压气体的密度计算出给定压力下气体的密度
@@ -49,11 +49,11 @@ Public Module Leak
     '气体泄漏计算公式
     Public Function CalculateLeakGas(ByVal LeakGasShape As String, ByVal LeakGasTG As Double, ByVal LeakGasK As Double, ByVal LeakGasP0 As Double, ByVal LeakGasP As Double, ByVal LeakGasA As Double, ByVal LeakGasM As Double) As Double
         If LeakGasK = 0 Then
-            MsgBox("请设置物质的气体绝热指数!", MsgBoxStyle.OkOnly, "物质性质出错!")
+            'MsgBox("请设置物质的气体绝热指数!", MsgBoxStyle.OkOnly, "物质性质出错!")
             Return ErrorValue
         End If
         If LeakGasM = 0 Then
-            MsgBox("请设置物质的摩尔质量!", MsgBoxStyle.OkOnly, "物质性质出错!")
+            'MsgBox("请设置物质的摩尔质量!", MsgBoxStyle.OkOnly, "物质性质出错!")
             Return ErrorValue
         End If
         '计算气体泄漏系数
@@ -102,7 +102,7 @@ Public Module Leak
     '液体泄漏公式
     Public Function CalculateLeakLiquid(ByVal chkHeight As Short, ByVal LeakLiquidCd As Double, ByVal LeakLiquidHeight As Double, ByVal LeakLiquidA As Double, ByVal LeakLiquidPl As Double, ByVal LeakLiquidP As Double, ByVal LeakLiquidP0 As Double) As Double
         If LeakLiquidPl = 0 Then
-            MsgBox("请输入物质的液体密度!", MsgBoxStyle.OkOnly, "物质性质数据出错")
+            'MsgBox("请输入物质的液体密度!", MsgBoxStyle.OkOnly, "物质性质数据出错")
             Return ErrorValue
         End If
         '确定是否考虑高度
@@ -119,11 +119,11 @@ Public Module Leak
     End Function
     Public Function CalculateLeakFv(ByVal LeakLiquidCP As Double, ByVal LeakLiquidTLG As Double, ByVal LeakLiquidTC As Double, ByVal LeakLiquidH As Double) As Double
         If LeakLiquidH = 0 Then
-            MsgBox("请设置物质的液体的气化热!", MsgBoxStyle.OkOnly, "物质性质出错!")
+            'MsgBox("请设置物质的液体的气化热!", MsgBoxStyle.OkOnly, "物质性质出错!")
             Return ErrorValue
         End If
         If LeakLiquidCP = 0 Then
-            MsgBox("请设置物质的液体的定压比热!", MsgBoxStyle.OkOnly, "物质性质出错!")
+            'MsgBox("请设置物质的液体的定压比热!", MsgBoxStyle.OkOnly, "物质性质出错!")
             Return ErrorValue
         End If
         '计算液体蒸发量
@@ -132,7 +132,7 @@ Public Module Leak
     '热量蒸发公式
     Public Function CalculateLeakHeat(ByVal LeakEvaporationGround As Integer, ByVal LeakEvaporationS As Double, ByVal LeakEvaporationT0 As Double, ByVal LeakEvaporationTb As Double, ByVal LeakEvaporationH As Double, ByVal LeakEvaporationt As Double) As Double
         If LeakEvaporationH = 0 Then
-            MsgBox("请设置物质的液体的气化热!", MsgBoxStyle.OkOnly, "物质性质出错!")
+            'MsgBox("请设置物质的液体的气化热!", MsgBoxStyle.OkOnly, "物质性质出错!")
             Return ErrorValue
         End If
         '选择表面热导系数和热扩散系数

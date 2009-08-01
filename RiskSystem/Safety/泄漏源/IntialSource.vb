@@ -638,7 +638,7 @@
                     m_LeakEvaporationP = OutP
                 End If
                 If m_LeakGasP = 0 Then
-                    MsgBox("无法自动计算容器内的压力，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
+                    'MsgBox("无法自动计算容器内的压力，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
                     Return False
                 Else
                     Return True
@@ -648,7 +648,7 @@
                     m_LeakGasP = chem.GetP(m_InT + FreezingPoint)
                 End If
                 If m_LeakGasP = 0 Then
-                    MsgBox("无法自动计算容器内的压力，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
+                    'MsgBox("无法自动计算容器内的压力，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
                     Return False
                 Else
                     Return True
@@ -658,7 +658,7 @@
                     m_LeakEvaporationP = chem.GetP(OutT + FreezingPoint)
                 End If
                 If m_LeakEvaporationP = 0 Then
-                    MsgBox("无法自动计液体表面蒸气压，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
+                    'MsgBox("无法自动计液体表面蒸气压，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
                     Return False
                 Else
                     Return True
