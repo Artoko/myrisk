@@ -868,7 +868,7 @@ Partial Class frmLeakSource
         Me.cmbLeakType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLeakType.FormattingEnabled = True
         Me.cmbLeakType.Items.AddRange(New Object() {"(1)自定义泄漏源", "(2)气体容器小孔、中孔泄漏", "(3)气体容器爆裂", "(4)压力液化气容器液下小孔、中孔泄漏", "(5)压力液化气容器液上小孔、中孔泄漏", "(6)压力液化气容器爆裂", "(7)常压液体容器小孔、中孔泄漏", "(8)常压液体容器爆裂", "(9)压力液化气容器两相流泄漏", "(10)冷冻液化气容器小孔、中孔泄漏", "(11)冷冻液化气容器爆裂"})
-        Me.cmbLeakType.Location = New System.Drawing.Point(122, 21)
+        Me.cmbLeakType.Location = New System.Drawing.Point(94, 6)
         Me.cmbLeakType.Name = "cmbLeakType"
         Me.cmbLeakType.Size = New System.Drawing.Size(320, 20)
         Me.cmbLeakType.TabIndex = 246
@@ -876,7 +876,7 @@ Partial Class frmLeakSource
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(33, 24)
+        Me.Label11.Location = New System.Drawing.Point(5, 9)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(83, 12)
         Me.Label11.TabIndex = 247
@@ -952,10 +952,10 @@ Partial Class frmLeakSource
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(12, 47)
+        Me.TabControl1.Location = New System.Drawing.Point(3, 32)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(797, 576)
+        Me.TabControl1.Size = New System.Drawing.Size(697, 569)
         Me.TabControl1.TabIndex = 254
         '
         'TabPage1
@@ -982,9 +982,9 @@ Partial Class frmLeakSource
         Me.TabPage1.Location = New System.Drawing.Point(4, 21)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(789, 551)
+        Me.TabPage1.Size = New System.Drawing.Size(689, 544)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "TabPage1"
+        Me.TabPage1.Text = "泄漏源"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'TabPage2
@@ -1007,9 +1007,9 @@ Partial Class frmLeakSource
         Me.TabPage2.Location = New System.Drawing.Point(4, 21)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(789, 551)
+        Me.TabPage2.Size = New System.Drawing.Size(689, 544)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "TabPage2"
+        Me.TabPage2.Text = "物化性质"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'ListView1
@@ -1608,7 +1608,7 @@ Partial Class frmLeakSource
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(969, 635)
+        Me.ClientSize = New System.Drawing.Size(704, 611)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.cmbLeakType)
