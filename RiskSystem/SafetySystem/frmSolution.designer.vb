@@ -114,9 +114,10 @@ Partial Class frmSolution
         '
         'TreeView
         '
-        Me.TreeView.Location = New System.Drawing.Point(0, -1)
+        Me.TreeView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TreeView.Location = New System.Drawing.Point(0, 0)
         Me.TreeView.Name = "TreeView"
-        Me.TreeView.Size = New System.Drawing.Size(388, 373)
+        Me.TreeView.Size = New System.Drawing.Size(398, 626)
         Me.TreeView.TabIndex = 3
         '
         'frmSolution
@@ -124,7 +125,7 @@ Partial Class frmSolution
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(254, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(448, 626)
+        Me.ClientSize = New System.Drawing.Size(398, 626)
         Me.Controls.Add(Me.ExplorerBar1)
         Me.Controls.Add(Me.TreeView)
         Me.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

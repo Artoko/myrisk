@@ -90,7 +90,7 @@ Public Class frmMain
         DockPanel.SuspendLayout(True)
         '把控件设置为中文
         'Steema.TeeChart.Languages.ChineseSimp.Activate()
-
+        NewAermod()
     End Sub
     Private Sub frmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         e.Cancel = False
@@ -259,7 +259,18 @@ Public Class frmMain
     End Sub
     Private Sub BackgroundWorkerAermod_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerAermod.DoWork
         If Project0.PType = 0 Then
-            Project0.Dis0.Cal() '计算扩散
+            '初始化计算的气象参数。也就是根据观测的气象数据计算出当天的稳定度来
+            If Project0.SurfMet Is Nothing AndAlso Project0.SurfMet.ArrayMetData.Length > 0 Then
+                Dim SurMet As Met.MetGeneral = Project0.SurfMet.Clone
+                If SurMet.IsInsert = True Then '对气象数据插值处理
+                    SurMet.InsetAllMetData()
+                End If
+                Project0.PreMet() '预处理数据
+                Project0.Dis0.Cal() '计算扩散
+            Else
+                MsgBox("请输入地面气象数据")
+            End If
+
         Else
             Project0.FAndB.Cal() '计算所有的火灾爆炸方案
         End If
@@ -528,6 +539,10 @@ Public Class frmMain
             Me.DrawContourWindow.cmbRusult.Items.Add("个人风险值")
         End If
 
+        If Me.DrawContourWindow.cmbRusult.Items.Count > 0 Then
+            Me.DrawContourWindow.cmbRusult.SelectedIndex = 0
+        End If
+
         Me.Result.TreeView1.Nodes.Clear() '清空
         Select Case Project0.PType
             Case 0 '泄漏
@@ -763,6 +778,11 @@ Public Class frmMain
             .ContourPannel.Axes.LeftAxis.AxisLabel.LabelVisible = True
             '设置底轴刻度的标注可见
             .ContourPannel.Axes.BottomAxis.AxisLabel.LabelVisible = True
+
+            '设置网格不可见
+            .ContourPannel.Axes.LeftAxis.AxisGridding.AxisGriddingVisible = False
+            .ContourPannel.Axes.BottomAxis.AxisGridding.AxisGriddingVisible = False
+
 
             Me.Refresh()
         End With
@@ -1159,6 +1179,7 @@ Public Class frmMain
         '新建一个项目
         Project0 = New Project
         Project0.Dis0 = New DisPuff.Dis '新建一个泄漏项目
+        Project0.Dis0.Forecast.IsCalGrid = True
         SetTree()
         Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & SolutionExplorer.TreeView.Nodes(0).Text
         IntialLeakProject()
@@ -1185,11 +1206,6 @@ Public Class frmMain
         '添加新的工程
         SolutionExplorer.TreeView.Nodes.Add(newNode1)
 
-        '控制
-        newNode2 = newNode1.Nodes.Add("物质属性")
-        newTreeNode = New TreeNode("物质的物理化学性质及毒性")
-        newTreeNode.Text = "物质的物理化学性质及毒性"
-        newNode2.Nodes.Add(newTreeNode)
 
         '污染源
 
@@ -1199,6 +1215,11 @@ Public Class frmMain
         newTreeNode.Text = "事故源项"
         newNode2.Nodes.Add(newTreeNode)
 
+        '物质属性
+        newNode2 = newNode1.Nodes.Add("物质属性")
+        newTreeNode = New TreeNode("物质的物理化学性质及毒性")
+        newTreeNode.Text = "物质的物理化学性质及毒性"
+        newNode2.Nodes.Add(newTreeNode)
 
         '网格和关心点
         newNode2 = newNode1.Nodes.Add("计算点")
@@ -1222,12 +1243,15 @@ Public Class frmMain
         newTreeNode.Text = "气象数据选项"
         newNode2.Nodes.Add(newTreeNode)
 
-        '地形数据
-        newNode2 = newNode1.Nodes.Add("地形数据")
-
-        newTreeNode = New TreeNode("地形数据选项")
-        newTreeNode.Text = "地形数据选项"
+        newTreeNode = New TreeNode("逐时地面气象数据")
+        newTreeNode.Text = "逐时地面气象数据"
         newNode2.Nodes.Add(newTreeNode)
+        ''地形数据
+        'newNode2 = newNode1.Nodes.Add("地形数据")
+
+        'newTreeNode = New TreeNode("地形数据选项")
+        'newTreeNode.Text = "地形数据选项"
+        'newNode2.Nodes.Add(newTreeNode)
 
         '输出控制
         newNode2 = newNode1.Nodes.Add("输出控制")
@@ -1244,6 +1268,6 @@ Public Class frmMain
     End Sub
 
     Private Sub 新建NToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 新建NToolStripButton.Click
-
+        NewAermod()
     End Sub
 End Class

@@ -114,17 +114,17 @@ Public Class frmResult
         Next
 
         'ÉèÖÃµÈÖµÏßÃû³ÆºÍÖµµÄÊý×é
-        ReDim myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
-        ReDim myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+        ReDim myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+        ReDim myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
         For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
         Next
         For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
             For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                For k1 As Integer = 0 To myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourValue.Length - 1
-                    If myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourValue(k1) Then
-                        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourValue(k1) + 0.000001
+                For k1 As Integer = 0 To myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
+                    If myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) Then
+                        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) + 0.000001
                     End If
                 Next
             Next
@@ -164,8 +164,8 @@ Public Class frmResult
             ReDim .ArrayHurtName(-1)
             'ÉèÖÃÊÂ¹ÊÖµ
             ReDim .ArrayHurtValue(-1)
-            ReDim .ContourNames(-1)
-            ReDim .ContourValue(-1)
+            ReDim .ContourPannel.Contours.ContourValueSetting.ContourNames(-1)
+            ReDim .ContourPannel.Contours.ContourValueSetting.ContourValue(-1)
             Select Case Project0.FAndB.FType
                 Case 0 'TNT±¬Õ¨
                     .setType(1)
@@ -179,11 +179,11 @@ Public Class frmResult
                             .ArrayHurtValue(.ArrayHurtValue.Length - 1) = Project0.FAndB.UVCE.ResultR(k)
 
 
-                            ReDim Preserve .ContourNames(.ContourNames.Length)
-                            .ContourNames(.ContourNames.Length - 1) = Project0.FAndB.UVCE.DestroyRr(k).MDrangName & "°ë¾¶"
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length - 1) = Project0.FAndB.UVCE.DestroyRr(k).MDrangName & "°ë¾¶"
 
-                            ReDim Preserve .ContourValue(.ContourValue.Length)
-                            .ContourValue(.ContourValue.Length - 1) = Project0.FAndB.UVCE.ResultR(k)
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1) = Project0.FAndB.UVCE.ResultR(k)
                         End If
                     Next
                     .ContourPannel.Contours.x0 = Project0.FAndB.UVCE.SoucePoint.x
@@ -200,11 +200,11 @@ Public Class frmResult
                             .ArrayHurtValue(.ArrayHurtValue.Length - 1) = Project0.FAndB.MaterialTNT.ResultR(k)
 
 
-                            ReDim Preserve .ContourNames(.ContourNames.Length)
-                            .ContourNames(.ContourNames.Length - 1) = Project0.FAndB.MaterialTNT.DestroyRr(k).MDrangName & "°ë¾¶"
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length - 1) = Project0.FAndB.MaterialTNT.DestroyRr(k).MDrangName & "°ë¾¶"
 
-                            ReDim Preserve .ContourValue(.ContourValue.Length)
-                            .ContourValue(.ContourValue.Length - 1) = Project0.FAndB.MaterialTNT.ResultR(k)
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1) = Project0.FAndB.MaterialTNT.ResultR(k)
                         End If
                     Next
                     .ContourPannel.Contours.x0 = Project0.FAndB.MaterialTNT.SoucePoint.x
@@ -222,11 +222,11 @@ Public Class frmResult
                             .ArrayHurtValue(.ArrayHurtValue.Length - 1) = Project0.FAndB.GasStation.ResultR(k)
 
 
-                            ReDim Preserve .ContourNames(.ContourNames.Length)
-                            .ContourNames(.ContourNames.Length - 1) = Project0.FAndB.GasStation.DestroyRr(k).MDrangName & "°ë¾¶"
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length - 1) = Project0.FAndB.GasStation.DestroyRr(k).MDrangName & "°ë¾¶"
 
-                            ReDim Preserve .ContourValue(.ContourValue.Length)
-                            .ContourValue(.ContourValue.Length - 1) = Project0.FAndB.GasStation.ResultR(k)
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1) = Project0.FAndB.GasStation.ResultR(k)
                         End If
                     Next
                     .ContourPannel.Contours.x0 = Project0.FAndB.GasStation.SoucePoint.x
@@ -243,11 +243,11 @@ Public Class frmResult
                             .ArrayHurtValue(.ArrayHurtValue.Length - 1) = Project0.FAndB.PhysicsExplode.ResultR(k)
 
 
-                            ReDim Preserve .ContourNames(.ContourNames.Length)
-                            .ContourNames(.ContourNames.Length - 1) = Project0.FAndB.PhysicsExplode.DestroyRr(k).MDrangName & "°ë¾¶"
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length - 1) = Project0.FAndB.PhysicsExplode.DestroyRr(k).MDrangName & "°ë¾¶"
 
-                            ReDim Preserve .ContourValue(.ContourValue.Length)
-                            .ContourValue(.ContourValue.Length - 1) = Project0.FAndB.PhysicsExplode.ResultR(k)
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1) = Project0.FAndB.PhysicsExplode.ResultR(k)
                         End If
                     Next
                     .ContourPannel.Contours.x0 = Project0.FAndB.PhysicsExplode.SoucePoint.x
@@ -266,11 +266,11 @@ Public Class frmResult
                             .ArrayHurtValue(.ArrayHurtValue.Length - 1) = Project0.FAndB.PoolFire.ResultR(k)
 
 
-                            ReDim Preserve .ContourNames(.ContourNames.Length)
-                            .ContourNames(.ContourNames.Length - 1) = Project0.FAndB.PoolFire.ArrHeatEradiate(k).HeatName & "°ë¾¶"
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length - 1) = Project0.FAndB.PoolFire.ArrHeatEradiate(k).HeatName & "°ë¾¶"
 
-                            ReDim Preserve .ContourValue(.ContourValue.Length)
-                            .ContourValue(.ContourValue.Length - 1) = Project0.FAndB.PoolFire.ResultR(k)
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1) = Project0.FAndB.PoolFire.ResultR(k)
                         End If
                     Next
                     .ContourPannel.Contours.x0 = Project0.FAndB.PoolFire.SourcePoint.x
@@ -288,11 +288,11 @@ Public Class frmResult
                             .ArrayHurtValue(.ArrayHurtValue.Length - 1) = Project0.FAndB.Bleve.ResultR(k)
 
 
-                            ReDim Preserve .ContourNames(.ContourNames.Length)
-                            .ContourNames(.ContourNames.Length - 1) = Project0.FAndB.Bleve.ArrHeatEradiate(k).HeatName & "°ë¾¶"
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length - 1) = Project0.FAndB.Bleve.ArrHeatEradiate(k).HeatName & "°ë¾¶"
 
-                            ReDim Preserve .ContourValue(.ContourValue.Length)
-                            .ContourValue(.ContourValue.Length - 1) = Project0.FAndB.Bleve.ResultR(k)
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1) = Project0.FAndB.Bleve.ResultR(k)
                         End If
                     Next
                     .ContourPannel.Contours.x0 = Project0.FAndB.Bleve.SourcePoint.x
@@ -310,11 +310,11 @@ Public Class frmResult
                             .ArrayHurtValue(.ArrayHurtValue.Length - 1) = Project0.FAndB.SolidFire.ResultR(k)
 
 
-                            ReDim Preserve .ContourNames(.ContourNames.Length)
-                            .ContourNames(.ContourNames.Length - 1) = Project0.FAndB.SolidFire.ArrHeatEradiate(k).HeatName & "°ë¾¶"
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length - 1) = Project0.FAndB.SolidFire.ArrHeatEradiate(k).HeatName & "°ë¾¶"
 
-                            ReDim Preserve .ContourValue(.ContourValue.Length)
-                            .ContourValue(.ContourValue.Length - 1) = Project0.FAndB.SolidFire.ResultR(k)
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1) = Project0.FAndB.SolidFire.ResultR(k)
                         End If
                     Next
                     .ContourPannel.Contours.x0 = Project0.FAndB.SolidFire.SourcePoint.x
@@ -326,11 +326,11 @@ Public Class frmResult
                     For k As Integer = 0 To Project0.FAndB.Jet.JetFire.ArrHeatEradiate.Length - 1
                         If Project0.FAndB.Jet.JetFire.ArrHeatEradiate(k).Checkd Then
                             'ÉèÖÃÊÂ¹ÊÃû³Æ
-                            ReDim Preserve .ContourNames(.ContourNames.Length)
-                            .ContourNames(.ContourNames.Length - 1) = Project0.FAndB.Jet.JetFire.ArrHeatEradiate(k).HeatName & "·¶Î§"
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourNames(.ContourPannel.Contours.ContourValueSetting.ContourNames.Length - 1) = Project0.FAndB.Jet.JetFire.ArrHeatEradiate(k).HeatName & "·¶Î§"
 
-                            ReDim Preserve .ContourValue(.ContourValue.Length)
-                            .ContourValue(.ContourValue.Length - 1) = Project0.FAndB.Jet.JetFire.ArrHeatEradiate(k).Heat
+                            ReDim Preserve .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length)
+                            .ContourPannel.Contours.ContourValueSetting.ContourValue(.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1) = Project0.FAndB.Jet.JetFire.ArrHeatEradiate(k).Heat
 
                         End If
                     Next

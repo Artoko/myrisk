@@ -19,6 +19,12 @@ Public Class Project
     ''' <remarks></remarks>
     Private m_FAB As New FireBlast.FAndB
     ''' <summary>
+    ''' 逐次地面气象数据
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private m_SurfMet As New Met.MetGeneral
+
+    ''' <summary>
     ''' 保存标志
     ''' </summary>
     ''' <remarks></remarks>
@@ -69,6 +75,19 @@ Public Class Project
         End Set
     End Property
     ''' <summary>
+    ''' 逐次地面气象数据
+    ''' </summary>
+    ''' <remarks></remarks>
+    Property SurfMet() As Met.MetGeneral
+        Get
+            Return Me.m_SurfMet
+        End Get
+        Set(ByVal value As Met.MetGeneral)
+            Me.m_SurfMet = value
+        End Set
+    End Property
+
+    ''' <summary>
     ''' 保存标志
     ''' </summary>
     ''' <remarks></remarks>
@@ -94,4 +113,31 @@ Public Class Project
             Me.m_SaveName = value
         End Set
     End Property
+
+
+    ''' <summary>
+    ''' 对气象数据进行预处理。计算出等值线来
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub PreMet()
+        ReDim Me.m_Dis0.Forecast.Met(Me.m_SurfMet.ArrayMetData.Length - 1)
+        For i As Integer = 0 To Me.m_Dis0.Forecast.Met.Length - 1
+            Me.m_Dis0.Forecast.Met(i) = New DisPuff.Met
+            Me.m_Dis0.Forecast.Met(i).m_DateTime = Me.m_SurfMet.ArrayMetData(i).m_DateTime
+            Me.m_Dis0.Forecast.Met(i).WindType = 1
+            Me.m_Dis0.Forecast.Met(i).WindSpeed = Me.m_SurfMet.ArrayMetData(i).m_WindSpeed / 10 '对单位进行转换
+            Me.m_Dis0.Forecast.Met(i).WindDer = Me.m_SurfMet.ArrayMetData(i).m_Vane * 10 '对单位进行转换
+            Dim Lon As Double = Me.m_SurfMet.Location.Longitude.Number '经度
+            Dim Lat As Double = Me.m_SurfMet.Location.Latitude.Number '纬度
+            Dim u10 As Double = Me.m_Dis0.Forecast.Met(i).WindSpeed '10米处风速
+            Dim TotalCloud As Integer = Me.m_SurfMet.ArrayMetData(i).m_TotalCloud
+            Dim LowCloud As Integer = Me.m_SurfMet.ArrayMetData(i).m_LowCloud '低云量
+            Dim LeakTime As Date = Me.m_SurfMet.ArrayMetData(i).m_DateTime '泄漏时刻
+            Dim SunriseTime As New DateTime(LeakTime.Year, LeakTime.Month, LeakTime.Day, 6, 0, 0)
+            Dim SunsetTime As New DateTime(LeakTime.Year, LeakTime.Month, LeakTime.Day, 20, 0, 0)
+            Me.m_Dis0.Forecast.Met(i).Stab = DisPuff.GetPs(Lon, Lat, u10, TotalCloud, LowCloud, LeakTime, SunriseTime, SunsetTime) '计算稳定度
+            Me.m_Dis0.Forecast.Met(i).Frequency = 1 / Me.m_Dis0.Forecast.Met.Length
+        Next
+
+    End Sub
 End Class

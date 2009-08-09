@@ -226,6 +226,8 @@ Public Class frmSolution
                 CareOption()
             ElseIf myTreeNode.Text.Contains("气象数据选项") Then
                 metOption()
+            ElseIf myTreeNode.Text.Contains("逐时地面气象数据") Then
+                SurfMetOption()
             ElseIf myTreeNode.Text.Contains("地形数据选项") Then
                 'Aermap()
             ElseIf myTreeNode.Text.Contains("输出选项") Then
@@ -277,13 +279,25 @@ Public Class frmSolution
         End If
     End Sub
 
-    Private Sub metOption()
+    Private Sub MetOption()
         Dim frmMet As frmMet = New frmMet()
         frmMet.Dis = Project0.Dis0.Clone
         If frmMet.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Project0.Dis0 = frmMet.Dis.Clone
         End If
     End Sub
+    ''' <summary>
+    ''' 逐时地面气象数据
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub SurfMetOption()
+        Dim frmGeneralMet As New Met.frmGeneralMetData
+        frmGeneralMet.Aermet.Stage2.MetGeneral = Project0.SurfMet.Clone
+        If frmGeneralMet.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            Project0.SurfMet = frmGeneralMet.Aermet.Stage2.MetGeneral.Clone
+        End If
+    End Sub
+
     Private Sub OutOption()
         Dim frmOut As frmOutOption = New frmOutOption()
         frmOut.Dis = Project0.Dis0.Clone
