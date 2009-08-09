@@ -3,6 +3,12 @@
 ''' </summary>
 ''' <remarks></remarks>
 <Serializable()> Public Class Met
+
+    ''' <summary>
+    ''' 时间
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public m_DateTime As DateTime '日期
     Private m_WindType As Integer = 0 '风的类型。0
     Private m_WindDer As Double '风向度
     Private m_Vane As String  '风向

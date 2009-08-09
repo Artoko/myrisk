@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary
-Imports System.Xml.Serialization
 Imports Sunmast.Hardware
 ''' <summary>
 ''' 泄漏源参数
@@ -631,6 +630,7 @@ Imports Sunmast.Hardware
                 E1 = QLG
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
+                    .Q = QLG * 1000000 '泄漏速率，mg/s
                     .H = Me.m_IntialSource.H
                     .He = Me.m_IntialSource.H  '泄漏源有效高度
                     .DurationTime = 1
@@ -805,6 +805,7 @@ Imports Sunmast.Hardware
                             Q3 = 0
                             Q4 = 0
                         Next i
+                        .Q = .QsAll * 1000000 / MultiSLeak.DurationTime '泄漏物质的速率mg/s
                     End With
                 End If
                 '非正常排放模型,点源
@@ -901,6 +902,7 @@ Imports Sunmast.Hardware
                 End If
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
+                    .Q = E1 * 1000000 '泄漏速率，mg/s
                     .H = Me.m_IntialSource.H
                     .He = Me.m_IntialSource.H  '泄漏源有效高度
                     .DurationTime = 1
@@ -970,6 +972,7 @@ Imports Sunmast.Hardware
                             Q2 = 0
                             Q3 = 0
                         Next i
+                        .Q = .QsAll * 1000000 / MultiSLeak.DurationTime '泄漏物质的速率mg/s
                     End With
                 End If
                 '非正常排放模型,点源
@@ -1002,6 +1005,7 @@ Imports Sunmast.Hardware
                 E1 = 0
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
+                    .Q = E1 * 1000000 '泄漏速率，mg/s
                     .H = Me.m_IntialSource.H   '泄漏源高度
                     '计算结果泄漏速率
                     .Ts = Me.m_IntialSource.InT + 273.15 '将摄氏度转化为绝对温度
@@ -1129,6 +1133,7 @@ Imports Sunmast.Hardware
                             Q3 = 0
                             Q4 = 0
                         Next i
+                        .Q = .QsAll * 1000000 / MultiSLeak.DurationTime '泄漏物质的速率mg/s
                     End With
                 End If
                 '非正常排放模型,点源
@@ -1166,6 +1171,7 @@ Imports Sunmast.Hardware
                 End If
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
+                    .Q = E1 * 1000000 '泄漏速率，mg/s
                     .H = Me.m_IntialSource.H
                     .He = Me.m_IntialSource.H  '泄漏源有效高度
                     .DurationTime = 1
@@ -1235,6 +1241,7 @@ Imports Sunmast.Hardware
                             Q2 = 0
                             Q3 = 0
                         Next i
+                        .Q = .QsAll * 1000000 / MultiSLeak.DurationTime '泄漏物质的速率mg/s
                     End With
                 End If
                 '非正常排放模型,点源
@@ -1395,6 +1402,7 @@ Imports Sunmast.Hardware
                             Q3 = 0
                             Q4 = 0
                         Next i
+                        .Q = .QsAll * 1000000 / MultiSLeak.DurationTime '泄漏物质的速率mg/s
                     End With
                 End If
                 '非正常排放模型,点源
@@ -1432,6 +1440,7 @@ Imports Sunmast.Hardware
                 End If
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
+                    .Q = E1 * 1000000 '泄漏速率，mg/s
                     .H = Me.m_IntialSource.H
                     .He = Me.m_IntialSource.H  '泄漏源有效高度
                     .DurationTime = 1
@@ -1501,6 +1510,7 @@ Imports Sunmast.Hardware
                             Q2 = 0
                             Q3 = 0
                         Next i
+                        .Q = .QsAll * 1000000 / MultiSLeak.DurationTime '泄漏物质的速率mg/s
                     End With
                 End If
                 '非正常排放模型,点源
@@ -1538,6 +1548,7 @@ Imports Sunmast.Hardware
                 End If
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
+                    .Q = E1 * 1000000 '泄漏速率，mg/s
                     .H = Me.m_IntialSource.H
                     .He = Me.m_IntialSource.H  '泄漏源有效高度
                     .DurationTime = 1
@@ -1607,6 +1618,7 @@ Imports Sunmast.Hardware
                             Q2 = 0
                             Q3 = 0
                         Next i
+                        .Q = .QsAll * 1000000 / MultiSLeak.DurationTime '泄漏物质的速率mg/s
                     End With
                 End If
                 '非正常排放模型,点源
