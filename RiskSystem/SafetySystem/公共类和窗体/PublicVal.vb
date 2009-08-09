@@ -12,5 +12,7 @@ Module PublicVal
     Public Vesion As Integer = 2 '1为单位版，2为单机版
 
     Public strjmCode As String = "woasdfgjyikhgighkghjkdfasdfc" '加密码
+
+   
 End Module
 

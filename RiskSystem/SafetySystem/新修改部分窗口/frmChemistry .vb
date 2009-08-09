@@ -36,13 +36,99 @@ Public Class frmChemistry
         Me.txtAntoineA.Value = Me.m_Dis.Chemical.AntoineA
         Me.txtAntoineB.Value = Me.m_Dis.Chemical.AntoineB
         Me.txtAntoineC.Value = Me.m_Dis.Chemical.AntoineC
-
-
         RefreshEFlexHurt()
         m_IsSeach = True
+
+        ShowEnable()
+
     End Sub
 
-    
+    Private Sub ShowEnable()
+        Select Case Me.m_Dis.IntialSource.LeakType
+            Case 0 '(1)自定义泄漏源
+
+                '数据库
+                txtLeakLiquidCP.Enabled = False '液体定压比热
+                txtLeakLiquidH.Enabled = False '液体气化热
+                txtLeakGasK.Enabled = False '气体绝热指数
+                txtCpg.Enabled = False '气体定压比热
+                GroupATI.Enabled = False '安托因
+
+            Case 1 '(2)气体容器小孔、中孔泄漏、
+
+                '数据库
+                txtLeakLiquidCP.Enabled = False '液体定压比热
+                txtLeakLiquidH.Enabled = False '液体气化热
+                txtLeakGasK.Enabled = True  '气体绝热指数
+                txtCpg.Enabled = False '气体定压比热
+                GroupATI.Enabled = False '安托因
+            Case 2 '(3)气体容器爆裂
+                '数据库
+                txtLeakLiquidCP.Enabled = False '液体定压比热
+                txtLeakLiquidH.Enabled = False '液体气化热
+                txtLeakGasK.Enabled = False   '气体绝热指数
+                txtCpg.Enabled = False '气体定压比热
+                GroupATI.Enabled = False '安托因
+            Case 3 '(4)压力液化气容器液下小孔、中孔泄漏
+
+                '数据库
+                txtLeakLiquidCP.Enabled = True  '液体定压比热
+                txtLeakLiquidH.Enabled = True  '液体气化热
+                txtLeakGasK.Enabled = False   '气体绝热指数
+                txtCpg.Enabled = False '气体定压比热
+                GroupATI.Enabled = True  '安托因
+
+            Case 4 '(5)压力液化气容器液上小孔、中孔泄漏
+                '数据库
+                txtLeakLiquidCP.Enabled = False '液体定压比热
+                txtLeakLiquidH.Enabled = False '液体气化热
+                txtLeakGasK.Enabled = True    '气体绝热指数
+                txtCpg.Enabled = False '气体定压比热
+                GroupATI.Enabled = True   '安托因
+            Case 5 '(6)压力液化气容器爆裂
+                '数据库
+                txtLeakLiquidCP.Enabled = True  '液体定压比热
+                txtLeakLiquidH.Enabled = True  '液体气化热
+                txtLeakGasK.Enabled = False   '气体绝热指数
+                txtCpg.Enabled = False '气体定压比热
+                GroupATI.Enabled = True  '安托因
+            Case 6 '(7)常压液体容器小孔、中孔泄漏
+                '数据库
+                txtLeakLiquidCP.Enabled = False   '液体定压比热
+                txtLeakLiquidH.Enabled = False   '液体气化热
+                txtLeakGasK.Enabled = False   '气体绝热指数
+                txtCpg.Enabled = False '气体定压比热
+                GroupATI.Enabled = True  '安托因
+            Case 7 ' (8)常压液体容器爆裂
+                '数据库
+                txtLeakLiquidCP.Enabled = False   '液体定压比热
+                txtLeakLiquidH.Enabled = False   '液体气化热
+                txtLeakGasK.Enabled = False   '气体绝热指数
+                txtCpg.Enabled = False '气体定压比热
+                GroupATI.Enabled = True  '安托因
+            Case 8 '(9)压力液化气容器两相流泄漏
+                '数据库
+                txtLeakLiquidCP.Enabled = True    '液体定压比热
+                txtLeakLiquidH.Enabled = True    '液体气化热
+                txtLeakGasK.Enabled = False   '气体绝热指数
+                txtCpg.Enabled = False  '气体定压比热
+                GroupATI.Enabled = True  '安托因
+            Case 9 '(10)冷冻液化气容器小孔、中孔泄漏
+                '数据库
+                txtLeakLiquidCP.Enabled = True    '液体定压比热
+                txtLeakLiquidH.Enabled = True    '液体气化热
+                txtLeakGasK.Enabled = False   '气体绝热指数
+                txtCpg.Enabled = False  '气体定压比热
+                GroupATI.Enabled = True  '安托因
+            Case 10 '(11)冷冻液化气容器爆裂
+                '数据库
+                txtLeakLiquidCP.Enabled = True    '液体定压比热
+                txtLeakLiquidH.Enabled = True    '液体气化热
+                txtLeakGasK.Enabled = False   '气体绝热指数
+                txtCpg.Enabled = False  '气体定压比热
+                GroupATI.Enabled = True  '安托因
+        End Select
+    End Sub
 
     Private Sub EFlexHurt_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles EFlexHurt.Validating
         Dim nCount As Integer = EFlexHurt.Rows.Count - 1

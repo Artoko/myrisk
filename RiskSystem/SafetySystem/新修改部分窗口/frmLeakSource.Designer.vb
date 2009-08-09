@@ -87,74 +87,11 @@ Partial Class frmLeakSource
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.Label5 = New System.Windows.Forms.Label
         Me.txtProbability = New Chart.CText
-        Me.TabControl1 = New System.Windows.Forms.TabControl
-        Me.TabPage1 = New System.Windows.Forms.TabPage
-        Me.TabPage2 = New System.Windows.Forms.TabPage
-        Me.ListView1 = New System.Windows.Forms.ListView
-        Me._ListView1_ColumnHeader_1 = New System.Windows.Forms.ColumnHeader
-        Me._ListView1_ColumnHeader_2 = New System.Windows.Forms.ColumnHeader
-        Me._ListView1_ColumnHeader_3 = New System.Windows.Forms.ColumnHeader
-        Me._ListView1_ColumnHeader_4 = New System.Windows.Forms.ColumnHeader
-        Me._ListView1_ColumnHeader_5 = New System.Windows.Forms.ColumnHeader
-        Me.cmbName = New System.Windows.Forms.ComboBox
-        Me.Command1 = New System.Windows.Forms.Button
-        Me.Command2 = New System.Windows.Forms.Button
-        Me.Label43 = New System.Windows.Forms.Label
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.txtPrn = New Chart.CText
-        Me.txtPrB = New Chart.CText
-        Me.txtPrA = New Chart.CText
-        Me.Label100 = New System.Windows.Forms.Label
-        Me.Label70 = New System.Windows.Forms.Label
-        Me.Label60 = New System.Windows.Forms.Label
-        Me.Cancel_Button = New System.Windows.Forms.Button
-        Me.OK_Button = New System.Windows.Forms.Button
-        Me.Label13 = New System.Windows.Forms.Label
-        Me.cmbSearchType = New System.Windows.Forms.ComboBox
-        Me.cmdSearch = New System.Windows.Forms.Button
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.EFlexHurt = New Chart.EFlex
-        Me.cmdDelHurt = New System.Windows.Forms.Button
-        Me.cmdAddHurt = New System.Windows.Forms.Button
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox
-        Me.txtLeakEvaporationTb = New Chart.CText
-        Me.txtPg = New Chart.CText
-        Me.txtLeakLiquidPl = New Chart.CText
-        Me.txtLeakM = New Chart.CText
-        Me.Label41 = New System.Windows.Forms.Label
-        Me.Label16 = New System.Windows.Forms.Label
-        Me.Label23 = New System.Windows.Forms.Label
-        Me.Label26 = New System.Windows.Forms.Label
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.Label12 = New System.Windows.Forms.Label
-        Me.txtAntoineC = New Chart.CText
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.txtAntoineB = New Chart.CText
-        Me.Label15 = New System.Windows.Forms.Label
-        Me.txtAntoineA = New Chart.CText
-        Me.GroupBox8 = New System.Windows.Forms.GroupBox
-        Me.txtLeakGasK = New Chart.CText
-        Me.Label40 = New System.Windows.Forms.Label
-        Me.txtCpg = New Chart.CText
-        Me.txtLeakLiquidH = New Chart.CText
-        Me.Label17 = New System.Windows.Forms.Label
-        Me.txtLeakLiquidCP = New Chart.CText
-        Me.text5 = New System.Windows.Forms.Label
-        Me.Label24 = New System.Windows.Forms.Label
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        Me.TabControl1.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
-        CType(Me.EFlexHurt, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox7.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        Me.GroupBox8.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox6
@@ -175,7 +112,7 @@ Partial Class frmLeakSource
         Me.GroupBox6.Controls.Add(Me.txtLeakLiquidHeight)
         Me.GroupBox6.Controls.Add(Me.Label45)
         Me.GroupBox6.Controls.Add(Me.Label6)
-        Me.GroupBox6.Location = New System.Drawing.Point(14, 268)
+        Me.GroupBox6.Location = New System.Drawing.Point(31, 296)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.Size = New System.Drawing.Size(253, 199)
         Me.GroupBox6.TabIndex = 217
@@ -407,7 +344,7 @@ Partial Class frmLeakSource
         Me.GroupBox11.Controls.Add(Me.Label44)
         Me.GroupBox11.Controls.Add(Me.Label47)
         Me.GroupBox11.Controls.Add(Me.Label37)
-        Me.GroupBox11.Location = New System.Drawing.Point(14, 137)
+        Me.GroupBox11.Location = New System.Drawing.Point(31, 165)
         Me.GroupBox11.Name = "GroupBox11"
         Me.GroupBox11.Size = New System.Drawing.Size(253, 125)
         Me.GroupBox11.TabIndex = 216
@@ -419,9 +356,9 @@ Partial Class frmLeakSource
         Me.chkAutoCalLeakP.AutoSize = True
         Me.chkAutoCalLeakP.Location = New System.Drawing.Point(32, 66)
         Me.chkAutoCalLeakP.Name = "chkAutoCalLeakP"
-        Me.chkAutoCalLeakP.Size = New System.Drawing.Size(120, 16)
+        Me.chkAutoCalLeakP.Size = New System.Drawing.Size(180, 16)
         Me.chkAutoCalLeakP.TabIndex = 67
-        Me.chkAutoCalLeakP.Text = "自动计算容器压力"
+        Me.chkAutoCalLeakP.Text = "通过安托因公式计算容器压力"
         Me.C1SuperTooltip1.SetToolTip(Me.chkAutoCalLeakP, resources.GetString("chkAutoCalLeakP.ToolTip"))
         Me.chkAutoCalLeakP.UseVisualStyleBackColor = True
         '
@@ -513,7 +450,7 @@ Partial Class frmLeakSource
         Me.GroupBox12.Controls.Add(Me.Label9)
         Me.GroupBox12.Controls.Add(Me.txtY)
         Me.GroupBox12.Controls.Add(Me.txtX)
-        Me.GroupBox12.Location = New System.Drawing.Point(14, 58)
+        Me.GroupBox12.Location = New System.Drawing.Point(31, 86)
         Me.GroupBox12.Name = "GroupBox12"
         Me.GroupBox12.Size = New System.Drawing.Size(253, 72)
         Me.GroupBox12.TabIndex = 225
@@ -568,7 +505,7 @@ Partial Class frmLeakSource
         Me.txtLeakSourceName.BackColor = System.Drawing.SystemColors.Window
         Me.txtLeakSourceName.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtLeakSourceName.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.txtLeakSourceName.Location = New System.Drawing.Point(111, 27)
+        Me.txtLeakSourceName.Location = New System.Drawing.Point(128, 55)
         Me.txtLeakSourceName.MaxLength = 0
         Me.txtLeakSourceName.Name = "txtLeakSourceName"
         Me.txtLeakSourceName.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -582,7 +519,7 @@ Partial Class frmLeakSource
         Me.Label67.BackColor = System.Drawing.Color.Transparent
         Me.Label67.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label67.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label67.Location = New System.Drawing.Point(34, 30)
+        Me.Label67.Location = New System.Drawing.Point(51, 58)
         Me.Label67.Name = "Label67"
         Me.Label67.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Label67.Size = New System.Drawing.Size(71, 12)
@@ -595,7 +532,7 @@ Partial Class frmLeakSource
         Me.lblQ8.BackColor = System.Drawing.Color.Transparent
         Me.lblQ8.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblQ8.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.lblQ8.Location = New System.Drawing.Point(344, 58)
+        Me.lblQ8.Location = New System.Drawing.Point(361, 86)
         Me.lblQ8.Name = "lblQ8"
         Me.lblQ8.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.lblQ8.Size = New System.Drawing.Size(101, 12)
@@ -606,7 +543,7 @@ Partial Class frmLeakSource
         'txtQ0
         '
         Me.txtQ0.DataType = Chart.DataType.DataDouble
-        Me.txtQ0.Location = New System.Drawing.Point(451, 55)
+        Me.txtQ0.Location = New System.Drawing.Point(468, 83)
         Me.txtQ0.MaxValue = 0
         Me.txtQ0.MinValue = 0
         Me.txtQ0.Name = "txtQ0"
@@ -621,7 +558,7 @@ Partial Class frmLeakSource
         Me.cbmSourceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbmSourceType.FormattingEnabled = True
         Me.cbmSourceType.Items.AddRange(New Object() {"点源", "面源", "体源"})
-        Me.cbmSourceType.Location = New System.Drawing.Point(451, 27)
+        Me.cbmSourceType.Location = New System.Drawing.Point(468, 55)
         Me.cbmSourceType.Name = "cbmSourceType"
         Me.cbmSourceType.Size = New System.Drawing.Size(100, 20)
         Me.cbmSourceType.TabIndex = 229
@@ -629,7 +566,7 @@ Partial Class frmLeakSource
         'Label49
         '
         Me.Label49.AutoSize = True
-        Me.Label49.Location = New System.Drawing.Point(410, 30)
+        Me.Label49.Location = New System.Drawing.Point(427, 58)
         Me.Label49.Name = "Label49"
         Me.Label49.Size = New System.Drawing.Size(35, 12)
         Me.Label49.TabIndex = 228
@@ -638,7 +575,7 @@ Partial Class frmLeakSource
         'LabelS
         '
         Me.LabelS.AutoSize = True
-        Me.LabelS.Location = New System.Drawing.Point(350, 85)
+        Me.LabelS.Location = New System.Drawing.Point(367, 113)
         Me.LabelS.Name = "LabelS"
         Me.LabelS.Size = New System.Drawing.Size(95, 12)
         Me.LabelS.TabIndex = 230
@@ -647,7 +584,7 @@ Partial Class frmLeakSource
         'txtS_S
         '
         Me.txtS_S.DataType = Chart.DataType.DataDouble
-        Me.txtS_S.Location = New System.Drawing.Point(451, 82)
+        Me.txtS_S.Location = New System.Drawing.Point(468, 110)
         Me.txtS_S.MaxValue = 0
         Me.txtS_S.MinValue = 0
         Me.txtS_S.Name = "txtS_S"
@@ -663,7 +600,7 @@ Partial Class frmLeakSource
         Me.Label29.BackColor = System.Drawing.Color.Transparent
         Me.Label29.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label29.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label29.Location = New System.Drawing.Point(350, 112)
+        Me.Label29.Location = New System.Drawing.Point(367, 140)
         Me.Label29.Name = "Label29"
         Me.Label29.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Label29.Size = New System.Drawing.Size(95, 12)
@@ -674,7 +611,7 @@ Partial Class frmLeakSource
         'txtThickness
         '
         Me.txtThickness.DataType = Chart.DataType.DataDouble
-        Me.txtThickness.Location = New System.Drawing.Point(451, 109)
+        Me.txtThickness.Location = New System.Drawing.Point(468, 137)
         Me.txtThickness.MaxValue = 0
         Me.txtThickness.MinValue = 0
         Me.txtThickness.Name = "txtThickness"
@@ -697,7 +634,7 @@ Partial Class frmLeakSource
         Me.GroupBox5.Controls.Add(Me.Label7)
         Me.GroupBox5.Controls.Add(Me.Label34)
         Me.GroupBox5.Controls.Add(Me.cmbLeakEvaporationGround)
-        Me.GroupBox5.Location = New System.Drawing.Point(315, 137)
+        Me.GroupBox5.Location = New System.Drawing.Point(332, 165)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Size = New System.Drawing.Size(253, 181)
         Me.GroupBox5.TabIndex = 235
@@ -709,9 +646,9 @@ Partial Class frmLeakSource
         Me.chkAutoCalVapP.AutoSize = True
         Me.chkAutoCalVapP.Location = New System.Drawing.Point(21, 109)
         Me.chkAutoCalVapP.Name = "chkAutoCalVapP"
-        Me.chkAutoCalVapP.Size = New System.Drawing.Size(156, 16)
+        Me.chkAutoCalVapP.Size = New System.Drawing.Size(216, 16)
         Me.chkAutoCalVapP.TabIndex = 67
-        Me.chkAutoCalVapP.Text = "自动计算液体表面蒸气压"
+        Me.chkAutoCalVapP.Text = "通过安托因公式计算液体表面蒸气压"
         Me.C1SuperTooltip1.SetToolTip(Me.chkAutoCalVapP, resources.GetString("chkAutoCalVapP.ToolTip"))
         Me.chkAutoCalVapP.UseVisualStyleBackColor = True
         '
@@ -868,7 +805,7 @@ Partial Class frmLeakSource
         Me.cmbLeakType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLeakType.FormattingEnabled = True
         Me.cmbLeakType.Items.AddRange(New Object() {"(1)自定义泄漏源", "(2)气体容器小孔、中孔泄漏", "(3)气体容器爆裂", "(4)压力液化气容器液下小孔、中孔泄漏", "(5)压力液化气容器液上小孔、中孔泄漏", "(6)压力液化气容器爆裂", "(7)常压液体容器小孔、中孔泄漏", "(8)常压液体容器爆裂", "(9)压力液化气容器两相流泄漏", "(10)冷冻液化气容器小孔、中孔泄漏", "(11)冷冻液化气容器爆裂"})
-        Me.cmbLeakType.Location = New System.Drawing.Point(94, 6)
+        Me.cmbLeakType.Location = New System.Drawing.Point(117, 22)
         Me.cmbLeakType.Name = "cmbLeakType"
         Me.cmbLeakType.Size = New System.Drawing.Size(320, 20)
         Me.cmbLeakType.TabIndex = 246
@@ -876,7 +813,7 @@ Partial Class frmLeakSource
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(5, 9)
+        Me.Label11.Location = New System.Drawing.Point(28, 25)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(83, 12)
         Me.Label11.TabIndex = 247
@@ -884,7 +821,7 @@ Partial Class frmLeakSource
         '
         'm_OK
         '
-        Me.m_OK.Location = New System.Drawing.Point(375, 448)
+        Me.m_OK.Location = New System.Drawing.Point(392, 476)
         Me.m_OK.Name = "m_OK"
         Me.m_OK.Size = New System.Drawing.Size(75, 23)
         Me.m_OK.TabIndex = 248
@@ -893,7 +830,7 @@ Partial Class frmLeakSource
         '
         'm_Cancel
         '
-        Me.m_Cancel.Location = New System.Drawing.Point(476, 448)
+        Me.m_Cancel.Location = New System.Drawing.Point(493, 476)
         Me.m_Cancel.Name = "m_Cancel"
         Me.m_Cancel.Size = New System.Drawing.Size(75, 23)
         Me.m_Cancel.TabIndex = 249
@@ -920,7 +857,8 @@ Partial Class frmLeakSource
         Me.GroupBox1.Controls.Add(Me.txtAirProportion)
         Me.GroupBox1.Controls.Add(Me.chkIsHeavy)
         Me.GroupBox1.Controls.Add(Me.Label4)
-        Me.GroupBox1.Location = New System.Drawing.Point(315, 332)
+        Me.GroupBox1.ForeColor = System.Drawing.Color.Red
+        Me.GroupBox1.Location = New System.Drawing.Point(332, 360)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(253, 60)
         Me.GroupBox1.TabIndex = 251
@@ -930,7 +868,8 @@ Partial Class frmLeakSource
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(386, 407)
+        Me.Label5.ForeColor = System.Drawing.Color.Red
+        Me.Label5.Location = New System.Drawing.Point(403, 435)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(59, 12)
         Me.Label5.TabIndex = 252
@@ -939,7 +878,8 @@ Partial Class frmLeakSource
         'txtProbability
         '
         Me.txtProbability.DataType = Chart.DataType.DataDouble
-        Me.txtProbability.Location = New System.Drawing.Point(451, 404)
+        Me.txtProbability.ForeColor = System.Drawing.Color.Red
+        Me.txtProbability.Location = New System.Drawing.Point(468, 432)
         Me.txtProbability.MaxValue = 1
         Me.txtProbability.MinValue = 0.00000000001
         Me.txtProbability.Name = "txtProbability"
@@ -948,670 +888,32 @@ Partial Class frmLeakSource
         Me.txtProbability.Text = "0"
         Me.txtProbability.Value = 0
         '
-        'TabControl1
-        '
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(3, 32)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(697, 569)
-        Me.TabControl1.TabIndex = 254
-        '
-        'TabPage1
-        '
-        Me.TabPage1.Controls.Add(Me.Label67)
-        Me.TabPage1.Controls.Add(Me.txtProbability)
-        Me.TabPage1.Controls.Add(Me.GroupBox11)
-        Me.TabPage1.Controls.Add(Me.Label5)
-        Me.TabPage1.Controls.Add(Me.GroupBox6)
-        Me.TabPage1.Controls.Add(Me.GroupBox1)
-        Me.TabPage1.Controls.Add(Me.txtLeakSourceName)
-        Me.TabPage1.Controls.Add(Me.m_Cancel)
-        Me.TabPage1.Controls.Add(Me.GroupBox12)
-        Me.TabPage1.Controls.Add(Me.m_OK)
-        Me.TabPage1.Controls.Add(Me.txtQ0)
-        Me.TabPage1.Controls.Add(Me.lblQ8)
-        Me.TabPage1.Controls.Add(Me.Label49)
-        Me.TabPage1.Controls.Add(Me.GroupBox5)
-        Me.TabPage1.Controls.Add(Me.cbmSourceType)
-        Me.TabPage1.Controls.Add(Me.Label29)
-        Me.TabPage1.Controls.Add(Me.txtS_S)
-        Me.TabPage1.Controls.Add(Me.txtThickness)
-        Me.TabPage1.Controls.Add(Me.LabelS)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 21)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(689, 544)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "泄漏源"
-        Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.ListView1)
-        Me.TabPage2.Controls.Add(Me.cmbName)
-        Me.TabPage2.Controls.Add(Me.Command1)
-        Me.TabPage2.Controls.Add(Me.Command2)
-        Me.TabPage2.Controls.Add(Me.Label43)
-        Me.TabPage2.Controls.Add(Me.GroupBox2)
-        Me.TabPage2.Controls.Add(Me.Cancel_Button)
-        Me.TabPage2.Controls.Add(Me.OK_Button)
-        Me.TabPage2.Controls.Add(Me.Label13)
-        Me.TabPage2.Controls.Add(Me.cmbSearchType)
-        Me.TabPage2.Controls.Add(Me.cmdSearch)
-        Me.TabPage2.Controls.Add(Me.GroupBox4)
-        Me.TabPage2.Controls.Add(Me.GroupBox7)
-        Me.TabPage2.Controls.Add(Me.GroupBox3)
-        Me.TabPage2.Controls.Add(Me.GroupBox8)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 21)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(689, 544)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "物化性质"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'ListView1
-        '
-        Me.ListView1.BackColor = System.Drawing.SystemColors.Window
-        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me._ListView1_ColumnHeader_1, Me._ListView1_ColumnHeader_2, Me._ListView1_ColumnHeader_3, Me._ListView1_ColumnHeader_4, Me._ListView1_ColumnHeader_5})
-        Me.ListView1.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.ListView1.FullRowSelect = True
-        Me.ListView1.Location = New System.Drawing.Point(18, 43)
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(654, 168)
-        Me.ListView1.TabIndex = 297
-        Me.ListView1.UseCompatibleStateImageBehavior = False
-        Me.ListView1.View = System.Windows.Forms.View.Details
-        '
-        '_ListView1_ColumnHeader_1
-        '
-        Me._ListView1_ColumnHeader_1.Text = "中文名1"
-        Me._ListView1_ColumnHeader_1.Width = 126
-        '
-        '_ListView1_ColumnHeader_2
-        '
-        Me._ListView1_ColumnHeader_2.Text = "中文名2"
-        Me._ListView1_ColumnHeader_2.Width = 104
-        '
-        '_ListView1_ColumnHeader_3
-        '
-        Me._ListView1_ColumnHeader_3.Text = "英文名1"
-        Me._ListView1_ColumnHeader_3.Width = 99
-        '
-        '_ListView1_ColumnHeader_4
-        '
-        Me._ListView1_ColumnHeader_4.Text = "英文名2"
-        Me._ListView1_ColumnHeader_4.Width = 108
-        '
-        '_ListView1_ColumnHeader_5
-        '
-        Me._ListView1_ColumnHeader_5.Text = "CAS 号"
-        Me._ListView1_ColumnHeader_5.Width = 170
-        '
-        'cmbName
-        '
-        Me.cmbName.FormattingEnabled = True
-        Me.cmbName.Items.AddRange(New Object() {"氯", "氨", "丙烯醛", "四氯化碳", "氯化氢", "甲基溴", "光气", "氟化氢", "丙烯腈", "丙烯醇", "氰化氢", "硫化氢", "磷化氢", "对硫磷"})
-        Me.cmbName.Location = New System.Drawing.Point(82, 16)
-        Me.cmbName.Name = "cmbName"
-        Me.cmbName.Size = New System.Drawing.Size(153, 20)
-        Me.cmbName.TabIndex = 306
-        '
-        'Command1
-        '
-        Me.Command1.BackColor = System.Drawing.SystemColors.Control
-        Me.Command1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Command1.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Command1.Location = New System.Drawing.Point(404, 498)
-        Me.Command1.Name = "Command1"
-        Me.Command1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Command1.Size = New System.Drawing.Size(41, 25)
-        Me.Command1.TabIndex = 298
-        Me.Command1.Text = "加密"
-        Me.Command1.UseVisualStyleBackColor = False
-        Me.Command1.Visible = False
-        '
-        'Command2
-        '
-        Me.Command2.BackColor = System.Drawing.SystemColors.Control
-        Me.Command2.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Command2.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Command2.Location = New System.Drawing.Point(451, 498)
-        Me.Command2.Name = "Command2"
-        Me.Command2.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Command2.Size = New System.Drawing.Size(41, 25)
-        Me.Command2.TabIndex = 299
-        Me.Command2.Text = "解密"
-        Me.Command2.UseVisualStyleBackColor = False
-        Me.Command2.Visible = False
-        '
-        'Label43
-        '
-        Me.Label43.AutoSize = True
-        Me.Label43.BackColor = System.Drawing.Color.Transparent
-        Me.Label43.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label43.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label43.Location = New System.Drawing.Point(17, 19)
-        Me.Label43.Name = "Label43"
-        Me.Label43.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label43.Size = New System.Drawing.Size(59, 12)
-        Me.Label43.TabIndex = 305
-        Me.Label43.Text = "物料名称:"
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Controls.Add(Me.txtPrn)
-        Me.GroupBox2.Controls.Add(Me.txtPrB)
-        Me.GroupBox2.Controls.Add(Me.txtPrA)
-        Me.GroupBox2.Controls.Add(Me.Label100)
-        Me.GroupBox2.Controls.Add(Me.Label70)
-        Me.GroupBox2.Controls.Add(Me.Label60)
-        Me.GroupBox2.Location = New System.Drawing.Point(315, 426)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(357, 49)
-        Me.GroupBox2.TabIndex = 301
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "毒性负荷参数"
-        '
-        'txtPrn
-        '
-        Me.txtPrn.DataType = Chart.DataType.DataDouble
-        Me.txtPrn.Location = New System.Drawing.Point(239, 17)
-        Me.txtPrn.MaxValue = 0
-        Me.txtPrn.MinValue = 0
-        Me.txtPrn.Name = "txtPrn"
-        Me.txtPrn.Size = New System.Drawing.Size(72, 21)
-        Me.txtPrn.TabIndex = 5
-        Me.txtPrn.Text = "0"
-        Me.txtPrn.Value = 0
-        '
-        'txtPrB
-        '
-        Me.txtPrB.DataType = Chart.DataType.DataDouble
-        Me.txtPrB.Location = New System.Drawing.Point(138, 17)
-        Me.txtPrB.MaxValue = 0
-        Me.txtPrB.MinValue = 0
-        Me.txtPrB.Name = "txtPrB"
-        Me.txtPrB.Size = New System.Drawing.Size(72, 21)
-        Me.txtPrB.TabIndex = 4
-        Me.txtPrB.Text = "0"
-        Me.txtPrB.Value = 0
-        '
-        'txtPrA
-        '
-        Me.txtPrA.DataType = Chart.DataType.DataDouble
-        Me.txtPrA.Location = New System.Drawing.Point(37, 17)
-        Me.txtPrA.MaxValue = 0
-        Me.txtPrA.MinValue = 0
-        Me.txtPrA.Name = "txtPrA"
-        Me.txtPrA.Size = New System.Drawing.Size(72, 21)
-        Me.txtPrA.TabIndex = 3
-        Me.txtPrA.Text = "0"
-        Me.txtPrA.Value = 0
-        '
-        'Label100
-        '
-        Me.Label100.AutoSize = True
-        Me.Label100.Location = New System.Drawing.Point(216, 20)
-        Me.Label100.Name = "Label100"
-        Me.Label100.Size = New System.Drawing.Size(17, 12)
-        Me.Label100.TabIndex = 2
-        Me.Label100.Text = "n:"
-        '
-        'Label70
-        '
-        Me.Label70.AutoSize = True
-        Me.Label70.Location = New System.Drawing.Point(115, 20)
-        Me.Label70.Name = "Label70"
-        Me.Label70.Size = New System.Drawing.Size(17, 12)
-        Me.Label70.TabIndex = 1
-        Me.Label70.Text = "B:"
-        '
-        'Label60
-        '
-        Me.Label60.AutoSize = True
-        Me.Label60.Location = New System.Drawing.Point(14, 20)
-        Me.Label60.Name = "Label60"
-        Me.Label60.Size = New System.Drawing.Size(17, 12)
-        Me.Label60.TabIndex = 0
-        Me.Label60.Text = "A:"
-        '
-        'Cancel_Button
-        '
-        Me.Cancel_Button.Location = New System.Drawing.Point(588, 498)
-        Me.Cancel_Button.Name = "Cancel_Button"
-        Me.Cancel_Button.Size = New System.Drawing.Size(75, 23)
-        Me.Cancel_Button.TabIndex = 308
-        Me.Cancel_Button.Text = "取消(&C)"
-        Me.Cancel_Button.UseVisualStyleBackColor = True
-        '
-        'OK_Button
-        '
-        Me.OK_Button.Location = New System.Drawing.Point(498, 498)
-        Me.OK_Button.Name = "OK_Button"
-        Me.OK_Button.Size = New System.Drawing.Size(75, 23)
-        Me.OK_Button.TabIndex = 307
-        Me.OK_Button.Text = "确定(&O)"
-        Me.OK_Button.UseVisualStyleBackColor = True
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.BackColor = System.Drawing.SystemColors.Control
-        Me.Label13.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label13.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label13.Location = New System.Drawing.Point(241, 20)
-        Me.Label13.Name = "Label13"
-        Me.Label13.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label13.Size = New System.Drawing.Size(59, 12)
-        Me.Label13.TabIndex = 296
-        Me.Label13.Text = "查找方式:"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'cmbSearchType
-        '
-        Me.cmbSearchType.BackColor = System.Drawing.SystemColors.Window
-        Me.cmbSearchType.Cursor = System.Windows.Forms.Cursors.Default
-        Me.cmbSearchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbSearchType.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.cmbSearchType.Items.AddRange(New Object() {"中文名", "英文名", "CAS号"})
-        Me.cmbSearchType.Location = New System.Drawing.Point(315, 17)
-        Me.cmbSearchType.Name = "cmbSearchType"
-        Me.cmbSearchType.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.cmbSearchType.Size = New System.Drawing.Size(174, 20)
-        Me.cmbSearchType.TabIndex = 295
-        '
-        'cmdSearch
-        '
-        Me.cmdSearch.BackColor = System.Drawing.SystemColors.Control
-        Me.cmdSearch.Cursor = System.Windows.Forms.Cursors.Default
-        Me.cmdSearch.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.cmdSearch.Location = New System.Drawing.Point(523, 14)
-        Me.cmdSearch.Name = "cmdSearch"
-        Me.cmdSearch.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.cmdSearch.Size = New System.Drawing.Size(149, 25)
-        Me.cmdSearch.TabIndex = 302
-        Me.cmdSearch.Text = "从数据库中查找物化数据"
-        Me.cmdSearch.UseVisualStyleBackColor = True
-        '
-        'GroupBox4
-        '
-        Me.GroupBox4.Controls.Add(Me.EFlexHurt)
-        Me.GroupBox4.Controls.Add(Me.cmdDelHurt)
-        Me.GroupBox4.Controls.Add(Me.cmdAddHurt)
-        Me.GroupBox4.Location = New System.Drawing.Point(315, 217)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(357, 203)
-        Me.GroupBox4.TabIndex = 300
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "浓度限值"
-        '
-        'EFlexHurt
-        '
-        Me.EFlexHurt.ColumnInfo = resources.GetString("EFlexHurt.ColumnInfo")
-        Me.EFlexHurt.IsCopy = True
-        Me.EFlexHurt.IsCut = True
-        Me.EFlexHurt.IsPaste = True
-        Me.EFlexHurt.Location = New System.Drawing.Point(18, 20)
-        Me.EFlexHurt.Name = "EFlexHurt"
-        Me.EFlexHurt.Rows.Count = 2
-        Me.EFlexHurt.Rows.DefaultSize = 18
-        Me.EFlexHurt.Size = New System.Drawing.Size(333, 144)
-        Me.EFlexHurt.StyleInfo = resources.GetString("EFlexHurt.StyleInfo")
-        Me.EFlexHurt.TabIndex = 264
-        '
-        'cmdDelHurt
-        '
-        Me.cmdDelHurt.Location = New System.Drawing.Point(273, 170)
-        Me.cmdDelHurt.Name = "cmdDelHurt"
-        Me.cmdDelHurt.Size = New System.Drawing.Size(75, 23)
-        Me.cmdDelHurt.TabIndex = 263
-        Me.cmdDelHurt.Text = "删除(&D)"
-        Me.cmdDelHurt.UseVisualStyleBackColor = True
-        '
-        'cmdAddHurt
-        '
-        Me.cmdAddHurt.Location = New System.Drawing.Point(192, 170)
-        Me.cmdAddHurt.Name = "cmdAddHurt"
-        Me.cmdAddHurt.Size = New System.Drawing.Size(75, 23)
-        Me.cmdAddHurt.TabIndex = 262
-        Me.cmdAddHurt.Text = "添加(&A)"
-        Me.cmdAddHurt.UseVisualStyleBackColor = True
-        '
-        'GroupBox7
-        '
-        Me.GroupBox7.Controls.Add(Me.txtLeakEvaporationTb)
-        Me.GroupBox7.Controls.Add(Me.txtPg)
-        Me.GroupBox7.Controls.Add(Me.txtLeakLiquidPl)
-        Me.GroupBox7.Controls.Add(Me.txtLeakM)
-        Me.GroupBox7.Controls.Add(Me.Label41)
-        Me.GroupBox7.Controls.Add(Me.Label16)
-        Me.GroupBox7.Controls.Add(Me.Label23)
-        Me.GroupBox7.Controls.Add(Me.Label26)
-        Me.GroupBox7.Location = New System.Drawing.Point(18, 217)
-        Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(291, 126)
-        Me.GroupBox7.TabIndex = 303
-        Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "物理参数"
-        '
-        'txtLeakEvaporationTb
-        '
-        Me.txtLeakEvaporationTb.DataType = Chart.DataType.DataDouble
-        Me.txtLeakEvaporationTb.ForeColor = System.Drawing.Color.Blue
-        Me.txtLeakEvaporationTb.Location = New System.Drawing.Point(182, 89)
-        Me.txtLeakEvaporationTb.MaxValue = 0
-        Me.txtLeakEvaporationTb.MinValue = 0
-        Me.txtLeakEvaporationTb.Name = "txtLeakEvaporationTb"
-        Me.txtLeakEvaporationTb.Size = New System.Drawing.Size(100, 21)
-        Me.txtLeakEvaporationTb.TabIndex = 46
-        Me.txtLeakEvaporationTb.Text = "0"
-        Me.txtLeakEvaporationTb.Value = 0
-        '
-        'txtPg
-        '
-        Me.txtPg.DataType = Chart.DataType.DataDouble
-        Me.txtPg.ForeColor = System.Drawing.Color.Blue
-        Me.txtPg.Location = New System.Drawing.Point(182, 68)
-        Me.txtPg.MaxValue = 0
-        Me.txtPg.MinValue = 0
-        Me.txtPg.Name = "txtPg"
-        Me.txtPg.Size = New System.Drawing.Size(100, 21)
-        Me.txtPg.TabIndex = 45
-        Me.txtPg.Text = "0"
-        Me.txtPg.Value = 0
-        '
-        'txtLeakLiquidPl
-        '
-        Me.txtLeakLiquidPl.DataType = Chart.DataType.DataDouble
-        Me.txtLeakLiquidPl.ForeColor = System.Drawing.Color.Blue
-        Me.txtLeakLiquidPl.Location = New System.Drawing.Point(182, 47)
-        Me.txtLeakLiquidPl.MaxValue = 0
-        Me.txtLeakLiquidPl.MinValue = 0
-        Me.txtLeakLiquidPl.Name = "txtLeakLiquidPl"
-        Me.txtLeakLiquidPl.Size = New System.Drawing.Size(100, 21)
-        Me.txtLeakLiquidPl.TabIndex = 44
-        Me.txtLeakLiquidPl.Text = "0"
-        Me.txtLeakLiquidPl.Value = 0
-        '
-        'txtLeakM
-        '
-        Me.txtLeakM.DataType = Chart.DataType.DataDouble
-        Me.txtLeakM.ForeColor = System.Drawing.Color.Blue
-        Me.txtLeakM.Location = New System.Drawing.Point(182, 26)
-        Me.txtLeakM.MaxValue = 1000
-        Me.txtLeakM.MinValue = 0
-        Me.txtLeakM.Name = "txtLeakM"
-        Me.txtLeakM.Size = New System.Drawing.Size(100, 21)
-        Me.txtLeakM.TabIndex = 43
-        Me.txtLeakM.Text = "0"
-        Me.txtLeakM.Value = 0
-        '
-        'Label41
-        '
-        Me.Label41.AutoSize = True
-        Me.Label41.BackColor = System.Drawing.Color.Transparent
-        Me.Label41.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label41.ForeColor = System.Drawing.Color.Blue
-        Me.Label41.Location = New System.Drawing.Point(63, 29)
-        Me.Label41.Name = "Label41"
-        Me.Label41.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label41.Size = New System.Drawing.Size(113, 12)
-        Me.Label41.TabIndex = 40
-        Me.Label41.Text = "摩尔质量M[kg/mol]:"
-        Me.Label41.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.BackColor = System.Drawing.Color.Transparent
-        Me.Label16.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label16.ForeColor = System.Drawing.Color.Blue
-        Me.Label16.Location = New System.Drawing.Point(51, 71)
-        Me.Label16.Name = "Label16"
-        Me.Label16.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label16.Size = New System.Drawing.Size(125, 12)
-        Me.Label16.TabIndex = 39
-        Me.Label16.Text = "蒸气密度ρg[kg/m^3]:"
-        Me.Label16.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.BackColor = System.Drawing.Color.Transparent
-        Me.Label23.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label23.ForeColor = System.Drawing.Color.Blue
-        Me.Label23.Location = New System.Drawing.Point(51, 50)
-        Me.Label23.Name = "Label23"
-        Me.Label23.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label23.Size = New System.Drawing.Size(125, 12)
-        Me.Label23.TabIndex = 41
-        Me.Label23.Text = "液体密度ρl[kg/m^3]:"
-        Me.Label23.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'Label26
-        '
-        Me.Label26.AutoSize = True
-        Me.Label26.BackColor = System.Drawing.Color.Transparent
-        Me.Label26.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label26.ForeColor = System.Drawing.Color.Blue
-        Me.Label26.Location = New System.Drawing.Point(51, 92)
-        Me.Label26.Name = "Label26"
-        Me.Label26.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label26.Size = New System.Drawing.Size(125, 12)
-        Me.Label26.TabIndex = 42
-        Me.Label26.Text = "液体常压沸点 Tb[℃]:"
-        Me.Label26.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.Label12)
-        Me.GroupBox3.Controls.Add(Me.txtAntoineC)
-        Me.GroupBox3.Controls.Add(Me.Label14)
-        Me.GroupBox3.Controls.Add(Me.txtAntoineB)
-        Me.GroupBox3.Controls.Add(Me.Label15)
-        Me.GroupBox3.Controls.Add(Me.txtAntoineA)
-        Me.GroupBox3.Location = New System.Drawing.Point(18, 470)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(291, 58)
-        Me.GroupBox3.TabIndex = 309
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "安托因参数"
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(6, 28)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(17, 12)
-        Me.Label12.TabIndex = 288
-        Me.Label12.Text = "A:"
-        '
-        'txtAntoineC
-        '
-        Me.txtAntoineC.DataType = Chart.DataType.DataDouble
-        Me.txtAntoineC.Location = New System.Drawing.Point(215, 25)
-        Me.txtAntoineC.MaxValue = 0
-        Me.txtAntoineC.MinValue = 0
-        Me.txtAntoineC.Name = "txtAntoineC"
-        Me.txtAntoineC.Size = New System.Drawing.Size(67, 21)
-        Me.txtAntoineC.TabIndex = 293
-        Me.txtAntoineC.Text = "0"
-        Me.txtAntoineC.Value = 0
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(101, 28)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(17, 12)
-        Me.Label14.TabIndex = 289
-        Me.Label14.Text = "B:"
-        '
-        'txtAntoineB
-        '
-        Me.txtAntoineB.DataType = Chart.DataType.DataDouble
-        Me.txtAntoineB.Location = New System.Drawing.Point(119, 25)
-        Me.txtAntoineB.MaxValue = 0
-        Me.txtAntoineB.MinValue = 0
-        Me.txtAntoineB.Name = "txtAntoineB"
-        Me.txtAntoineB.Size = New System.Drawing.Size(67, 21)
-        Me.txtAntoineB.TabIndex = 292
-        Me.txtAntoineB.Text = "0"
-        Me.txtAntoineB.Value = 0
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(192, 28)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(17, 12)
-        Me.Label15.TabIndex = 290
-        Me.Label15.Text = "C:"
-        '
-        'txtAntoineA
-        '
-        Me.txtAntoineA.DataType = Chart.DataType.DataDouble
-        Me.txtAntoineA.Location = New System.Drawing.Point(29, 25)
-        Me.txtAntoineA.MaxValue = 0
-        Me.txtAntoineA.MinValue = 0
-        Me.txtAntoineA.Name = "txtAntoineA"
-        Me.txtAntoineA.Size = New System.Drawing.Size(67, 21)
-        Me.txtAntoineA.TabIndex = 291
-        Me.txtAntoineA.Text = "0"
-        Me.txtAntoineA.Value = 0
-        '
-        'GroupBox8
-        '
-        Me.GroupBox8.Controls.Add(Me.txtLeakGasK)
-        Me.GroupBox8.Controls.Add(Me.Label40)
-        Me.GroupBox8.Controls.Add(Me.txtCpg)
-        Me.GroupBox8.Controls.Add(Me.txtLeakLiquidH)
-        Me.GroupBox8.Controls.Add(Me.Label17)
-        Me.GroupBox8.Controls.Add(Me.txtLeakLiquidCP)
-        Me.GroupBox8.Controls.Add(Me.text5)
-        Me.GroupBox8.Controls.Add(Me.Label24)
-        Me.GroupBox8.Location = New System.Drawing.Point(19, 349)
-        Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(290, 115)
-        Me.GroupBox8.TabIndex = 304
-        Me.GroupBox8.TabStop = False
-        Me.GroupBox8.Text = "物化参数"
-        '
-        'txtLeakGasK
-        '
-        Me.txtLeakGasK.DataType = Chart.DataType.DataDouble
-        Me.txtLeakGasK.ForeColor = System.Drawing.Color.Blue
-        Me.txtLeakGasK.Location = New System.Drawing.Point(181, 67)
-        Me.txtLeakGasK.MaxValue = 0
-        Me.txtLeakGasK.MinValue = 0
-        Me.txtLeakGasK.Name = "txtLeakGasK"
-        Me.txtLeakGasK.Size = New System.Drawing.Size(100, 21)
-        Me.txtLeakGasK.TabIndex = 8
-        Me.txtLeakGasK.Text = "0"
-        Me.txtLeakGasK.Value = 0
-        '
-        'Label40
-        '
-        Me.Label40.AutoSize = True
-        Me.Label40.BackColor = System.Drawing.Color.Transparent
-        Me.Label40.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label40.ForeColor = System.Drawing.Color.Blue
-        Me.Label40.Location = New System.Drawing.Point(74, 70)
-        Me.Label40.Name = "Label40"
-        Me.Label40.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label40.Size = New System.Drawing.Size(101, 12)
-        Me.Label40.TabIndex = 5
-        Me.Label40.Text = "气体绝热指数 κ:"
-        Me.Label40.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'txtCpg
-        '
-        Me.txtCpg.DataType = Chart.DataType.DataDouble
-        Me.txtCpg.ForeColor = System.Drawing.Color.Blue
-        Me.txtCpg.Location = New System.Drawing.Point(181, 88)
-        Me.txtCpg.MaxValue = 1.0E+17
-        Me.txtCpg.MinValue = 0
-        Me.txtCpg.Name = "txtCpg"
-        Me.txtCpg.Size = New System.Drawing.Size(100, 21)
-        Me.txtCpg.TabIndex = 281
-        Me.txtCpg.Text = "0"
-        Me.txtCpg.Value = 0
-        '
-        'txtLeakLiquidH
-        '
-        Me.txtLeakLiquidH.DataType = Chart.DataType.DataDouble
-        Me.txtLeakLiquidH.ForeColor = System.Drawing.Color.Blue
-        Me.txtLeakLiquidH.Location = New System.Drawing.Point(181, 46)
-        Me.txtLeakLiquidH.MaxValue = 0
-        Me.txtLeakLiquidH.MinValue = 0
-        Me.txtLeakLiquidH.Name = "txtLeakLiquidH"
-        Me.txtLeakLiquidH.Size = New System.Drawing.Size(100, 21)
-        Me.txtLeakLiquidH.TabIndex = 10
-        Me.txtLeakLiquidH.Text = "0"
-        Me.txtLeakLiquidH.Value = 0
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.ForeColor = System.Drawing.Color.Blue
-        Me.Label17.Location = New System.Drawing.Point(32, 91)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(143, 12)
-        Me.Label17.TabIndex = 280
-        Me.Label17.Text = "气体的定压比热[J/K.kg]:"
-        '
-        'txtLeakLiquidCP
-        '
-        Me.txtLeakLiquidCP.DataType = Chart.DataType.DataDouble
-        Me.txtLeakLiquidCP.ForeColor = System.Drawing.Color.Blue
-        Me.txtLeakLiquidCP.Location = New System.Drawing.Point(181, 25)
-        Me.txtLeakLiquidCP.MaxValue = 0
-        Me.txtLeakLiquidCP.MinValue = 0
-        Me.txtLeakLiquidCP.Name = "txtLeakLiquidCP"
-        Me.txtLeakLiquidCP.Size = New System.Drawing.Size(100, 21)
-        Me.txtLeakLiquidCP.TabIndex = 9
-        Me.txtLeakLiquidCP.Text = "0"
-        Me.txtLeakLiquidCP.Value = 0
-        '
-        'text5
-        '
-        Me.text5.AutoSize = True
-        Me.text5.BackColor = System.Drawing.Color.Transparent
-        Me.text5.Cursor = System.Windows.Forms.Cursors.Default
-        Me.text5.ForeColor = System.Drawing.Color.Blue
-        Me.text5.Location = New System.Drawing.Point(14, 28)
-        Me.text5.Name = "text5"
-        Me.text5.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.text5.Size = New System.Drawing.Size(161, 12)
-        Me.text5.TabIndex = 6
-        Me.text5.Text = "液体定压比热CP[J/(kg·K)]:"
-        Me.text5.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'Label24
-        '
-        Me.Label24.AutoSize = True
-        Me.Label24.BackColor = System.Drawing.Color.Transparent
-        Me.Label24.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label24.ForeColor = System.Drawing.Color.Blue
-        Me.Label24.Location = New System.Drawing.Point(50, 49)
-        Me.Label24.Name = "Label24"
-        Me.Label24.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label24.Size = New System.Drawing.Size(125, 12)
-        Me.Label24.TabIndex = 7
-        Me.Label24.Text = "液体的气化热H[J/kg]:"
-        Me.Label24.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
         'frmLeakSource
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(704, 611)
-        Me.Controls.Add(Me.TabControl1)
+        Me.ClientSize = New System.Drawing.Size(607, 521)
+        Me.Controls.Add(Me.Label67)
+        Me.Controls.Add(Me.txtProbability)
+        Me.Controls.Add(Me.GroupBox11)
         Me.Controls.Add(Me.Label11)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.cmbLeakType)
+        Me.Controls.Add(Me.GroupBox6)
+        Me.Controls.Add(Me.LabelS)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.txtThickness)
+        Me.Controls.Add(Me.txtLeakSourceName)
+        Me.Controls.Add(Me.txtS_S)
+        Me.Controls.Add(Me.m_Cancel)
+        Me.Controls.Add(Me.Label29)
+        Me.Controls.Add(Me.GroupBox12)
+        Me.Controls.Add(Me.cbmSourceType)
+        Me.Controls.Add(Me.m_OK)
+        Me.Controls.Add(Me.GroupBox5)
+        Me.Controls.Add(Me.txtQ0)
+        Me.Controls.Add(Me.Label49)
+        Me.Controls.Add(Me.lblQ8)
         Me.Name = "frmLeakSource"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "事故泄漏源项"
@@ -1625,21 +927,6 @@ Partial Class frmLeakSource
         Me.GroupBox5.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        Me.TabControl1.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        CType(Me.EFlexHurt, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox7.ResumeLayout(False)
-        Me.GroupBox7.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1707,58 +994,4 @@ Partial Class frmLeakSource
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents txtProbability As Chart.CText
-    Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
-    Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
-    Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
-    Public WithEvents ListView1 As System.Windows.Forms.ListView
-    Public WithEvents _ListView1_ColumnHeader_1 As System.Windows.Forms.ColumnHeader
-    Public WithEvents _ListView1_ColumnHeader_2 As System.Windows.Forms.ColumnHeader
-    Public WithEvents _ListView1_ColumnHeader_3 As System.Windows.Forms.ColumnHeader
-    Public WithEvents _ListView1_ColumnHeader_4 As System.Windows.Forms.ColumnHeader
-    Public WithEvents _ListView1_ColumnHeader_5 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents cmbName As System.Windows.Forms.ComboBox
-    Public WithEvents Command1 As System.Windows.Forms.Button
-    Public WithEvents Command2 As System.Windows.Forms.Button
-    Friend WithEvents Label43 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents txtPrn As Chart.CText
-    Friend WithEvents txtPrB As Chart.CText
-    Friend WithEvents txtPrA As Chart.CText
-    Friend WithEvents Label100 As System.Windows.Forms.Label
-    Friend WithEvents Label70 As System.Windows.Forms.Label
-    Friend WithEvents Label60 As System.Windows.Forms.Label
-    Friend WithEvents Cancel_Button As System.Windows.Forms.Button
-    Friend WithEvents OK_Button As System.Windows.Forms.Button
-    Public WithEvents Label13 As System.Windows.Forms.Label
-    Public WithEvents cmbSearchType As System.Windows.Forms.ComboBox
-    Public WithEvents cmdSearch As System.Windows.Forms.Button
-    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
-    Friend WithEvents EFlexHurt As Chart.EFlex
-    Friend WithEvents cmdDelHurt As System.Windows.Forms.Button
-    Friend WithEvents cmdAddHurt As System.Windows.Forms.Button
-    Friend WithEvents GroupBox7 As System.Windows.Forms.GroupBox
-    Friend WithEvents txtLeakEvaporationTb As Chart.CText
-    Friend WithEvents txtPg As Chart.CText
-    Friend WithEvents txtLeakLiquidPl As Chart.CText
-    Friend WithEvents txtLeakM As Chart.CText
-    Public WithEvents Label41 As System.Windows.Forms.Label
-    Public WithEvents Label16 As System.Windows.Forms.Label
-    Public WithEvents Label23 As System.Windows.Forms.Label
-    Public WithEvents Label26 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents txtAntoineC As Chart.CText
-    Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents txtAntoineB As Chart.CText
-    Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents txtAntoineA As Chart.CText
-    Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
-    Friend WithEvents txtLeakGasK As Chart.CText
-    Public WithEvents Label40 As System.Windows.Forms.Label
-    Friend WithEvents txtCpg As Chart.CText
-    Friend WithEvents txtLeakLiquidH As Chart.CText
-    Friend WithEvents Label17 As System.Windows.Forms.Label
-    Friend WithEvents txtLeakLiquidCP As Chart.CText
-    Public WithEvents text5 As System.Windows.Forms.Label
-    Public WithEvents Label24 As System.Windows.Forms.Label
 End Class

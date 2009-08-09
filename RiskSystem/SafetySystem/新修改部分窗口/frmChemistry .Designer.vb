@@ -74,13 +74,13 @@ Partial Class frmChemistry
         Me.Label4 = New System.Windows.Forms.Label
         Me.Label7 = New System.Windows.Forms.Label
         Me.Label8 = New System.Windows.Forms.Label
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.GroupATI = New System.Windows.Forms.GroupBox
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         CType(Me.EFlexHurt, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.GroupATI.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox5
@@ -243,7 +243,7 @@ Partial Class frmChemistry
         Me.GroupBox1.Size = New System.Drawing.Size(290, 115)
         Me.GroupBox1.TabIndex = 279
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "物化参数"
+        Me.GroupBox1.Text = "物化参数(与泄漏类型有关)"
         '
         'txtLeakGasK
         '
@@ -660,20 +660,20 @@ Partial Class frmChemistry
         Me.Label8.TabIndex = 288
         Me.Label8.Text = "A:"
         '
-        'GroupBox2
+        'GroupATI
         '
-        Me.GroupBox2.Controls.Add(Me.Label8)
-        Me.GroupBox2.Controls.Add(Me.txtAntoineC)
-        Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Controls.Add(Me.txtAntoineB)
-        Me.GroupBox2.Controls.Add(Me.Label4)
-        Me.GroupBox2.Controls.Add(Me.txtAntoineA)
-        Me.GroupBox2.Location = New System.Drawing.Point(13, 469)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(291, 58)
-        Me.GroupBox2.TabIndex = 294
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "安托因参数"
+        Me.GroupATI.Controls.Add(Me.Label8)
+        Me.GroupATI.Controls.Add(Me.txtAntoineC)
+        Me.GroupATI.Controls.Add(Me.Label7)
+        Me.GroupATI.Controls.Add(Me.txtAntoineB)
+        Me.GroupATI.Controls.Add(Me.Label4)
+        Me.GroupATI.Controls.Add(Me.txtAntoineA)
+        Me.GroupATI.Location = New System.Drawing.Point(13, 469)
+        Me.GroupATI.Name = "GroupATI"
+        Me.GroupATI.Size = New System.Drawing.Size(291, 58)
+        Me.GroupATI.TabIndex = 294
+        Me.GroupATI.TabStop = False
+        Me.GroupATI.Text = "安托因参数(与泄漏类型有关)"
         '
         'frmChemistry
         '
@@ -681,7 +681,7 @@ Partial Class frmChemistry
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(687, 546)
         Me.Controls.Add(Me.ListView1)
-        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupATI)
         Me.Controls.Add(Me.cmbName)
         Me.Controls.Add(Me.Command1)
         Me.Controls.Add(Me.cmbSearchType)
@@ -706,8 +706,8 @@ Partial Class frmChemistry
         Me.GroupBox1.PerformLayout()
         Me.GroupBox7.ResumeLayout(False)
         Me.GroupBox7.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        Me.GroupATI.ResumeLayout(False)
+        Me.GroupATI.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -762,5 +762,5 @@ Partial Class frmChemistry
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupATI As System.Windows.Forms.GroupBox
 End Class
