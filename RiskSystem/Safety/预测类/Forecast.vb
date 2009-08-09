@@ -1,7 +1,7 @@
 ﻿<Serializable()> Public Class Forecast
 #Region "属性"
    
-    Private m_IsCalVane As Boolean = False
+    Private m_IsCalVane As Boolean = True
     Private m_IsCalGrid As Boolean = False
     Private m_IsCalCare As Boolean = True
 

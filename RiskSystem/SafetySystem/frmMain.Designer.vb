@@ -82,6 +82,7 @@ Partial Class frmMain
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.注册RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStrip = New System.Windows.Forms.ToolStrip
+        Me.新建NToolStripButton = New System.Windows.Forms.ToolStripButton
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton
         Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
@@ -107,7 +108,6 @@ Partial Class frmMain
         Me.DockPanel = New WeifenLuo.WinFormsUI.DockPanel
         Me.BackgroundWorkerAermod = New System.ComponentModel.BackgroundWorker
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.新建NToolStripButton = New System.Windows.Forms.ToolStripButton
         Me.MenuStrip.SuspendLayout()
         Me.ToolStrip.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
@@ -115,7 +115,7 @@ Partial Class frmMain
         '
         'MenuStrip
         '
-        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileMenu, Me.ViewMenu, Me.mnuSourceItemLeak, Me.设置SToolStripMenuItem, Me.执行ToolStripMenuItem, Me.ToolsMenu, Me.HelpMenu})
+        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileMenu, Me.ViewMenu, Me.mnuSourceItemLeak, Me.ToolsMenu, Me.设置SToolStripMenuItem, Me.执行ToolStripMenuItem, Me.HelpMenu})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
         Me.MenuStrip.Size = New System.Drawing.Size(802, 24)
@@ -518,6 +518,15 @@ Partial Class frmMain
         Me.ToolStrip.TabIndex = 6
         Me.ToolStrip.Text = "指针"
         '
+        '新建NToolStripButton
+        '
+        Me.新建NToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.新建NToolStripButton.Image = CType(resources.GetObject("新建NToolStripButton.Image"), System.Drawing.Image)
+        Me.新建NToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.新建NToolStripButton.Name = "新建NToolStripButton"
+        Me.新建NToolStripButton.Size = New System.Drawing.Size(23, 22)
+        Me.新建NToolStripButton.Text = "新建(&N)"
+        '
         'OpenToolStripButton
         '
         Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
@@ -689,15 +698,6 @@ Partial Class frmMain
         'Timer1
         '
         Me.Timer1.Interval = 1000
-        '
-        '新建NToolStripButton
-        '
-        Me.新建NToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.新建NToolStripButton.Image = CType(resources.GetObject("新建NToolStripButton.Image"), System.Drawing.Image)
-        Me.新建NToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.新建NToolStripButton.Name = "新建NToolStripButton"
-        Me.新建NToolStripButton.Size = New System.Drawing.Size(23, 22)
-        Me.新建NToolStripButton.Text = "新建(&N)"
         '
         'frmMain
         '

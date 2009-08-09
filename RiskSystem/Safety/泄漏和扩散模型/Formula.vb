@@ -1134,10 +1134,10 @@ Public Module Formula
                             '计算相应取样时间的扩散参数
                             ay = aySamplingTime(0.5, SamplingTime, ay)
                             ax = ay
+                            '点源修正后的扩散参数
+                            D = Math.Sqrt(MultiSource.Si(Ni + 1) / PI) * 2
+                            ay = ay + D / 4.3  'y轴扩散参数
                         End If
-                        '点源修正后的扩散参数
-                        D = Math.Sqrt(MultiSource.Si(Ni + 1) / PI) * 2
-                        ay = ay + D / 4.3  'y轴扩散参数
                     End If
                 Else
 
@@ -1169,10 +1169,10 @@ Public Module Formula
                             '计算相应取样时间的扩散参数
                             ay = aySamplingTime(0.5, SamplingTime, ay)
                             ax = ay
+                            '点源修正后的扩散参数
+                            D = Math.Sqrt(MultiSource.Si(Ni + 1) / PI) * 2
+                            ay = ay + D / 4.3  'y轴扩散参数
                         End If
-                        '点源修正后的扩散参数
-                        D = Math.Sqrt(MultiSource.Si(Ni + 1) / PI) * 2
-                        ay = ay + D / 4.3  'y轴扩散参数
                     End If
                 End If
                 '叠加
