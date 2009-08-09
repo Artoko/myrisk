@@ -28,8 +28,6 @@ Partial Class frmDrawContour
         Me.cmbMet = New System.Windows.Forms.ToolStripComboBox
         Me.ToolStripLabel3 = New System.Windows.Forms.ToolStripLabel
         Me.cmbTime = New System.Windows.Forms.ToolStripComboBox
-        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel
-        Me.cmbNum = New System.Windows.Forms.ToolStripComboBox
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -46,7 +44,7 @@ Partial Class frmDrawContour
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.cmbRusult, Me.ToolStripLabel1, Me.cmbMet, Me.ToolStripLabel3, Me.cmbTime, Me.ToolStripLabel2, Me.cmbNum})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.cmbRusult, Me.ToolStripLabel1, Me.cmbMet, Me.ToolStripLabel3, Me.cmbTime})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(1008, 25)
@@ -89,19 +87,6 @@ Partial Class frmDrawContour
         Me.cmbTime.Name = "cmbTime"
         Me.cmbTime.Size = New System.Drawing.Size(121, 25)
         '
-        'ToolStripLabel2
-        '
-        Me.ToolStripLabel2.Name = "ToolStripLabel2"
-        Me.ToolStripLabel2.Size = New System.Drawing.Size(59, 22)
-        Me.ToolStripLabel2.Text = "小数位数:"
-        '
-        'cmbNum
-        '
-        Me.cmbNum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbNum.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
-        Me.cmbNum.Name = "cmbNum"
-        Me.cmbNum.Size = New System.Drawing.Size(121, 25)
-        '
         'frmDrawContour
         '
         Me.BackColor = System.Drawing.Color.White
@@ -125,7 +110,5 @@ Partial Class frmDrawContour
     Friend WithEvents cmbMet As System.Windows.Forms.ToolStripComboBox
     Friend WithEvents ToolStripLabel3 As System.Windows.Forms.ToolStripLabel
     Friend WithEvents cmbTime As System.Windows.Forms.ToolStripComboBox
-    Friend WithEvents ToolStripLabel2 As System.Windows.Forms.ToolStripLabel
-    Friend WithEvents cmbNum As System.Windows.Forms.ToolStripComboBox
 
 End Class

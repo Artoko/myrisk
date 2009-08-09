@@ -69,6 +69,7 @@ Partial Class frmOutOption
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.ForeColor = System.Drawing.Color.Red
         Me.CheckBox1.Location = New System.Drawing.Point(49, 20)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(156, 16)
@@ -79,6 +80,7 @@ Partial Class frmOutOption
         'txtInhalationTime
         '
         Me.txtInhalationTime.DataType = Chart.DataType.DataDouble
+        Me.txtInhalationTime.ForeColor = System.Drawing.Color.Red
         Me.txtInhalationTime.Location = New System.Drawing.Point(141, 64)
         Me.txtInhalationTime.MaxValue = 999999999
         Me.txtInhalationTime.MinValue = 0
@@ -91,6 +93,7 @@ Partial Class frmOutOption
         'Label6111
         '
         Me.Label6111.AutoSize = True
+        Me.Label6111.ForeColor = System.Drawing.Color.Red
         Me.Label6111.Location = New System.Drawing.Point(46, 67)
         Me.Label6111.Name = "Label6111"
         Me.Label6111.Size = New System.Drawing.Size(89, 12)
@@ -100,6 +103,7 @@ Partial Class frmOutOption
         'chkSlip
         '
         Me.chkSlip.AutoSize = True
+        Me.chkSlip.ForeColor = System.Drawing.Color.Red
         Me.chkSlip.Location = New System.Drawing.Point(49, 42)
         Me.chkSlip.Name = "chkSlip"
         Me.chkSlip.Size = New System.Drawing.Size(192, 16)
@@ -150,7 +154,7 @@ Partial Class frmOutOption
         Me.Label31.AutoSize = True
         Me.Label31.BackColor = System.Drawing.Color.Transparent
         Me.Label31.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Label31.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Label31.ForeColor = System.Drawing.Color.Red
         Me.Label31.Location = New System.Drawing.Point(14, 23)
         Me.Label31.Name = "Label31"
         Me.Label31.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -162,6 +166,7 @@ Partial Class frmOutOption
         'txtIntervalTime
         '
         Me.txtIntervalTime.DataType = Chart.DataType.DataInteger
+        Me.txtIntervalTime.ForeColor = System.Drawing.Color.Red
         Me.txtIntervalTime.Location = New System.Drawing.Point(122, 54)
         Me.txtIntervalTime.MaxValue = 60
         Me.txtIntervalTime.MinValue = 1
@@ -209,6 +214,7 @@ Partial Class frmOutOption
         'LabelIntervalTime
         '
         Me.LabelIntervalTime.AutoSize = True
+        Me.LabelIntervalTime.ForeColor = System.Drawing.Color.Red
         Me.LabelIntervalTime.Location = New System.Drawing.Point(15, 57)
         Me.LabelIntervalTime.Name = "LabelIntervalTime"
         Me.LabelIntervalTime.Size = New System.Drawing.Size(101, 12)
@@ -218,6 +224,7 @@ Partial Class frmOutOption
         'txtSamplingTime
         '
         Me.txtSamplingTime.DataType = Chart.DataType.DataDouble
+        Me.txtSamplingTime.ForeColor = System.Drawing.Color.Red
         Me.txtSamplingTime.Location = New System.Drawing.Point(97, 20)
         Me.txtSamplingTime.MaxValue = 0
         Me.txtSamplingTime.MinValue = 0
@@ -377,7 +384,6 @@ Partial Class frmOutOption
     Friend WithEvents Label6111 As System.Windows.Forms.Label
     Friend WithEvents chkSlip As System.Windows.Forms.CheckBox
     Public WithEvents cmbGroundCharacter As System.Windows.Forms.ComboBox
-    Friend WithEvents txtForeCount As Chart.CText
     Public WithEvents Label48 As System.Windows.Forms.Label
     Public WithEvents Label31 As System.Windows.Forms.Label
     Friend WithEvents txtIntervalTime As Chart.CText
@@ -397,4 +403,5 @@ Partial Class frmOutOption
     Friend WithEvents chkInstantaneous As System.Windows.Forms.CheckBox
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents txtForeCount As Chart.CText
 End Class

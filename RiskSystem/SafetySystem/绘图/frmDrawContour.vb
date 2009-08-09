@@ -831,8 +831,8 @@ Public Class frmDrawContour
             ReDim .ArrayHurtName(-1)
             '设置事故值
             ReDim .ArrayHurtValue(-1)
-            ReDim .ContourNames(-1)
-            ReDim .ContourValue(-1)
+            ReDim .ContourPannel.Contours.ContourValueSetting.ContourNames(-1)
+            ReDim .ContourPannel.Contours.ContourValueSetting.ContourValue(-1)
 
         End With
         '重新计算等值线
@@ -848,27 +848,19 @@ Public Class frmDrawContour
     ''' <remarks></remarks>
     Private Sub RefreshResult()
         If cmbRusult.Text = "瞬时浓度" Then
-            If cmbMet.SelectedIndex >= 0 And cmbTime.SelectedIndex >= 0 And cmbNum.SelectedIndex >= 0 Then
+            If cmbMet.SelectedIndex >= 0 And cmbTime.SelectedIndex >= 0 Then
+                '设置等值线的网格点
                 For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                     For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
                         Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.InstantaneousGridC(cmbMet.SelectedIndex, cmbTime.SelectedIndex, k, l)
                     Next
                 Next
                 '设置等值线名称和值的数组
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
                 For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                    Me.ContourPaint1.ContourPaintSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
-                    Me.ContourPaint1.ContourPaintSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
-                Next
-                For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
-                    For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        For k1 As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourValue.Length - 1
-                            If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourValue(k1) Then
-                                Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourValue(k1) + 0.000001
-                            End If
-                        Next
-                    Next
+                    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
+                    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
                 Next
                 Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
                 Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
@@ -902,17 +894,17 @@ Public Class frmDrawContour
                     Next
                 Next
                 '设置等值线名称和值的数组
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
                 For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                    Me.ContourPaint1.ContourPaintSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
-                    Me.ContourPaint1.ContourPaintSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
+                    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
+                    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
                 Next
                 For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                     For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        For k1 As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourValue.Length - 1
-                            If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourValue(k1) Then
-                                Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourValue(k1) + 0.000001
+                        For k1 As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
+                            If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) Then
+                                Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) + 0.000001
                             End If
                         Next
                     Next
@@ -949,24 +941,15 @@ Public Class frmDrawContour
                     Next
                 Next
                 '设置等值线名称和值的数组
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourNames(3 - 1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourValue(3 - 1)
-                Me.ContourPaint1.ContourPaintSetting.ContourNames(0) = "90%"
-                Me.ContourPaint1.ContourPaintSetting.ContourValue(0) = 90
-                Me.ContourPaint1.ContourPaintSetting.ContourNames(1) = "50%"
-                Me.ContourPaint1.ContourPaintSetting.ContourValue(1) = 50
-                Me.ContourPaint1.ContourPaintSetting.ContourNames(2) = "10%"
-                Me.ContourPaint1.ContourPaintSetting.ContourValue(2) = 10
+                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(3 - 1)
+                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(3 - 1)
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(0) = "90%"
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(0) = 90
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(1) = "50%"
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(1) = 50
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(2) = "10%"
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(2) = 10
 
-                For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
-                    For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        For k1 As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourValue.Length - 1
-                            If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourValue(k1) Then
-                                Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourValue(k1) + 0.000001
-                            End If
-                        Next
-                    Next
-                Next
                 Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
                 Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
                 '设置伤害范围
@@ -999,22 +982,13 @@ Public Class frmDrawContour
                 Next
             Next
             '设置等值线名称和值的数组
-            ReDim Me.ContourPaint1.ContourPaintSetting.ContourNames(6 - 1)
-            ReDim Me.ContourPaint1.ContourPaintSetting.ContourValue(6 - 1)
-            For i As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourValue.Length - 1
-                Me.ContourPaint1.ContourPaintSetting.ContourNames(i) = (1 / (10 ^ (i + 4))).ToString
-                Me.ContourPaint1.ContourPaintSetting.ContourValue(i) = (1 / (10 ^ (i + 4)))
+            ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(6 - 1)
+            ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(6 - 1)
+            For i As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(i) = (1 / (10 ^ (i + 4))).ToString
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(i) = (1 / (10 ^ (i + 4)))
             Next
 
-            For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
-                For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                    For k1 As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourValue.Length - 1
-                        If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourValue(k1) Then
-                            Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourValue(k1) + 1.0E-20
-                        End If
-                    Next
-                Next
-            Next
             Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
             Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
             '设置伤害范围
@@ -1091,7 +1065,7 @@ Public Class frmDrawContour
 
     End Sub
 
-    Private Sub cmbNum_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbNum.SelectedIndexChanged
+    Private Sub cmbNum_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs)
         RefreshResult() ' 根据用户选择的下拉列表绘图
 
     End Sub
@@ -1099,4 +1073,7 @@ Public Class frmDrawContour
 
 
 
+    Private Sub cmbRusult_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbRusult.Click
+
+    End Sub
 End Class
