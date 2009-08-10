@@ -2,7 +2,7 @@
 ''' 工程类，用于管理所有的工程
 ''' </summary>
 ''' <remarks></remarks>
-Public Class Project
+<Serializable()> Public Class Project
     ''' <summary>
     ''' 工程类型：0泄漏预测项目，1为火灾爆炸项目
     ''' </summary>

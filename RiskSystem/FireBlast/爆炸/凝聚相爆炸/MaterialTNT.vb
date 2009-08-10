@@ -2,9 +2,9 @@
 ''' TNT当量法类
 ''' </summary>
 ''' <remarks></remarks>
-Public Class MaterialTNT
+<Serializable()> Public Class MaterialTNT
     Inherits BaseBoo
-    
+
     ''' <summary>
     ''' 表示用公式法计算死亡半径和财产损失半径
     ''' </summary>
@@ -15,7 +15,7 @@ Public Class MaterialTNT
     ''' </summary>
     ''' <remarks></remarks>
     Private m_P0 As Double = 101325 '
-    
+
     Private m_Wf As Double = 5000 '蒸汽云中燃料的总质量，kg
     Private m_Qf As Double = 60000000 '蒸汽的燃料热，J/kg
     Private m_QTNT As Double = 4.52 * 1000000 '——TNT的爆炸热，一般取4.52×106J/kg
@@ -35,7 +35,7 @@ Public Class MaterialTNT
             Me.m_P0 = value
         End Set
     End Property
-   
+
 
     ''' <summary>
     ''' 蒸汽云中燃料的总质量，kg

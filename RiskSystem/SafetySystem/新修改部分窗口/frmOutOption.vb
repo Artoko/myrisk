@@ -20,8 +20,7 @@
         txtForeInterval.Value = Me.m_Dis.Forecast.OutPut.ForeInterval
         txtForeCount.Value = Me.m_Dis.Forecast.OutPut.ForeCount
 
-        '滑移平均最大浓度时间。改为有毒物质吸入时间
-        chkSlip.Checked = Me.m_Dis.Forecast.OutPut.IsSlipChecked
+
         txtInhalationTime.Value = Me.m_Dis.Forecast.OutPut.InhalationTime
 
         '取样时间
@@ -32,7 +31,15 @@
         chkInstantaneous.Checked = Me.m_Dis.Forecast.OutPut.IsInstantaneous '瞬时浓度
         cmbModel_SelectedIndexChanged(sender, e)
         chkInstantaneous_CheckedChanged(sender, e)
-        Me.chkCharge.Checked = Me.m_Dis.Forecast.OutPut.IsCharge '毒性负荷法
+
+        Me.chkRisk.Checked = Me.m_Dis.Forecast.OutPut.IsRisk
+        '滑移平均最大浓度时间。改为有毒物质吸入时间
+        If Me.m_Dis.Forecast.OutPut.ChargeOrSlip = 0 Then
+            Me.RdioChargeOrSlip1.Checked = True
+        Else
+            Me.RdioChargeOrSlip1.Checked = False
+        End If
+        RdioChargeOrSlip1_CheckedChanged(sender, e)
     End Sub
 
     Private Sub txtForeStart_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtForeStart.Validating
@@ -77,11 +84,6 @@
         Me.m_Dis.Forecast.OutPut.InhalationTime = txtInhalationTime.Value
     End Sub
 
-    Private Sub chkSlip_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkSlip.CheckedChanged
-        txtInhalationTime.Enabled = chkSlip.Checked
-        Me.m_Dis.Forecast.OutPut.IsSlipChecked = chkSlip.Checked
-    End Sub
-
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Me.DialogResult = Windows.Forms.DialogResult.OK
         Me.Close()
@@ -102,8 +104,17 @@
         txtForeCount.Enabled = chkInstantaneous.Checked
     End Sub
 
-    
-    Private Sub chkCharge_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkCharge.CheckedChanged
-        Me.m_Dis.Forecast.OutPut.IsCharge = Me.chkCharge.Checked
+    Private Sub chkRisk_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRisk.CheckedChanged
+        Me.m_Dis.Forecast.OutPut.IsRisk = Me.chkRisk.Checked
+    End Sub
+
+    Private Sub RdioChargeOrSlip1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RdioChargeOrSlip1.CheckedChanged, RdioChargeOrSlip2.CheckedChanged
+        If RdioChargeOrSlip1.Checked Then
+            Me.m_Dis.Forecast.OutPut.ChargeOrSlip = 0
+            txtInhalationTime.Enabled = False
+        Else
+            Me.m_Dis.Forecast.OutPut.ChargeOrSlip = 1
+            txtInhalationTime.Enabled = True
+        End If
     End Sub
 End Class

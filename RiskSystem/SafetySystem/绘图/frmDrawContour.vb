@@ -705,14 +705,21 @@ Public Class frmDrawContour
 
         'End If
     End Sub
-    
     ''' <summary>
-    ''' 用关心点更新绘图
+    ''' 在绘图中设置污染源
     ''' </summary>
     ''' <remarks></remarks>
-    Private Sub RefreshCare()
-
-
+    Public Sub SetPolluteDraw()
+        '在绘图中设置污染源的位置和图形
+        Dim PolluteSymbols As DrawContour.PolluteSymbols = ContourPaint1.ContourPaintSetting.ContourPannel.Symbols.PolluteSymbol
+        ReDim PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0)
+        '点源
+        PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0) = New DrawContour.NameAndPoints
+        PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).Name = Project0.Dis0.IntialSource.LeakSourceName '设置点源
+        ReDim PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).ArrayPoint(0)
+        PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).ArrayPoint(0).x = Project0.Dis0.IntialSource.Coordinate.x
+        PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).ArrayPoint(0).y = Project0.Dis0.IntialSource.Coordinate.y
+        PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).Type = 0
         Dim CareSymbols As DrawContour.CareSymbols = ContourPaint1.ContourPaintSetting.ContourPannel.Symbols.CareSymbols
         If Project0.PType = 0 Then '泄漏事故
             ReDim CareSymbols.ArrayCareName(Project0.Dis0.Forecast.CareReceptor.Length - 1)
@@ -742,10 +749,14 @@ Public Class frmDrawContour
             CareSymbols.IntialCareSymbols() '初始化
         End If
 
-        Me.Refresh() '重绘
+
+        CareSymbols.IntialCareSymbols() '初始化
+
+        ContourPaint1.ContourPaintSetting.SetGrid(Project0.Dis0.Forecast.Grid.MinX, Project0.Dis0.Forecast.Grid.StepX, Project0.Dis0.Forecast.Grid.CountX _
+                                                  , Project0.Dis0.Forecast.Grid.MinY, Project0.Dis0.Forecast.Grid.StepY, Project0.Dis0.Forecast.Grid.CountY)
+
+        Refresh() '重绘       
     End Sub
-
-
 
     Private Sub ContourPaint1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ContourPaint1.MouseMove
         Dim myFrmMain As frmMain = My.Application.ApplicationContext.MainForm

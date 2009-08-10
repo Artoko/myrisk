@@ -351,16 +351,15 @@ Imports Sunmast.Hardware
                 ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridUpVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的上风向个数,从0开始，所以增加一个
             Next
             '网格点滑移平均最大浓度网格初始化
-            If Me.Forecast.OutPut.IsSlipChecked Then
-                ReDim Me.m_Results.MetResults(SN).Slip.HurtLengthSlip(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
-                ReDim Me.m_Results.MetResults(SN).Slip.GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
 
-                For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
-                    For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
-                        Me.m_Results.AllGridResult.SlipGrid(SN, j, k) = New Slippage
-                    Next
+            ReDim Me.m_Results.MetResults(SN).Slip.HurtLengthSlip(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
+            ReDim Me.m_Results.MetResults(SN).Slip.GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
+
+            For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
+                For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
+                    Me.m_Results.AllGridResult.SlipGrid(SN, j, k) = New Slippage
                 Next
-            End If
+            Next
         Next
         '设置总的计算量
         If Me.m_ForeCast.IsCalGrid = True Then
@@ -1716,6 +1715,9 @@ Imports Sunmast.Hardware
         Dim MaxY As Double
         Dim Result As Double '定义计算结果
         Dim i, j As Integer
+        '-------------------------------------------------------------
+        '计算瞬时浓度
+        '-------------------------------------------------------------
         If Me.m_ForeCast.OutPut.IsInstantaneous = True Then '计算瞬时浓度
             For nCount As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
                 '处理数组 
@@ -1764,122 +1766,128 @@ Imports Sunmast.Hardware
                 Me.m_Results.AllProgress += 1
             Next nCount
         End If
-
         '---------------------------------------------------------------
-        '计算毒性负荷
+        '计算风险值
         '---------------------------------------------------------------
-        MinX = Me.m_ForeCast.Grid.MinX  'X轴从坐标负数到正数开始计算浓度
-        MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) 'y轴从坐标正数到负数开始计算浓度
-        dblx = MinX
-        dbly = MaxY
-        dblz = Me.m_ForeCast.Grid.WGH
-        '开始按网格点来计算预测浓度--------------------------------------------------------------
-        '是绝对坐标系统，需转换坐标
-        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+        If Me.m_ForeCast.OutPut.ChargeOrSlip = 0 Then
+            '---------------------------------------------------------------
+            '计算毒性负荷
+            '---------------------------------------------------------------
+            MinX = Me.m_ForeCast.Grid.MinX  'X轴从坐标负数到正数开始计算浓度
+            MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) 'y轴从坐标正数到负数开始计算浓度
+            dblx = MinX
+            dbly = MaxY
+            dblz = Me.m_ForeCast.Grid.WGH
+            '开始按网格点来计算预测浓度--------------------------------------------------------------
+            '是绝对坐标系统，需转换坐标
+            dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+            dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
 
-        Dim nToxinConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
+            Dim nToxinConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
 
-        '以下开始按网格点计算浓度分布-------------------------------------------------------------------
-        For i = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
-            For j = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
-                '计算某一将网格点的最大浓度出现时间
-                Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 24 * 3600, dblx, dbly, dblz, 10)
-                If dblMax.MaxC > 1 Then
-                    Dim dblCnt As Double = ToxinCharge(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2) '用变步长求得毒性负荷的积分
-                    Me.m_Results.AllGridResult.Pr(Sn, j, i) = m_Chemical.PrA + m_Chemical.PrB * Math.Log(dblCnt) '计算概率值
+            '以下开始按网格点计算浓度分布-------------------------------------------------------------------
+            For i = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
+                For j = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
+                    '计算某一将网格点的最大浓度出现时间
+                    Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 24 * 3600, dblx, dbly, dblz, 10)
+                    If dblMax.MaxC > 1 Then
+                        Dim dblCnt As Double = ToxinCharge(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2) '用变步长求得毒性负荷的积分
+                        Me.m_Results.AllGridResult.Pr(Sn, j, i) = m_Chemical.PrA + m_Chemical.PrB * Math.Log(dblCnt) '计算概率值
 
-                    If Me.m_Results.AllGridResult.Pr(Sn, j, i) < 0 Then
-                        Me.m_Results.AllGridResult.Pr(Sn, j, i) = 0
-                    Else
-                        Me.m_Results.AllGridResult.D(Sn, j, i) = DiePr.NormalSchool(Me.m_Results.AllGridResult.Pr(Sn, j, i)) * 100 '计算死亡百分率%
-                        Me.m_Results.AllGridResult.PersonalRisk(j, i) += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100  '个人风险值叠加
-                        Me.m_Results.AllGridResult.ArrayRisk(Sn) += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100 '事故风险值叠加
-                        Me.m_Results.AllGridResult.AllRisk += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100 '总的事故概率叠加
+                        If Me.m_Results.AllGridResult.Pr(Sn, j, i) < 0 Then
+                            Me.m_Results.AllGridResult.Pr(Sn, j, i) = 0
+                        Else
+                            Me.m_Results.AllGridResult.D(Sn, j, i) = DiePr.NormalSchool(Me.m_Results.AllGridResult.Pr(Sn, j, i)) * 100 '计算死亡百分率%
+                            Me.m_Results.AllGridResult.PersonalRisk(j, i) += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100  '个人风险值叠加
+                            Me.m_Results.AllGridResult.ArrayRisk(Sn) += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100 '事故风险值叠加
+                            Me.m_Results.AllGridResult.AllRisk += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100 '总的事故概率叠加
+                        End If
                     End If
-                End If
 
-                MaxY = MaxY - Me.m_ForeCast.Grid.StepY  'y值逐渐减小
+                    MaxY = MaxY - Me.m_ForeCast.Grid.StepY  'y值逐渐减小
+                    '将网格点赋值给相应的坐标
+                    dblx = MinX / 1.0#
+                    dbly = MaxY / 1.0#
+
+                    dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                    dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+
+                    Result = 0 '将结果置0
+                    '修改进度
+                    Me.m_Results.Status2 = "正在计算网格点的死亡概率和死亡百分率，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nToxinConut * 100, 1) & "%"
+
+                Next j
+                MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) '给maxY初始值
+                MinX = MinX + Me.m_ForeCast.Grid.StepX  'minx增加
                 '将网格点赋值给相应的坐标
                 dblx = MinX / 1.0#
                 dbly = MaxY / 1.0#
-                'If OptionCoordinate2.Checked = True Then
+                '转换坐标
+                dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+            Next i
+
+        Else
+            '----------------------------------------------------------------------------------------------------------------------------------------
+            '计算网格的滑移平均最大浓度－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+            '----------------------------------------------------------------------------------------------------------------------------------------
+            '计算网格点的扩散参数和浓度-----------------------
+            MinX = Me.m_ForeCast.Grid.MinX  'X轴从坐标负数到正数开始计算浓度
+            MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) 'y轴从坐标正数到负数开始计算浓度
+            dblx = MinX
+            dbly = MaxY
+            dblz = Me.m_ForeCast.Grid.WGH
+            '开始按网格点来计算预测浓度--------------------------------------------------------------
+            '是绝对坐标系统，需转换坐标
+            dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+            dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+
+            Dim nSlipConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
+            '以下开始按网格点计算浓度分布-------------------------------------------------------------------
+            For i = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
+                For j = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
+
+                    '计算某一将网格点的最大浓度出现时间
+                    Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 24 * 3600, dblx, dbly, dblz, 10)
+
+                    '计算将网格点的滑移平均最大浓度
+                    If dblMax.MaxC > 1 Then
+                        Me.m_Results.AllGridResult.SlipGrid(Sn, j, i) = ReceptorMaxSlipAverage(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2)
+                        If Me.m_Results.AllGridResult.SlipGrid(Sn, j, i).MaxCon >= Me.m_ForeCast.HurtConcentration(0).ConcentrationVale Then '如果滑移平均浓度>=LC50，则死亡概率为50，否则为0
+                            Me.m_Results.AllGridResult.D(Sn, j, i) = 50 '计算死亡百分率%
+                            Me.m_Results.AllGridResult.PersonalRisk(j, i) += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100  '个人风险值叠加
+                            Me.m_Results.AllGridResult.ArrayRisk(Sn) += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100 '事故风险值叠加
+                            Me.m_Results.AllGridResult.AllRisk += Me.m_Results.AllGridResult.D(Sn, j, i) * Me.m_ForeCast.Met(Sn).Frequency * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100 '总的事故概率叠加
+                        Else
+                            Me.m_Results.AllGridResult.Pr(Sn, j, i) = 0
+                        End If
+                    End If
+
+                    MaxY = MaxY - Me.m_ForeCast.Grid.StepY  'y值逐渐减小
+                    '将网格点赋值给相应的坐标
+                    dblx = MinX / 1.0#
+                    dbly = MaxY / 1.0#
+
+                    dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                    dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+
+                    Result = 0 '将结果置0
+
+                    '修改进度
+                    Me.m_Results.Status2 = "正在计算网格点的滑移平均最大值，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nSlipConut * 100, 1) & "%"
+
+                Next j
+                MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) '给maxY初始值
+                MinX = MinX + Me.m_ForeCast.Grid.StepX  'minx增加
+                '将网格点赋值给相应的坐标
+                dblx = MinX / 1.0#
+                dbly = MaxY / 1.0#
+                '转换坐标
                 dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
                 dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                'End If
-                Result = 0 '将结果置0
-                '修改进度
-                Me.m_Results.Status2 = "正在计算网格点的死亡概率和死亡百分率，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nToxinConut * 100, 1) & "%"
-
-            Next j
-            MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) '给maxY初始值
-            MinX = MinX + Me.m_ForeCast.Grid.StepX  'minx增加
-            '将网格点赋值给相应的坐标
-            dblx = MinX / 1.0#
-            dbly = MaxY / 1.0#
-            '转换坐标
-            'If OptionCoordinate2.Checked = True Then
-            dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-            dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-            'End If
-        Next i
-
-        ''----------------------------------------------------------------------------------------------------------------------------------------
-        ''计算网格的滑移平均最大浓度－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
-        ''----------------------------------------------------------------------------------------------------------------------------------------
-        'If Me.Forecast.OutPut.IsSlipChecked = True Then
-        '    '计算网格点的扩散参数和浓度-----------------------
-        '    MinX = Me.m_ForeCast.Grid.MinX  'X轴从坐标负数到正数开始计算浓度
-        '    MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) 'y轴从坐标正数到负数开始计算浓度
-        '    dblx = MinX
-        '    dbly = MaxY
-        '    dblz = Me.m_ForeCast.Grid.WGH
-        '    '开始按网格点来计算预测浓度--------------------------------------------------------------
-        '    '是绝对坐标系统，需转换坐标
-        '    dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-        '    dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-
-        '    Dim nSlipConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
-        '    '以下开始按网格点计算浓度分布-------------------------------------------------------------------
-        '    For i = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
-        '        For j = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
-
-        '            '计算某一将网格点的最大浓度出现时间
-        '            Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 600 * 3600, dblx, dbly, dblz)
-
-        '            '计算将网格点的滑移平均最大浓度
-        '            If dblMax.MaxC > 1 Then
-        '                Me.m_Results.AllGridResult.SlipGrid(Sn, j, i) = ReceptorMaxSlipAverage(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2)
-
-        '            End If
-
-        '            MaxY = MaxY - Me.m_ForeCast.Grid.StepY  'y值逐渐减小
-        '            '将网格点赋值给相应的坐标
-        '            dblx = MinX / 1.0#
-        '            dbly = MaxY / 1.0#
-        '            'If OptionCoordinate2.Checked = True Then
-        '            dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-        '            dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-        '            'End If
-        '            Result = 0 '将结果置0
-
-        '            '修改进度
-        '            Me.m_Results.Status2 = "正在计算网格点的滑移平均最大值，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nSlipConut * 100, 1) & "%"
-
-        '        Next j
-        '        MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) '给maxY初始值
-        '        MinX = MinX + Me.m_ForeCast.Grid.StepX  'minx增加
-        '        '将网格点赋值给相应的坐标
-        '        dblx = MinX / 1.0#
-        '        dbly = MaxY / 1.0#
-        '        '转换坐标
-        '        'If OptionCoordinate2.Checked = True Then
-        '        dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-        '        dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y)
-        '        'End If
-        '    Next i
-        '    Me.m_Results.Status2 = ""
-        'End If
+            Next i
+            Me.m_Results.Status2 = ""
+        End If
     End Sub
 
 
@@ -1926,7 +1934,7 @@ Imports Sunmast.Hardware
         '---------------------------------------------------------------------------------------------------------------------------------------
         '下风向滑移平均最大值
         '---------------------------------------------------------------------------------------------------------------------------------------
-        If Me.Forecast.OutPut.IsSlipChecked Then
+        If Me.Forecast.OutPut.ChargeOrSlip = 1 And Me.Forecast.OutPut.IsRisk Then
             '计算下风向的扩散参数和浓度-----------------------
             dblx = 0
             dbly = 0
@@ -2002,12 +2010,8 @@ Imports Sunmast.Hardware
                     Result = 0 '将结果置0
                 End If
             Next iCustomC
-            '计算关心点的滑移平均最大浓度
-            If Me.Forecast.OutPut.IsSlipChecked Then
-                Me.m_Results.AllCareResult.SlipCare(Sn, i) = CalculateCareSlip(Sn, dblx, dbly, dblz)
-            End If
         Next i
-        '以下开始按关心点的瞬时浓度、死亡概率和死亡百分率-------------------------------------------------------------------
+            '以下开始按关心点的瞬时浓度、死亡概率和死亡百分率-------------------------------------------------------------------
         For i = 0 To Me.m_ForeCast.CareReceptor.Length - 1 Step 1 '按关心点计算
             Dim dblCnt As Double = 0 '用于储存概率函数括号内的累积值
             '计算瞬时浓度
@@ -2028,18 +2032,30 @@ Imports Sunmast.Hardware
                 Me.m_Results.AllProgress += 1
             Next nCount
 
-            dblz = Me.m_ForeCast.CareReceptor(i).Point3D.z
-            '如果是绝对坐标系统，需转换坐标
-            dblx = CoordinateX(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-            dbly = CoordinateY(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-            dblCnt = ToxinCharge(Sn, dblx, dbly, dblz, Me.m_Results.AllCareResult.CarePointMaxCT(Sn, i).maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, Me.m_Results.AllCareResult.CarePointMaxCT(Sn, i).maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2) '用变步长求得毒性负荷的积分
-            Me.m_Results.AllCareResult.Pr(Sn, i) = m_Chemical.PrA + m_Chemical.PrB * Math.Log(dblCnt) '计算概率值
-            If Me.m_Results.AllCareResult.Pr(Sn, i) < 0 Then
-                Me.m_Results.AllCareResult.Pr(Sn, i) = 0
-            End If
-            Me.m_Results.AllCareResult.D(Sn, i) = DiePr.NormalSchool(Me.m_Results.AllCareResult.Pr(Sn, i)) * 100 '计算死亡百分率%
-        Next i
 
+            '计算关心点的滑移平均最大浓度
+            If Me.Forecast.OutPut.IsRisk = True Then
+                dblz = Me.m_ForeCast.CareReceptor(i).Point3D.z
+                '如果是绝对坐标系统，需转换坐标
+                dblx = CoordinateX(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                dbly = CoordinateY(Me.m_ForeCast.CareReceptor(i).Point3D.x / 1.0#, Me.m_ForeCast.CareReceptor(i).Point3D.y / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
+                If Me.Forecast.OutPut.ChargeOrSlip = 0 Then
+                    dblCnt = ToxinCharge(Sn, dblx, dbly, dblz, Me.m_Results.AllCareResult.CarePointMaxCT(Sn, i).maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, Me.m_Results.AllCareResult.CarePointMaxCT(Sn, i).maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2) '用变步长求得毒性负荷的积分
+                    Me.m_Results.AllCareResult.Pr(Sn, i) = m_Chemical.PrA + m_Chemical.PrB * Math.Log(dblCnt) '计算概率值
+                    If Me.m_Results.AllCareResult.Pr(Sn, i) < 0 Then
+                        Me.m_Results.AllCareResult.Pr(Sn, i) = 0
+                    End If
+                    Me.m_Results.AllCareResult.D(Sn, i) = DiePr.NormalSchool(Me.m_Results.AllCareResult.Pr(Sn, i)) * 100 '计算死亡百分率%
+                Else
+                    Me.m_Results.AllCareResult.SlipCare(Sn, i) = CalculateCareSlip(Sn, dblx, dbly, dblz)
+                    If Me.m_Results.AllCareResult.SlipCare(Sn, i).MaxCon > Me.m_ForeCast.HurtConcentration(0).ConcentrationVale Then
+                        Me.m_Results.AllCareResult.D(Sn, i) = 50
+                    Else
+                        Me.m_Results.AllCareResult.D(Sn, i) = 0
+                    End If
+                End If
+            End If
+        Next i
     End Sub
 
     ''' <summary>
@@ -2171,7 +2187,7 @@ Imports Sunmast.Hardware
         '------------------------------------------------------------------------------------------------------------------------------
         '计算滑移平均浓度
         '------------------------------------------------------------------------------------------------------------------------------
-        If Me.Forecast.OutPut.IsSlipChecked = True Then
+        If Me.Forecast.OutPut.IsRisk = True AndAlso Me.Forecast.OutPut.ChargeOrSlip = 1 Then
             '首先找出等间距的最大值，再从中找出最大值。
 
             '计算下风向的扩散参数和浓度-----------------------

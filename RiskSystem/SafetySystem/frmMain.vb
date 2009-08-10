@@ -2,8 +2,11 @@ Imports System.Windows.Forms
 Imports WeifenLuo.WinFormsUI
 Imports VS2005Extender
 Imports System.IO
-Imports System.Threading
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Runtime.Serialization.Formatters.Soap
 Imports System.Xml.Serialization
+Imports System.Threading
 
 Public Class frmMain
     Private m_Sucess As Boolean = False
@@ -90,7 +93,7 @@ Public Class frmMain
         DockPanel.SuspendLayout(True)
         '把控件设置为中文
         'Steema.TeeChart.Languages.ChineseSimp.Activate()
-        NewAermod()
+        NewRisk()
     End Sub
     Private Sub frmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         e.Cancel = False
@@ -292,8 +295,8 @@ Public Class frmMain
         ToolRun.Enabled = True
         If Me.m_Sucess = True Then
             RefreshResult() ' 更新计算结果
-            Cursor = Cursors.Default
         End If
+        Cursor = Cursors.Default
 
     End Sub
     ''' <summary>
@@ -372,67 +375,89 @@ Public Class frmMain
     End Sub
 
     Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripMenuItem.Click, SaveToolStripButton.Click
-        Dim SaveFileDialog1 As New SaveFileDialog
-        Dim sFile As String
-        Dim strNameLast As String
-        If Project0.IsSaved = False Then
-
-            With SaveFileDialog1
-                .Filter = "安全评价模拟系统文件 (*.sms)|*.sms"
-                .ShowDialog()
-                If Len(.FileName) = 0 Then
-                    Exit Sub
-                End If
-                sFile = .FileName
-            End With
-
-            If Project0.PType = 0 Then '泄漏
-                '保存文件名
-                Dim myObject As DisPuff.Dis = Project0.Dis0
-                ' Insert code to set properties and fields of the object.
-                Dim mySerializer As XmlSerializer = New XmlSerializer(GetType(DisPuff.Dis))
-                ' To write to a file, create a StreamWriter object.
-                Dim myWriter As StreamWriter = New StreamWriter(sFile)
-                mySerializer.Serialize(myWriter, myObject)
-                myWriter.Close()
-                strNameLast = GetFileName(sFile)
-                Me.Text = My.Application.Info.ProductName & "--" & strNameLast
-                Project0.SaveName = sFile
-                Project0.IsSaved = True
-            Else
-                '保存文件名
-                Dim myObject As FireBlast.FAndB = Project0.FAndB
-                ' Insert code to set properties and fields of the object.
-                Dim mySerializer As XmlSerializer = New XmlSerializer(GetType(FireBlast.FAndB))
-                ' To write to a file, create a StreamWriter object.
-                Dim myWriter As StreamWriter = New StreamWriter(sFile)
-                mySerializer.Serialize(myWriter, myObject)
-                myWriter.Close()
-                strNameLast = GetFileName(sFile)
-                Me.Text = My.Application.Info.ProductName & "--" & strNameLast
-                Project0.SaveName = sFile
-                Project0.IsSaved = True
-            End If
-
-        Else
-            '保存文件名
-            Dim myObject As DisPuff.Dis = Project0.Dis0
-            ' Insert code to set properties and fields of the object.
-            Dim mySerializer As XmlSerializer = New XmlSerializer(GetType(DisPuff.Dis))
-            ' To write to a file, create a StreamWriter object.
-            Dim myWriter As StreamWriter = New StreamWriter(Project0.SaveName)
-            mySerializer.Serialize(myWriter, myObject)
-            myWriter.Close()
-            strNameLast = GetFileName(Project0.SaveName)
-            Me.Text = My.Application.Info.ProductName & "--" & strNameLast
-        End If
-
+        SaveAs(False)
     End Sub
+    Private Function SaveAs(ByVal S As Boolean) As Boolean
+        Me.Status.Text = "正在保存文件"
+        Try
+            Dim SaveFileDialog1 As New SaveFileDialog
+            Dim sFile As String
+            Dim strNameLast As String
+            If Project0.IsSaved = False Or S = True Then
+
+                With SaveFileDialog1
+                    .Filter = "环境风险评价系统文件 (*.rsk)|*.rsk"
+                    .ShowDialog()
+                    If Len(.FileName) = 0 Then
+                        Return False
+                    End If
+                    sFile = .FileName
+                End With
+            Else
+                sFile = Project0.SaveName
+            End If
+            ' To write to a file, create a StreamWriter object.
+            strNameLast = GetFileName(sFile)
+            Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & strNameLast
+            Project0.SaveName = sFile
+            SolutionExplorer.TreeView.Nodes(0).Text = strNameLast
+            Project0.IsSaved = True
+
+            ' Create a filestream object
+            Dim fileStr As Stream = File.Open(sFile, FileMode.Create)
+            ' Create a linked list object and populate it with random nodes
+            Dim AllProject As New Project
+            AllProject = Project0
+              ' Create a formatter object based on command line arguments
+            Dim formatter As IFormatter
+            formatter = CType(New BinaryFormatter, IFormatter)
+            ' Serialize the object graph to stream
+            formatter.Serialize(fileStr, AllProject)
+            fileStr.Dispose()
+            ' All done
+            fileStr.Close()
+
+            Try
+                fileStr = File.Open(sFile, FileMode.Open)
+
+                formatter = CType(New BinaryFormatter, IFormatter)
+                fileStr.Seek(0, SeekOrigin.Begin)
+                Dim obj As Object = formatter.Deserialize(fileStr)
+                ' All done
+                fileStr.Close()
+            Catch ex As Exception
+                fileStr.Close()
+                MsgBox("保存文件时出现意外错误，请重新保存!")
+                Return False
+            End Try
+            Me.Status.Text = "文件保存完毕"
+            Return True
+        Catch ex As Exception
+            MsgBox("保存文件时出现意外错误，请重新保存!")
+            Return False
+        End Try
+    End Function
+
+
     Private Sub OpenFile(ByVal sender As Object, ByVal e As EventArgs) Handles OpenToolStripMenuItem.Click, OpenToolStripButton.Click
+        Dim Result As MsgBoxResult = MessageBox.Show("是否要保存当前的项目?", "保存", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+        If Result = MsgBoxResult.Yes Then
+            SaveToolStripMenuItem_Click(sender, e) '保存项目
+            OpenFilefun()
+        ElseIf Result = MsgBoxResult.No Then '不保存
+            OpenFilefun()
+        ElseIf Result = MsgBoxResult.Cancel Then '取消
+
+        End If
+    End Sub
+    Private Sub OpenFilefun()
+        '--------------------------------------------------------------------
+        '正式版代码
+        '-----------------------------------------------------------------------
 
         Dim sFile As String '文件名
         Dim OpenFileDialog As New OpenFileDialog
-        OpenFileDialog.Filter = "安全评价模拟系统文件 (*.sms)|*.sms"
+        OpenFileDialog.Filter = "环境风险评价系统文件 (*.rsk)|*.rsk"
         If (OpenFileDialog.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK) Then
             With OpenFileDialog
                 If Len(.FileName) = 0 Then
@@ -440,54 +465,38 @@ Public Class frmMain
                 End If
                 sFile = .FileName
             End With
-            FileOpen(1, sFile, OpenMode.Input)
-            Dim strType As String = ""
-            For i As Integer = 0 To 2
-                Input(1, strType)
-            Next
-            FileClose(1)
-            If strType.Contains("LeakType") Then '泄漏
-                Try
-                    Dim myObject As DisPuff.Dis
-                    ' Construct an instance of the XmlSerializer with the type
-                    ' of object that is being deserialized.
-                    Dim mySerializer As XmlSerializer = New XmlSerializer(GetType(DisPuff.Dis))
-                    ' To read the file, create a FileStream.
-                    Dim myFileStream As FileStream = New FileStream(sFile, FileMode.Open)
-                    ' Call the Deserialize method and cast to the object type.
-                    myObject = CType(mySerializer.Deserialize(myFileStream), DisPuff.Dis)
-                    Project0.Dis0 = myObject
-                    IntialLeakProject() '初始化
-                    RefreshResult() '更新计算结果
-                Catch ex As Exception
-                    MsgBox("文件格式有错误!")
-                End Try
+            Dim fileStr As Stream = Nothing
+            Dim formatter As IFormatter
+            Dim AllProject As New Project
+            Dim obj As Object
 
-            ElseIf strType.Contains("FType") Then
-                Try
-                    Dim myObject As FireBlast.FAndB
-                    ' Construct an instance of the XmlSerializer with the type
-                    ' of object that is being deserialized.
-                    Dim mySerializer As XmlSerializer = New XmlSerializer(GetType(FireBlast.FAndB))
-                    ' To read the file, create a FileStream.
-                    Dim myFileStream As FileStream = New FileStream(sFile, FileMode.Open)
-                    ' Call the Deserialize method and cast to the object type.
-                    myObject = CType(mySerializer.Deserialize(myFileStream), FireBlast.FAndB)
-                    Project0.FAndB = myObject
-                    InitialFireProject() '初始化
+            Try
+                fileStr = File.Open(sFile, FileMode.Open)
 
-                    RefreshResult() '更新计算结果
-                Catch ex As Exception
-                    MsgBox("文件格式有错误!")
-                End Try
-            Else
-                MsgBox("文件格式有错误!")
-            End If
+                ' Create a formatter object based on command line arguments
+
+                formatter = CType(New BinaryFormatter, IFormatter)
+                ' Deserialize the object graph from stream
+                fileStr.Seek(0, SeekOrigin.Begin)
+                obj = formatter.Deserialize(fileStr)
+                AllProject = CType(obj, Project)
+                AllProject.SaveName = sFile '设置文件名
+
+                Project0 = AllProject
+                'DrawContourWindow.ContourPaint1.SetPannelSetting(AllProject.PannelSetting)
+                fileStr.Close()
+                'Me.DrawContourWindow.SetPolluteDraw() '设置图形
+                Dim strNameLast As String = GetFileName(sFile)
+                Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & strNameLast
+                SolutionExplorer.TreeView.Nodes(0).Text = strNameLast
+                Me.RefreshResult() '显示结果
+                'Me.SolutionExplorer.RefreshSolutionTree()
+            Catch ex As Exception
+                fileStr.Close()
+                MsgBox("打开文件错误。可能您用的是较低版本的软件打开了较高版本保存的方案!")
+            End Try
         End If
-
-
     End Sub
-
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
         DrawContourWindow.ContourPaint1.SetMouseType(0) '箭头形
         DrawContourWindow.AddProject = False
@@ -537,10 +546,10 @@ Public Class frmMain
             Me.DrawContourWindow.cmbRusult.Items.Add("瞬时浓度")
             
         End If
-        If Project0.Dis0.Forecast.OutPut.IsSlipChecked = True Then '滑移平均浓度
+        If Project0.Dis0.Forecast.OutPut.IsRisk = True AndAlso Project0.Dis0.Forecast.OutPut.ChargeOrSlip = 1 Then '滑移平均浓度
             Me.DrawContourWindow.cmbRusult.Items.Add("滑移平均浓度")
         End If
-        If Project0.Dis0.Forecast.OutPut.IsCharge = True Then
+        If Project0.Dis0.Forecast.OutPut.IsRisk = True Then
             Me.DrawContourWindow.cmbRusult.Items.Add("死亡百分率")
             Me.DrawContourWindow.cmbRusult.Items.Add("个人风险值")
         End If
@@ -566,7 +575,7 @@ Public Class frmMain
                         newTreeNode.Text = Project0.Dis0.Forecast.OutPut.ForeStart + j * Project0.Dis0.Forecast.OutPut.ForeInterval & "min"
                         newNode2.Nodes.Add(newTreeNode)
                     Next
-                    If Project0.Dis0.Forecast.OutPut.IsSlipChecked Then
+                    If Project0.Dis0.Forecast.OutPut.IsRisk = True And Project0.Dis0.Forecast.OutPut.ChargeOrSlip = 1 Then
                         newTreeNode = New TreeNode("滑移平均最大浓度")
                         newTreeNode.Text = "滑移平均最大浓度"
                         newNode2.Nodes.Add(newTreeNode)
@@ -808,58 +817,7 @@ Public Class frmMain
         Project0.FAndB = New FireBlast.FAndB '新建火灾爆炸模型
         InitialFireProject() ' 初始化火灾爆炸项目
     End Sub
-    ''' <summary>
-    ''' 初始化火灾爆炸项目
-    ''' </summary>
-    ''' <remarks></remarks>
-    Private Sub InitialFireProject()
-        Project0.PType = 1 '火灾爆炸
-        '设置绘图网格
-        Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ChartType = 1
-        Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.Clear()
-        intialFireDrawData(Project0.FAndB.Grid.MinX, Project0.FAndB.Grid.MaxX, Project0.FAndB.Grid.MinY, Project0.FAndB.Grid.MaxY)
-        SetPropety(Project0.FAndB.Grid.StepX, Project0.FAndB.Grid.StepY)
-
-        '输出窗口
-        'OutWindow.Show(DockPanel, DockState.DockBottom)
-        OutToolStripMenuItem.Checked = True
-        '解决方案窗口
-
-        SolutionExplorer.ExplorerBar1.Groups(0).Visible = False
-        SolutionExplorer.ExplorerBar1.Groups(1).Visible = True
-        SolutionExplorer.ExplorerBar1.Groups(2).Visible = True
-        SolutionExplorer.ExplorerBar1.Groups(1).Items(0).Checked = True
-        SolutionExplorer.ExplorerBar1.Groups(1).Expanded = True
-        SolutionExplorer.ExplorerBar1.Groups(2).Expanded = True
-        SolutionExplorer.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
-        PorjectToolStripMenuItem.Checked = True
-        '结果树形列表窗口
-        Result.TreeView1.Nodes.Clear() '清空窗口
-        Result.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
-        PropertyToolStripMenuItem.Checked = True
-        '等值线图图层窗口
-        'DrawLay.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
-        DrawLayToolStripMenuItem.Checked = True
-
-        SolutionExplorer.Activate() '激活项目管理器
-        DockPanel.ResumeLayout(True, True)
-
-
-        '概述窗口
-        'Me.GeneralWindow.Show(DockPanel, DockState.Document)
-        '等值线窗口
-        Me.DrawContourWindow.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
-        绘图窗口ToolStripMenuItem.Checked = True
-        ''打开轴线图表窗口
-        'Me.ResultTNT.Show(DockPanel, DockState.Document)
-        'Me.ToolStripMenuItemChart.Checked = True
-
-        Me.DrawContourWindow.Activate() '激活等值线绘图窗口
-        '
-        '根据项目激活对应的菜单
-        ActiveMenu()
-    End Sub
-
+   
 
     Private Sub ToolStripButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
         DrawContourWindow.ContourPaint1.SetMouseType(0) '箭头形
@@ -1178,17 +1136,38 @@ Public Class frmMain
     End Sub
 
     Private Sub NewToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewToolStripMenuItem.Click
-        NewAermod()
+        Dim Result As MsgBoxResult = MessageBox.Show("是否要保存当前的项目?", "保存", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+        If Result = MsgBoxResult.Yes Then
+            SaveToolStripMenuItem_Click(sender, e) '保存项目
+            NewRisk() '新建1个项目
+        ElseIf Result = MsgBoxResult.No Then '不保存
+            NewRisk() '新建1个项目
+        ElseIf Result = MsgBoxResult.Cancel Then '取消
+
+        End If
+        NewRisk()
     End Sub
 
-    Private Sub NewAermod()
+    Private Sub NewRisk()
         '新建一个项目
         Project0 = New Project
-        Project0.Dis0 = New DisPuff.Dis '新建一个泄漏项目
         Project0.Dis0.Forecast.IsCalGrid = True
         SetTree()
         Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & SolutionExplorer.TreeView.Nodes(0).Text
         IntialLeakProject()
+        SetPropety()
+        '网格嵌套
+
+
+        Me.DrawContourWindow.SetPolluteDraw() '设置图形
+        'Me.ModifyResults() '修改结果
+        'Me.ResultTypeDayWindow.Hide()
+        'Me.ResultDataWindow.Hide()
+        'Me.MaxResultWindow.Hide()
+        'Me.MaxiFileWindow.Hide()
+        'PostFileWinow.Hide()
+
+
     End Sub
     ''' <summary>
     ''' 设置项目在列表中的内容
@@ -1273,7 +1252,87 @@ Public Class frmMain
         'ModifyTree()
     End Sub
 
+    ''' <summary>
+    ''' 初始化火灾爆炸项目
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub InitialFireProject()
+        '设置绘图网格
+        Me.DrawContourWindow.ContourPaint1.ContourPaintSetting = New DrawContour.ContourPaintSetting
+
+        Project0.PType = 1 '火灾爆炸
+        '设置绘图网格
+        Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ChartType = 1
+        Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.Clear()
+
+        intialFireDrawData(Project0.FAndB.Grid.MinX, Project0.FAndB.Grid.MaxX, Project0.FAndB.Grid.MinY, Project0.FAndB.Grid.MaxY)
+        SetPropety(Project0.FAndB.Grid.StepX, Project0.FAndB.Grid.StepY)
+
+        '输出窗口
+        'OutWindow.Show(DockPanel, DockState.DockBottom)
+        OutToolStripMenuItem.Checked = True
+        '解决方案窗口
+
+        SolutionExplorer.ExplorerBar1.Groups(0).Visible = False
+        SolutionExplorer.ExplorerBar1.Groups(1).Visible = True
+        SolutionExplorer.ExplorerBar1.Groups(2).Visible = True
+        SolutionExplorer.ExplorerBar1.Groups(1).Items(0).Checked = True
+        SolutionExplorer.ExplorerBar1.Groups(1).Expanded = True
+        SolutionExplorer.ExplorerBar1.Groups(2).Expanded = True
+        SolutionExplorer.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        PorjectToolStripMenuItem.Checked = True
+        '结果树形列表窗口
+        Result.TreeView1.Nodes.Clear() '清空窗口
+        Result.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        PropertyToolStripMenuItem.Checked = True
+        '等值线图图层窗口
+        'DrawLay.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        DrawLayToolStripMenuItem.Checked = True
+
+        SolutionExplorer.Activate() '激活项目管理器
+        DockPanel.ResumeLayout(True, True)
+
+
+        '概述窗口
+        'Me.GeneralWindow.Show(DockPanel, DockState.Document)
+        '等值线窗口
+        Me.DrawContourWindow.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+        绘图窗口ToolStripMenuItem.Checked = True
+        ''打开轴线图表窗口
+        'Me.ResultTNT.Show(DockPanel, DockState.Document)
+        'Me.ToolStripMenuItemChart.Checked = True
+
+        Me.DrawContourWindow.Activate() '激活等值线绘图窗口
+        '
+        '根据项目激活对应的菜单
+        ActiveMenu()
+    End Sub
+
+    ''' <summary>
+    ''' 设置等值线的图的属性值
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub SetPropety()
+        With Me.DrawContourWindow.ContourPaint1.ContourPaintSetting
+            '初始化绘图面板
+            .InitialPaint()
+            '设置绘图面板数据
+            .ResetCountData()
+
+            '设置左轴的增加值,并使左刻度可见
+            .ContourPannel.Axes.LeftAxis.MainAxisScale.Increase = Project0.Dis0.Forecast.Grid.StepY
+            '设置底轴的增加值，并使底刻度可见
+            .ContourPannel.Axes.BottomAxis.MainAxisScale.Increase = Project0.Dis0.Forecast.Grid.StepX
+            '设置右轴的增加值,并使左刻度不可见
+            .ContourPannel.Axes.RightAxis.MainAxisScale.Increase = .ContourPannel.Axes.LeftAxis.MainAxisScale.Increase
+
+            '设置顶轴增加值，并使底刻度不可见
+            .ContourPannel.Axes.TopAxis.MainAxisScale.Increase = .ContourPannel.Axes.BottomAxis.MainAxisScale.Increase
+
+            Me.Refresh()
+        End With
+    End Sub
     Private Sub 新建NToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 新建NToolStripButton.Click
-        NewAermod()
+        NewRisk()
     End Sub
 End Class

@@ -2,7 +2,7 @@
 ''' 距离类
 ''' </summary>
 ''' <remarks></remarks>
-Public Class CarePoint
+<Serializable()> Public Class CarePoint
     Private m_Dist As String = ""
     Private m_Rpoint As New Point2D
     Private m_ResultDistanceDp As Double

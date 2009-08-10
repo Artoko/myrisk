@@ -66,24 +66,6 @@ Public Class frmSolution
         'End Select
     End Sub
 
-    
-
-    Private Sub SetPolluteDraw()
-        '在绘图中设置污染源的位置和图形
-        Dim frmM As frmMain
-        frmM = My.Application.ApplicationContext.MainForm
-        Dim PolluteSymbols As DrawContour.PolluteSymbols = frmM.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Symbols.PolluteSymbol
-        'PolluteSymbols.PointSourceSymbols.Symbol.SymbolVisible = True
-        'PolluteSymbols.PointSourceSymbols.Symbol.SymbolSign.SymbolColor = Color.Blue
-        'PolluteSymbols.PointSourceSymbols.Symbol.SymbolSign.SymbolShape.SymbolShapeStyle = DrawContour.SymbolShapeStyle.SolidCircle
-        'PolluteSymbols.PointSourceSymbols.IntialPolluteSymbols()  '初始化
-        frmM.DrawContourWindow.Refresh() '重绘
-        '设置GIS绘图中的污染源
-        Dim myFrmMain As frmMain = My.Application.ApplicationContext.MainForm
-        '设置点源
-    
-    End Sub
-
     Private Sub frmSolution_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ExplorerBar1.Groups(0).Items(0).Checked = True
     End Sub

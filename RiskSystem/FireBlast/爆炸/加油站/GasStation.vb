@@ -1,17 +1,17 @@
-Public Class GasStation
+<Serializable()> Public Class GasStation
     Inherits BaseBoo
-    
+
     ''' <summary>
     ''' 表示用公式法计算死亡半径和财产损失半径
     ''' </summary>
     ''' <remarks></remarks>
     Private m_FormulaChecked As Boolean = True
-    
+
     Private m_a As Double = 0.04 '蒸汽云爆炸的效率因子，表明参与爆炸的可燃气体的分数
     Private m_Wf As Double = 20000 '蒸汽云中燃料的总质量，kg
     Private m_Qf As Double = 40000000 '蒸汽的燃料热，J/kg
     Private m_QTNT As Double = 4.52 * 1000000 '——TNT的爆炸热，一般取4.52×106J/kg
-   
+
     ''' <summary>
     ''' 蒸汽云爆炸的效率因子，表明参与爆炸的可燃气体的分数，一般取3%或4%
     ''' </summary>

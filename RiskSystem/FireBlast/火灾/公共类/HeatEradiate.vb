@@ -2,7 +2,7 @@
 ''' 热辐射类
 ''' </summary>
 ''' <remarks></remarks>
-Public Class HeatEradiate
+<Serializable()> Public Class HeatEradiate
     Private m_HeatName As String   '损害后果名称
     Private m_Heat As Double       '热辐射通量[W/m^2]
     Private m_Checkd As Boolean = True    '状态是否被选种（T/F）

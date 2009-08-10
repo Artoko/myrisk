@@ -1,4 +1,4 @@
-﻿Public Class BaseBoo
+﻿<Serializable()> Public Class BaseBoo
     ''' <summary>
     ''' 事故源名称
     ''' </summary>
@@ -34,7 +34,7 @@
     ''' </summary>
     ''' <remarks></remarks>
     Protected m_ResultStepDp(-1) As Double
-    
+
     ''' <summary>
     ''' 不同超压对应的距离
     ''' </summary>
@@ -137,7 +137,7 @@
         End Set
     End Property
 
-    
+
     ''' <summary>
     ''' 储存步长对应的超压
     ''' </summary>
@@ -152,7 +152,7 @@
             Me.m_ResultStepDp = value
         End Set
     End Property
-   
+
     ''' <summary>
     ''' 不同超压对应的距离
     ''' </summary>

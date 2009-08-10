@@ -1,4 +1,4 @@
-Public Class FAndB
+<Serializable()> Public Class FAndB
     Private m_FType As Integer 'ª‘÷±¨’®¿‡–Õ
     ''' <summary>
     ''' ‘§≤‚∑∂Œß

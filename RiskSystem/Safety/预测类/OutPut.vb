@@ -20,10 +20,10 @@
     ''' 确定是否计算滑移平均
     ''' </summary>
     ''' <remarks></remarks>
-    Private m_IsSlipChecked As Boolean = False
-
     Private m_IsInstantaneous As Boolean = True '是否计算瞬时浓度
-    Private m_IsCharge As Boolean = True '是否计算物质的毒性负荷
+    Private m_ChargeOrSlip As Integer = 0 '是计算物质的毒性负荷还是计算滑移平均,再计算风险值
+    Private m_IsRisk As Boolean = True '是否计算风险值
+
     ''' <summary>
     ''' 地面特征。
     ''' </summary>
@@ -150,19 +150,6 @@
             Me.m_InhalationTime = value
         End Set
     End Property
-
-    ''' <summary>
-    ''' 确定是否计算滑移平均
-    ''' </summary>
-    ''' <remarks></remarks>
-    Property IsSlipChecked() As Boolean
-        Get
-            Return Me.m_IsSlipChecked
-        End Get
-        Set(ByVal value As Boolean)
-            Me.m_IsSlipChecked = value
-        End Set
-    End Property
     ''' <summary>
     ''' 是否计算瞬时浓度
     ''' </summary>
@@ -178,17 +165,31 @@
         End Set
     End Property
     ''' <summary>
-    ''' 是否计算物质的毒性负荷死亡概率和死亡百分率
+    ''' 是计算物质的毒性负荷还是计算滑移平均,再计算风险值
     ''' </summary>
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Property IsCharge() As Boolean
+    Property ChargeOrSlip() As Boolean
         Get
-            Return m_IsCharge
+            Return m_ChargeOrSlip
         End Get
         Set(ByVal value As Boolean)
-            m_IsCharge = value
+            m_ChargeOrSlip = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 是否计算风险值
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property IsRisk() As Boolean
+        Get
+            Return Me.m_IsRisk
+        End Get
+        Set(ByVal value As Boolean)
+            Me.m_IsRisk = value
         End Set
     End Property
 End Class

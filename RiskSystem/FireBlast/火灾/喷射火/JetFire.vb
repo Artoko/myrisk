@@ -1,6 +1,6 @@
-Public Class JetFire
+<Serializable()> Public Class JetFire
 
-   
+
     ''' <summary>
     ''' 事故源名称
     ''' </summary>
@@ -38,13 +38,13 @@ Public Class JetFire
     ''' </summary>
     ''' <remarks></remarks>
     Private m_f As Double = 0.35 '
-    
+
     ''' <summary>
     ''' 发射因子，取0.2
     ''' </summary>
     ''' <remarks></remarks>
     Private m_Xp As Double = 0.2
-    
+
     ''' <summary>
     ''' 假设的点源数
     ''' </summary>
@@ -60,7 +60,7 @@ Public Class JetFire
     ''' </summary>
     ''' <remarks></remarks>
     Private m_StepCount As Integer = 20 '
-   
+
     ''' <summary>
     ''' 热辐射类的数组
     ''' </summary>
@@ -247,7 +247,7 @@ Public Class JetFire
             Me.m_StepCount = value
         End Set
     End Property
-   
+
     ''' <summary>
     ''' 热辐射类的数组
     ''' </summary>
@@ -276,7 +276,7 @@ Public Class JetFire
             Me.m_ResultStepDp = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 不同热辐射对应的点序列
     ''' </summary>

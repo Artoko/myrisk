@@ -2,7 +2,7 @@
 ''' ≈Á…‰ª¿‡
 ''' </summary>
 ''' <remarks></remarks>
-Public Class Jet
+<Serializable()> Public Class Jet
     Private m_JetFire As New JetFire
     Private m_ResultHurtPoint(-1) As hurtPointstruct
 
@@ -77,7 +77,7 @@ Public Class Jet
         Dim AnglePi As Double = (angle - 90) * (Math.PI) / 180
         Coory = y0 + X1 * Math.Sin(AnglePi) + Y1 * Math.Cos(AnglePi)
     End Function
-    
+
     Public Function GetResultString(ByVal dNum As Integer, ByVal pNum As Integer, ByVal m_carepoint As CarePoint()) As String
         Dim ChangeDistance(m_carepoint.Length - 1) As CarePoint
         For i As Integer = 0 To ChangeDistance.Length - 1

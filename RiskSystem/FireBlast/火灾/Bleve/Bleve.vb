@@ -1,4 +1,4 @@
-﻿Public Class Bleve
+﻿<Serializable()> Public Class Bleve
 
     ''' <summary>
     ''' 事故源名称
@@ -27,13 +27,13 @@
     Private m_StepCount As Integer = 20  ' 个数
     Private m_ArrHeatEradiate(0 To 3) As FireBlast.HeatEradiate  '热通量数组
 
-   
+
     ''' <summary>
     ''' 储存步长对应的热辐射
     ''' </summary>
     ''' <remarks></remarks>
     Private m_ResultStepDp(-1) As Double
-   
+
     ''' <summary>
     ''' 不热辐射压对应的距离
     ''' </summary>
@@ -225,7 +225,7 @@
             Me.m_StepCount = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 热辐射通量数组
     ''' </summary>
@@ -255,7 +255,7 @@
             Me.m_ResultStepDp = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 不同超压对应的距离
     ''' </summary>

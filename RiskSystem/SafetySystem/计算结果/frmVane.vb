@@ -20,7 +20,7 @@
             '添加结果表述
             Me.cmbRusult.Items.Clear()
             Me.cmbRusult.Items.Add("瞬时浓度")
-            If Project0.Dis0.Forecast.OutPut.IsSlipChecked Then
+            If Project0.Dis0.Forecast.OutPut.IsRisk = True And Project0.Dis0.Forecast.OutPut.ChargeOrSlip = 1 Then
                 Me.cmbRusult.Items.Add("滑移平均最大浓度")
             End If
             '添加气象条件

@@ -1,4 +1,4 @@
-﻿Module OpenAndSaveFile
+﻿Public Module OpenAndSaveFile
     Public Function GetFileName(ByRef sName As String) As String
         Dim nStart As Short
         Dim nEnd As Short

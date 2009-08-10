@@ -1,4 +1,4 @@
-Public Class SolidFire
+<Serializable()> Public Class SolidFire
     ''' <summary>
     ''' 事故源名称
     ''' </summary>
@@ -19,7 +19,7 @@ Public Class SolidFire
     ''' </summary>
     ''' <remarks></remarks>
     Private m_W As Double = 100000  '
-   
+
     ''' <summary>
     ''' 暴露时间t[ s ]
     ''' </summary>
@@ -35,7 +35,7 @@ Public Class SolidFire
     ''' </summary>
     ''' <remarks></remarks>
     Private m_MC As Double = 5
-    
+
     ''' <summary>
     ''' 热辐射系数f
     ''' </summary>
@@ -51,7 +51,7 @@ Public Class SolidFire
     ''' </summary>
     ''' <remarks></remarks>
     Private m_StepCount As Integer = 20 '
-    
+
     ''' <summary>
     ''' 热辐射类的数组
     ''' </summary>
@@ -149,7 +149,7 @@ Public Class SolidFire
             Me.m_W = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 暴露时间t[ s ]
     ''' </summary>
@@ -234,7 +234,7 @@ Public Class SolidFire
             Me.m_StepCount = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 热辐射类的数组
     ''' </summary>
@@ -349,7 +349,7 @@ Public Class SolidFire
         Dim T As Double = Me.m_W / Me.m_MC
         Return T
     End Function
-   
+
     ''' <summary>
     ''' 通过距离求得热辐热通
     ''' </summary>

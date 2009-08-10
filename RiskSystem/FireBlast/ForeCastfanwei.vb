@@ -1,4 +1,4 @@
-Public Class Grid
+<Serializable()> Public Class Grid
     Private m_MinX As Integer = -200 'X轴的起始坐标,m
     Private m_StepX As Integer = 10 'X轴的步长,m
     Private m_CountX As Integer = 41 'X轴的网格数

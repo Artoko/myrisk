@@ -1,4 +1,4 @@
-﻿Public Class PoolFireLogic
+﻿<Serializable()> Public Class PoolFireLogic
     ''' <summary>
     ''' 事故源名称
     ''' </summary>
@@ -69,7 +69,7 @@
     ''' </summary>
     ''' <remarks></remarks>
     Private m_StepCount As Integer = 20 '
-   
+
     ''' <summary>
     ''' 热辐射类的数组
     ''' </summary>
@@ -85,7 +85,7 @@
     ''' </summary>
     ''' <remarks></remarks>
     Private m_ResultStepDp(-1) As Double
-    
+
     ''' <summary>
     ''' 不热辐射压对应的距离
     ''' </summary>
@@ -312,7 +312,7 @@
             Me.m_StepCount = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 热辐射类的数组
     ''' </summary>
@@ -357,7 +357,7 @@
     End Property
 #End Region
 
-    
+
     Public Sub New()
         For i As Integer = 0 To Me.ArrHeatEradiate.Length - 1
             Me.ArrHeatEradiate(i) = New FireBlast.HeatEradiate

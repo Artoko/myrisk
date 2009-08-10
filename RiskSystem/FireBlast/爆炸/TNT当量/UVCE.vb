@@ -2,15 +2,15 @@
 ''' TNT当量法类
 ''' </summary>
 ''' <remarks></remarks>
-Public Class UVCE
+<Serializable()> Public Class UVCE
     Inherits BaseBoo
-    
+
     ''' <summary>
     ''' 表示用公式法计算死亡半径和财产损失半径
     ''' </summary>
     ''' <remarks></remarks>
     Private m_FormulaChecked As Boolean = True
-   
+
     Private m_a As Double = 3 '蒸汽云爆炸的效率因子，表明参与爆炸的可燃气体的分数，一般取3%或4%
     Private m_Wf As Double = 100000 '蒸汽云中燃料的总质量，kg
     Private m_Qf As Double = 50409000 '蒸汽的燃料热，J/kg
@@ -89,7 +89,7 @@ Public Class UVCE
         End Set
     End Property
 
-   
+
     ''' <summary>
     ''' 取得TNT当量
     ''' </summary>

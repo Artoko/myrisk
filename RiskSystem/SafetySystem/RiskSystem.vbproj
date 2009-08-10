@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="公共类和窗体\OpenAndSaveFile.vb" />
     <Compile Include="绘图控件\RiskContourContol.Designer.vb">
       <DependentUpon>RiskContourContol.vb</DependentUpon>
     </Compile>
@@ -148,7 +149,6 @@
     <Compile Include="新修改部分窗口\frmChemistry .vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OpenAndSaveFile.vb" />
     <Compile Include="SplashScreen1.Designer.vb">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
     </Compile>

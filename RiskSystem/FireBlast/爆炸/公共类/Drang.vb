@@ -2,7 +2,7 @@
 ''' 超压类
 ''' </summary>
 ''' <remarks></remarks>
-Public Class Drang
+<Serializable()> Public Class Drang
     Private m_Drang As Double
     Private m_DrangName As String
     Private m_Selected As Boolean

@@ -23,10 +23,8 @@ Partial Class frmOutOption
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox
-        Me.chkCharge = New System.Windows.Forms.CheckBox
         Me.txtInhalationTime = New Chart.CText
         Me.Label6111 = New System.Windows.Forms.Label
-        Me.chkSlip = New System.Windows.Forms.CheckBox
         Me.cmbGroundCharacter = New System.Windows.Forms.ComboBox
         Me.txtForeCount = New Chart.CText
         Me.Label48 = New System.Windows.Forms.Label
@@ -47,6 +45,9 @@ Partial Class frmOutOption
         Me.Cancel_Button = New System.Windows.Forms.Button
         Me.OK_Button = New System.Windows.Forms.Button
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.chkRisk = New System.Windows.Forms.CheckBox
+        Me.RdioChargeOrSlip1 = New System.Windows.Forms.RadioButton
+        Me.RdioChargeOrSlip2 = New System.Windows.Forms.RadioButton
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
@@ -55,27 +56,17 @@ Partial Class frmOutOption
         '
         'GroupBox6
         '
-        Me.GroupBox6.Controls.Add(Me.chkCharge)
+        Me.GroupBox6.Controls.Add(Me.RdioChargeOrSlip2)
+        Me.GroupBox6.Controls.Add(Me.RdioChargeOrSlip1)
+        Me.GroupBox6.Controls.Add(Me.chkRisk)
         Me.GroupBox6.Controls.Add(Me.txtInhalationTime)
         Me.GroupBox6.Controls.Add(Me.Label6111)
-        Me.GroupBox6.Controls.Add(Me.chkSlip)
         Me.GroupBox6.Location = New System.Drawing.Point(297, 124)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.Size = New System.Drawing.Size(259, 99)
         Me.GroupBox6.TabIndex = 279
         Me.GroupBox6.TabStop = False
-        Me.GroupBox6.Text = "吸入浓度参数"
-        '
-        'chkCharge
-        '
-        Me.chkCharge.AutoSize = True
-        Me.chkCharge.ForeColor = System.Drawing.Color.Red
-        Me.chkCharge.Location = New System.Drawing.Point(49, 20)
-        Me.chkCharge.Name = "chkCharge"
-        Me.chkCharge.Size = New System.Drawing.Size(156, 16)
-        Me.chkCharge.TabIndex = 3
-        Me.chkCharge.Text = "用毒性负荷法计算风险值"
-        Me.chkCharge.UseVisualStyleBackColor = True
+        Me.GroupBox6.Text = "              "
         '
         'txtInhalationTime
         '
@@ -99,17 +90,6 @@ Partial Class frmOutOption
         Me.Label6111.Size = New System.Drawing.Size(89, 12)
         Me.Label6111.TabIndex = 1
         Me.Label6111.Text = "吸入时间[min]:"
-        '
-        'chkSlip
-        '
-        Me.chkSlip.AutoSize = True
-        Me.chkSlip.ForeColor = System.Drawing.Color.Red
-        Me.chkSlip.Location = New System.Drawing.Point(49, 42)
-        Me.chkSlip.Name = "chkSlip"
-        Me.chkSlip.Size = New System.Drawing.Size(192, 16)
-        Me.chkSlip.TabIndex = 0
-        Me.chkSlip.Text = "计算滑移平均最大浓度及风险值"
-        Me.chkSlip.UseVisualStyleBackColor = True
         '
         'cmbGroundCharacter
         '
@@ -354,6 +334,38 @@ Partial Class frmOutOption
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "模型选项"
         '
+        'chkRisk
+        '
+        Me.chkRisk.AutoSize = True
+        Me.chkRisk.Location = New System.Drawing.Point(6, 0)
+        Me.chkRisk.Name = "chkRisk"
+        Me.chkRisk.Size = New System.Drawing.Size(84, 16)
+        Me.chkRisk.TabIndex = 4
+        Me.chkRisk.Text = "计算风险值"
+        Me.chkRisk.UseVisualStyleBackColor = True
+        '
+        'RdioChargeOrSlip1
+        '
+        Me.RdioChargeOrSlip1.AutoSize = True
+        Me.RdioChargeOrSlip1.Location = New System.Drawing.Point(49, 19)
+        Me.RdioChargeOrSlip1.Name = "RdioChargeOrSlip1"
+        Me.RdioChargeOrSlip1.Size = New System.Drawing.Size(155, 16)
+        Me.RdioChargeOrSlip1.TabIndex = 5
+        Me.RdioChargeOrSlip1.TabStop = True
+        Me.RdioChargeOrSlip1.Text = "用毒性负荷法计算风险值"
+        Me.RdioChargeOrSlip1.UseVisualStyleBackColor = True
+        '
+        'RdioChargeOrSlip2
+        '
+        Me.RdioChargeOrSlip2.AutoSize = True
+        Me.RdioChargeOrSlip2.Location = New System.Drawing.Point(49, 42)
+        Me.RdioChargeOrSlip2.Name = "RdioChargeOrSlip2"
+        Me.RdioChargeOrSlip2.Size = New System.Drawing.Size(191, 16)
+        Me.RdioChargeOrSlip2.TabIndex = 6
+        Me.RdioChargeOrSlip2.TabStop = True
+        Me.RdioChargeOrSlip2.Text = "计算滑移平均最大浓度及风险值"
+        Me.RdioChargeOrSlip2.UseVisualStyleBackColor = True
+        '
         'frmOutOption
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -382,7 +394,6 @@ Partial Class frmOutOption
     Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
     Friend WithEvents txtInhalationTime As Chart.CText
     Friend WithEvents Label6111 As System.Windows.Forms.Label
-    Friend WithEvents chkSlip As System.Windows.Forms.CheckBox
     Public WithEvents cmbGroundCharacter As System.Windows.Forms.ComboBox
     Public WithEvents Label48 As System.Windows.Forms.Label
     Public WithEvents Label31 As System.Windows.Forms.Label
@@ -401,7 +412,9 @@ Partial Class frmOutOption
     Friend WithEvents Cancel_Button As System.Windows.Forms.Button
     Friend WithEvents OK_Button As System.Windows.Forms.Button
     Friend WithEvents chkInstantaneous As System.Windows.Forms.CheckBox
-    Friend WithEvents chkCharge As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents txtForeCount As Chart.CText
+    Friend WithEvents chkRisk As System.Windows.Forms.CheckBox
+    Friend WithEvents RdioChargeOrSlip2 As System.Windows.Forms.RadioButton
+    Friend WithEvents RdioChargeOrSlip1 As System.Windows.Forms.RadioButton
 End Class
