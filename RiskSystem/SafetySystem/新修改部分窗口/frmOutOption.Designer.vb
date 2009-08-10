@@ -23,7 +23,7 @@ Partial Class frmOutOption
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
+        Me.chkCharge = New System.Windows.Forms.CheckBox
         Me.txtInhalationTime = New Chart.CText
         Me.Label6111 = New System.Windows.Forms.Label
         Me.chkSlip = New System.Windows.Forms.CheckBox
@@ -55,7 +55,7 @@ Partial Class frmOutOption
         '
         'GroupBox6
         '
-        Me.GroupBox6.Controls.Add(Me.CheckBox1)
+        Me.GroupBox6.Controls.Add(Me.chkCharge)
         Me.GroupBox6.Controls.Add(Me.txtInhalationTime)
         Me.GroupBox6.Controls.Add(Me.Label6111)
         Me.GroupBox6.Controls.Add(Me.chkSlip)
@@ -66,16 +66,16 @@ Partial Class frmOutOption
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "吸入浓度参数"
         '
-        'CheckBox1
+        'chkCharge
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.ForeColor = System.Drawing.Color.Red
-        Me.CheckBox1.Location = New System.Drawing.Point(49, 20)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(156, 16)
-        Me.CheckBox1.TabIndex = 3
-        Me.CheckBox1.Text = "用毒性负荷法计算风险值"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.chkCharge.AutoSize = True
+        Me.chkCharge.ForeColor = System.Drawing.Color.Red
+        Me.chkCharge.Location = New System.Drawing.Point(49, 20)
+        Me.chkCharge.Name = "chkCharge"
+        Me.chkCharge.Size = New System.Drawing.Size(156, 16)
+        Me.chkCharge.TabIndex = 3
+        Me.chkCharge.Text = "用毒性负荷法计算风险值"
+        Me.chkCharge.UseVisualStyleBackColor = True
         '
         'txtInhalationTime
         '
@@ -401,7 +401,7 @@ Partial Class frmOutOption
     Friend WithEvents Cancel_Button As System.Windows.Forms.Button
     Friend WithEvents OK_Button As System.Windows.Forms.Button
     Friend WithEvents chkInstantaneous As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents chkCharge As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents txtForeCount As Chart.CText
 End Class

@@ -6,7 +6,7 @@ Imports System.Threading
 Imports System.Xml.Serialization
 
 Public Class frmMain
-
+    Private m_Sucess As Boolean = False
 
     Public SolutionExplorer As New frmSolution  '项目管理器窗口
     Public Result As New frmResult '结果窗口
@@ -258,21 +258,24 @@ Public Class frmMain
         Run()
     End Sub
     Private Sub BackgroundWorkerAermod_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerAermod.DoWork
+        m_Sucess = False
         If Project0.PType = 0 Then
             '初始化计算的气象参数。也就是根据观测的气象数据计算出当天的稳定度来
-            If Project0.SurfMet Is Nothing AndAlso Project0.SurfMet.ArrayMetData.Length > 0 Then
+            If Project0.SurfMet IsNot Nothing AndAlso Project0.SurfMet.ArrayMetData.Length > 0 Then
                 Dim SurMet As Met.MetGeneral = Project0.SurfMet.Clone
                 If SurMet.IsInsert = True Then '对气象数据插值处理
                     SurMet.InsetAllMetData()
                 End If
                 Project0.PreMet() '预处理数据
                 Project0.Dis0.Cal() '计算扩散
+                m_Sucess = True
             Else
                 MsgBox("请输入地面气象数据")
             End If
 
         Else
             Project0.FAndB.Cal() '计算所有的火灾爆炸方案
+            m_Sucess = True
         End If
         
     End Sub
@@ -287,8 +290,11 @@ Public Class frmMain
         Timer1.Stop()
         MenuRun.Enabled = True
         ToolRun.Enabled = True
-        RefreshResult() ' 更新计算结果
-        Cursor = Cursors.Default
+        If Me.m_Sucess = True Then
+            RefreshResult() ' 更新计算结果
+            Cursor = Cursors.Default
+        End If
+
     End Sub
     ''' <summary>
     ''' 更新计算结果

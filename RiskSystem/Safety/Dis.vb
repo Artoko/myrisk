@@ -286,8 +286,7 @@ Imports Sunmast.Hardware
         ReDim Me.m_Results.AllGridResult.InstantaneousGridC(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
 
         '初始化设置网格点滑移平均最大浓度
-        'If Me.Forecast.OutPut.IsSlipChecked Then
-        ReDim Me.m_Results.AllGridResult.SlipGrid(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
+            ReDim Me.m_Results.AllGridResult.SlipGrid(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
         For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
             '网格点滑移平均最大浓度网格初始化
             For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
@@ -297,7 +296,6 @@ Imports Sunmast.Hardware
                 Next
             Next
         Next
-        'End If
 
         '初始化设置网格点死亡概率和死亡百分率
         ReDim Me.m_Results.AllGridResult.Pr(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
@@ -309,7 +307,7 @@ Imports Sunmast.Hardware
         ReDim Me.m_Results.AllCareResult.InstantaneousCareC(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.CareReceptor.Length - 1) '某关心点的多个时刻的浓度
 
         '初始化设置关心点对象中的滑移平均最大浓度
-        'If Me.Forecast.OutPut.IsSlipChecked Then
+
         ReDim Me.m_Results.AllCareResult.SlipCare(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
         For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
             For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
@@ -317,7 +315,6 @@ Imports Sunmast.Hardware
                 Me.m_Results.AllCareResult.SlipCare(SN, j).StartAndEndTimeTime = New StartAndEndTime
             Next
         Next
-        'End If
         '初始化设置关心点对象中的最大浓度及出现的时间该:气象条件、关心点
         ReDim Me.m_Results.AllCareResult.CarePointMaxCT(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
         For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
@@ -343,7 +340,6 @@ Imports Sunmast.Hardware
         '-----------------------------------------------------------------------------------
         '初始化计算结果的对象结束
         '-----------------------------------------------------------------------------------
-
         For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
             Me.m_Results.MetResults(SN) = New MetResult
             ReDim Me.m_Results.MetResults(SN).ForeTimeResults(Me.m_ForeCast.OutPut.ForeCount - 1)
@@ -354,7 +350,6 @@ Imports Sunmast.Hardware
                 ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
                 ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridUpVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的上风向个数,从0开始，所以增加一个
             Next
-
             '网格点滑移平均最大浓度网格初始化
             If Me.Forecast.OutPut.IsSlipChecked Then
                 ReDim Me.m_Results.MetResults(SN).Slip.HurtLengthSlip(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围

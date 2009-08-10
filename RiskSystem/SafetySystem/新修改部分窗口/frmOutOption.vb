@@ -29,9 +29,10 @@
         '模型
         cmbModel.SelectedIndex = Me.m_Dis.Forecast.OutPut.GaussModelType
         txtIntervalTime.Value = Me.m_Dis.Forecast.OutPut.IntervalTime
-        chkInstantaneous.Checked = Me.m_Dis.Forecast.OutPut.IsInstantaneous
+        chkInstantaneous.Checked = Me.m_Dis.Forecast.OutPut.IsInstantaneous '瞬时浓度
         cmbModel_SelectedIndexChanged(sender, e)
         chkInstantaneous_CheckedChanged(sender, e)
+        Me.chkCharge.Checked = Me.m_Dis.Forecast.OutPut.IsCharge '毒性负荷法
     End Sub
 
     Private Sub txtForeStart_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtForeStart.Validating
@@ -99,5 +100,10 @@
         txtForeStart.Enabled = chkInstantaneous.Checked
         txtForeInterval.Enabled = chkInstantaneous.Checked
         txtForeCount.Enabled = chkInstantaneous.Checked
+    End Sub
+
+    
+    Private Sub chkCharge_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkCharge.CheckedChanged
+        Me.m_Dis.Forecast.OutPut.IsCharge = Me.chkCharge.Checked
     End Sub
 End Class
