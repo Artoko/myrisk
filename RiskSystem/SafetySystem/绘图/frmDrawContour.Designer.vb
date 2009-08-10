@@ -20,7 +20,7 @@ Partial Class frmDrawContour
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Me.ContourPaint1 = New DrawContour.ContourPaintForm
+        Me.ContourPaint1 = New RiskContourContol
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
         Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel
         Me.cmbRusult = New System.Windows.Forms.ToolStripComboBox
