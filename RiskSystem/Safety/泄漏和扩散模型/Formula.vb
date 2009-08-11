@@ -368,7 +368,7 @@ Public Module Formula
                 r1 = 0.0733348
             End If
         End If
-        DiffuseParameterY15 = r1 * (x1 ^ A1)
+        DiffuseParameterY15 = r1 * Math.Pow(x1, A1)
     End Function
 
     '国标方法计算有风时Z轴扩散参数，风速＞＝1.5。x1表示下风向距离，Stab表示稳定度。中间值取平均值得出。
@@ -475,7 +475,7 @@ Public Module Formula
                 r2 = 2.40691
             End If
         End If
-        DiffuseParameterZ15 = r2 * x2 ^ A2
+        DiffuseParameterZ15 = r2 * Math.Pow(x2, A2)
     End Function
 
     '根据风速求回归系数r01，对于A-B、B-C、C-D、D-E稳定度下的参数按内插法取平均值
@@ -596,7 +596,7 @@ Public Module Formula
                 p = 0.3
             End If
         End If
-        UP = u10 * (z2 / 10) ^ p
+        UP = u10 * Math.Pow((z2 / 10), p)
     End Function
 
     '取样时间
@@ -607,7 +607,7 @@ Public Module Formula
         ElseIf t2 >= 1 Then
             Q = 0.3
         End If
-        aySamplingTime = ay1 * (t2 / t1) ^ Q
+        aySamplingTime = ay1 * Math.Pow((t2 / t1), Q)
     End Function
 
     '取样时间
@@ -618,7 +618,7 @@ Public Module Formula
         ElseIf t2 >= 1 Then
             Q = 0.3
         End If
-        rSamplingTime = r1 * (t2 / t1) ^ Q
+        rSamplingTime = r1 * Math.Pow((t2 / t1), Q)
     End Function
 
     ''' <summary>

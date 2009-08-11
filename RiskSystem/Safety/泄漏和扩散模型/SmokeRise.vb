@@ -31,14 +31,14 @@ Module SmokeRise
         If H > 240 Then
             H = 240
         End If
-        RiseH1 = n0 * Qh ^ n1 * H ^ n2 / u
+        RiseH1 = n0 * Math.Pow(Qh, n1) * Math.Pow(H, n2) / u
     End Function
 
     Private Function RiseH2(ByVal Qh As Double, ByVal Qv As Double, ByVal D As Double, ByVal u As Double, ByVal H As Double, ByVal Ground As String, ByVal Angle As Double) As Double
         Dim H1 As Double
         Dim H2 As Double
         Dim Vs As Double
-        Vs = Qv / (PI * (D / 2) ^ 2) * System.Math.Sin(Angle / 180 * PI)
+        Vs = Qv / (PI * (D / 2) * (D / 2)) * System.Math.Sin(Angle / 180 * PI)
         H2 = RiseH1(Qh, u, H, Ground)
         H1 = 2 * (1.5 * Vs * D + 0.01 * Qh) / u - 0.048 * (Qh - 1700) / u
         RiseH2 = H1 + (H2 - H1) * (Qh - 1700) / 400
@@ -49,7 +49,7 @@ Module SmokeRise
         If D = 0 Then
             Vs = 0
         Else
-            Vs = Qv / (PI * (D / 2) ^ 2) * System.Math.Sin(Angle / 180 * PI)
+            Vs = Qv / (PI * (D / 2) * (D / 2)) * System.Math.Sin(Angle / 180 * PI)
             RiseH3 = 2 * (1.5 * Vs * D + 0.01 * Qh) / u
         End If
     End Function
@@ -69,7 +69,7 @@ Module SmokeRise
         If Qh < 0 Then
             Qh = 0
         End If
-        RiseHU15Stab = Qh ^ (1 / 3) * (dTz + 0.0098) ^ (-1 / 3) * u ^ (-1 / 3)
+        RiseHU15Stab = Math.Pow(Qh, (1 / 3)) * Math.Pow((dTz + 0.0098), (-1 / 3)) * Math.Pow(u, (-1 / 3))
     End Function
 
     Private Function RiseHU0_15(ByVal Qh As Double, ByVal dTz As Double) As Double
@@ -77,7 +77,7 @@ Module SmokeRise
         If Qh < 0 Then
             Qh = 0
         End If
-        RiseHU0_15 = 5.5 * Qh ^ (1 / 4) * (dTz + 0.0098) ^ (-3 / 8)
+        RiseHU0_15 = 5.5 * Math.Pow(Qh, (1 / 4)) * Math.Pow((dTz + 0.0098), (-3 / 8))
     End Function
 
     'ÎÂ¶ÈÌÝ¶È

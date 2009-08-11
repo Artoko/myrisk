@@ -8,7 +8,7 @@
     ''' <remarks></remarks>
     Function DiePr(ByVal t As Double, ByVal q As Double) As Double
         Dim p As Double = 0
-        p = -37.23 + 2.56 * Math.Log(t * q ^ (4 / 3))
+        p = -37.23 + 2.56 * Math.Log(t * Math.Pow(q, (4 / 3)))
         If p < 0 Then
             p = 0
         End If
@@ -78,6 +78,6 @@
 
     '计算不完全珈玛函数使用的函数
     Public Function F(ByVal u As Double) As Double
-        F = 1 / System.Math.Sqrt(2 * Math.PI) * System.Math.Exp(-u ^ 2 / 2)
+        F = 1 / System.Math.Sqrt(2 * Math.PI) * System.Math.Exp(-u * u / 2)
     End Function
 End Module

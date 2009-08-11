@@ -346,7 +346,7 @@
         Dim dblRi As Double
         dblRi = Me.m_g * dblLs * (dblDensity - dblDensitya) / dblDensitya * (dblut ^ (-2))
         Dim dblMa2 As Double
-        dblMa2 = Me.m_a2 * dblDensitya * Math.PI * dblR ^ 2 * dblut / dblRi * dbldt
+        dblMa2 = Me.m_a2 * dblDensitya * Math.PI * dblR * dblR * dblut / dblRi * dbldt
         Return dblMa2
 
     End Function
@@ -428,7 +428,7 @@
             '云团的体积
             Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_V = (Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_Ma + Me.m_Mg) / Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_Density
             '云团的高度
-            Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_H = Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_V / (Math.PI * Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_R ^ 2)
+            Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_H = Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_V / (Math.PI * Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_R * Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_R)
             '云团的扩散时间
             Me.m_BoxMetAndMass.BoxAirMass(j + 1).m_t = Me.m_BoxMetAndMass.BoxAirMass(j).m_t + dbldt
             '云团中污染物的浓度
