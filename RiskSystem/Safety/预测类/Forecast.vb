@@ -8,7 +8,8 @@
     Private m_Vane As New Vane '下风向类
     Private m_Grid As New Grid '预测网格
     Private m_Met(-1) As Met '气象条件数组
-    
+    Private m_OldMet(-1) As Met '气象条件数据组，用于中转
+    Private m_MaxMet(-1) As Met '气象条件数据组，用于中转
     Private m_Ta As Double = 16 '环境温度，摄氏度
     Private m_Pa As Double = 101325 '大气压力,Pa
     Private m_HurtConcentration(0 To 1) As HurtConcentration '伤害浓度
@@ -90,7 +91,32 @@
             Me.m_Met = value
         End Set
     End Property
-   
+    ''' <summary>
+    ''' 气象条件数据组，用于中转
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property OldMet() As Met()
+        Get
+            Return Me.m_OldMet
+        End Get
+        Set(ByVal value As Met())
+            Me.m_OldMet = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 最不利气象
+    ''' </summary>
+    ''' <remarks></remarks>
+    Property MaxMet() As Met()
+        Get
+            Return Me.m_MaxMet
+        End Get
+        Set(ByVal value As Met())
+            Me.m_MaxMet = value
+        End Set
+    End Property
     ''' <summary>
     ''' 环境温度，摄氏度
     ''' </summary>

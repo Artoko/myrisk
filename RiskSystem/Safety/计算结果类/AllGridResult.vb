@@ -17,12 +17,12 @@
     ''' 死亡概率：气象条件，Y轴，X轴
     ''' </summary>
     ''' <remarks></remarks>
-    Private m_Pr(-1, -1, -1) As Double
+    Private m_Pr()(,) As Double
     ''' <summary>
     ''' 死亡百分率 %：气象条件，Y轴，X轴
     ''' </summary>
     ''' <remarks></remarks>
-    Private m_D(-1, -1, -1) As Double
+    Private m_D()(,) As Double
     ''' <summary>
     ''' 个人风险值。所有气象条件下的个人风险值
     ''' </summary>
@@ -67,11 +67,11 @@
     ''' 死亡概率：气象条件，关心点
     ''' </summary>
     ''' <remarks></remarks>
-    Property Pr() As Double(,,)
+    Property Pr() As Double()(,)
         Get
             Return Me.m_Pr
         End Get
-        Set(ByVal value As Double(,,))
+        Set(ByVal value As Double()(,))
             Me.m_Pr = value
         End Set
     End Property
@@ -80,11 +80,11 @@
     ''' 死亡百分率 %：气象条件，关心点
     ''' </summary>
     ''' <remarks></remarks>
-    Property D() As Double(,,)
+    Property D() As Double()(,)
         Get
             Return Me.m_D
         End Get
-        Set(ByVal value As Double(,,))
+        Set(ByVal value As Double()(,))
             Me.m_D = value
         End Set
     End Property

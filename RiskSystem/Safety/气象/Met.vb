@@ -3,6 +3,7 @@
 ''' </summary>
 ''' <remarks></remarks>
 <Serializable()> Public Class Met
+    Implements ICloneable
 
     ''' <summary>
     ''' 时间
@@ -124,4 +125,18 @@
             Me.m_U_Ground = value
         End Set
     End Property
+
+    Public Function Clone() As Object Implements System.ICloneable.Clone
+        Dim objCopy As New Met()
+        objCopy.m_DateTime = Me.m_DateTime '日期
+        objCopy.m_WindType = Me.m_WindType '风的类型。0
+        objCopy.m_WindDer = Me.m_WindDer  '风向度
+        objCopy.m_Vane = Me.m_Vane   '风向
+        objCopy.m_Wind_Speed = Me.m_Wind_Speed  '风速,m/s
+        objCopy.m_Stab = Me.m_Stab  '稳定度
+        objCopy.m_Frequency = Me.m_Frequency  '该气象的频率
+        objCopy.m_u2 = Me.m_u2 '泄漏口高度处风速
+        objCopy.m_U_Ground = Me.m_U_Ground  '声明地面风速，因为在热量蒸发模型中用到
+        Return objCopy
+    End Function
 End Class

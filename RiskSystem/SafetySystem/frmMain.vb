@@ -270,6 +270,7 @@ Public Class frmMain
                     SurMet.InsetAllMetData()
                 End If
                 Project0.PreMet() '预处理数据
+                Project0.Dis0.CalRisk() '计算风险值
                 Project0.Dis0.Cal() '计算扩散
                 m_Sucess = True
             Else
@@ -568,8 +569,8 @@ Public Class frmMain
                 '添加新的工程
                 Me.Result.TreeView1.Nodes.Add(newNode1)
 
-                For i As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
-                    newNode2 = newNode1.Nodes.Add(Project0.Dis0.Forecast.Met(i).Vane & "," & Project0.Dis0.Forecast.Met(i).WindSpeed & "," & Project0.Dis0.Forecast.Met(i).Stab)
+                For i As Integer = 0 To Project0.Dis0.Forecast.MaxMet.Length - 1
+                    newNode2 = newNode1.Nodes.Add(Project0.Dis0.Forecast.MaxMet(i).Vane & "," & Project0.Dis0.Forecast.MaxMet(i).WindSpeed & "," & Project0.Dis0.Forecast.MaxMet(i).Stab)
                     For j As Integer = 0 To Project0.Dis0.Forecast.OutPut.ForeCount - 1
                         newTreeNode = New TreeNode(Project0.Dis0.Forecast.OutPut.ForeStart + j * Project0.Dis0.Forecast.OutPut.ForeInterval & "min")
                         newTreeNode.Text = Project0.Dis0.Forecast.OutPut.ForeStart + j * Project0.Dis0.Forecast.OutPut.ForeInterval & "min"
