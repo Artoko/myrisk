@@ -86,7 +86,7 @@ Partial Class frmMet
         Me.GroupBox9.Controls.Add(Me.Label27)
         Me.GroupBox9.Location = New System.Drawing.Point(20, 22)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(318, 83)
+        Me.GroupBox9.Size = New System.Drawing.Size(251, 83)
         Me.GroupBox9.TabIndex = 269
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "环境参数"

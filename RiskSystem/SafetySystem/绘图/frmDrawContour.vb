@@ -952,14 +952,18 @@ Public Class frmDrawContour
                     Next
                 Next
                 '设置等值线名称和值的数组
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(3 - 1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(3 - 1)
+                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(5 - 1)
+                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(5 - 1)
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(0) = "90%"
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(0) = 90
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(1) = "50%"
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(1) = 50
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(2) = "10%"
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(2) = 10
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(3) = "1%"
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(3) = 1
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(4) = "0.1%"
+                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(4) = 0.1
 
                 Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
                 Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
@@ -989,7 +993,7 @@ Public Class frmDrawContour
 
             For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                 For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                    Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.PersonalRisk(k, l) '个人风险
+                    Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.PersonalRisk(k, l) * Project0.Dis0.IntialSource.Probability '个人风险
                 Next
             Next
             '设置等值线名称和值的数组
@@ -1040,7 +1044,7 @@ Public Class frmDrawContour
             End If
             cmbMet.Items.Clear()
             For i As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1 '气象条件
-                cmbMet.Items.Add(Project0.Dis0.Forecast.Met(i).Vane & "," & Project0.Dis0.Forecast.Met(i).WindSpeed & "," & Project0.Dis0.Forecast.Met(i).Stab)
+                cmbMet.Items.Add(Project0.Dis0.Forecast.Met(i).m_DateTime.Year & "年" & Project0.Dis0.Forecast.Met(i).m_DateTime.Month & "月" & Project0.Dis0.Forecast.Met(i).m_DateTime.Day & "日" & Project0.Dis0.Forecast.Met(i).m_DateTime.Hour & "时")
             Next
             If cmbMet.Items.Count > 0 Then
                 cmbMet.SelectedIndex = 0
@@ -1051,7 +1055,7 @@ Public Class frmDrawContour
             cmbTime.SelectedIndex = 0
             cmbMet.Items.Clear()
             For i As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1 '气象条件
-                cmbMet.Items.Add(Project0.Dis0.Forecast.Met(i).Vane & "," & Project0.Dis0.Forecast.Met(i).WindSpeed & "," & Project0.Dis0.Forecast.Met(i).Stab)
+                cmbMet.Items.Add(Project0.Dis0.Forecast.Met(i).m_DateTime.Year & "年" & Project0.Dis0.Forecast.Met(i).m_DateTime.Month & "月" & Project0.Dis0.Forecast.Met(i).m_DateTime.Day & "日" & Project0.Dis0.Forecast.Met(i).m_DateTime.Hour & "时")
             Next
             cmbMet.Items.Add("所有")
             cmbMet.SelectedIndex = 0
