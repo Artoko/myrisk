@@ -26,13 +26,13 @@
             '添加气象条件
             Me.cmbMet.Items.Clear()
             For i As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
-                Me.cmbMet.Items.Add(Project0.Dis0.Forecast.Met(i).Vane & "," & Project0.Dis0.Forecast.Met(i).WindSpeed & "," & Project0.Dis0.Forecast.Met(i).Stab)
+                cmbMet.Items.Add(Project0.Dis0.Forecast.Met(i).m_DateTime.Year & "年" & Project0.Dis0.Forecast.Met(i).m_DateTime.Month & "月" & Project0.Dis0.Forecast.Met(i).m_DateTime.Day & "日" & Project0.Dis0.Forecast.Met(i).m_DateTime.Hour & "时")
             Next
-            Me.cmbMet.Items.Add("所有气象条件")
+            'Me.cmbMet.Items.Add("所有气象条件")
 
             '添加预测时刻
             cmbCare.SelectedIndex = cmbCare.Items.Count - 1
-            cmbMet.SelectedIndex = cmbMet.Items.Count - 1
+            cmbMet.SelectedIndex = 0
             cmbNum.SelectedIndex = 1
             cmbMet_SelectedIndexChanged(sender, e)
 
