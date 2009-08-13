@@ -170,11 +170,11 @@
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Property ChargeOrSlip() As Boolean
+    Property ChargeOrSlip() As Integer
         Get
             Return m_ChargeOrSlip
         End Get
-        Set(ByVal value As Boolean)
+        Set(ByVal value As Integer)
             m_ChargeOrSlip = value
         End Set
     End Property

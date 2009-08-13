@@ -12,7 +12,7 @@
     ''' 网格滑移平均最大浓度：气象条件，Y轴，X轴
     ''' </summary>
     ''' <remarks></remarks>
-    Private m_SlipGrid(-1, -1, -1) As Slippage
+    Private m_SlipGrid()(,) As Slippage
     ''' <summary>
     ''' 死亡概率：气象条件，Y轴，X轴
     ''' </summary>
@@ -39,6 +39,11 @@
     ''' <remarks></remarks>
     Private m_AllRisk As Double
     ''' <summary>
+    ''' 死亡人数
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private m_DiePeople(-1) As Double
+    ''' <summary>
     ''' 瞬时计算结果数组依次表示为：气象条件，预测时刻，Y行，X列
     ''' </summary>
     ''' <remarks></remarks>
@@ -54,11 +59,11 @@
     ''' 网格滑移平均最大浓度
     ''' </summary>
     ''' <remarks></remarks>
-    Property SlipGrid() As Slippage(,,)
+    Property SlipGrid() As Slippage()(,)
         Get
             Return m_SlipGrid
         End Get
-        Set(ByVal value As Slippage(,,))
+        Set(ByVal value As Slippage()(,))
             m_SlipGrid = value
         End Set
     End Property
@@ -111,6 +116,18 @@
         End Get
         Set(ByVal value As Double())
             m_ArrayRisk = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' 死亡人数
+    ''' </summary>
+    ''' <remarks></remarks>
+    Property DiePeople() As Double()
+        Get
+            Return Me.m_DiePeople
+        End Get
+        Set(ByVal value As Double())
+            Me.m_DiePeople = value
         End Set
     End Property
     ''' <summary>

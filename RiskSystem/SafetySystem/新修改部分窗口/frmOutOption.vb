@@ -36,9 +36,12 @@
         '滑移平均最大浓度时间。改为有毒物质吸入时间
         If Me.m_Dis.Forecast.OutPut.ChargeOrSlip = 0 Then
             Me.RdioChargeOrSlip1.Checked = True
+            Me.RdioChargeOrSlip2.Checked = False
         Else
             Me.RdioChargeOrSlip1.Checked = False
+            Me.RdioChargeOrSlip2.Checked = True
         End If
+
         RdioChargeOrSlip1_CheckedChanged(sender, e)
     End Sub
 
@@ -111,10 +114,8 @@
     Private Sub RdioChargeOrSlip1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RdioChargeOrSlip1.CheckedChanged, RdioChargeOrSlip2.CheckedChanged
         If RdioChargeOrSlip1.Checked Then
             Me.m_Dis.Forecast.OutPut.ChargeOrSlip = 0
-            txtInhalationTime.Enabled = False
         Else
             Me.m_Dis.Forecast.OutPut.ChargeOrSlip = 1
-            txtInhalationTime.Enabled = True
         End If
     End Sub
 End Class

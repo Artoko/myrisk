@@ -54,6 +54,11 @@ Public Class frmMain
     ''' <remarks></remarks>
     Public ResultSlab As New frmSlabCon
     ''' <summary>
+    ''' 事故风险值
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public frmRisk As New frmRisk
+    ''' <summary>
     ''' 爆炸TNT曲线图
     ''' </summary>
     ''' <remarks></remarks>
@@ -257,6 +262,8 @@ Public Class frmMain
         DrawContourWindow.ContourPaint1.SetMouseType(0) '箭头形
         DrawContourWindow.AddProject = False
         DrawContourWindow.FireBlastType = -1
+        '先保存文件
+        SaveAs(False)
         '运行
         Run()
     End Sub
@@ -269,6 +276,11 @@ Public Class frmMain
                 If SurMet.IsInsert = True Then '对气象数据插值处理
                     SurMet.InsetAllMetData()
                 End If
+                For i As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
+                    If Project0.Dis0.Forecast.Met(i).u2 < 0.3 Then
+                        Project0.Dis0.Forecast.Met(i).u2 = 0
+                    End If
+                Next
                 Project0.PreMet() '预处理数据
                 Project0.Dis0.CalRisk() '计算风险值
                 Project0.Dis0.Cal() '计算扩散
@@ -281,13 +293,12 @@ Public Class frmMain
             Project0.FAndB.Cal() '计算所有的火灾爆炸方案
             m_Sucess = True
         End If
-        
+
     End Sub
 
     Private Sub BackgroundWorkerAermod_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerAermod.RunWorkerCompleted
-        Me.Status.Text = "计算完毕。"
+        SaveAs(False)
         Dim Mainform As frmMain = My.Application.ApplicationContext.MainForm
-        Mainform.Status.Text = "就绪"
         Mainform.Status2.Text = ""
         Mainform.ProgressBar.Visible = False
         '关闭时钟
@@ -298,6 +309,8 @@ Public Class frmMain
             RefreshResult() ' 更新计算结果
         End If
         Cursor = Cursors.Default
+        Mainform.Status.Text = "就绪"
+        Me.Status.Text = "计算完毕。"
 
     End Sub
     ''' <summary>
@@ -323,7 +336,11 @@ Public Class frmMain
         End If
     End Sub
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        Me.Status.Text = "总进度已完成" & FormatNumber(Project0.Dis0.Results.AllProgress / Project0.Dis0.Results.AllCalMount * 100, 1) & "%"
+        Dim pro As Double = Project0.Dis0.Results.AllProgress / Project0.Dis0.Results.AllCalMount
+        If pro > 1 Then
+            pro = 1
+        End If
+        Me.Status.Text = "总进度已完成" & FormatNumber(pro * 100, 1) & "%"
         Me.Status2.Text = Project0.Dis0.Results.Status2
     End Sub
 
@@ -340,40 +357,6 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub OptionsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OptionsToolStripMenuItem.Click
-        Dim op As New frmOptionGG
-        If frmOptionGG.ShowDialog = Windows.Forms.DialogResult.OK Then
-        End If
-    End Sub
-
-    Private Sub 导入背景图IToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim frmImage As New frmImportBackImage1
-        frmImage.Text = "导入地理位置图"
-        frmImage.FileName = Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.imageFileName
-        If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.LoadBitmap(frmImage.FileName)
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.X = frmImage.LeftBottomPoint.X
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Y = frmImage.LeftBottomPoint.Y
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Width = frmImage.RightTopPoint.X - frmImage.LeftBottomPoint.X
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Height = frmImage.RightTopPoint.Y - frmImage.LeftBottomPoint.Y
-            Me.DrawContourWindow.Refresh()
-        End If
-    End Sub
-
-
-    Private Sub 导入平面图PToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim frmImage As New frmImportBackImage1
-        frmImage.Text = "导入场区平面图"
-        frmImage.FileName = Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.imageFileName
-        If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.LoadBitmap(frmImage.FileName)
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.X = frmImage.LeftBottomPoint.X
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Y = frmImage.LeftBottomPoint.Y
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Width = frmImage.RightTopPoint.X - frmImage.LeftBottomPoint.X
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Height = frmImage.RightTopPoint.Y - frmImage.LeftBottomPoint.Y
-            Me.DrawContourWindow.Refresh()
-        End If
-    End Sub
 
     Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripMenuItem.Click, SaveToolStripButton.Click
         SaveAs(False)
@@ -547,14 +530,15 @@ Public Class frmMain
             Me.DrawContourWindow.cmbRusult.Items.Add("瞬时浓度")
             
         End If
-        If Project0.Dis0.Forecast.OutPut.IsRisk = True AndAlso Project0.Dis0.Forecast.OutPut.ChargeOrSlip = 1 Then '滑移平均浓度
-            Me.DrawContourWindow.cmbRusult.Items.Add("滑移平均浓度")
-        End If
         If Project0.Dis0.Forecast.OutPut.IsRisk = True Then
-            Me.DrawContourWindow.cmbRusult.Items.Add("死亡百分率")
-            Me.DrawContourWindow.cmbRusult.Items.Add("个人风险值")
+            If Project0.Dis0.Forecast.OutPut.ChargeOrSlip = 1 Then '滑移平均浓度
+                Me.DrawContourWindow.cmbRusult.Items.Add("滑移平均浓度")
+                Me.DrawContourWindow.cmbRusult.Items.Add("个人风险值")
+            Else
+                Me.DrawContourWindow.cmbRusult.Items.Add("死亡百分率")
+                Me.DrawContourWindow.cmbRusult.Items.Add("个人风险值")
+            End If
         End If
-
         If Me.DrawContourWindow.cmbRusult.Items.Count > 0 Then
             Me.DrawContourWindow.cmbRusult.SelectedIndex = 0
         End If
@@ -706,7 +690,6 @@ Public Class frmMain
         ResultFire.Hide()
 
         If Project0 IsNot Nothing Then
-            设置SToolStripMenuItem.Visible = True
             执行ToolStripMenuItem.Visible = True
             If Project0.PType = 0 Then '泄漏
                 最大浓度及浓度限值分析ToolStripMenuItem.Visible = True
@@ -736,7 +719,6 @@ Public Class frmMain
                 End If
             End If
         Else
-            设置SToolStripMenuItem.Visible = False
             执行ToolStripMenuItem.Visible = False
         End If
     End Sub
@@ -895,75 +877,6 @@ Public Class frmMain
         frmNewLeakLiquid.ShowDialog()
     End Sub
 
-    Private Sub 导入背景图IToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 导入背景图IToolStripMenuItem.Click
-        Dim frmImage As New frmImportBackImage1
-        frmImage.Text = "导入背景图"
-        frmImage.FileName = Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.imageFileName
-        If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.LoadBitmap(frmImage.FileName)
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.X = frmImage.LeftBottomPoint.X
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Y = frmImage.LeftBottomPoint.Y
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Width = frmImage.RightTopPoint.X - frmImage.LeftBottomPoint.X
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Height = frmImage.RightTopPoint.Y - frmImage.LeftBottomPoint.Y
-            Me.DrawContourWindow.Refresh()
-            If frmImage.chkYz.Checked = True Then
-                If Project0.PType = 0 Then '泄漏、火灾爆炸
-                    Project0.Dis0.Forecast.Grid.MinX = frmImage.LeftBottomPoint.X
-                    Project0.Dis0.Forecast.Grid.MinY = frmImage.LeftBottomPoint.Y
-                    Project0.Dis0.Forecast.Grid.CountX = (frmImage.RightTopPoint.X - frmImage.LeftBottomPoint.X) / Project0.Dis0.Forecast.Grid.StepX
-                    Project0.Dis0.Forecast.Grid.CountY = (frmImage.RightTopPoint.Y - frmImage.LeftBottomPoint.Y) / Project0.Dis0.Forecast.Grid.StepY
-                    intialDrawData(Project0.Dis0.Forecast.Grid.MinX, Project0.Dis0.Forecast.Grid.StepX, Project0.Dis0.Forecast.Grid.CountX, Project0.Dis0.Forecast.Grid.MinY, Project0.Dis0.Forecast.Grid.StepY, Project0.Dis0.Forecast.Grid.CountY)
-                    SetPropety(Project0.Dis0.Forecast.Grid.StepX, Project0.Dis0.Forecast.Grid.StepY)
-
-                Else
-                    Project0.FAndB.Grid.MinX = frmImage.LeftBottomPoint.X
-                    Project0.FAndB.Grid.MaxX = frmImage.RightTopPoint.X
-                    Project0.FAndB.Grid.MinY = frmImage.LeftBottomPoint.Y
-                    Project0.FAndB.Grid.MaxY = frmImage.RightTopPoint.Y
-                    intialFireDrawData(Project0.FAndB.Grid.MinX, Project0.FAndB.Grid.MaxX, Project0.FAndB.Grid.MinY, Project0.FAndB.Grid.MaxY)
-                    SetPropety(Project0.FAndB.Grid.StepX, Project0.FAndB.Grid.StepY)
-
-                End If
-            End If
-        End If
-    End Sub
-
-    Private Sub 导入平面图PToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim frmImage As New frmImportBackImage1
-        frmImage.Text = "导入场区平面图"
-        frmImage.FileName = Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.imageFileName
-        If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.LoadBitmap(frmImage.FileName)
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.X = frmImage.LeftBottomPoint.X
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Y = frmImage.LeftBottomPoint.Y
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Width = frmImage.RightTopPoint.X - frmImage.LeftBottomPoint.X
-            Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Height = frmImage.RightTopPoint.Y - frmImage.LeftBottomPoint.Y
-            Me.DrawContourWindow.Refresh()
-            If frmImage.chkYz.Checked = True Then
-                If Project0.PType = 0 Then '泄漏、火灾爆炸
-                    Project0.Dis0.Forecast.Grid.MinX = frmImage.LeftBottomPoint.X
-                    Project0.Dis0.Forecast.Grid.MinY = frmImage.LeftBottomPoint.Y
-                    Project0.Dis0.Forecast.Grid.CountX = (frmImage.RightTopPoint.X - frmImage.LeftBottomPoint.X) / Project0.Dis0.Forecast.Grid.StepX
-                    Project0.Dis0.Forecast.Grid.CountY = (frmImage.RightTopPoint.Y - frmImage.LeftBottomPoint.Y) / Project0.Dis0.Forecast.Grid.StepY
-                    intialDrawData(Project0.Dis0.Forecast.Grid.MinX, Project0.Dis0.Forecast.Grid.StepX, Project0.Dis0.Forecast.Grid.CountX, Project0.Dis0.Forecast.Grid.MinY, Project0.Dis0.Forecast.Grid.StepY, Project0.Dis0.Forecast.Grid.CountY)
-                    SetPropety(Project0.Dis0.Forecast.Grid.StepX, Project0.Dis0.Forecast.Grid.StepY)
-
-                Else
-                    Project0.FAndB.Grid.MinX = frmImage.LeftBottomPoint.X
-                    Project0.FAndB.Grid.MaxX = frmImage.RightTopPoint.X
-                    Project0.FAndB.Grid.MinY = frmImage.LeftBottomPoint.Y
-                    Project0.FAndB.Grid.MaxY = frmImage.RightTopPoint.Y
-                    intialFireDrawData(Project0.FAndB.Grid.MinX, Project0.FAndB.Grid.MaxX, Project0.FAndB.Grid.MinY, Project0.FAndB.Grid.MaxY)
-                    SetPropety(Project0.FAndB.Grid.StepX, Project0.FAndB.Grid.StepY)
-
-                End If
-            End If
-
-        End If
-    End Sub
-
-  
-
     Private Sub 常用危险化学品物理化学性质数据库ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 常用危险化学品物理化学性质数据库ToolStripMenuItem.Click
         Dim frmNew As New frmSearchData
         frmNew.txtInT.Visible = True
@@ -1047,6 +960,12 @@ Public Class frmMain
 
     '更新结果分析
     Private Sub RefreshAllize()
+        If Project0.Dis0.Results.AllGridResult.ArrayRisk.Length > 0 Then
+            Me.frmRisk.ReLoad = True
+            Me.frmRisk.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+        Else
+            MsgBox("没有计算结果，请计算后再分析!")
+        End If
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             Me.ResultVaneMax.ReLoad = True
             Me.ResultVaneMax.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
@@ -1192,6 +1111,14 @@ Public Class frmMain
         '添加新的工程
         SolutionExplorer.TreeView.Nodes.Add(newNode1)
 
+        '背景图
+        newNode2 = newNode1.Nodes.Add("背景图")
+        newTreeNode = New TreeNode("地理位置图")
+        newTreeNode.Text = "地理位置图"
+        newNode2.Nodes.Add(newTreeNode)
+        newTreeNode = New TreeNode("厂区平面图")
+        newTreeNode.Text = "厂区平面图"
+        newNode2.Nodes.Add(newTreeNode)
 
         '污染源
 
@@ -1336,4 +1263,6 @@ Public Class frmMain
     Private Sub 新建NToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 新建NToolStripButton.Click
         NewRisk()
     End Sub
+
+    
 End Class

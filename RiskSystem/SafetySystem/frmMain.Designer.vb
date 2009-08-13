@@ -55,10 +55,11 @@ Partial Class frmMain
         Me.mnuLeakFlash = New System.Windows.Forms.ToolStripMenuItem
         Me.mnuLeakHeat = New System.Windows.Forms.ToolStripMenuItem
         Me.mnuLeakQuality = New System.Windows.Forms.ToolStripMenuItem
-        Me.设置SToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.导入背景图IToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.预测方案ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolsMenu = New System.Windows.Forms.ToolStripMenuItem
+        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.全国各地气压数据库PToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.大气稳定度计算SToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.重置窗口布局RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.执行ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuRun = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator
@@ -71,11 +72,6 @@ Partial Class frmMain
         Me.火灾爆炸事故概述GToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.火灾事故热辐热分析HToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.爆炸事故冲击波超压PToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolsMenu = New System.Windows.Forms.ToolStripMenuItem
-        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.全国各地气压数据库PToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.大气稳定度计算SToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.重置窗口布局RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpMenu = New System.Windows.Forms.ToolStripMenuItem
         Me.IndexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator
@@ -115,7 +111,7 @@ Partial Class frmMain
         '
         'MenuStrip
         '
-        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileMenu, Me.ViewMenu, Me.mnuSourceItemLeak, Me.ToolsMenu, Me.设置SToolStripMenuItem, Me.执行ToolStripMenuItem, Me.HelpMenu})
+        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileMenu, Me.ViewMenu, Me.mnuSourceItemLeak, Me.ToolsMenu, Me.执行ToolStripMenuItem, Me.HelpMenu})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
         Me.MenuStrip.Size = New System.Drawing.Size(802, 24)
@@ -345,31 +341,39 @@ Partial Class frmMain
         Me.mnuLeakQuality.Size = New System.Drawing.Size(184, 22)
         Me.mnuLeakQuality.Text = "质量蒸发量计算(&Q)"
         '
-        '设置SToolStripMenuItem
+        'ToolsMenu
         '
-        Me.设置SToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.导入背景图IToolStripMenuItem, Me.预测方案ToolStripMenuItem, Me.OptionsToolStripMenuItem})
-        Me.设置SToolStripMenuItem.Name = "设置SToolStripMenuItem"
-        Me.设置SToolStripMenuItem.Size = New System.Drawing.Size(59, 20)
-        Me.设置SToolStripMenuItem.Text = "设置(&S)"
-        Me.设置SToolStripMenuItem.Visible = False
+        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.常用危险化学品物理化学性质数据库ToolStripMenuItem, Me.全国各地气压数据库PToolStripMenuItem, Me.大气稳定度计算SToolStripMenuItem, Me.重置窗口布局RToolStripMenuItem})
+        Me.ToolsMenu.Name = "ToolsMenu"
+        Me.ToolsMenu.Size = New System.Drawing.Size(59, 20)
+        Me.ToolsMenu.Text = "工具(&T)"
         '
-        '导入背景图IToolStripMenuItem
+        '常用危险化学品物理化学性质数据库ToolStripMenuItem
         '
-        Me.导入背景图IToolStripMenuItem.Name = "导入背景图IToolStripMenuItem"
-        Me.导入背景图IToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
-        Me.导入背景图IToolStripMenuItem.Text = "导入背景图(&B)"
+        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem.Name = "常用危险化学品物理化学性质数据库ToolStripMenuItem"
+        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
+        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem.Text = "常用危险化学品物理化学性质数据库(&C)"
+        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem.Visible = False
         '
-        '预测方案ToolStripMenuItem
+        '全国各地气压数据库PToolStripMenuItem
         '
-        Me.预测方案ToolStripMenuItem.Name = "预测方案ToolStripMenuItem"
-        Me.预测方案ToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
-        Me.预测方案ToolStripMenuItem.Text = "修改预测方案(R)"
+        Me.全国各地气压数据库PToolStripMenuItem.Name = "全国各地气压数据库PToolStripMenuItem"
+        Me.全国各地气压数据库PToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
+        Me.全国各地气压数据库PToolStripMenuItem.Text = "全国各地气压数据库(&P)"
+        Me.全国各地气压数据库PToolStripMenuItem.Visible = False
         '
-        'OptionsToolStripMenuItem
+        '大气稳定度计算SToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
-        Me.OptionsToolStripMenuItem.Text = "输出选项(&O)"
+        Me.大气稳定度计算SToolStripMenuItem.Name = "大气稳定度计算SToolStripMenuItem"
+        Me.大气稳定度计算SToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
+        Me.大气稳定度计算SToolStripMenuItem.Text = "大气稳定度计算(&S)"
+        '
+        '重置窗口布局RToolStripMenuItem
+        '
+        Me.重置窗口布局RToolStripMenuItem.Name = "重置窗口布局RToolStripMenuItem"
+        Me.重置窗口布局RToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
+        Me.重置窗口布局RToolStripMenuItem.Text = "重置窗口布局(&R)"
+        Me.重置窗口布局RToolStripMenuItem.Visible = False
         '
         '执行ToolStripMenuItem
         '
@@ -443,38 +447,6 @@ Partial Class frmMain
         Me.爆炸事故冲击波超压PToolStripMenuItem.Name = "爆炸事故冲击波超压PToolStripMenuItem"
         Me.爆炸事故冲击波超压PToolStripMenuItem.Size = New System.Drawing.Size(220, 22)
         Me.爆炸事故冲击波超压PToolStripMenuItem.Text = "爆炸事故冲击波超压分析(&P)"
-        '
-        'ToolsMenu
-        '
-        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.常用危险化学品物理化学性质数据库ToolStripMenuItem, Me.全国各地气压数据库PToolStripMenuItem, Me.大气稳定度计算SToolStripMenuItem, Me.重置窗口布局RToolStripMenuItem})
-        Me.ToolsMenu.Name = "ToolsMenu"
-        Me.ToolsMenu.Size = New System.Drawing.Size(59, 20)
-        Me.ToolsMenu.Text = "工具(&T)"
-        '
-        '常用危险化学品物理化学性质数据库ToolStripMenuItem
-        '
-        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem.Name = "常用危险化学品物理化学性质数据库ToolStripMenuItem"
-        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
-        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem.Text = "常用危险化学品物理化学性质数据库(&C)"
-        '
-        '全国各地气压数据库PToolStripMenuItem
-        '
-        Me.全国各地气压数据库PToolStripMenuItem.Name = "全国各地气压数据库PToolStripMenuItem"
-        Me.全国各地气压数据库PToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
-        Me.全国各地气压数据库PToolStripMenuItem.Text = "全国各地气压数据库(&P)"
-        '
-        '大气稳定度计算SToolStripMenuItem
-        '
-        Me.大气稳定度计算SToolStripMenuItem.Name = "大气稳定度计算SToolStripMenuItem"
-        Me.大气稳定度计算SToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
-        Me.大气稳定度计算SToolStripMenuItem.Text = "大气稳定度计算(&S)"
-        '
-        '重置窗口布局RToolStripMenuItem
-        '
-        Me.重置窗口布局RToolStripMenuItem.Name = "重置窗口布局RToolStripMenuItem"
-        Me.重置窗口布局RToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
-        Me.重置窗口布局RToolStripMenuItem.Text = "重置窗口布局(&R)"
-        Me.重置窗口布局RToolStripMenuItem.Visible = False
         '
         'HelpMenu
         '
@@ -599,6 +571,7 @@ Partial Class frmMain
         Me.ToolStripButton4.Name = "ToolStripButton4"
         Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton4.Text = "关心点"
+        Me.ToolStripButton4.Visible = False
         '
         'ToolStripButton5
         '
@@ -608,11 +581,13 @@ Partial Class frmMain
         Me.ToolStripButton5.Name = "ToolStripButton5"
         Me.ToolStripButton5.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton5.Text = "设置坐标范围"
+        Me.ToolStripButton5.Visible = False
         '
         'ToolStripSeparator11
         '
         Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
         Me.ToolStripSeparator11.Size = New System.Drawing.Size(6, 25)
+        Me.ToolStripSeparator11.Visible = False
         '
         'ToolRun
         '
@@ -778,8 +753,6 @@ Partial Class frmMain
     Friend WithEvents ToolRun As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripMenuItemF As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents LToolStripMenuItemL As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents 设置SToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents 导入背景图IToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 重置窗口布局RToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 常用危险化学品物理化学性质数据库ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 全国各地气压数据库PToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -790,10 +763,8 @@ Partial Class frmMain
     Friend WithEvents 下风向浓度分析VToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator17 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents txtLocation As System.Windows.Forms.ToolStripLabel
-    Friend WithEvents 预测方案ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 重气体浓度分析ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 连续重气体浓度分析SToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents OptionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents mnuSourceItemLeak As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents mnuLeakGas As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents mnuLeakTwo As System.Windows.Forms.ToolStripMenuItem

@@ -3,6 +3,8 @@
 ''' </summary>
 ''' <remarks></remarks>
 <Serializable()> Public Class StartAndEndTime
+    Implements ICloneable
+
     ''' <summary>
     ''' 开始时间
     ''' </summary>
@@ -23,6 +25,13 @@
         Dim str As String = Math.Truncate(StartTime / 60) & "分" & CInt(Me.StartTime - Math.Truncate(StartTime / 60) * 60) & "秒 - " & Math.Truncate(EndTime / 60) & "分" & CInt(EndTime - Math.Truncate(EndTime / 60) * 60) & "秒"
         Return str
 
+    End Function
+
+    Public Function Clone() As Object Implements System.ICloneable.Clone
+        Dim obj As New StartAndEndTime
+        obj.StartTime = Me.StartTime
+        obj.EndTime = Me.EndTime
+        Return obj
     End Function
 End Class
 

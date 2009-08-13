@@ -214,6 +214,10 @@ Public Class frmSolution
                 'Aermap()
             ElseIf myTreeNode.Text.Contains("输出选项") Then
                 OutOption()
+            ElseIf myTreeNode.Text.Contains("地理位置图") Then
+                ImportBackImage1()
+            ElseIf myTreeNode.Text.Contains("厂区平面图") Then
+                ImportBackImage2()
             End If
         End If
         '根据用户设置的污染源情况修改解决方案的中的污染源
@@ -221,7 +225,44 @@ Public Class frmSolution
         '改变鼠标样式为默认
         My.Application.ApplicationContext.MainForm.Cursor = Cursors.Default
     End Sub
-
+    ''' <summary>
+    '''设置控制选项
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub ImportBackImage1()
+        Dim frmImage As New CImPortImage.frmImportBackImage1
+        frmImage.Text = "导入地理位置图"
+        frmImage.ImportImageControl1.InsertImage = Project0.ImportImage0.ImportBack1.Clone
+        If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
+            Dim myFrmMain As frmMain = My.Application.ApplicationContext.MainForm
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.LoadBitmap(frmImage.ImportImageControl1.InsertImage.FileName)
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.X = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Y = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Width = frmImage.ImportImageControl1.InsertImage.RightTopPoint.X - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Height = frmImage.ImportImageControl1.InsertImage.RightTopPoint.Y - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
+            myFrmMain.DrawContourWindow.Refresh()
+            Project0.ImportImage0.ImportBack1 = frmImage.ImportImageControl1.InsertImage.Clone
+        End If
+    End Sub
+    ''' <summary>
+    '''设置控制选项
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub ImportBackImage2()
+        Dim frmImage As New CImPortImage.frmImportBackImage1
+        frmImage.Text = "导入场区平面图"
+        frmImage.ImportImageControl1.InsertImage = Project0.ImportImage0.ImportBack2.Clone
+        If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
+            Dim myFrmMain As frmMain = My.Application.ApplicationContext.MainForm
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.LoadBitmap(frmImage.ImportImageControl1.InsertImage.FileName)
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.X = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Y = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Width = frmImage.ImportImageControl1.InsertImage.RightTopPoint.X - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
+            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Height = frmImage.ImportImageControl1.InsertImage.RightTopPoint.Y - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
+            myFrmMain.DrawContourWindow.Refresh()
+            Project0.ImportImage0.ImportBack2 = frmImage.ImportImageControl1.InsertImage.Clone
+        End If
+    End Sub
     ''' <summary>
     ''' 设置点源
     ''' </summary>
@@ -231,6 +272,8 @@ Public Class frmSolution
         frmLeakSource.Dis = Project0.Dis0.Clone
         If frmLeakSource.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Project0.Dis0 = frmLeakSource.Dis.Clone
+            Dim frmMain As frmMain = My.Application.ApplicationContext.MainForm
+            frmMain.DrawContourWindow.SetPolluteDraw()
         End If
     End Sub
     ''' <summary>
@@ -250,6 +293,8 @@ Public Class frmSolution
         frmGrid.Dis = Project0.Dis0.Clone
         If frmGrid.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Project0.Dis0 = frmGrid.Dis.Clone
+            Dim frmMain As frmMain = My.Application.ApplicationContext.MainForm
+            frmMain.DrawContourWindow.SetPolluteDraw()
         End If
     End Sub
 
@@ -258,6 +303,8 @@ Public Class frmSolution
         frmCare.Dis = Project0.Dis0.Clone
         If frmCare.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Project0.Dis0 = frmCare.Dis.Clone
+            Dim frmMain As frmMain = My.Application.ApplicationContext.MainForm
+            frmMain.DrawContourWindow.SetPolluteDraw()
         End If
     End Sub
 

@@ -32,6 +32,8 @@
 
     Private m_SaveName As String
 
+    Public ImportImage0 As New ImportImages '地理位置和厂区平面图
+
     ''' <summary>
     ''' 工程类型：0泄漏预测项目，1为火灾爆炸项目
     ''' </summary>

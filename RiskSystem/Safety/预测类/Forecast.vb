@@ -8,7 +8,7 @@
     Private m_Vane As New Vane '下风向类
     Private m_Grid As New Grid '预测网格
     Private m_Met(-1) As Met '气象条件数组
-    Private m_OldMet(-1) As Met '气象条件数据组，用于中转
+    Private m_IntialMet(-1) As Met '气象条件数据组，用于储存最初的气象数据 
     Private m_MaxMet(-1) As Met '气象条件数据组，用于中转
     Private m_Ta As Double = 16 '环境温度，摄氏度
     Private m_Pa As Double = 101325 '大气压力,Pa
@@ -92,17 +92,17 @@
         End Set
     End Property
     ''' <summary>
-    ''' 气象条件数据组，用于中转
+    ''' 气象条件数据组，用于储存最初的气象数据
     ''' </summary>
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Property OldMet() As Met()
+    Property IntialMet() As Met()
         Get
-            Return Me.m_OldMet
+            Return Me.m_IntialMet
         End Get
         Set(ByVal value As Met())
-            Me.m_OldMet = value
+            Me.m_IntialMet = value
         End Set
     End Property
     ''' <summary>

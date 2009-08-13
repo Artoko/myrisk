@@ -67,6 +67,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\CommonCountour\DrawContour\bin\Debug\Chart.dll</HintPath>
     </Reference>
+    <Reference Include="CImPortImage, Version=1.0.3512.40160, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\CImPortImage.dll</HintPath>
+    </Reference>
     <Reference Include="DrawContour, Version=1.1.3508.25636, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\DrawContour.dll</HintPath>
@@ -130,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="公共类和窗体\ImportImages.vb" />
     <Compile Include="公共类和窗体\OpenAndSaveFile.vb" />
     <Compile Include="绘图控件\RiskContourContol.Designer.vb">
       <DependentUpon>RiskContourContol.vb</DependentUpon>
@@ -307,6 +312,12 @@
     <Compile Include="计算结果\frmHeavyCon.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="计算结果\frmRisk.Designer.vb">
+      <DependentUpon>frmRisk.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmRisk.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="计算结果\frmSlabCon.Designer.vb">
       <DependentUpon>frmSlabCon.vb</DependentUpon>
     </Compile>
@@ -353,12 +364,6 @@
       <DependentUpon>frmDrawLayer.vb</DependentUpon>
     </Compile>
     <Compile Include="frmDrawLayer.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="绘图\frmImportBackImage1.Designer.vb">
-      <DependentUpon>frmImportBackImage1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="绘图\frmImportBackImage1.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="绘图\RectArea.vb" />
@@ -567,6 +572,10 @@
       <DependentUpon>frmHeavyCon.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmRisk.resx">
+      <DependentUpon>frmRisk.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="计算结果\frmSlabCon.resx">
       <DependentUpon>frmSlabCon.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -598,10 +607,6 @@
     <EmbeddedResource Include="frmDrawLayer.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmDrawLayer.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="绘图\frmImportBackImage1.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmImportBackImage1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDocking.resx">
       <SubType>Designer</SubType>

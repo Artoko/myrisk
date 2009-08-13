@@ -23,6 +23,9 @@ Partial Class frmOutOption
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox
+        Me.RdioChargeOrSlip2 = New System.Windows.Forms.RadioButton
+        Me.RdioChargeOrSlip1 = New System.Windows.Forms.RadioButton
+        Me.chkRisk = New System.Windows.Forms.CheckBox
         Me.txtInhalationTime = New Chart.CText
         Me.Label6111 = New System.Windows.Forms.Label
         Me.cmbGroundCharacter = New System.Windows.Forms.ComboBox
@@ -45,9 +48,6 @@ Partial Class frmOutOption
         Me.Cancel_Button = New System.Windows.Forms.Button
         Me.OK_Button = New System.Windows.Forms.Button
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.chkRisk = New System.Windows.Forms.CheckBox
-        Me.RdioChargeOrSlip1 = New System.Windows.Forms.RadioButton
-        Me.RdioChargeOrSlip2 = New System.Windows.Forms.RadioButton
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
@@ -67,6 +67,39 @@ Partial Class frmOutOption
         Me.GroupBox6.TabIndex = 279
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "              "
+        '
+        'RdioChargeOrSlip2
+        '
+        Me.RdioChargeOrSlip2.AutoSize = True
+        Me.RdioChargeOrSlip2.Location = New System.Drawing.Point(49, 42)
+        Me.RdioChargeOrSlip2.Name = "RdioChargeOrSlip2"
+        Me.RdioChargeOrSlip2.Size = New System.Drawing.Size(191, 16)
+        Me.RdioChargeOrSlip2.TabIndex = 6
+        Me.RdioChargeOrSlip2.TabStop = True
+        Me.RdioChargeOrSlip2.Text = "计算滑移平均最大浓度及风险值"
+        Me.RdioChargeOrSlip2.UseVisualStyleBackColor = True
+        '
+        'RdioChargeOrSlip1
+        '
+        Me.RdioChargeOrSlip1.AutoSize = True
+        Me.RdioChargeOrSlip1.Location = New System.Drawing.Point(49, 19)
+        Me.RdioChargeOrSlip1.Name = "RdioChargeOrSlip1"
+        Me.RdioChargeOrSlip1.Size = New System.Drawing.Size(155, 16)
+        Me.RdioChargeOrSlip1.TabIndex = 5
+        Me.RdioChargeOrSlip1.TabStop = True
+        Me.RdioChargeOrSlip1.Text = "用毒性负荷法计算风险值"
+        Me.RdioChargeOrSlip1.UseVisualStyleBackColor = True
+        '
+        'chkRisk
+        '
+        Me.chkRisk.AutoSize = True
+        Me.chkRisk.Enabled = False
+        Me.chkRisk.Location = New System.Drawing.Point(6, 0)
+        Me.chkRisk.Name = "chkRisk"
+        Me.chkRisk.Size = New System.Drawing.Size(84, 16)
+        Me.chkRisk.TabIndex = 4
+        Me.chkRisk.Text = "计算风险值"
+        Me.chkRisk.UseVisualStyleBackColor = True
         '
         'txtInhalationTime
         '
@@ -333,38 +366,6 @@ Partial Class frmOutOption
         Me.GroupBox1.TabIndex = 296
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "模型选项"
-        '
-        'chkRisk
-        '
-        Me.chkRisk.AutoSize = True
-        Me.chkRisk.Location = New System.Drawing.Point(6, 0)
-        Me.chkRisk.Name = "chkRisk"
-        Me.chkRisk.Size = New System.Drawing.Size(84, 16)
-        Me.chkRisk.TabIndex = 4
-        Me.chkRisk.Text = "计算风险值"
-        Me.chkRisk.UseVisualStyleBackColor = True
-        '
-        'RdioChargeOrSlip1
-        '
-        Me.RdioChargeOrSlip1.AutoSize = True
-        Me.RdioChargeOrSlip1.Location = New System.Drawing.Point(49, 19)
-        Me.RdioChargeOrSlip1.Name = "RdioChargeOrSlip1"
-        Me.RdioChargeOrSlip1.Size = New System.Drawing.Size(155, 16)
-        Me.RdioChargeOrSlip1.TabIndex = 5
-        Me.RdioChargeOrSlip1.TabStop = True
-        Me.RdioChargeOrSlip1.Text = "用毒性负荷法计算风险值"
-        Me.RdioChargeOrSlip1.UseVisualStyleBackColor = True
-        '
-        'RdioChargeOrSlip2
-        '
-        Me.RdioChargeOrSlip2.AutoSize = True
-        Me.RdioChargeOrSlip2.Location = New System.Drawing.Point(49, 42)
-        Me.RdioChargeOrSlip2.Name = "RdioChargeOrSlip2"
-        Me.RdioChargeOrSlip2.Size = New System.Drawing.Size(191, 16)
-        Me.RdioChargeOrSlip2.TabIndex = 6
-        Me.RdioChargeOrSlip2.TabStop = True
-        Me.RdioChargeOrSlip2.Text = "计算滑移平均最大浓度及风险值"
-        Me.RdioChargeOrSlip2.UseVisualStyleBackColor = True
         '
         'frmOutOption
         '
