@@ -52,6 +52,9 @@ Public Class frmLeakSource
         txtAirProportion.Value = Me.m_Dis.IntialSource.AirProportion
 
         txtProbability.Value = Me.m_Dis.IntialSource.Probability
+        '环境温度和环境压力
+        txtTa.Value = Me.m_Dis.Forecast.Ta
+        txtPa.Value = Me.m_Dis.Forecast.Pa
 
     End Sub
     Private Sub txtLeakSourceName_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtLeakSourceName.Validating
@@ -515,6 +518,16 @@ Public Class frmLeakSource
 
     Private Sub txtProbability_Validating(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtProbability.Validating
         Me.m_Dis.IntialSource.Probability = txtProbability.Value
+
+    End Sub
+
+    Private Sub txtTa_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtTa.Validating
+        Me.m_Dis.Forecast.Ta = txtTa.Value
+
+    End Sub
+
+    Private Sub txtPa_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtPa.Validating
+        Me.m_Dis.Forecast.Pa = txtPa.Value
 
     End Sub
 End Class

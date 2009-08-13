@@ -282,6 +282,9 @@ Imports Sunmast.Hardware
         '初始化计算结果的对象
         '------------------------------------------------------------------------------------
         Dim MaxTen As Integer = 10
+        If Me.m_ForeCast.Met.Length < 10 Then
+            MaxTen = Me.m_ForeCast.Met.Length
+        End If
         '初始化设置网格点对象中的瞬时网格点数组。风险值最大的前10浓度分布
         ReDim Me.m_Results.AllGridResult.InstantaneousGridC(MaxTen - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
 
@@ -319,7 +322,7 @@ Imports Sunmast.Hardware
         '初始化设置关心点对象中的滑移平均最大浓度。风险值最大的前10浓度分布
 
         ReDim Me.m_Results.AllCareResult.SlipCare(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+        For SN As Integer = 0 To MaxTen - 1 '气象条件
             For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
                 Me.m_Results.AllCareResult.SlipCare(SN, j) = New Slippage
                 Me.m_Results.AllCareResult.SlipCare(SN, j).StartAndEndTimeTime = New StartAndEndTime
@@ -327,14 +330,14 @@ Imports Sunmast.Hardware
         Next
         '初始化设置关心点对象中的最大浓度及出现的时间该:气象条件、关心点
         ReDim Me.m_Results.AllCareResult.CarePointMaxCT(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+        For SN As Integer = 0 To MaxTen - 1 '气象条件
             For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
                 Me.m_Results.AllCareResult.CarePointMaxCT(SN, j) = New MaxCD
             Next
         Next
         '初始化设置关心点对象中关心点出现某伤害一浓度的浓度限值的开始和结束时间:气象条件，关心点，给定浓度值
         ReDim Me.m_Results.AllCareResult.CarePointTime(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1, Me.m_ForeCast.HurtConcentration.Length - 1)
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+        For SN As Integer = 0 To MaxTen - 1 '气象条件
             For i As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
                 For j As Integer = 0 To Me.m_ForeCast.HurtConcentration.Length - 1
                     Me.m_Results.AllCareResult.CarePointTime(SN, i, j) = New StartAndEndTime
@@ -1912,7 +1915,7 @@ Imports Sunmast.Hardware
                             If Pr(j, i) < 0 Then
                                 Pr(j, i) = 0
                             Else
-                                D(j, i) = DiePr.NormalSchool(Pr(j, i)) * 100 '计算死亡率，不含百分号
+                                D(j, i) = DiePr.NormalSchool(Pr(j, i)) * 100 '计算死亡率，含百分号
                                 Me.m_Results.AllGridResult.PersonalRisk(j, i) += D(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '个人风险值叠加
                                 DiePeople += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100
                                 MetRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '事故风险值叠加

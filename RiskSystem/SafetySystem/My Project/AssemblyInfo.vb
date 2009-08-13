@@ -10,7 +10,7 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("环境风险评价系统(RiskSystem)")> 
 <Assembly: AssemblyDescription("警告：本计算机程序受著作权法和国际条约保护。如未经授权而擅自复制或传播本程序(或其中任何部分)，将受到严厉的民事和刑事制裁，并将在法律许可的最大限度内受到起诉。")> 
-<Assembly: AssemblyCompany("石家庄环安科技有限公司")> 
+<Assembly: AssemblyCompany("环安科技")> 
 <Assembly: AssemblyProduct("环境风险评价系统(RiskSystem)")> 
 <Assembly: AssemblyCopyright("版权所有 (C)  2005-2008")> 
 <Assembly: AssemblyTrademark("")> 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' 方法是按如下所示使用“*”:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.3")> 
-<Assembly: AssemblyFileVersion("1.3")> 
+<Assembly: AssemblyVersion("3.0.0.0")> 
+<Assembly: AssemblyFileVersion("3.0.0.0")> 

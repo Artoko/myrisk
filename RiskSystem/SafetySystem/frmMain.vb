@@ -473,13 +473,17 @@ Public Class frmMain
                 Dim strNameLast As String = GetFileName(sFile)
                 Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & strNameLast
                 SolutionExplorer.TreeView.Nodes(0).Text = strNameLast
-                Me.RefreshResult() '显示结果
                 'Me.SolutionExplorer.RefreshSolutionTree()
             Catch ex As Exception
                 fileStr.Close()
                 MsgBox("打开文件错误。可能您用的是较低版本的软件打开了较高版本保存的方案!")
             End Try
         End If
+        Try
+            Me.RefreshResult() '显示结果
+        Catch ex As Exception
+            MsgBox("可能您的方案已经改变，请重新计算!")
+        End Try
     End Sub
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
         DrawContourWindow.ContourPaint1.SetMouseType(0) '箭头形
@@ -1152,9 +1156,9 @@ Public Class frmMain
         '气象条件
         newNode2 = newNode1.Nodes.Add("气象数据")
 
-        newTreeNode = New TreeNode("气象数据选项")
-        newTreeNode.Text = "气象数据选项"
-        newNode2.Nodes.Add(newTreeNode)
+        'newTreeNode = New TreeNode("气象数据选项")
+        'newTreeNode.Text = "气象数据选项"
+        'newNode2.Nodes.Add(newTreeNode)
 
         newTreeNode = New TreeNode("逐时地面气象数据")
         newTreeNode.Text = "逐时地面气象数据"
