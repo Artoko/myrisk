@@ -37,7 +37,7 @@
             .SetData(0, 5, "稳定度")
             .SetData(0, 6, "气象概率")
             .SetData(0, 7, "死亡人数")
-            .SetData(0, 8, "风险值[10^-5]")
+            .SetData(0, 8, "风险值[/a]")
         End With
         EFlexRisk.Rows.Count = Project0.Dis0.Forecast.Met.Length + 3
         For i As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
@@ -56,13 +56,13 @@
                 .SetData(i + 1, 5, Project0.Dis0.Forecast.Met(i).Stab)
                 .SetData(i + 1, 6, Project0.Dis0.Forecast.Met(i).Frequency)
                 .SetData(i + 1, 7, Project0.Dis0.Results.AllGridResult.DiePeople(i))
-                .SetData(i + 1, 8, Project0.Dis0.Results.AllGridResult.ArrayRisk(i) / 100000)
+                .SetData(i + 1, 8, Project0.Dis0.Results.AllGridResult.ArrayRisk(i) * Project0.Dis0.IntialSource.Probability)
             End With
         Next
         With EFlexRisk
             .SetData(Project0.Dis0.Forecast.Met.Length + 2, 1, Project0.Dis0.IntialSource.Probability) '时间
             .SetData(Project0.Dis0.Forecast.Met.Length + 2, 2, "全部")
-            .SetData(Project0.Dis0.Forecast.Met.Length + 2, 8, Project0.Dis0.Results.AllGridResult.AllRisk / 100000)
+            .SetData(Project0.Dis0.Forecast.Met.Length + 2, 8, Project0.Dis0.Results.AllGridResult.AllRisk * Project0.Dis0.IntialSource.Probability)
         End With
         EFlexRisk.AutoSizeCols()
 
