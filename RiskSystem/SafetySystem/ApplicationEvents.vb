@@ -1,6 +1,4 @@
-﻿Imports Sunmast.Hardware
-
-Namespace My
+﻿Namespace My
 
     ' 以下事件可用于 MyApplication:
     ' 

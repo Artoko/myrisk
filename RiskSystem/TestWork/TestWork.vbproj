@@ -106,10 +106,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LCD\LCD.csproj">
-      <Project>{9012052C-E7E4-4ADB-AA0D-B4E3D37A8017}</Project>
-      <Name>LCD</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Safety\DisPuff.vbproj">
       <Project>{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}</Project>
       <Name>DisPuff</Name>

@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary
-Imports Sunmast.Hardware
 ''' <summary>
 ''' 泄漏源参数
 ''' </summary>
@@ -232,35 +231,6 @@ Imports Sunmast.Hardware
 #End Region
 
 #Region "方法"
-    Private Function reg() As Boolean
-
-        Try
-            '先判断用户是否已经注册
-            If My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value2", Nothing) Is Nothing Or My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value3", Nothing) Is Nothing Then
-                '提示注册 
-                Return False
-            Else
-                Dim reg2 As String = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value2", Nothing)
-                '根据用户的注册信息进行比较，确定是不是合法用户
-                Dim reg3 As String = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Value3", Nothing)
-                Dim jm As New Comon.KeyCryp
-                Dim strjm As String = jm.Encrypto(reg2) '显示给用户的字符串是三次加密的
-                Dim CalStr As String = ""
-                Dim strName As String = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\YT", "Name", Nothing)
-                Dim dhh As HardDiskInfo
-                dhh = AtapiDevice.GetHddInfo(0)
-                CalStr = dhh.SerialNumber & strName & strjmCode '取得硬盘号并加一个字符串用于加密
-
-                If strjm <> reg3 Or jm.Encrypto(jm.Encrypto(jm.Encrypto(CalStr))) <> reg3 Then '如果注册信息不正确则提示注册
-                    Return False
-                End If
-            End If
-        Catch
-            Return False
-        End Try
-        Return True
-    End Function
-
 
     ''' <summary>
     ''' 计算结果
@@ -553,9 +523,6 @@ Imports Sunmast.Hardware
     ''' <param name="Sn">气象条件的序号</param>
     ''' <remarks></remarks>
     Public Sub CalculateGeneral(ByVal Sn As Integer)
-        If reg() = False Then
-            Exit Sub
-        End If
 
         '清空表格
 
