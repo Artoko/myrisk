@@ -377,7 +377,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' 计算结果
     ''' </summary>
     ''' <remarks></remarks>
-    Public Function Cal() As Boolean
+    Public Function CalInstance() As Boolean
 
         ReDim Me.m_ForeCast.Met(Me.m_ForeCast.MaxMet.Length - 1)
         For i As Integer = 0 To Me.m_ForeCast.Met.Length - 1
@@ -517,6 +517,138 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Next SN
         Return True
     End Function
+
+    ''' <summary>
+    ''' 计算结果
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Function Cal() As Boolean
+
+        ReDim Me.m_ForeCast.Met(Me.m_ForeCast.MaxMet.Length - 1)
+        For i As Integer = 0 To Me.m_ForeCast.Met.Length - 1
+            Me.m_ForeCast.Met(i) = Me.m_ForeCast.MaxMet(i).Clone
+        Next
+
+        '初始化泄漏源的参数
+        If m_IntialSource.IntialPara(m_Chemical, m_ForeCast.Ta, m_ForeCast.Pa) = False Then
+            Return False
+        End If
+        '污染源数组
+        ReDim Me.m_Sources(Me.m_ForeCast.Met.Length - 1)
+        '重气体数组
+        ReDim Me.m_Heavy(Me.m_ForeCast.Met.Length - 1)
+        '------------------------------------------------------------------------------------
+        '初始化计算结果的对象
+        '------------------------------------------------------------------------------------
+        '计算结果初始化对象，建立新的实例
+        ReDim Me.m_Results.MetResults(Me.m_ForeCast.Met.Length - 1)
+        '初始化设置网格点对象中的瞬时网格点数组。风险值最大的前10浓度分布
+        ReDim Me.m_Results.AllGridResult.InstantaneousGridC(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
+
+        '初始化设置网格点滑移平均最大浓度。风险值最大的前10浓度分布
+        ReDim Me.m_Results.AllGridResult.Pr(Me.m_ForeCast.Met.Length - 1)
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            ReDim Me.m_Results.AllGridResult.Pr(SN)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
+        Next
+        ReDim Me.m_Results.AllGridResult.D(Me.m_ForeCast.Met.Length - 1)
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            ReDim Me.m_Results.AllGridResult.D(SN)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
+        Next
+
+        ReDim Me.m_Results.AllGridResult.PersonalRisk(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
+        ReDim Me.m_Results.AllGridResult.ArrayRisk(Me.m_ForeCast.Met.Length - 1)
+        Me.m_Results.AllGridResult.AllRisk = 0
+        '初始化设置关心点对象中的瞬时浓度。风险值最大的前10浓度分布
+        ReDim Me.m_Results.AllCareResult.InstantaneousCareC(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.CareReceptor.Length - 1) '某关心点的多个时刻的浓度
+
+        '初始化设置关心点对象中的滑移平均最大浓度。风险值最大的前10浓度分布
+
+        ReDim Me.m_Results.AllCareResult.SlipCare(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
+                Me.m_Results.AllCareResult.SlipCare(SN, j) = New Slippage
+                Me.m_Results.AllCareResult.SlipCare(SN, j).StartAndEndTimeTime = New StartAndEndTime
+            Next
+        Next
+        '初始化设置关心点对象中的最大浓度及出现的时间该:气象条件、关心点
+        ReDim Me.m_Results.AllCareResult.CarePointMaxCT(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
+                Me.m_Results.AllCareResult.CarePointMaxCT(SN, j) = New MaxCD
+            Next
+        Next
+        '初始化设置关心点对象中关心点出现某伤害一浓度的浓度限值的开始和结束时间:气象条件，关心点，给定浓度值
+        ReDim Me.m_Results.AllCareResult.CarePointTime(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1, Me.m_ForeCast.HurtConcentration.Length - 1)
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            For i As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
+                For j As Integer = 0 To Me.m_ForeCast.HurtConcentration.Length - 1
+                    Me.m_Results.AllCareResult.CarePointTime(SN, i, j) = New StartAndEndTime
+                Next
+            Next
+        Next
+
+        '初始化设置关心点对象中死亡概率：气象条件，关心点
+        ReDim Me.m_Results.AllCareResult.Pr(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
+
+        '初始化设置关心点对象中死亡百分率 %：气象条件，关心点
+        ReDim Me.m_Results.AllCareResult.D(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
+        '-----------------------------------------------------------------------------------
+        '初始化计算结果的对象结束
+        '-----------------------------------------------------------------------------------
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            Me.m_Results.MetResults(SN) = New MetResult
+            ReDim Me.m_Results.MetResults(SN).ForeTimeResults(Me.m_ForeCast.OutPut.ForeCount - 1)
+
+            For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+                Me.m_Results.MetResults(SN).ForeTimeResults(i) = New ForeTimeResult '轴线最大浓度及距离
+                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).HurtLength(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
+                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
+                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridUpVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的上风向个数,从0开始，所以增加一个
+            Next
+            '网格点滑移平均最大浓度网格初始化
+
+            ReDim Me.m_Results.MetResults(SN).Slip.HurtLengthSlip(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
+            ReDim Me.m_Results.MetResults(SN).Slip.GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
+
+            For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
+                For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
+                    Me.m_Results.AllGridResult.SlipGrid(SN)(j, k) = New Slippage
+                Next
+            Next
+        Next
+        '设置总的计算量
+        If Me.m_ForeCast.IsCalGrid = True Then
+            Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 3 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * Me.m_ForeCast.Met.Length
+        Else
+            Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 2 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * Me.m_ForeCast.Met.Length
+        End If
+        ''初始化最不利的气象条件
+        'ReDim Me.m_ForeCast.MaxMet(MaxTen - 1)
+
+        ''初始化进度
+        Me.m_Results.AllProgress = 0
+
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            CalculateGeneral(SN)   '计算概述
+            '泄漏量计算
+            CalLeakSource(SN) '计算泄漏量
+            CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
+            If Me.Forecast.IsCalGrid = True Then
+                CalculateGrid(SN) '计算网格点
+            End If
+            If Me.Forecast.IsCalVane Then
+                CalculateVane(SN) '计算下风向
+            End If
+            If Me.Forecast.IsCalCare = True Then
+                CalculateCare(SN) '计算关心点
+            End If
+            '设置计算进度
+            Me.m_Results.AllProgress += 1
+        Next SN
+        Return True
+    End Function
+
+
     ''' <summary>
     ''' 概述结果
     ''' </summary>

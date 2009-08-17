@@ -283,7 +283,7 @@ Public Class frmMain
                 Next
                 Project0.PreMet() '预处理数据
                 Project0.Dis0.CalRisk() '计算风险值
-                Project0.Dis0.Cal() '计算扩散
+                Project0.Dis0.CalInstance() '计算扩散
                 m_Sucess = True
             Else
                 MsgBox("请输入地面气象数据")
