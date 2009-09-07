@@ -71,10 +71,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\CImPortImage.dll</HintPath>
     </Reference>
-    <Reference Include="DrawContour, Version=1.1.3508.25636, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\DrawContour.dll</HintPath>
-    </Reference>
     <Reference Include="Infragistics2.Shared.v7.3, Version=7.3.20073.38, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -672,6 +668,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonCountour\DrawContour\DrawContour.vbproj">
+      <Project>{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}</Project>
+      <Name>DrawContour</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FireBlast\FireBlast.vbproj">
       <Project>{4A09A702-6749-4DD8-A884-12479C7D059F}</Project>
       <Name>FireBlast</Name>
