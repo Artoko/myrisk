@@ -523,53 +523,55 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' </summary>
     ''' <remarks></remarks>
     Public Function Cal() As Boolean
-
-        ReDim Me.m_ForeCast.Met(Me.m_ForeCast.MaxMet.Length - 1)
-        For i As Integer = 0 To Me.m_ForeCast.Met.Length - 1
-            Me.m_ForeCast.Met(i) = Me.m_ForeCast.MaxMet(i).Clone
-        Next
-
+        Me.Forecast.OutPut.IsRisk = False
         '初始化泄漏源的参数
         If m_IntialSource.IntialPara(m_Chemical, m_ForeCast.Ta, m_ForeCast.Pa) = False Then
             Return False
         End If
         '污染源数组
         ReDim Me.m_Sources(Me.m_ForeCast.Met.Length - 1)
-        '重气体数组
-        ReDim Me.m_Heavy(Me.m_ForeCast.Met.Length - 1)
+
         '------------------------------------------------------------------------------------
         '初始化计算结果的对象
         '------------------------------------------------------------------------------------
         '计算结果初始化对象，建立新的实例
         ReDim Me.m_Results.MetResults(Me.m_ForeCast.Met.Length - 1)
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            Me.m_Results.MetResults(SN) = New MetResult
+            ReDim Me.m_Results.MetResults(SN).ForeTimeResults(Me.m_ForeCast.OutPut.ForeCount - 1)
+            For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+                Me.m_Results.MetResults(SN).ForeTimeResults(i) = New ForeTimeResult '轴线最大浓度及距离
+                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).HurtLength(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
+                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
+            Next
+            '网格点滑移平均最大浓度网格初始化
+        Next
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+            CalculateGeneral(SN)   '计算概述
+            '泄漏量计算
+            CalLeakSource(SN) '计算泄漏量
+            CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
+        Next SN
+
+        '根据伤害浓度的计算结果来设置网格点数的距离
+        Dim MaxLenth As Double = 0
+        For i As Integer = 0 To Me.m_Results.MetResults(0).ForeTimeResults(0).HurtLength.Length - 1
+            If Me.m_Results.MetResults(0).ForeTimeResults(0).HurtLength(i) > MaxLenth Then
+                MaxLenth = Me.m_Results.MetResults(0).ForeTimeResults(0).HurtLength(i)
+            End If
+        Next
+
+        Dim MaxStep As Integer = Math.Truncate(MaxLenth * 2 / (Me.m_ForeCast.Grid.CountX - 1)) + 1
+        Dim MaxL As Integer = MaxStep * (Me.m_ForeCast.Grid.CountX - 1) / 2
+
+        SetGrid(-MaxL, MaxStep, Me.m_ForeCast.Grid.CountX, -MaxL, MaxStep, Me.m_ForeCast.Grid.CountY, Me.m_ForeCast.Grid.WGH) '设置网格点
+
         '初始化设置网格点对象中的瞬时网格点数组。风险值最大的前10浓度分布
         ReDim Me.m_Results.AllGridResult.InstantaneousGridC(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
 
-        '初始化设置网格点滑移平均最大浓度。风险值最大的前10浓度分布
-        ReDim Me.m_Results.AllGridResult.Pr(Me.m_ForeCast.Met.Length - 1)
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
-            ReDim Me.m_Results.AllGridResult.Pr(SN)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-        Next
-        ReDim Me.m_Results.AllGridResult.D(Me.m_ForeCast.Met.Length - 1)
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
-            ReDim Me.m_Results.AllGridResult.D(SN)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-        Next
-
-        ReDim Me.m_Results.AllGridResult.PersonalRisk(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-        ReDim Me.m_Results.AllGridResult.ArrayRisk(Me.m_ForeCast.Met.Length - 1)
-        Me.m_Results.AllGridResult.AllRisk = 0
         '初始化设置关心点对象中的瞬时浓度。风险值最大的前10浓度分布
         ReDim Me.m_Results.AllCareResult.InstantaneousCareC(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.CareReceptor.Length - 1) '某关心点的多个时刻的浓度
 
-        '初始化设置关心点对象中的滑移平均最大浓度。风险值最大的前10浓度分布
-
-        ReDim Me.m_Results.AllCareResult.SlipCare(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
-            For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
-                Me.m_Results.AllCareResult.SlipCare(SN, j) = New Slippage
-                Me.m_Results.AllCareResult.SlipCare(SN, j).StartAndEndTimeTime = New StartAndEndTime
-            Next
-        Next
         '初始化设置关心点对象中的最大浓度及出现的时间该:气象条件、关心点
         ReDim Me.m_Results.AllCareResult.CarePointMaxCT(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
         For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
@@ -587,35 +589,9 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Next
         Next
 
-        '初始化设置关心点对象中死亡概率：气象条件，关心点
-        ReDim Me.m_Results.AllCareResult.Pr(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
-
-        '初始化设置关心点对象中死亡百分率 %：气象条件，关心点
-        ReDim Me.m_Results.AllCareResult.D(Me.m_ForeCast.Met.Length - 1, Me.m_ForeCast.CareReceptor.Length - 1)
         '-----------------------------------------------------------------------------------
         '初始化计算结果的对象结束
         '-----------------------------------------------------------------------------------
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
-            Me.m_Results.MetResults(SN) = New MetResult
-            ReDim Me.m_Results.MetResults(SN).ForeTimeResults(Me.m_ForeCast.OutPut.ForeCount - 1)
-
-            For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
-                Me.m_Results.MetResults(SN).ForeTimeResults(i) = New ForeTimeResult '轴线最大浓度及距离
-                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).HurtLength(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
-                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
-                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridUpVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的上风向个数,从0开始，所以增加一个
-            Next
-            '网格点滑移平均最大浓度网格初始化
-
-            ReDim Me.m_Results.MetResults(SN).Slip.HurtLengthSlip(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
-            ReDim Me.m_Results.MetResults(SN).Slip.GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
-
-            For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
-                For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
-                    Me.m_Results.AllGridResult.SlipGrid(SN)(j, k) = New Slippage
-                Next
-            Next
-        Next
         '设置总的计算量
         If Me.m_ForeCast.IsCalGrid = True Then
             Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 3 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * Me.m_ForeCast.Met.Length
@@ -623,16 +599,15 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 2 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * Me.m_ForeCast.Met.Length
         End If
         ''初始化最不利的气象条件
-        'ReDim Me.m_ForeCast.MaxMet(MaxTen - 1)
 
-        ''初始化进度
+        '初始化进度
         Me.m_Results.AllProgress = 0
 
         For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
-            CalculateGeneral(SN)   '计算概述
+            'CalculateGeneral(SN)   '计算概述
             '泄漏量计算
-            CalLeakSource(SN) '计算泄漏量
-            CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
+            'CalLeakSource(SN) '计算泄漏量
+            'CalculateVaneMaxC(SN) '计算最大落地浓度及出现距离
             If Me.Forecast.IsCalGrid = True Then
                 CalculateGrid(SN) '计算网格点
             End If
@@ -3295,14 +3270,12 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' <summary>
     ''' 设置预测的时刻。可以设置等间距的多个时刻
     ''' </summary>
-    ''' <param name="ForeStartTime">预测的起始时刻，单位min</param>
-    ''' <param name="ForeIntervalTime">预测的时间步长，单位min</param>
-    ''' <param name="ForeCount">预测时刻的个数</param>
+    ''' <param name="ForeTime">预测的时刻，单位min</param>
     ''' <remarks></remarks>
-    Public Sub SetForecastTime(ByVal ForeStartTime As Double, ByVal ForeIntervalTime As Double, ByVal ForeCount As Integer)
-        Me.m_ForeCast.OutPut.ForeStart = ForeStartTime
-        Me.m_ForeCast.OutPut.ForeInterval = ForeIntervalTime
-        Me.m_ForeCast.OutPut.ForeCount = ForeCount
+    Public Sub SetForecastTime(ByVal ForeTime As Double)
+        Me.m_ForeCast.OutPut.ForeStart = ForeTime
+        Me.m_ForeCast.OutPut.ForeInterval = 10
+        Me.m_ForeCast.OutPut.ForeCount = 1
     End Sub
     ''' <summary>
     ''' 计算稳定度
@@ -3368,6 +3341,19 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Me.m_ForeCast.Grid.WGH = Height
     End Sub
     ''' <summary>
+    ''' 设置网格点的个数和网格点的高度
+    ''' </summary>
+    ''' <param name="Count">网格数</param>
+    ''' <param name="Height">Z轴的高度,m</param>
+    ''' <remarks></remarks>
+    Public Sub SetGridCount(ByVal Count As Integer, ByVal Height As Double)
+        Me.m_ForeCast.IsCalGrid = True
+        Me.m_ForeCast.Grid.CountX = Count
+        Me.m_ForeCast.Grid.CountY = Count
+        Me.m_ForeCast.Grid.WGH = Height
+    End Sub
+
+    ''' <summary>
     ''' 设置地表特征
     ''' </summary>
     ''' <param name="Index">地表特征的序号：0--平原地区农村及城市远郊区；1--工业区或城区；2--丘陵山区的农村或城市</param>
@@ -3386,18 +3372,16 @@ Imports System.Runtime.Serialization.Formatters.Binary
     End Sub
 
     ''' <summary>
-    ''' 获取多个预测刻的多个关心点的浓度值
+    ''' 获取一个预测刻的多个关心点的浓度值
     ''' </summary>
-    ''' <param name="OutPutCareData">输出的关心点浓度值的数组，二维数组，第一维是对应的预测时刻，第二维时对应关心点的浓度</param>
+    ''' <param name="OutPutCareData">输出的关心点浓度值的数组，对应关心点的浓度</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function GetCareData(ByRef OutPutCareData As Double(,)) As Boolean
+    Public Function GetCareData(ByRef OutPutCareData As Double()) As Boolean
 
-        Dim OutPut(Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.CareReceptor.Length - 1) As Double
-        For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+        Dim OutPut(Me.m_ForeCast.CareReceptor.Length - 1) As Double
             For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
-                OutPut(i, j) = Me.m_Results.AllCareResult.InstantaneousCareC(0, i, j)
-            Next
+            OutPut(j) = Me.m_Results.AllCareResult.InstantaneousCareC(0, 0, j)
         Next
         OutPutCareData = OutPut
         If Me.m_ForeCast.IsCalCare = True Then
@@ -3406,23 +3390,94 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Return False
         End If
     End Function
-
-    Public Function GetGridData(ByRef OutPutGridData As Double(,,))
-        Dim OutPut(Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double
-        For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
-            For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
-                For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
-                    OutPut(i, j, k) = Me.m_Results.AllGridResult.InstantaneousGridC(0, i, j, k)
-                Next
+    ''' <summary>
+    ''' 获取网格数据
+    ''' </summary>
+    ''' <param name="OutPutGridData"></param>
+    ''' <param name="MinX"></param>
+    ''' <param name="StepX"></param>
+    ''' <param name="MinY"></param>
+    ''' <param name="StepY"></param>
+    ''' <param name="Count"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetGridData(ByRef OutPutGridData As Double(,), ByRef MinX As Integer, ByRef StepX As Integer _
+                     , ByRef MinY As Integer, ByRef StepY As Integer, ByRef Count As Integer)
+        Dim OutPut(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double
+        For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
+            For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
+                OutPut(j, k) = Me.m_Results.AllGridResult.InstantaneousGridC(0, 0, j, k)
             Next
         Next
         OutPutGridData = OutPut
+        MinX = Me.m_ForeCast.Grid.MinX
+        StepX = Me.m_ForeCast.Grid.StepX
+        MinY = Me.m_ForeCast.Grid.MinY
+        StepY = Me.m_ForeCast.Grid.StepY
+        Count = Me.m_ForeCast.Grid.CountX
+
         If Me.m_ForeCast.IsCalGrid = True Then
             Return True
         Else
             Return False
         End If
     End Function
+    ''' <summary>
+    ''' 获取等值线数组
+    ''' </summary>
+    ''' <param name="ContourValue"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetContours(ByVal ContourValue As Double) As YT_ContourDLL.Point3D()
+        '通过等值线控件，获得某一给定值的等值线，并将值给数据OneContourLine
+        Dim AContour As New YT_ContourDLL.YT_ContourDLL
+        Dim AIn(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double
+        '对数组进行倒置变换和反转变换
+        Dim i, j, k As Integer
+        For i = 0 To Me.m_ForeCast.Grid.CountY - 1
+            For j = 0 To Me.m_ForeCast.Grid.CountX - 1
+                AIn(i, j) = Me.m_Results.AllGridResult.InstantaneousGridC(0, 0, Me.m_ForeCast.Grid.CountY - 1 - j, i)
+            Next
+        Next
+        '初始化等值线
+        Dim AOut(-1, -1) As YT_ContourDLL.Point3D
+        AContour.Intial(AIn, Me.m_ForeCast.Grid.CountY, Me.m_ForeCast.Grid.CountX, Me.m_ForeCast.Grid.MinX, Me.m_ForeCast.Grid.MinY _
+                        , Me.m_ForeCast.Grid.MinX + (Me.m_ForeCast.Grid.CountX - 1) * Me.m_ForeCast.Grid.StepX, Me.m_ForeCast.Grid.MinY + (Me.m_ForeCast.Grid.CountY - 1) * Me.m_ForeCast.Grid.StepY) '初始化等值线
+        AContour.Calculate(ContourValue) '计算等值线
+        AContour.PutContour(AOut) '输出等值线
+        Dim OneContourLinesCount As Integer '同一值的等值线条数
+        OneContourLinesCount = AContour.PutLineNumber()
+        '以下代码将有效的等值线值加入数组OneContourLine中，对于多条等值线，用Z＝-1分开
+        Dim OneContourLine(-1) As YT_ContourDLL.Point3D
+        ReDim OneContourLine(-1)
+        k = 0
+        For i = 0 To OneContourLinesCount - 1
+            j = 0
+            Dim ALine(-1) As YT_ContourDLL.Point3D '用于储存一条等值线。纯一条。 
+            Do '采用这种循环可使最后一个Z＝-1的数加入数组中
+                ReDim Preserve OneContourLine(k)
+                ReDim Preserve ALine(j)
+                OneContourLine(k).x = AOut(i, j).x
+                OneContourLine(k).y = AOut(i, j).y
+                OneContourLine(k).z = AOut(i, j).z
+                ALine(j).x = AOut(i, j).x
+                ALine(j).y = AOut(i, j).y
+                ALine(j).z = AOut(i, j).z
+                j = j + 1
+                k = k + 1
+            Loop While AOut(i, j - 1).z <> -1
+        Next
+        Return OneContourLine
+    End Function
+    Public Sub SetToxicity(ByVal HurtConcentration As HurtConcentration())
+        ReDim Me.Forecast.HurtConcentration(HurtConcentration.Length - 1)
+        For i As Integer = 0 To HurtConcentration.Length - 1
+            Me.Forecast.HurtConcentration(i) = New DisPuff.HurtConcentration
+            Me.Forecast.HurtConcentration(i).Name = HurtConcentration(i).Name  '名称
+            Me.Forecast.HurtConcentration(i).ConcentrationVale = HurtConcentration(i).ConcentrationVale  '浓度值
+        Next
+    End Sub
+
 
 #End Region
     Public Function Clone() As Dis

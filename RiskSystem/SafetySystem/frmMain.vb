@@ -358,7 +358,7 @@ Public Class frmMain
     End Sub
 
 
-    Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripMenuItem.Click, SaveToolStripButton.Click
+    Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripButton.Click, SaveToolStripMenuItem.Click
         SaveAs(False)
     End Sub
     Private Function SaveAs(ByVal S As Boolean) As Boolean
@@ -423,7 +423,7 @@ Public Class frmMain
     End Function
 
 
-    Private Sub OpenFile(ByVal sender As Object, ByVal e As EventArgs) Handles OpenToolStripMenuItem.Click, OpenToolStripButton.Click
+    Private Sub OpenFile(ByVal sender As Object, ByVal e As EventArgs) Handles OpenToolStripButton.Click, OpenToolStripMenuItem.Click
         Dim Result As MsgBoxResult = MessageBox.Show("是否要保存当前的项目?", "保存", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
         If Result = MsgBoxResult.Yes Then
             SaveToolStripMenuItem_Click(sender, e) '保存项目

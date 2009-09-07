@@ -10,7 +10,7 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Safety")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Microsoft")> 
+<Assembly: AssemblyCompany("环安科技")> 
 <Assembly: AssemblyProduct("Safety")> 
 <Assembly: AssemblyCopyright("版权所有 (C) Microsoft 2008")> 
 <Assembly: AssemblyTrademark("")> 

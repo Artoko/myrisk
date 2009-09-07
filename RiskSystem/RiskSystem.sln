@@ -11,6 +11,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestWork", "TestWork\TestWo
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{FA9DA680-5412-475A-9702-A16DBB362B09}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "YT_ContourDLL", "CommonCountour\Contour\YT_ContourDLL.vbproj", "{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -39,6 +41,10 @@ Global
 		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA9DA680-5412-475A-9702-A16DBB362B09}.Debug|Any CPU.ActiveCfg = Debug
 		{FA9DA680-5412-475A-9702-A16DBB362B09}.Release|Any CPU.ActiveCfg = Release
+		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
