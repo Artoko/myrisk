@@ -37,7 +37,12 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="C1.Win.C1FlexGrid.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="Chart, Version=1.1.3390.1254, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Chart.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -58,6 +63,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Declaration.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +86,60 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="典型泄漏\frmLeakSource.Designer.vb">
+      <DependentUpon>frmLeakSource.vb</DependentUpon>
+    </Compile>
+    <Compile Include="典型泄漏\frmLeakSource.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakFlash.Designer.vb">
+      <DependentUpon>frmLeakFlash.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakFlash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakGas.Designer.vb">
+      <DependentUpon>frmLeakGas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakGas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakHeat.Designer.vb">
+      <DependentUpon>frmLeakHeat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakHeat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakLiquid.Designer.vb">
+      <DependentUpon>frmLeakLiquid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakLiquid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakQuality.Designer.vb">
+      <DependentUpon>frmLeakQuality.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakQuality.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakTwo.Designer.vb">
+      <DependentUpon>frmLeakTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="数据库1\物化数据\frmSearchData.Designer.vb">
+      <DependentUpon>frmSearchData.vb</DependentUpon>
+    </Compile>
+    <Compile Include="数据库1\物化数据\frmSearchData.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="数据库2\frmChemistry .Designer.vb">
+      <DependentUpon>frmChemistry .vb</DependentUpon>
+    </Compile>
+    <Compile Include="数据库2\frmChemistry .vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
@@ -91,6 +151,42 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="典型泄漏\frmLeakSource.resx">
+      <DependentUpon>frmLeakSource.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakFlash.resx">
+      <DependentUpon>frmLeakFlash.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakGas.resx">
+      <DependentUpon>frmLeakGas.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakHeat.resx">
+      <DependentUpon>frmLeakHeat.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakLiquid.resx">
+      <DependentUpon>frmLeakLiquid.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakQuality.resx">
+      <DependentUpon>frmLeakQuality.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakTwo.resx">
+      <DependentUpon>frmLeakTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="数据库1\物化数据\frmSearchData.resx">
+      <DependentUpon>frmSearchData.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="数据库2\frmChemistry .resx">
+      <DependentUpon>frmChemistry .vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -106,6 +202,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonCountour\Contour\YT_ContourDLL.vbproj">
+      <Project>{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}</Project>
+      <Name>YT_ContourDLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Safety\DisPuff.vbproj">
       <Project>{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}</Project>
       <Name>DisPuff</Name>
