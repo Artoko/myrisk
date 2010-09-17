@@ -60,16 +60,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ADODB, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="C1.Win.C1FlexGrid.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
-    <Reference Include="C1.Win.C1FlexGrid.Classic.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
-    <Reference Include="C1.Win.C1SuperTooltip.2, Version=2.0.20071.31, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1FlexGrid.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\C1.Win.C1FlexGrid.2.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Win.C1FlexGrid.Classic.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\C1.Win.C1FlexGrid.Classic.2.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Win.C1SuperTooltip.2, Version=2.0.20071.31, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\C1.Win.C1SuperTooltip.2.dll</HintPath>
+    </Reference>
     <Reference Include="Chart, Version=1.1.3271.36471, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\CommonCountour\DrawContour\bin\Debug\Chart.dll</HintPath>
-    </Reference>
-    <Reference Include="CImPortImage, Version=1.0.3512.40160, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\CImPortImage.dll</HintPath>
     </Reference>
     <Reference Include="Infragistics2.Shared.v7.3, Version=7.3.20073.38, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -107,8 +112,14 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TeeChart, Version=2.0.2040.15118, Culture=neutral, PublicKeyToken=dfb0c027679133d1" />
-    <Reference Include="TeeChart.Languages, Version=2.0.2040.15118, Culture=neutral, PublicKeyToken=dfb0c027679133d1" />
+    <Reference Include="TeeChart, Version=2.0.2040.15118, Culture=neutral, PublicKeyToken=dfb0c027679133d1">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\TeeChart.dll</HintPath>
+    </Reference>
+    <Reference Include="TeeChart.Languages, Version=2.0.2040.15118, Culture=neutral, PublicKeyToken=dfb0c027679133d1">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\TeeChart.Languages.dll</HintPath>
+    </Reference>
     <Reference Include="VS2005Extender, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\VS2005Extender.dll</HintPath>

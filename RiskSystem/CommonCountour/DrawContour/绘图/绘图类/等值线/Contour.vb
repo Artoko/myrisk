@@ -48,37 +48,37 @@ Imports System.Drawing.Drawing2D
     End Sub
 
     Private Sub GetOneContour(ByVal GridPoint(,) As Double, ByVal row As Integer, ByVal col As Integer, ByVal X_min As Double, ByVal Y_min As Double, ByVal X_max As Double, ByVal Y_max As Double)
-        '通过等值线控件，获得某一给定值的等值线，并将值给数据OneContourLine
-        Dim AContour As New ContourDLL.ContourDLL
-        Dim AIn(col - 1, row - 1) As Double
-        '对数组进行倒置变换和反转变换
-        Dim i, j, k As Integer
-        For i = 0 To col - 1
-            For j = 0 To row - 1
-                AIn(i, j) = GridPoint(row - 1 - j, i)
-            Next
-        Next
-        '初始化等值线
-        Dim AOut(-1, -1) As ContourDLL.Point3D
-        AContour.Intial(AIn, row, col, X_min, Y_min, X_max, Y_max) '初始化等值线
-        AContour.Calculate(ContourValue) '计算等值线
-        AContour.PutContour(AOut) '输出等值线
-        Dim OneContourLines As Integer '同一值的等值线条数
-        OneContourLines = AContour.PutLineNumber()
-        '以下代码将有效的等值线值加入数组OneContourLine中，对于多条等值线，用Z＝-1分开
-        ReDim OneContourLine(-1)
-        k = 0
-        For i = 0 To OneContourLines - 1
-            j = 0
-            Do '采用这种循环可使最后一个Z＝-1的数加入数组中
-                ReDim Preserve OneContourLine(k)
-                OneContourLine(k).x = AOut(i, j).x
-                OneContourLine(k).y = AOut(i, j).y
-                OneContourLine(k).z = AOut(i, j).z
-                j = j + 1
-                k = k + 1
-            Loop While AOut(i, j - 1).z <> -1
-        Next
+        ''通过等值线控件，获得某一给定值的等值线，并将值给数据OneContourLine
+        'Dim AContour As New Contour 
+        'Dim AIn(col - 1, row - 1) As Double
+        ''对数组进行倒置变换和反转变换
+        'Dim i, j, k As Integer
+        'For i = 0 To col - 1
+        '    For j = 0 To row - 1
+        '        AIn(i, j) = GridPoint(row - 1 - j, i)
+        '    Next
+        'Next
+        ''初始化等值线
+        'Dim AOut(-1, -1) As ContourDLL.Point3D
+        'AContour.Intial(AIn, row, col, X_min, Y_min, X_max, Y_max) '初始化等值线
+        'AContour.Calculate(ContourValue) '计算等值线
+        'AContour.PutContour(AOut) '输出等值线
+        'Dim OneContourLines As Integer '同一值的等值线条数
+        'OneContourLines = AContour.PutLineNumber()
+        ''以下代码将有效的等值线值加入数组OneContourLine中，对于多条等值线，用Z＝-1分开
+        'ReDim OneContourLine(-1)
+        'k = 0
+        'For i = 0 To OneContourLines - 1
+        '    j = 0
+        '    Do '采用这种循环可使最后一个Z＝-1的数加入数组中
+        '        ReDim Preserve OneContourLine(k)
+        '        OneContourLine(k).x = AOut(i, j).x
+        '        OneContourLine(k).y = AOut(i, j).y
+        '        OneContourLine(k).z = AOut(i, j).z
+        '        j = j + 1
+        '        k = k + 1
+        '    Loop While AOut(i, j - 1).z <> -1
+        'Next
     End Sub
     ''' <summary>
     ''' 根据求得的等值线求出所有的等值线段

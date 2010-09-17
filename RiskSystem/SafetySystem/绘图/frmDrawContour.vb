@@ -842,8 +842,8 @@ Public Class frmDrawContour
             ReDim .ArrayHurtName(-1)
             '设置事故值
             ReDim .ArrayHurtValue(-1)
-            ReDim .ContourPannel.Contours.ContourValueSetting.ContourNames(-1)
-            ReDim .ContourPannel.Contours.ContourValueSetting.ContourValue(-1)
+            'ReDim .ContourPannel.Contours.ContourValueSetting.ContourNames(-1)
+            'ReDim .ContourPannel.Contours.ContourValueSetting.ContourValue(-1)
 
         End With
         '重新计算等值线
@@ -858,178 +858,178 @@ Public Class frmDrawContour
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub RefreshResult()
-        If cmbRusult.Text = "瞬时浓度" Then
-            If cmbMet.SelectedIndex >= 0 And cmbTime.SelectedIndex >= 0 Then
-                '设置等值线的网格点
-                For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
-                    For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.InstantaneousGridC(cmbMet.SelectedIndex, cmbTime.SelectedIndex, k, l)
-                    Next
-                Next
-                '设置等值线名称和值的数组
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
-                For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
-                    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
-                Next
-                Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
-                Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
-                '设置伤害范围
+        'If cmbRusult.Text = "瞬时浓度" Then
+        '    If cmbMet.SelectedIndex >= 0 And cmbTime.SelectedIndex >= 0 Then
+        '        '设置等值线的网格点
+        '        For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
+        '            For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
+        '                Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.InstantaneousGridC(cmbMet.SelectedIndex, cmbTime.SelectedIndex, k, l)
+        '            Next
+        '        Next
+        '        '设置等值线名称和值的数组
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+        '        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
+        '            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
+        '        Next
+        '        Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
+        '        Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
+        '        '设置伤害范围
 
-                ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(-1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(-1)
-                For m As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                    '设置事故名称
-                    ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(Me.ContourPaint1.ContourPaintSetting.ArrayHurtName.Length)
-                    ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue.Length)
-                    Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(m) = Project0.Dis0.Forecast.HurtConcentration(m).Name
-                    'If strSlip = "滑移平均最大浓度" Then
-                    '    Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).Slip.HurtLengthSlip(m)
-                    'Else
-                    Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
-                    'End If
-                Next
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
-                '重新计算等值线
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-                Me.ContourPaint1.ContourPaintSetting.ResetCountData()
-                Me.ContourPaint1.Refresh()
-            End If
-        ElseIf cmbRusult.Text = "滑移平均浓度" Then
-            If cmbMet.SelectedIndex >= 0 Then
-                For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
-                    For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(cmbMet.SelectedIndex)(k, l).MaxCon
-                    Next
-                Next
-                '设置等值线名称和值的数组
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
-                For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
-                    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
-                Next
-                For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
-                    For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        For k1 As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
-                            If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) Then
-                                Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) + 0.000001
-                            End If
-                        Next
-                    Next
-                Next
-                Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
-                Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
-                '设置伤害范围
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(-1)
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(-1)
+        '        For m As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '            '设置事故名称
+        '            ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(Me.ContourPaint1.ContourPaintSetting.ArrayHurtName.Length)
+        '            ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue.Length)
+        '            Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(m) = Project0.Dis0.Forecast.HurtConcentration(m).Name
+        '            'If strSlip = "滑移平均最大浓度" Then
+        '            '    Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).Slip.HurtLengthSlip(m)
+        '            'Else
+        '            Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
+        '            'End If
+        '        Next
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+        '        '重新计算等值线
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+        '        Me.ContourPaint1.ContourPaintSetting.ResetCountData()
+        '        Me.ContourPaint1.Refresh()
+        '    End If
+        'ElseIf cmbRusult.Text = "滑移平均浓度" Then
+        '    If cmbMet.SelectedIndex >= 0 Then
+        '        For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
+        '            For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
+        '                Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(cmbMet.SelectedIndex)(k, l).MaxCon
+        '            Next
+        '        Next
+        '        '设置等值线名称和值的数组
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(Project0.Dis0.Forecast.HurtConcentration.Length - 1)
+        '        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(n) = Project0.Dis0.Forecast.HurtConcentration(n).Name
+        '            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(n) = FormatNumber(Project0.Dis0.Forecast.HurtConcentration(n).ConcentrationVale, 7)
+        '        Next
+        '        For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
+        '            For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
+        '                For k1 As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
+        '                    If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) Then
+        '                        Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) + 0.000001
+        '                    End If
+        '                Next
+        '            Next
+        '        Next
+        '        Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
+        '        Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
+        '        '设置伤害范围
 
-                ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(-1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(-1)
-                For m As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                    '设置事故名称
-                    ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(Me.ContourPaint1.ContourPaintSetting.ArrayHurtName.Length)
-                    ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue.Length)
-                    Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(m) = Project0.Dis0.Forecast.HurtConcentration(m).Name
-                    'If strSlip = "滑移平均最大浓度" Then
-                    Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).Slip.HurtLengthSlip(m)
-                    'Else
-                    'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
-                    'End If
-                Next
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
-                '重新计算等值线
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-                Me.ContourPaint1.ContourPaintSetting.ResetCountData()
-                Me.ContourPaint1.Refresh()
-            End If
-        ElseIf cmbRusult.Text = "死亡百分率" Then
-            If cmbMet.SelectedIndex >= 0 Then
-                For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
-                    For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.D(cmbMet.SelectedIndex)(k, l)
-                    Next
-                Next
-                '设置等值线名称和值的数组
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(5 - 1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(5 - 1)
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(0) = "90%"
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(0) = 90
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(1) = "50%"
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(1) = 50
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(2) = "10%"
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(2) = 10
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(3) = "1%"
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(3) = 1
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(4) = "0.1%"
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(4) = 0.1
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(-1)
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(-1)
+        '        For m As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '            '设置事故名称
+        '            ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(Me.ContourPaint1.ContourPaintSetting.ArrayHurtName.Length)
+        '            ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue.Length)
+        '            Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(m) = Project0.Dis0.Forecast.HurtConcentration(m).Name
+        '            'If strSlip = "滑移平均最大浓度" Then
+        '            Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).Slip.HurtLengthSlip(m)
+        '            'Else
+        '            'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
+        '            'End If
+        '        Next
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+        '        '重新计算等值线
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+        '        Me.ContourPaint1.ContourPaintSetting.ResetCountData()
+        '        Me.ContourPaint1.Refresh()
+        '    End If
+        'ElseIf cmbRusult.Text = "死亡百分率" Then
+        '    If cmbMet.SelectedIndex >= 0 Then
+        '        For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
+        '            For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
+        '                Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.D(cmbMet.SelectedIndex)(k, l)
+        '            Next
+        '        Next
+        '        '设置等值线名称和值的数组
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(5 - 1)
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(5 - 1)
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(0) = "90%"
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(0) = 90
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(1) = "50%"
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(1) = 50
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(2) = "10%"
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(2) = 10
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(3) = "1%"
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(3) = 1
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(4) = "0.1%"
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(4) = 0.1
 
-                Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
-                Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
-                '设置伤害范围
+        '        Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
+        '        Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
+        '        '设置伤害范围
 
-                ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(-1)
-                ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(-1)
-                For m As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                    '设置事故名称
-                    ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(Me.ContourPaint1.ContourPaintSetting.ArrayHurtName.Length)
-                    ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue.Length)
-                    'Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(m) = Project0.Dis0.Forecast.HurtConcentration(m).Name
-                    'If strSlip = "滑移平均最大浓度" Then
-                    '    Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).Slip.HurtLengthSlip(m)
-                    'Else
-                    'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
-                    'End If
-                Next
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
-                '重新计算等值线
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-                Me.ContourPaint1.ContourPaintSetting.ResetCountData()
-                Me.ContourPaint1.Refresh()
-            End If
-        ElseIf cmbRusult.Text = "个人风险值" Then
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(-1)
+        '        ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(-1)
+        '        For m As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '            '设置事故名称
+        '            ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(Me.ContourPaint1.ContourPaintSetting.ArrayHurtName.Length)
+        '            ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue.Length)
+        '            'Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(m) = Project0.Dis0.Forecast.HurtConcentration(m).Name
+        '            'If strSlip = "滑移平均最大浓度" Then
+        '            '    Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).Slip.HurtLengthSlip(m)
+        '            'Else
+        '            'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
+        '            'End If
+        '        Next
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+        '        '重新计算等值线
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+        '        Me.ContourPaint1.ContourPaintSetting.ResetCountData()
+        '        Me.ContourPaint1.Refresh()
+        '    End If
+        'ElseIf cmbRusult.Text = "个人风险值" Then
 
-            For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
-                For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                    Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.PersonalRisk(k, l) * Project0.Dis0.IntialSource.Probability '个人风险
-                Next
-            Next
-            '设置等值线名称和值的数组
-            ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(6 - 1)
-            ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(6 - 1)
-            For i As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(i) = (1 / (10 ^ (i + 4))).ToString
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(i) = (1 / (10 ^ (i + 4)))
-            Next
+        '    For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
+        '        For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
+        '            Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.PersonalRisk(k, l) * Project0.Dis0.IntialSource.Probability '个人风险
+        '        Next
+        '    Next
+        '    '设置等值线名称和值的数组
+        '    ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(6 - 1)
+        '    ReDim Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(6 - 1)
+        '    For i As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourNames(i) = (1 / (10 ^ (i + 4))).ToString
+        '        Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(i) = (1 / (10 ^ (i + 4)))
+        '    Next
 
-            Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
-            Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
-            '设置伤害范围
+        '    Me.ContourPaint1.ContourPaintSetting.m_nRows = Project0.Dis0.Forecast.Grid.CountY
+        '    Me.ContourPaint1.ContourPaintSetting.m_nCols = Project0.Dis0.Forecast.Grid.CountX
+        '    '设置伤害范围
 
-            ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(-1)
-            ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(-1)
-            For m As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                '设置事故名称
-                ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(Me.ContourPaint1.ContourPaintSetting.ArrayHurtName.Length)
-                ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue.Length)
-                'Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(m) = Project0.Dis0.Forecast.HurtConcentration(m).Name
-                'If strSlip = "滑移平均最大浓度" Then
-                '    Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).Slip.HurtLengthSlip(m)
-                'Else
-                'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
-                'End If
-            Next
-            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
-            '重新计算等值线
-            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-            Me.ContourPaint1.ContourPaintSetting.ResetCountData()
-            Me.ContourPaint1.Refresh()
-        End If
+        '    ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(-1)
+        '    ReDim Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(-1)
+        '    For m As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '        '设置事故名称
+        '        ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(Me.ContourPaint1.ContourPaintSetting.ArrayHurtName.Length)
+        '        ReDim Preserve Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue.Length)
+        '        'Me.ContourPaint1.ContourPaintSetting.ArrayHurtName(m) = Project0.Dis0.Forecast.HurtConcentration(m).Name
+        '        'If strSlip = "滑移平均最大浓度" Then
+        '        '    Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).Slip.HurtLengthSlip(m)
+        '        'Else
+        '        'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
+        '        'End If
+        '    Next
+        '    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+        '    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+        '    '重新计算等值线
+        '    Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+        '    Me.ContourPaint1.ContourPaintSetting.ResetCountData()
+        '    Me.ContourPaint1.Refresh()
+        'End If
 
-        
+
 
 
     End Sub

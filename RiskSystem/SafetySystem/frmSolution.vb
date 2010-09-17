@@ -230,38 +230,38 @@ Public Class frmSolution
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub ImportBackImage1()
-        Dim frmImage As New CImPortImage.frmImportBackImage1
-        frmImage.Text = "导入地理位置图"
-        frmImage.ImportImageControl1.InsertImage = Project0.ImportImage0.ImportBack1.Clone
-        If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Dim myFrmMain As frmMain = My.Application.ApplicationContext.MainForm
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.LoadBitmap(frmImage.ImportImageControl1.InsertImage.FileName)
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.X = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Y = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Width = frmImage.ImportImageControl1.InsertImage.RightTopPoint.X - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Height = frmImage.ImportImageControl1.InsertImage.RightTopPoint.Y - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
-            myFrmMain.DrawContourWindow.Refresh()
-            Project0.ImportImage0.ImportBack1 = frmImage.ImportImageControl1.InsertImage.Clone
-        End If
+        'Dim frmImage As New CImPortImage.frmImportBackImage1
+        'frmImage.Text = "导入地理位置图"
+        'frmImage.ImportImageControl1.InsertImage = Project0.ImportImage0.ImportBack1.Clone
+        'If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
+        '    Dim myFrmMain As frmMain = My.Application.ApplicationContext.MainForm
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.LoadBitmap(frmImage.ImportImageControl1.InsertImage.FileName)
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.X = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Y = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Width = frmImage.ImportImageControl1.InsertImage.RightTopPoint.X - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.BackImage.BackRect.Height = frmImage.ImportImageControl1.InsertImage.RightTopPoint.Y - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
+        '    myFrmMain.DrawContourWindow.Refresh()
+        '    Project0.ImportImage0.ImportBack1 = frmImage.ImportImageControl1.InsertImage.Clone
+        'End If
     End Sub
     ''' <summary>
     '''设置控制选项
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub ImportBackImage2()
-        Dim frmImage As New CImPortImage.frmImportBackImage1
-        frmImage.Text = "导入场区平面图"
-        frmImage.ImportImageControl1.InsertImage = Project0.ImportImage0.ImportBack2.Clone
-        If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Dim myFrmMain As frmMain = My.Application.ApplicationContext.MainForm
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.LoadBitmap(frmImage.ImportImageControl1.InsertImage.FileName)
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.X = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Y = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Width = frmImage.ImportImageControl1.InsertImage.RightTopPoint.X - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
-            myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Height = frmImage.ImportImageControl1.InsertImage.RightTopPoint.Y - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
-            myFrmMain.DrawContourWindow.Refresh()
-            Project0.ImportImage0.ImportBack2 = frmImage.ImportImageControl1.InsertImage.Clone
-        End If
+        'Dim frmImage As New CImPortImage.frmImportBackImage1
+        'frmImage.Text = "导入场区平面图"
+        'frmImage.ImportImageControl1.InsertImage = Project0.ImportImage0.ImportBack2.Clone
+        'If frmImage.ShowDialog = Windows.Forms.DialogResult.OK Then
+        '    Dim myFrmMain As frmMain = My.Application.ApplicationContext.MainForm
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.LoadBitmap(frmImage.ImportImageControl1.InsertImage.FileName)
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.X = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Y = frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Width = frmImage.ImportImageControl1.InsertImage.RightTopPoint.X - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.X
+        '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.PlanImage.BackRect.Height = frmImage.ImportImageControl1.InsertImage.RightTopPoint.Y - frmImage.ImportImageControl1.InsertImage.LeftBottomPoint.Y
+        '    myFrmMain.DrawContourWindow.Refresh()
+        '    Project0.ImportImage0.ImportBack2 = frmImage.ImportImageControl1.InsertImage.Clone
+        'End If
     End Sub
     ''' <summary>
     ''' 设置点源
