@@ -132,64 +132,10 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="公共类和窗体\ImportImages.vb" />
     <Compile Include="公共类和窗体\OpenAndSaveFile.vb" />
-    <Compile Include="新修改部分窗口\frmPopulation.Designer.vb">
-      <DependentUpon>frmPopulation.vb</DependentUpon>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmPopulation.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmCare.Designer.vb">
-      <DependentUpon>frmCare.vb</DependentUpon>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmCare.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmChemistry .Designer.vb">
-      <DependentUpon>frmChemistry .vb</DependentUpon>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmChemistry .vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="SplashScreen1.Designer.vb">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
     </Compile>
     <Compile Include="SplashScreen1.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="原项计算\frmLeakFlash.Designer.vb">
-      <DependentUpon>frmLeakFlash.vb</DependentUpon>
-    </Compile>
-    <Compile Include="原项计算\frmLeakFlash.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="原项计算\frmLeakGas.Designer.vb">
-      <DependentUpon>frmLeakGas.vb</DependentUpon>
-    </Compile>
-    <Compile Include="原项计算\frmLeakGas.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="原项计算\frmLeakHeat.Designer.vb">
-      <DependentUpon>frmLeakHeat.vb</DependentUpon>
-    </Compile>
-    <Compile Include="原项计算\frmLeakHeat.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="原项计算\frmLeakLiquid.Designer.vb">
-      <DependentUpon>frmLeakLiquid.vb</DependentUpon>
-    </Compile>
-    <Compile Include="原项计算\frmLeakLiquid.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="原项计算\frmLeakQuality.Designer.vb">
-      <DependentUpon>frmLeakQuality.vb</DependentUpon>
-    </Compile>
-    <Compile Include="原项计算\frmLeakQuality.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="原项计算\frmLeakTwo.Designer.vb">
-      <DependentUpon>frmLeakTwo.vb</DependentUpon>
-    </Compile>
-    <Compile Include="原项计算\frmLeakTwo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="工具\frmPS.Designer.vb">
@@ -198,86 +144,7 @@
     <Compile Include="工具\frmPS.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="数据库\气压数据\SelectDrang.Designer.vb">
-      <DependentUpon>SelectDrang.vb</DependentUpon>
-    </Compile>
-    <Compile Include="数据库\气压数据\SelectDrang.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="数据库\物化数据\frmSearchData.Designer.vb">
-      <DependentUpon>frmSearchData.vb</DependentUpon>
-    </Compile>
-    <Compile Include="数据库\物化数据\frmSearchData.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="数据库\加密解密数据库.vb" />
-    <Compile Include="新修改部分窗口\frmGrid.Designer.vb">
-      <DependentUpon>frmGrid.vb</DependentUpon>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmGrid.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmMet.Designer.vb">
-      <DependentUpon>frmMet.vb</DependentUpon>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmMet.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmOutOption.Designer.vb">
-      <DependentUpon>frmOutOption.vb</DependentUpon>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmOutOption.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmVaneDrown.Designer.vb">
-      <DependentUpon>frmVaneDrown.vb</DependentUpon>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmVaneDrown.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="公共类和窗体\Project.vb" />
-    <Compile Include="新修改部分窗口\frmLeakSource.Designer.vb">
-      <DependentUpon>frmLeakSource.vb</DependentUpon>
-    </Compile>
-    <Compile Include="新修改部分窗口\frmLeakSource.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="火灾\frmBleve.Designer.vb">
-      <DependentUpon>frmBleve.vb</DependentUpon>
-    </Compile>
-    <Compile Include="火灾\frmBleve.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="火灾\frmJet.Designer.vb">
-      <DependentUpon>frmJet.vb</DependentUpon>
-    </Compile>
-    <Compile Include="火灾\frmJet.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="火灾\frmSolidFire.Designer.vb">
-      <DependentUpon>frmSolidFire.vb</DependentUpon>
-    </Compile>
-    <Compile Include="火灾\frmSolidFire.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="爆炸\frmGasStation.Designer.vb">
-      <DependentUpon>frmGasStation.vb</DependentUpon>
-    </Compile>
-    <Compile Include="爆炸\frmGasStation.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="爆炸\frmMatialTNT.Designer.vb">
-      <DependentUpon>frmMatialTNT.vb</DependentUpon>
-    </Compile>
-    <Compile Include="爆炸\frmMatialTNT.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="爆炸\frmPhysicsExplode.Designer.vb">
-      <DependentUpon>frmPhysicsExplode.vb</DependentUpon>
-    </Compile>
-    <Compile Include="爆炸\frmPhysicsExplode.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="计算结果\frmCareCon.Designer.vb">
       <DependentUpon>frmCareCon.vb</DependentUpon>
     </Compile>
@@ -336,18 +203,6 @@
       <DependentUpon>frmVaneMax.vb</DependentUpon>
     </Compile>
     <Compile Include="计算结果\frmVaneMax.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="火灾\frmPoolFire.Designer.vb">
-      <DependentUpon>frmPoolFire.vb</DependentUpon>
-    </Compile>
-    <Compile Include="火灾\frmPoolFire.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="爆炸\frmUVCE.Designer.vb">
-      <DependentUpon>frmUVCE.vb</DependentUpon>
-    </Compile>
-    <Compile Include="爆炸\frmUVCE.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="计算结果\frmTNTResult.Designer.vb">
@@ -443,110 +298,16 @@
     <Compile Include="绘图\frmDrawContour.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="鼠标添加关心点\frmAddCare.Designer.vb">
-      <DependentUpon>frmAddCare.vb</DependentUpon>
-    </Compile>
-    <Compile Include="鼠标添加关心点\frmAddCare.vb">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\licenses.licx" />
-    <EmbeddedResource Include="新修改部分窗口\frmCare.resx">
-      <DependentUpon>frmCare.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="新修改部分窗口\frmChemistry .resx">
-      <DependentUpon>frmChemistry .vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="SplashScreen1.resx">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="原项计算\frmLeakFlash.resx">
-      <DependentUpon>frmLeakFlash.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="原项计算\frmLeakGas.resx">
-      <DependentUpon>frmLeakGas.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="原项计算\frmLeakHeat.resx">
-      <DependentUpon>frmLeakHeat.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="原项计算\frmLeakLiquid.resx">
-      <DependentUpon>frmLeakLiquid.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="原项计算\frmLeakQuality.resx">
-      <DependentUpon>frmLeakQuality.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="原项计算\frmLeakTwo.resx">
-      <DependentUpon>frmLeakTwo.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="工具\frmPS.resx">
       <DependentUpon>frmPS.vb</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="数据库\气压数据\SelectDrang.resx">
-      <DependentUpon>SelectDrang.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="数据库\物化数据\frmSearchData.resx">
-      <DependentUpon>frmSearchData.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="新修改部分窗口\frmGrid.resx">
-      <DependentUpon>frmGrid.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="新修改部分窗口\frmMet.resx">
-      <DependentUpon>frmMet.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="新修改部分窗口\frmOutOption.resx">
-      <DependentUpon>frmOutOption.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="新修改部分窗口\frmPopulation.resx">
-      <DependentUpon>frmPopulation.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="新修改部分窗口\frmVaneDrown.resx">
-      <DependentUpon>frmVaneDrown.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="新修改部分窗口\frmLeakSource.resx">
-      <DependentUpon>frmLeakSource.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="火灾\frmBleve.resx">
-      <DependentUpon>frmBleve.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="火灾\frmJet.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmJet.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="火灾\frmSolidFire.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmSolidFire.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="爆炸\frmGasStation.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmGasStation.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="爆炸\frmMatialTNT.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmMatialTNT.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="爆炸\frmPhysicsExplode.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmPhysicsExplode.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="计算结果\frmCareCon.resx">
       <DependentUpon>frmCareCon.vb</DependentUpon>
@@ -586,14 +347,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="计算结果\frmVaneMax.resx">
       <DependentUpon>frmVaneMax.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="火灾\frmPoolFire.resx">
-      <DependentUpon>frmPoolFire.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="爆炸\frmUVCE.resx">
-      <DependentUpon>frmUVCE.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="计算结果\frmTNTResult.resx">
@@ -650,10 +403,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>frmDrawContour.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="鼠标添加关心点\frmAddCare.resx">
-      <DependentUpon>frmAddCare.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram2.cd" />
@@ -671,6 +420,18 @@
     <ProjectReference Include="..\CommonCountour\DrawContour\DrawContour.vbproj">
       <Project>{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}</Project>
       <Name>DrawContour</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLib\DataLib.vbproj">
+      <Project>{F0AF364E-7288-4DB0-80D4-125DE4CB3612}</Project>
+      <Name>DataLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DisForm\DisForm.vbproj">
+      <Project>{9FEFD96A-347C-4E10-84F4-620A54315E5B}</Project>
+      <Name>DisForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FireBlastForm\FireBlastForm.vbproj">
+      <Project>{61647EFC-A24B-4BE2-9330-535FE2668B07}</Project>
+      <Name>FireBlastForm</Name>
     </ProjectReference>
     <ProjectReference Include="..\FireBlast\FireBlast.vbproj">
       <Project>{4A09A702-6749-4DD8-A884-12479C7D059F}</Project>

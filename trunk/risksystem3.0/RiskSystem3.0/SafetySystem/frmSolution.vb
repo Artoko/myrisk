@@ -1,5 +1,5 @@
 Imports WeifenLuo.WinFormsUI
-
+Imports DisForm
 Public Class frmSolution
     Inherits DockContent
 

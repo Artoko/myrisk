@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{61647EFC-A24B-4BE2-9330-535FE2668B07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FireBlastForm</RootNamespace>
+    <AssemblyName>FireBlastForm</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>FireBlastForm.xml</DocumentationFile>
+    <DefineConstants>_MYFORMS=True</DefineConstants>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>FireBlastForm.xml</DocumentationFile>
+    <DefineConstants>_MYFORMS=True</DefineConstants>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C1.Win.C1FlexGrid.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1FlexGrid.Classic.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1SuperTooltip.2, Version=2.0.20071.31, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="Chart, Version=1.1.3390.1254, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonCountour\DrawContour\bin\Debug\Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl1.Designer.vb">
+      <DependentUpon>UserControl1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="火灾\frmBleve.Designer.vb">
+      <DependentUpon>frmBleve.vb</DependentUpon>
+    </Compile>
+    <Compile Include="火灾\frmBleve.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="火灾\frmJet.Designer.vb">
+      <DependentUpon>frmJet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="火灾\frmJet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="火灾\frmPoolFire.Designer.vb">
+      <DependentUpon>frmPoolFire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="火灾\frmPoolFire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="火灾\frmSolidFire.Designer.vb">
+      <DependentUpon>frmSolidFire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="火灾\frmSolidFire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="爆炸\frmGasStation.Designer.vb">
+      <DependentUpon>frmGasStation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="爆炸\frmGasStation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="爆炸\frmMatialTNT.Designer.vb">
+      <DependentUpon>frmMatialTNT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="爆炸\frmMatialTNT.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="爆炸\frmPhysicsExplode.Designer.vb">
+      <DependentUpon>frmPhysicsExplode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="爆炸\frmPhysicsExplode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="爆炸\frmUVCE.Designer.vb">
+      <DependentUpon>frmUVCE.vb</DependentUpon>
+    </Compile>
+    <Compile Include="爆炸\frmUVCE.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="火灾\frmBleve.resx">
+      <DependentUpon>frmBleve.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="火灾\frmJet.resx">
+      <DependentUpon>frmJet.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="火灾\frmPoolFire.resx">
+      <DependentUpon>frmPoolFire.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="火灾\frmSolidFire.resx">
+      <DependentUpon>frmSolidFire.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="爆炸\frmGasStation.resx">
+      <DependentUpon>frmGasStation.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="爆炸\frmMatialTNT.resx">
+      <DependentUpon>frmMatialTNT.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="爆炸\frmPhysicsExplode.resx">
+      <DependentUpon>frmPhysicsExplode.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="爆炸\frmUVCE.resx">
+      <DependentUpon>frmUVCE.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataLib\DataLib.vbproj">
+      <Project>{F0AF364E-7288-4DB0-80D4-125DE4CB3612}</Project>
+      <Name>DataLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FireBlast\FireBlast.vbproj">
+      <Project>{4A09A702-6749-4DD8-A884-12479C7D059F}</Project>
+      <Name>FireBlast</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

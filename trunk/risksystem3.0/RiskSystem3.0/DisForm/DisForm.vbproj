@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9FEFD96A-347C-4E10-84F4-620A54315E5B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>DisForm</RootNamespace>
+    <AssemblyName>DisForm</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>DisForm.xml</DocumentationFile>
+    <DefineConstants>_MYFORMS=True</DefineConstants>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>DisForm.xml</DocumentationFile>
+    <DefineConstants>_MYFORMS=True</DefineConstants>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="C1.Win.C1FlexGrid.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1FlexGrid.Classic.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1SuperTooltip.2, Version=2.0.20071.31, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="Chart, Version=1.1.3390.1254, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonCountour\DrawContour\bin\Debug\Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinTabControl.v7.3, Version=7.3.20073.38, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl1.Designer.vb">
+      <DependentUpon>UserControl1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="原项计算\frmLeakFlash.Designer.vb">
+      <DependentUpon>frmLeakFlash.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakFlash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakGas.Designer.vb">
+      <DependentUpon>frmLeakGas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakGas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakHeat.Designer.vb">
+      <DependentUpon>frmLeakHeat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakHeat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakLiquid.Designer.vb">
+      <DependentUpon>frmLeakLiquid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakLiquid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakQuality.Designer.vb">
+      <DependentUpon>frmLeakQuality.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakQuality.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakTwo.Designer.vb">
+      <DependentUpon>frmLeakTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmCare.Designer.vb">
+      <DependentUpon>frmCare.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmCare.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmChemistry .Designer.vb">
+      <DependentUpon>frmChemistry .vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmChemistry .vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmGrid.Designer.vb">
+      <DependentUpon>frmGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmGrid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmLeakSource.Designer.vb">
+      <DependentUpon>frmLeakSource.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmLeakSource.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmMet.Designer.vb">
+      <DependentUpon>frmMet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmMet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmOutOption.Designer.vb">
+      <DependentUpon>frmOutOption.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmOutOption.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmPopulation.Designer.vb">
+      <DependentUpon>frmPopulation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmPopulation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmVaneDrown.Designer.vb">
+      <DependentUpon>frmVaneDrown.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmVaneDrown.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="鼠标添加关心点\frmAddCare.Designer.vb">
+      <DependentUpon>frmAddCare.vb</DependentUpon>
+    </Compile>
+    <Compile Include="鼠标添加关心点\frmAddCare.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakFlash.resx">
+      <DependentUpon>frmLeakFlash.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakGas.resx">
+      <DependentUpon>frmLeakGas.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakHeat.resx">
+      <DependentUpon>frmLeakHeat.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakLiquid.resx">
+      <DependentUpon>frmLeakLiquid.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakQuality.resx">
+      <DependentUpon>frmLeakQuality.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakTwo.resx">
+      <DependentUpon>frmLeakTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmCare.resx">
+      <DependentUpon>frmCare.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmChemistry .resx">
+      <DependentUpon>frmChemistry .vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmGrid.resx">
+      <DependentUpon>frmGrid.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmLeakSource.resx">
+      <DependentUpon>frmLeakSource.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmMet.resx">
+      <DependentUpon>frmMet.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmOutOption.resx">
+      <DependentUpon>frmOutOption.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmPopulation.resx">
+      <DependentUpon>frmPopulation.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmVaneDrown.resx">
+      <DependentUpon>frmVaneDrown.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="鼠标添加关心点\frmAddCare.resx">
+      <DependentUpon>frmAddCare.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataLib\DataLib.vbproj">
+      <Project>{F0AF364E-7288-4DB0-80D4-125DE4CB3612}</Project>
+      <Name>DataLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Safety\DisPuff.vbproj">
+      <Project>{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}</Project>
+      <Name>DisPuff</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

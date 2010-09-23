@@ -1,3 +1,4 @@
+Imports DisForm
 Public Class frmDrawContour
     Private m_AddProject As Boolean = 0 '添加项目
 
@@ -123,7 +124,7 @@ Public Class frmDrawContour
         If e.Button = Windows.Forms.MouseButtons.Left And Me.m_AddProject = True Then
             Select Case Me.m_SourceType
                 Case 0 '点源
-                   
+
                 Case 1 '体源
                 Case 2 '矩形面源
                 Case 3 '多边形面源
@@ -512,7 +513,7 @@ Public Class frmDrawContour
         ContourPaint1.Refresh()
     End Sub
 #Region "计算结果绘图"
-    
+
     ''' <summary>
     ''' 根据用户选择的下拉列表绘图
     ''' </summary>
@@ -689,7 +690,7 @@ Public Class frmDrawContour
             Me.ContourPaint1.Refresh()
         End If
 
-        
+
 
 
     End Sub
