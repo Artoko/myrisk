@@ -7,7 +7,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Runtime.Serialization.Formatters.Soap
 Imports System.Xml.Serialization
 Imports System.Threading
-
+Imports DisForm
+Imports DataLib
 Public Class frmMain
     Private m_Sucess As Boolean = False
 
