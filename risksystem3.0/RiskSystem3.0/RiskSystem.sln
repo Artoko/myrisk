@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RiskSystem", "SafetySystem\RiskSystem.vbproj", "{F0892BA2-AE94-49DB-9511-6451AC66D169}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DisPuff", "Safety\DisPuff.vbproj", "{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FireBlast", "FireBlast\FireBlast.vbproj", "{4A09A702-6749-4DD8-A884-12479C7D059F}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestWork", "TestWork\TestWork.vbproj", "{2D4E051F-F02E-495A-B0A3-ED29187B40E0}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "YT_ContourDLL", "CommonCountour\Contour\YT_ContourDLL.vbproj", "{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DrawContour", "CommonCountour\DrawContour\DrawContour.vbproj", "{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0892BA2-AE94-49DB-9511-6451AC66D169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0892BA2-AE94-49DB-9511-6451AC66D169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0892BA2-AE94-49DB-9511-6451AC66D169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0892BA2-AE94-49DB-9511-6451AC66D169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A09A702-6749-4DD8-A884-12479C7D059F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A09A702-6749-4DD8-A884-12479C7D059F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A09A702-6749-4DD8-A884-12479C7D059F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A09A702-6749-4DD8-A884-12479C7D059F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

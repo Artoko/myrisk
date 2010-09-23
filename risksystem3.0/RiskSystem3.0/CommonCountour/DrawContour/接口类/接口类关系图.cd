@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DrawContour.InterfacePannel">
+    <Position X="4.5" Y="8.5" Width="1.5" />
+    <AssociationLine Name="Sources" Type="DrawContour.Sources" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.25" Y="8.5" />
+        <Point X="5.25" Y="7.252" />
+        <Point X="7.855" Y="7.252" />
+        <Point X="7.855" Y="6.179" />
+        <Point X="10" Y="6.179" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.206" Y="-0.046" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAAAAgACAAA=</HashCode>
+      <FileName>接口类\污染源\InterfacePannel.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Sources" />
+      <Property Name="Receptor" />
+      <Property Name="IContours" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrawContour.Sources" Collapsed="true">
+    <Position X="10" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAEQCAAAAAEAAQgACGAABIAA=</HashCode>
+      <FileName>接口类\污染源\Sources.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ArrayPointSour" />
+      <Property Name="ArrayAreaPolySour" />
+      <Property Name="ArrayAreaCircleSour" />
+      <Property Name="ArrayVolumeSour" />
+      <Property Name="ArrayAreaSour" />
+      <Property Name="ArryOpenSour" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrawContour.AreaPolySour">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIBAAAAAAAAAAAAAAAAAAAAAAAASAAAAAA=</HashCode>
+      <FileName>接口类\污染源\AreaPolySour.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.BaseSourClass">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAgABAAIIAAAAAAAAAAAAAAAAgQgAAAA=</HashCode>
+      <FileName>接口类\污染源\BaseSourClass.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Location" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrawContour.AreaCircleSour">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAJAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>接口类\污染源\AreaCircleSour.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.VolumeSour">
+    <Position X="11.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAEAAAAAAAACAAAAAQAAAAAA=</HashCode>
+      <FileName>接口类\污染源\VolumeSour.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.Location">
+    <Position X="10" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAaAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>接口类\污染源\Location.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.PointSour">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>接口类\污染源\PointSour.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.DiscCart" Collapsed="true">
+    <Position X="10.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAACQAAAAIAAAAAAAQQAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>接口类\接受点\DiscCart.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.GridCart" Collapsed="true">
+    <Position X="10.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAICgAAAAgAIAAEAAAAAAAAAAAAEAAAAAAwAAAAI=</HashCode>
+      <FileName>接口类\接受点\GridCart.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.Receptor" Collapsed="true">
+    <Position X="7.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAMAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>接口类\接受点\Receptor.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GridCart" />
+      <Property Name="ArrayDiscCarts" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrawContour.IContours">
+    <Position X="7" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>接口类\等值线\IContours.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ArrayIContours" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrawContour.IContour">
+    <Position X="9" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAABAAAAAAAAAIAAAAAAgAAgAgAAAA=</HashCode>
+      <FileName>接口类\等值线\IContour.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ArrayIContourPoint" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrawContour.IContourPoints">
+    <Position X="11.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAIAAAAAAAAAAAAAAAAAAAAgAAAAAQAAA=</HashCode>
+      <FileName>接口类\等值线\IContourPoint.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.AreaSour" Collapsed="true">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAABAAAAAAAAAAAAAIAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>接口类\污染源\AreaSour.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.OpenSour">
+    <Position X="1.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAABAAAAAAAAAAAAAIAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>接口类\污染源\OpenSour.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawContour.LineSour">
+    <Position X="16.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LineSour.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="宋体" Size="9" />
+</ClassDiagram>

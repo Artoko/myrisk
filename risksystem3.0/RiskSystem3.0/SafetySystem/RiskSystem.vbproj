@@ -1,0 +1,718 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F0892BA2-AE94-49DB-9511-6451AC66D169}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>RiskSystem.My.MyApplication</StartupObject>
+    <RootNamespace>RiskSystem</RootNamespace>
+    <AssemblyName>RiskSystem</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>RiskSystem.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>RiskSystem.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ADODB, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="C1.Win.C1FlexGrid.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1FlexGrid.Classic.2, Version=2.6.20071.324, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="C1.Win.C1SuperTooltip.2, Version=2.0.20071.31, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
+    <Reference Include="Chart, Version=1.1.3271.36471, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\CommonCountour\DrawContour\bin\Debug\Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="CImPortImage, Version=1.0.3512.40160, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\CImPortImage.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics2.Shared.v7.3, Version=7.3.20073.38, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinExplorerBar.v7.3, Version=7.3.20073.38, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinTabControl.v7.3, Version=7.3.20073.38, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics2.Win.v7.3, Version=7.3.20073.38, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Met, Version=1.1.3506.40951, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Met.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic.Compatibility">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PropertyGridEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\PropertyGridEx.dll</HintPath>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TeeChart, Version=2.0.2040.15118, Culture=neutral, PublicKeyToken=dfb0c027679133d1" />
+    <Reference Include="TeeChart.Languages, Version=2.0.2040.15118, Culture=neutral, PublicKeyToken=dfb0c027679133d1" />
+    <Reference Include="VS2005Extender, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\VS2005Extender.dll</HintPath>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="公共类和窗体\ImportImages.vb" />
+    <Compile Include="公共类和窗体\OpenAndSaveFile.vb" />
+    <Compile Include="新修改部分窗口\frmPopulation.Designer.vb">
+      <DependentUpon>frmPopulation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmPopulation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmCare.Designer.vb">
+      <DependentUpon>frmCare.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmCare.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmChemistry .Designer.vb">
+      <DependentUpon>frmChemistry .vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmChemistry .vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen1.Designer.vb">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakFlash.Designer.vb">
+      <DependentUpon>frmLeakFlash.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakFlash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakGas.Designer.vb">
+      <DependentUpon>frmLeakGas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakGas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakHeat.Designer.vb">
+      <DependentUpon>frmLeakHeat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakHeat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakLiquid.Designer.vb">
+      <DependentUpon>frmLeakLiquid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakLiquid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakQuality.Designer.vb">
+      <DependentUpon>frmLeakQuality.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakQuality.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="原项计算\frmLeakTwo.Designer.vb">
+      <DependentUpon>frmLeakTwo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="原项计算\frmLeakTwo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="工具\frmPS.Designer.vb">
+      <DependentUpon>frmPS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="工具\frmPS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="数据库\气压数据\SelectDrang.Designer.vb">
+      <DependentUpon>SelectDrang.vb</DependentUpon>
+    </Compile>
+    <Compile Include="数据库\气压数据\SelectDrang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="数据库\物化数据\frmSearchData.Designer.vb">
+      <DependentUpon>frmSearchData.vb</DependentUpon>
+    </Compile>
+    <Compile Include="数据库\物化数据\frmSearchData.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="数据库\加密解密数据库.vb" />
+    <Compile Include="新修改部分窗口\frmGrid.Designer.vb">
+      <DependentUpon>frmGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmGrid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmMet.Designer.vb">
+      <DependentUpon>frmMet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmMet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmOutOption.Designer.vb">
+      <DependentUpon>frmOutOption.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmOutOption.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmVaneDrown.Designer.vb">
+      <DependentUpon>frmVaneDrown.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmVaneDrown.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="公共类和窗体\Project.vb" />
+    <Compile Include="新修改部分窗口\frmLeakSource.Designer.vb">
+      <DependentUpon>frmLeakSource.vb</DependentUpon>
+    </Compile>
+    <Compile Include="新修改部分窗口\frmLeakSource.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="火灾\frmBleve.Designer.vb">
+      <DependentUpon>frmBleve.vb</DependentUpon>
+    </Compile>
+    <Compile Include="火灾\frmBleve.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="火灾\frmJet.Designer.vb">
+      <DependentUpon>frmJet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="火灾\frmJet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="火灾\frmSolidFire.Designer.vb">
+      <DependentUpon>frmSolidFire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="火灾\frmSolidFire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="爆炸\frmGasStation.Designer.vb">
+      <DependentUpon>frmGasStation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="爆炸\frmGasStation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="爆炸\frmMatialTNT.Designer.vb">
+      <DependentUpon>frmMatialTNT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="爆炸\frmMatialTNT.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="爆炸\frmPhysicsExplode.Designer.vb">
+      <DependentUpon>frmPhysicsExplode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="爆炸\frmPhysicsExplode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmCareCon.Designer.vb">
+      <DependentUpon>frmCareCon.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmCareCon.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmCareMax.Designer.vb">
+      <DependentUpon>frmCareMax.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmCareMax.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmFireResult.Designer.vb">
+      <DependentUpon>frmFireResult.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmFireResult.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmGeneral.Designer.vb">
+      <DependentUpon>frmGeneral.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmGeneral.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmHeavyCon.Designer.vb">
+      <DependentUpon>frmHeavyCon.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmHeavyCon.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmRisk.Designer.vb">
+      <DependentUpon>frmRisk.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmRisk.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmSlabCon.Designer.vb">
+      <DependentUpon>frmSlabCon.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmSlabCon.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmUpVane.Designer.vb">
+      <DependentUpon>frmUpVane.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmUpVane.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmVane.Designer.vb">
+      <DependentUpon>frmVane.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmVane.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmVaneMax.Designer.vb">
+      <DependentUpon>frmVaneMax.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmVaneMax.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="火灾\frmPoolFire.Designer.vb">
+      <DependentUpon>frmPoolFire.vb</DependentUpon>
+    </Compile>
+    <Compile Include="火灾\frmPoolFire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="爆炸\frmUVCE.Designer.vb">
+      <DependentUpon>frmUVCE.vb</DependentUpon>
+    </Compile>
+    <Compile Include="爆炸\frmUVCE.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="计算结果\frmTNTResult.Designer.vb">
+      <DependentUpon>frmTNTResult.vb</DependentUpon>
+    </Compile>
+    <Compile Include="计算结果\frmTNTResult.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDrawLayer.Designer.vb">
+      <DependentUpon>frmDrawLayer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDrawLayer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="绘图\RectArea.vb" />
+    <Compile Include="frmDocking.Designer.vb">
+      <DependentUpon>frmDocking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDocking.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="工具\frmOption.Designer.vb">
+      <DependentUpon>frmOption.vb</DependentUpon>
+    </Compile>
+    <Compile Include="工具\frmOption.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="帮助\dlgAbout.Designer.vb">
+      <DependentUpon>dlgAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="帮助\dlgAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWelcome.Designer.vb">
+      <DependentUpon>frmWelcome.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWelcome.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOut.Designer.vb">
+      <DependentUpon>frmOut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOut.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.vb">
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmResult.Designer.vb">
+      <DependentUpon>frmResult.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResult.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="帮助\dlgRegedit.Designer.vb">
+      <DependentUpon>dlgRegedit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="帮助\dlgRegedit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="公共类和窗体\PublicVal.vb" />
+    <Compile Include="frmSolution.designer.vb">
+      <DependentUpon>frmSolution.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSolution.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="绘图\绘图\Declaration.vb" />
+    <Compile Include="绘图\绘图\publicVar.vb" />
+    <Compile Include="绘图\绘图\复制EMF图形\ClipboardMetafile.vb" />
+    <Compile Include="绘图\绘图\绘图类\PublicVariable.vb" />
+    <Compile Include="绘图\frmDrawContour.Designer.vb">
+      <DependentUpon>frmDrawContour.vb</DependentUpon>
+    </Compile>
+    <Compile Include="绘图\frmDrawContour.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="鼠标添加关心点\frmAddCare.Designer.vb">
+      <DependentUpon>frmAddCare.vb</DependentUpon>
+    </Compile>
+    <Compile Include="鼠标添加关心点\frmAddCare.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="新修改部分窗口\frmCare.resx">
+      <DependentUpon>frmCare.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmChemistry .resx">
+      <DependentUpon>frmChemistry .vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen1.resx">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakFlash.resx">
+      <DependentUpon>frmLeakFlash.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakGas.resx">
+      <DependentUpon>frmLeakGas.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakHeat.resx">
+      <DependentUpon>frmLeakHeat.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakLiquid.resx">
+      <DependentUpon>frmLeakLiquid.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakQuality.resx">
+      <DependentUpon>frmLeakQuality.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="原项计算\frmLeakTwo.resx">
+      <DependentUpon>frmLeakTwo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="工具\frmPS.resx">
+      <DependentUpon>frmPS.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="数据库\气压数据\SelectDrang.resx">
+      <DependentUpon>SelectDrang.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="数据库\物化数据\frmSearchData.resx">
+      <DependentUpon>frmSearchData.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmGrid.resx">
+      <DependentUpon>frmGrid.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmMet.resx">
+      <DependentUpon>frmMet.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmOutOption.resx">
+      <DependentUpon>frmOutOption.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmPopulation.resx">
+      <DependentUpon>frmPopulation.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmVaneDrown.resx">
+      <DependentUpon>frmVaneDrown.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="新修改部分窗口\frmLeakSource.resx">
+      <DependentUpon>frmLeakSource.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="火灾\frmBleve.resx">
+      <DependentUpon>frmBleve.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="火灾\frmJet.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmJet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="火灾\frmSolidFire.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmSolidFire.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="爆炸\frmGasStation.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmGasStation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="爆炸\frmMatialTNT.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMatialTNT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="爆炸\frmPhysicsExplode.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPhysicsExplode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmCareCon.resx">
+      <DependentUpon>frmCareCon.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmCareMax.resx">
+      <DependentUpon>frmCareMax.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmFireResult.resx">
+      <DependentUpon>frmFireResult.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmGeneral.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmGeneral.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmHeavyCon.resx">
+      <DependentUpon>frmHeavyCon.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmRisk.resx">
+      <DependentUpon>frmRisk.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmSlabCon.resx">
+      <DependentUpon>frmSlabCon.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmUpVane.resx">
+      <DependentUpon>frmUpVane.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmVane.resx">
+      <DependentUpon>frmVane.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmVaneMax.resx">
+      <DependentUpon>frmVaneMax.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="火灾\frmPoolFire.resx">
+      <DependentUpon>frmPoolFire.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="爆炸\frmUVCE.resx">
+      <DependentUpon>frmUVCE.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果\frmTNTResult.resx">
+      <DependentUpon>frmTNTResult.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDrawLayer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmDrawLayer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDocking.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmDocking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="工具\frmOption.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmOption.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="帮助\dlgAbout.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>dlgAbout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWelcome.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmWelcome.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOut.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmOut.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmResult.resx">
+      <DependentUpon>frmResult.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSolution.resx">
+      <DependentUpon>frmSolution.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="帮助\dlgRegedit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>dlgRegedit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="绘图\frmDrawContour.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmDrawContour.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="鼠标添加关心点\frmAddCare.resx">
+      <DependentUpon>frmAddCare.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram2.cd" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonCountour\DrawContour\DrawContour.vbproj">
+      <Project>{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}</Project>
+      <Name>DrawContour</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FireBlast\FireBlast.vbproj">
+      <Project>{4A09A702-6749-4DD8-A884-12479C7D059F}</Project>
+      <Name>FireBlast</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Safety\DisPuff.vbproj">
+      <Project>{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}</Project>
+      <Name>DisPuff</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="鼠标\Care.cur" />
+    <Content Include="鼠标\ZoomIn.cur" />
+    <Content Include="鼠标\ZoomOut.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="公共类和窗体\结果\" />
+    <Folder Include="绘图控件\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

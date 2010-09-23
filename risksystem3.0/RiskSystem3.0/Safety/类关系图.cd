@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DisPuff.Dis">
+    <Position X="1" Y="5.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IBFAmADADgwQAQghgQAAQEgE7gQUBIEEABAwAUEAEhA=</HashCode>
+      <FileName>Dis.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Forecast" />
+      <Property Name="Results" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.Results">
+    <Position X="3.5" Y="5.5" Width="1.5" />
+    <Members>
+      <Field Name="m_AllCalMount" Hidden="true" />
+      <Field Name="m_AllCareResult" Hidden="true" />
+      <Field Name="m_AllGridResult" Hidden="true" />
+      <Field Name="m_AllProgress" Hidden="true" />
+      <Field Name="m_MetResults" Hidden="true" />
+      <Field Name="m_Status2" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAiAQAgGAAAAAIAAAkAAAAAJAAAAAAAAAAAA=</HashCode>
+      <FileName>计算结果类\Results.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MetResults" />
+      <Property Name="AllGridResult" />
+      <Property Name="AllCareResult" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.MetResult">
+    <Position X="6.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAABABgAAA=</HashCode>
+      <FileName>计算结果类\MetResult.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ForeTimeResults" />
+      <Property Name="Slip" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.ForeTimeResult">
+    <Position X="9.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAACgAgQAAAAAAAAAAAAAAAAQAAAEABAAAA=</HashCode>
+      <FileName>计算结果类\ForeTimeResult.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.SlipClass">
+    <Position X="6.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAQAAAQAAAAAAAAAAAAAAAAAAAEEAAAEA=</HashCode>
+      <FileName>计算结果类\SlipClass.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.AllGridResult">
+    <Position X="7.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgKEAAEAEEAAAACAAAAAAAQAAQAAAAAAFABAIAAAA=</HashCode>
+      <FileName>计算结果类\AllGridResult.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SlipGrid" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.AllCareResult">
+    <Position X="5.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAACAAAAAACAAQAAQQAAEgAEQBAAAABA=</HashCode>
+      <FileName>计算结果类\AllCareResult.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.Slippage" Collapsed="true">
+    <Position X="10.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>计算结果类\Slippage.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.Forecast">
+    <Position X="3.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAgAACAAwAgEBAAAIAgAECAAAAGAAAAAAAAEAAAA=</HashCode>
+      <FileName>预测类\Forecast.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Met" />
+      <Property Name="CareReceptor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.Met">
+    <Position X="7" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAKAAAAAAAMAAAEAAEAKAIAIAAAAAAAAIAAAg=</HashCode>
+      <FileName>气象\Met.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.CareReceptor">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAIAAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>预测类\CareReceptor.vb</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="m_Point3D" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DisPuff.Point3D" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAQAAAAA=</HashCode>
+      <FileName>声明\Declaration.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="宋体" Size="9" />
+</ClassDiagram>
