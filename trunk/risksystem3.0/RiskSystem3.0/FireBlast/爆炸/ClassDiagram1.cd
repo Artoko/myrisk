@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FireBlast.BaseBoo" Collapsed="true">
+    <Position X="3.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAQAQAQAQBAQACABAAQAAAAAAAAA=</HashCode>
+      <FileName>爆炸\公共类\BaseBoo.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireBlast.UVCE" Collapsed="true">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAoAAQBgQQBgAAAQEAQCwBQAAAAAEiARAAAQAQQAA=</HashCode>
+      <FileName>爆炸\TNT当量\UVCE.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireBlast.GasStation" Collapsed="true">
+    <Position X="1" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAoAAQBgQQBgAAAQEAQCQAQAAAAAEiAAAAAQAQQAA=</HashCode>
+      <FileName>爆炸\加油站\GasStation.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireBlast.MaterialTNT" Collapsed="true">
+    <Position X="1" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAoAAQBgQQBgAAQQEAQCwBAAAAAAECAAAAAQAQQAA=</HashCode>
+      <FileName>爆炸\凝聚相爆炸\MaterialTNT.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireBlast.PhysicsExplode" Collapsed="true">
+    <Position X="1" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAAAQBgQQRgABMQGQ4CcAQIBckBBFASAAAwAYAAA=</HashCode>
+      <FileName>爆炸\物理爆炸\PhysicsExplode.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="宋体" Size="9" />
+</ClassDiagram>
