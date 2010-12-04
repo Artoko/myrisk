@@ -29,7 +29,7 @@ Public Module Formula
         End If
     End Function
     ''' <summary>
-    ''' 多烟团对单一预测点的浓度影响
+    ''' 预测时刻多烟团对单一预测点的浓度影响
     ''' </summary>
     ''' <param name="arrayFlogTrack">多个烟团的轨迹的数组</param>
     ''' <param name="point">预测点的位置,x,y,z</param>
@@ -38,7 +38,7 @@ Public Module Formula
     Public Function MultiCommonGaussFog(ByVal arrayFlogTrack As FlogTrack(), ByVal point As Point3D) As Double
         Dim Resultc As Double = 0
         For i As Integer = 0 To arrayFlogTrack.Length - 1
-            Resultc += CommonGaussFog(arrayFlogTrack(i).Q, arrayFlogTrack(i).x0, arrayFlogTrack(i).y0, arrayFlogTrack(i).z0, arrayFlogTrack(i).ax, arrayFlogTrack(i).ax, arrayFlogTrack(i).az, point.x, point.y, point.z)
+            Resultc += CommonGaussFog(arrayFlogTrack(i).Q, arrayFlogTrack(i).x, arrayFlogTrack(i).y, arrayFlogTrack(i).z, arrayFlogTrack(i).ax, arrayFlogTrack(i).ax, arrayFlogTrack(i).az, point.x, point.y, point.z)
         Next
         Return Resultc
     End Function
@@ -1548,4 +1548,84 @@ Public Module Formula
             Return TCenter
         End If
     End Function
+
+    ''' <summary>
+    ''' 生成预测时刻多个烟团的轨迹和多个烟团对应的扩散参数
+    ''' </summary>
+    ''' <param name="arrayMet">气象数组</param>
+    ''' <param name="Sn">气象序号</param>
+    ''' <param name="ForecastTime">预测时刻。从泄漏开始计算的时刻。S</param>
+    ''' <param name="ground">地面类型</param>
+    ''' <param name="ArrayFlogLeave">烟团释放的初始时刻</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function CreateMultiFlogTrack(ByVal arrayMet As Met(), ByVal Sn As Integer, ByVal ForecastTime As Integer, ByVal ground As String, ByVal ArrayFlogLeave As FlogLeave()) As FlogTrack()
+        Dim ArrayFlogTrack(ArrayFlogLeave.Length - 1) As FlogTrack
+        For i As Integer = 0 To ArrayFlogLeave.Length - 1
+            CreateFlogTrack(arrayMet, Sn, ForecastTime, ground, ArrayFlogLeave(i), ArrayFlogTrack(i))
+        Next
+        Return ArrayFlogTrack
+    End Function
+
+
+    ''' <summary>
+    ''' 生成单个烟团的轨迹和该烟团对应的扩散参数
+    ''' </summary>
+    ''' <param name="arrayMet">预测时间内的气象数组</param>
+    ''' <param name="Sn">序号</param>
+    ''' <param name="ForecastTime">从泄漏开始后的预测时刻</param>
+    ''' <param name="ground">地面类型</param>
+    ''' <param name="FlogLeave">某一烟团的初始状态</param>
+    ''' <param name="FlogTrack">预测时刻的烟团的状态</param>
+    ''' <remarks></remarks>
+    Private Sub CreateFlogTrack(ByVal arrayMet As Met(), ByVal Sn As Integer, ByVal ForecastTime As Integer, ByVal ground As String, ByVal FlogLeave As FlogLeave, ByRef FlogTrack As FlogTrack)
+        '先不考虑重气体，以后再考虑。
+        '第一步：计算烟团的中心位置
+        If ForecastTime > 3600 Then '如果预测时刻大于1小时就进行追踪
+            Dim ax1 As Double = 0
+            Dim az1 As Double = 0
+            If FlogLeave.LeaveTime < 3600 Then
+                Dim DX As Double = Math.Sin(arrayMet(Sn).WindDer) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
+                Dim DY As Double = Math.Cos(arrayMet(Sn).WindDer) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
+                FlogLeave.x = FlogLeave.x + DX
+                FlogLeave.y = FlogLeave.y + DY
+                FlogLeave.z = FlogLeave.z
+                '根据上一步计算得到的水平和垂直向扩散参数计算出当前气象条件下烟团虚拟的距离
+                Dim DX_1 As Double = Anti_DiffuseY15(FlogLeave.ax, arrayMet(Sn).Stab, ground) '虚拟的距离
+                ax1 = DiffuseY15(arrayMet(Sn).u2 * 3600 + DX_1, arrayMet(Sn).Stab, ground)
+
+                Dim DZ_1 As Double = Anti_DiffuseZ15(FlogLeave.az, arrayMet(Sn).Stab, ground) '虚拟的距离
+                az1 = DiffuseZ15(arrayMet(Sn).u2 * 3600 + DZ_1, arrayMet(Sn).Stab, ground)
+            End If
+            Sn += 1
+            ForecastTime -= 3600
+            FlogLeave.LeaveTime -= 3600
+
+            '如果气象条件超出的边界，用边界的气象条件
+            If Sn > arrayMet.Length - 1 Then
+                Sn = arrayMet.Length - 1
+            End If
+            CreateFlogTrack(arrayMet, Sn, ForecastTime, ground, FlogLeave, FlogTrack)
+        Else
+            Dim DX As Double = Math.Sin(arrayMet(Sn).WindDer) * arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime)
+            Dim DY As Double = Math.Cos(arrayMet(Sn).WindDer) * arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime)
+            FlogLeave.x = FlogLeave.x + DX
+            FlogLeave.y = FlogLeave.y + DY
+            FlogLeave.z = FlogLeave.z
+
+            '根据上一步计算得到的水平和垂直向扩散参数计算出当前气象条件下烟团虚拟的距离
+            Dim DX_1 As Double = Anti_DiffuseY15(FlogLeave.ax, arrayMet(Sn).Stab, ground) '虚拟的距离
+            Dim ax1 As Double = DiffuseY15(arrayMet(Sn).u2 * ForecastTime + DX_1, arrayMet(Sn).Stab, ground)
+
+            Dim DZ_1 As Double = Anti_DiffuseZ15(FlogLeave.az, arrayMet(Sn).Stab, ForecastTime) '虚拟的距离
+            Dim az1 As Double = DiffuseZ15(arrayMet(Sn).u2 * ForecastTime + DZ_1, arrayMet(Sn).Stab, ground)
+
+            FlogTrack.x = FlogLeave.x
+            FlogTrack.y = FlogLeave.y
+            FlogTrack.z = FlogLeave.z
+            FlogTrack.ax = ax1
+            FlogTrack.az = az1
+            Exit Sub
+        End If
+    End Sub
 End Module
