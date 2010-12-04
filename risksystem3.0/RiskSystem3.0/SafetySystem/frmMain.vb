@@ -282,7 +282,7 @@ Public Class frmMain
                         Project0.Dis0.Forecast.Met(i).u2 = 0
                     End If
                 Next
-                Project0.PreMet() '预处理数据
+                Project0.PreMet() '预处理气象数据
                 Project0.Dis0.CalRisk() '计算风险值
                 Project0.Dis0.CalInstance() '计算扩散
                 m_Sucess = True
