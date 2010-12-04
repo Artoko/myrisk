@@ -1,4 +1,64 @@
 Public Module Formula
+#Region "变天条件下的多烟团模型"
+    ''' <summary>
+    ''' 通用单烟团模型。可用于变天条件
+    ''' </summary>
+    ''' <param name="Q">烟团的质量,mg</param>
+    ''' <param name="x0">某一烟团中心点的位置,m</param>
+    ''' <param name="y0">某一烟团中心点的位置,m</param>
+    ''' <param name="z0">某一烟团中心点的位置,m</param>
+    ''' <param name="ax">水平方向的扩散参数</param>
+    ''' <param name="ay">水平方向的扩散参数</param>
+    ''' <param name="az">垂直方向上的扩散参数</param>
+    ''' <param name="x">预测点的位置,m</param>
+    ''' <param name="y">预测点的位置,m</param>
+    ''' <param name="z">预测点的位置,m</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function CommonGaussFog(ByVal Q As Double, ByVal x0 As Double, ByVal y0 As Double, ByVal z0 As Double, ByVal ax As Double, ByVal ay As Double, ByVal az As Double, ByVal x As Double, ByVal y As Double, ByVal z As Double) As Double
+        If ax = 0 Or ay = 0 Or az = 0 Then
+            Return 0
+        Else
+            Dim dblx As Double '储存x轴向计算结果
+            Dim dbly As Double '储存z轴向计算结果
+            Dim dblz As Double '储存y轴向计算结果
+            dblx = System.Math.Exp(-(x - x0) * (x - x0) / (2 * ax * ax))
+            dbly = System.Math.Exp(-(y - y0) * (y - y0) / (2 * ay * ay))
+            dblz = System.Math.Exp(-(z - z0) * (z - z0) / (2 * az * az)) + System.Math.Exp(-(z + z0) * (z + z0) / (2 * az * az))
+            Return Q / (Math.Sqrt((2 * PI) * (2 * PI) * (2 * PI)) * ax * ay * az) * dblx * dbly * dblz
+        End If
+    End Function
+    ''' <summary>
+    ''' 多烟团对单一预测点的浓度影响
+    ''' </summary>
+    ''' <param name="arrayFlogTrack">多个烟团的轨迹的数组</param>
+    ''' <param name="point">预测点的位置,x,y,z</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function MultiCommonGaussFog(ByVal arrayFlogTrack As FlogTrack(), ByVal point As Point3D) As Double
+        Dim Resultc As Double = 0
+        For i As Integer = 0 To arrayFlogTrack.Length - 1
+            Resultc += CommonGaussFog(arrayFlogTrack(i).Q, arrayFlogTrack(i).x0, arrayFlogTrack(i).y0, arrayFlogTrack(i).z0, arrayFlogTrack(i).ax, arrayFlogTrack(i).ax, arrayFlogTrack(i).az, point.x, point.y, point.z)
+        Next
+        Return Resultc
+    End Function
+    ''' <summary>
+    ''' 计算多个点的浓度值，把浓度值储存的ArrayResult数组中。
+    ''' </summary>
+    ''' <param name="arrayFlogTrack">多个烟团的轨迹的数组</param>
+    ''' <param name="ArrayPoint">多个点的数组</param>
+    ''' <returns>返回储存了多个点的浓度值</returns>
+    ''' <remarks></remarks>
+    Public Function Multi_Point_CommonGaussFog(ByVal arrayFlogTrack As FlogTrack(), ByVal ArrayPoint As Point3D()) As Double()
+        Dim arrayC(ArrayPoint.Length - 1) As Double
+        For i As Integer = 0 To ArrayPoint.Length - 1
+            arrayC(i) = MultiCommonGaussFog(arrayFlogTrack, ArrayPoint(i))
+        Next
+        Return arrayC
+    End Function
+#End Region
+
+
 
     '单一气象条件下高斯单烟团模型
     Public Function GaussFog(ByVal Q As Double, ByVal x As Double, ByVal y As Double, ByVal z As Double, ByVal t As Double, ByVal u As Double, ByVal He As Double, ByVal ax As Double, ByVal ay As Double, ByVal az As Double) As Double
@@ -181,7 +241,7 @@ Public Module Formula
 
     End Function
 
-    
+
 
     '计算不完全珈玛函数使用的函数
     Public Function F(ByVal t As Double) As Double
@@ -241,29 +301,31 @@ Public Module Formula
         '(3)丘陵山区的农村或城市，其扩散参数选取方法同工业区
 
         If Ground = "平原地区农村及城市远郊区" Then
-            If Stab = "D" Then
-                RiseStab = "C-D"
-            ElseIf Stab = "E" Then
-                RiseStab = "D-E"
-            ElseIf Stab = "F" Then
-                RiseStab = "E"
-            Else
-                RiseStab = Stab
-            End If
+            Select Case Stab
+                Case "D"
+                    Return "C-D"
+                Case "E"
+                    Return "D-E"
+                Case "F"
+                    Return "E"
+                Case Else
+                    Return Stab
+            End Select
         Else ' Ground = "工业区或城区" Or Ground = "丘陵山区的农村或城市"
-            If Stab = "C" Then
-                RiseStab = "B"
-            ElseIf Stab = "C-D" Then
-                RiseStab = "B-C"
-            ElseIf Stab = "D" Then
-                RiseStab = "C"
-            ElseIf Stab = "E" Then
-                RiseStab = "D"
-            ElseIf Stab = "F" Then
-                RiseStab = "E"
-            Else
-                RiseStab = Stab
-            End If
+            Select Case Stab
+                Case "C"
+                    Return "B"
+                Case "C-D"
+                    Return "B-C"
+                Case "D"
+                    Return "C"
+                Case "E"
+                    Return "D"
+                Case "F"
+                    Return "E"
+                Case Else
+                    Return Stab
+            End Select
         End If
     End Function
 
@@ -1411,5 +1473,79 @@ Public Module Formula
         Dim az As Double
         az = DiffuseZ15(x, "F", "平原地区农村及城市远郊区") 'Z轴扩散参数。F稳定度下的扩散参数作为计算的依据
         Return az * 2
+    End Function
+
+
+    ''' <summary>
+    ''' 根据水平扩散参数求烟团走过的距离
+    ''' </summary>
+    ''' <param name="ax">扩散参数</param>
+    ''' <param name="stab">稳定度</param>
+    ''' <param name="ground">类型</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Anti_DiffuseY15(ByVal ax As Double, ByVal stab As String, ByVal ground As String)
+        If ax <= 0 Then
+            Return 0
+        Else
+            '采用二分法
+            Dim TCenter, F1, F2, FCenter As Double
+            Dim lowT As Double = 0
+            Dim HeighT As Double = 1000000 '最大1000公里范围
+            '根据上面求出的数组，从后向前找出浓度值的范围。再用二分法求出给定的值
+            F1 = DiffuseY15(lowT, stab, ground)
+            F2 = DiffuseY15(HeighT, stab, ground)
+            '采用二分法求给定值
+            Do
+                TCenter = (lowT + HeighT) / 2
+
+                FCenter = DiffuseY15(TCenter, stab, ground) '计算出中间值的浓度
+                If FCenter <= ax Then '如果中间值>=指定值
+                    lowT = TCenter
+                    F1 = FCenter
+                Else
+                    HeighT = TCenter
+                    F2 = FCenter
+                End If
+            Loop While Math.Abs(lowT - HeighT) > 0.1
+            Return TCenter
+        End If
+
+    End Function
+
+    ''' <summary>
+    ''' 根据水平扩散参数求烟团走过的距离
+    ''' </summary>
+    ''' <param name="az">扩散参数</param>
+    ''' <param name="stab">稳定度</param>
+    ''' <param name="ground">类型</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Anti_DiffuseZ15(ByVal az As Double, ByVal stab As String, ByVal ground As String)
+        If az <= 0 Then
+            Return 0
+        Else
+            '采用二分法
+            Dim TCenter, F1, F2, FCenter As Double
+            Dim lowT As Double = 0
+            Dim HeighT As Double = 1000000 '最大1000公里范围
+            '根据上面求出的数组，从后向前找出浓度值的范围。再用二分法求出给定的值
+            F1 = DiffuseZ15(lowT, stab, ground)
+            F2 = DiffuseZ15(HeighT, stab, ground)
+            '采用二分法求给定值
+            Do
+                TCenter = (lowT + HeighT) / 2
+
+                FCenter = DiffuseZ15(TCenter, stab, ground) '计算出中间值的浓度
+                If FCenter <= az Then '如果中间值>=指定值
+                    lowT = TCenter
+                    F1 = FCenter
+                Else
+                    HeighT = TCenter
+                    F2 = FCenter
+                End If
+            Loop While Math.Abs(lowT - HeighT) > 0.1
+            Return TCenter
+        End If
     End Function
 End Module
