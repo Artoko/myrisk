@@ -631,31 +631,31 @@
     '''  <returns></returns>
     ''' <remarks></remarks>
     Public Function IntialPara(ByVal chem As Chemical, ByVal OutT As Double, ByVal OutP As Double) As Boolean
-        Select Case m_LeakType
+        Select Case Me.m_LeakType
             Case 3, 8 '压力液化气
                 If m_chkLeakGasP Then
-                    m_LeakGasP = chem.GetP(m_InT + FreezingPoint)
-                    m_LeakEvaporationP = OutP
+                    Me.m_LeakGasP = chem.GetP(Me.m_InT + FREEZINGPOINT)
+                    Me.m_LeakEvaporationP = OutP
                 End If
-                If m_LeakGasP = 0 Then
+                If Me.m_LeakGasP = 0 Then
                     'MsgBox("无法自动计算容器内的压力，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
                     Return False
                 Else
                     Return True
                 End If
             Case 4 '压力液化气
-                If m_chkLeakGasP Then
-                    m_LeakGasP = chem.GetP(m_InT + FreezingPoint)
+                If Me.m_chkLeakGasP Then
+                    Me.m_LeakGasP = chem.GetP(m_InT + FREEZINGPOINT)
                 End If
-                If m_LeakGasP = 0 Then
+                If Me.m_LeakGasP = 0 Then
                     'MsgBox("无法自动计算容器内的压力，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
                     Return False
                 Else
                     Return True
                 End If
             Case 6, 7 '常压液化
-                If m_chkVap Then
-                    m_LeakEvaporationP = chem.GetP(OutT + FreezingPoint)
+                If Me.m_chkVap Then
+                    Me.m_LeakEvaporationP = chem.GetP(OutT + FREEZINGPOINT)
                 End If
                 If m_LeakEvaporationP = 0 Then
                     'MsgBox("无法自动计液体表面蒸气压，请检查物化数据中是否已经设置了该物质的安托因参数!", MsgBoxStyle.OkOnly, "自动计算压力错误")
@@ -664,8 +664,8 @@
                     Return True
                 End If
             Case 5, 9, 10 '
-                m_LeakEvaporationP = OutP
-                If m_LeakEvaporationP = 0 Then
+                Me.m_LeakEvaporationP = OutP
+                If Me.m_LeakEvaporationP = 0 Then
                     Return False
                 Else
                     Return True
