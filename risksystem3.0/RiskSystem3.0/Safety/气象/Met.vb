@@ -13,7 +13,7 @@
     Private m_WindType As Integer = 0 '风的类型。0
     Private m_WindDer As Double '风向度
     Private m_Vane As String  '风向
-    Private m_Wind_Speed As Double '风速,m/s
+    Private m_Wind_Speed As Double '10米处的风速,m/s
     Private m_Stab As String '稳定度
     Private m_Frequency As Double = 0.01 '该气象的频率
     Private m_u2 As Double '泄漏口高度处风速

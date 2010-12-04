@@ -1514,7 +1514,7 @@ Public Module Formula
     End Function
 
     ''' <summary>
-    ''' 根据水平扩散参数求烟团走过的距离
+    ''' 根据垂向扩散参数求烟团走过的距离
     ''' </summary>
     ''' <param name="az">扩散参数</param>
     ''' <param name="stab">稳定度</param>
