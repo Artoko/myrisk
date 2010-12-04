@@ -2792,8 +2792,29 @@ Imports System.Runtime.Serialization.Formatters.Binary
         'Next i
             '以下开始按关心点的瞬时浓度、死亡概率和死亡百分率-------------------------------------------------------------------
 
-            Dim dblCnt As Double = 0 '用于储存概率函数括号内的累积值
-            '计算瞬时浓度
+        Dim dblCnt As Double = 0 '用于储存概率函数括号内的累积值
+        '创建预测点的数组
+        Dim ArrayPoint(-1) As Point3D
+        Dim n As Integer = 0
+        If Me.Forecast.IsCalGrid = True Then
+            ReDim Preserve ArrayPoint(Me.Forecast.Grid.CountX + Me.Forecast.Grid.CountY - 1)
+            For i As Integer = 0 To Me.Forecast.Grid.CountY - 1
+                For j As Integer = 0 To Me.Forecast.Grid.CountX - 1
+                    ArrayPoint(n).y = Me.Forecast.Grid.MinY + Me.Forecast.Grid.StepY * i
+                    ArrayPoint(n).x = Me.Forecast.Grid.MinX + Me.Forecast.Grid.StepX * j
+                    ArrayPoint(n).z = Me.Forecast.Grid.WGH
+                    n += 1
+                Next
+            Next
+        End If
+        If Me.Forecast.IsCalCare = True Then
+            ReDim Preserve ArrayPoint(ArrayPoint.Length + Me.Forecast.CareReceptor.Length - 1)
+            For i As Integer = 0 To Me.Forecast.CareReceptor.Length - 1
+                ArrayPoint(n) = Me.Forecast.CareReceptor(i).Point3D
+                n += 1
+            Next
+        End If
+
         For nCount As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
             '处理计算时刻
             dblForecastTime = (Me.m_ForeCast.OutPut.ForeStart + Me.m_ForeCast.OutPut.ForeInterval * nCount) * 60 '将预测列表中的预测时刻按顺序赋值上述变量，乘以60，将单位转化为秒
@@ -2802,24 +2823,20 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Dim ListFlogLave As New List(Of FlogLeave())
             If Me.Sources(Sn).MultiPLeak.Q Then '点源泄漏
                 Dim FlogLeave(Me.Sources(Sn).MultiPLeak.Qi.Length - 2) As FlogLeave
-                For n As Integer = 0 To FlogLeave.Length - 1
-                    FlogLeave(n).Q = Me.Sources(Sn).MultiPLeak.Qi(n + 1)
-                    FlogLeave(n).z = Me.Sources(Sn).MultiPLeak.He
-                    FlogLeave(n).x = Me.IntialSource.Coordinate.x
-                    FlogLeave(n).y = Me.IntialSource.Coordinate.y
-                    FlogLeave(n).ax = 0
-                    FlogLeave(n).az = 0
-                    FlogLeave(n).LeaveTime = Me.Forecast.OutPut.IntervalTime * n
+                For i As Integer = 0 To FlogLeave.Length - 1
+                    FlogLeave(i).Q = Me.Sources(Sn).MultiPLeak.Qi(i + 1)
+                    FlogLeave(i).z = Me.Sources(Sn).MultiPLeak.He
+                    FlogLeave(i).x = Me.IntialSource.Coordinate.x
+                    FlogLeave(i).y = Me.IntialSource.Coordinate.y
+                    FlogLeave(i).ax = 0
+                    FlogLeave(i).az = 0
+                    FlogLeave(i).LeaveTime = Me.Forecast.OutPut.IntervalTime * i
                 Next
                 ListFlogLave.Add(FlogLeave)
             End If
-            '生成烟团的轨迹
-            Dim ArrayPoint(Me.Forecast.CareReceptor.Length - 1) As Point3D
-            For n As Integer = 0 To Me.Forecast.CareReceptor.Length - 1
-                ArrayPoint(n) = Me.Forecast.CareReceptor(n).Point3D
-            Next
-            For n As Integer = 0 To ListFlogLave.Count - 1
-                Dim ArrayFlogTrack() As FlogTrack = Formula.CreateMultiFlogTrack(Me.Forecast.Met, Sn, dblForecastTime, Me.Forecast.OutPut.GroundCharacter, ListFlogLave(n))
+            For i As Integer = 0 To ListFlogLave.Count - 1
+                '生成烟团的轨迹
+                Dim ArrayFlogTrack() As FlogTrack = Formula.CreateMultiFlogTrack(Me.Forecast.Met, Sn, dblForecastTime, Me.Forecast.OutPut.GroundCharacter, ListFlogLave(i))
                 Dim ArrayResult() As Double = Formula.Multi_Point_CommonGaussFog(ArrayFlogTrack, ArrayPoint)
             Next
             '设置计算进度
