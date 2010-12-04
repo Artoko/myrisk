@@ -1559,10 +1559,11 @@ Public Module Formula
     ''' <param name="ArrayFlogLeave">烟团释放的初始时刻</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function CreateMultiFlogTrack(ByVal arrayMet As Met(), ByVal Sn As Integer, ByVal ForecastTime As Integer, ByVal ground As String, ByVal ArrayFlogLeave As FlogLeave()) As FlogTrack()
+    Public Function CreateMultiFlogTrack(ByVal arrayMet As Met(), ByVal Sn As Integer, ByVal ForecastTime As Integer, ByVal ground As String, ByVal ArrayFlogLeave As FlogLeave()) As FlogTrack()
         Dim ArrayFlogTrack(ArrayFlogLeave.Length - 1) As FlogTrack
         For i As Integer = 0 To ArrayFlogLeave.Length - 1
             CreateFlogTrack(arrayMet, Sn, ForecastTime, ground, ArrayFlogLeave(i), ArrayFlogTrack(i))
+            ArrayFlogTrack(i).Q = ArrayFlogLeave(i).Q
         Next
         Return ArrayFlogTrack
     End Function
@@ -1585,8 +1586,8 @@ Public Module Formula
             Dim ax1 As Double = 0
             Dim az1 As Double = 0
             If FlogLeave.LeaveTime < 3600 Then
-                Dim DX As Double = Math.Sin(arrayMet(Sn).WindDer) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
-                Dim DY As Double = Math.Cos(arrayMet(Sn).WindDer) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
+                Dim DX As Double = Math.Sin((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
+                Dim DY As Double = Math.Cos((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
                 FlogLeave.x = FlogLeave.x + DX
                 FlogLeave.y = FlogLeave.y + DY
                 FlogLeave.z = FlogLeave.z
@@ -1607,18 +1608,19 @@ Public Module Formula
             End If
             CreateFlogTrack(arrayMet, Sn, ForecastTime, ground, FlogLeave, FlogTrack)
         Else
-            Dim DX As Double = Math.Sin(arrayMet(Sn).WindDer) * arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime)
-            Dim DY As Double = Math.Cos(arrayMet(Sn).WindDer) * arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime)
+            '由于风向是风的来向，下风向是风的去向，所以应加180度为去向
+            Dim DX As Double = Math.Cos((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime)
+            Dim DY As Double = Math.Sin((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime)
             FlogLeave.x = FlogLeave.x + DX
             FlogLeave.y = FlogLeave.y + DY
             FlogLeave.z = FlogLeave.z
 
             '根据上一步计算得到的水平和垂直向扩散参数计算出当前气象条件下烟团虚拟的距离
             Dim DX_1 As Double = Anti_DiffuseY15(FlogLeave.ax, arrayMet(Sn).Stab, ground) '虚拟的距离
-            Dim ax1 As Double = DiffuseY15(arrayMet(Sn).u2 * ForecastTime + DX_1, arrayMet(Sn).Stab, ground)
+            Dim ax1 As Double = DiffuseY15(arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime) + DX_1, arrayMet(Sn).Stab, ground)
 
             Dim DZ_1 As Double = Anti_DiffuseZ15(FlogLeave.az, arrayMet(Sn).Stab, ForecastTime) '虚拟的距离
-            Dim az1 As Double = DiffuseZ15(arrayMet(Sn).u2 * ForecastTime + DZ_1, arrayMet(Sn).Stab, ground)
+            Dim az1 As Double = DiffuseZ15(arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime) + DZ_1, arrayMet(Sn).Stab, ground)
 
             FlogTrack.x = FlogLeave.x
             FlogTrack.y = FlogLeave.y
