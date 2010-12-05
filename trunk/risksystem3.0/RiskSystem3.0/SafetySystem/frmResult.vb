@@ -104,7 +104,7 @@ Public Class frmResult
         For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
             If strSlip = "滑移平均最大浓度" Then
                 For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(i)(l, k).MaxCon
+                    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(i, l, k).MaxCon
                 Next
             Else
                 For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1

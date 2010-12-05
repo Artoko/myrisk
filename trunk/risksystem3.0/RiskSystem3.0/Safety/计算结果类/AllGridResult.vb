@@ -12,7 +12,7 @@
     ''' 网格滑移平均最大浓度：气象条件，Y轴，X轴
     ''' </summary>
     ''' <remarks></remarks>
-    Private m_SlipGrid()(,) As Slippage
+    Private m_SlipGrid(-1, -1, -1) As Slippage
     ''' <summary>
     ''' 死亡概率：气象条件，Y轴，X轴
     ''' </summary>
@@ -59,11 +59,11 @@
     ''' 网格滑移平均最大浓度
     ''' </summary>
     ''' <remarks></remarks>
-    Property SlipGrid() As Slippage()(,)
+    Property SlipGrid() As Slippage(,,)
         Get
             Return m_SlipGrid
         End Get
-        Set(ByVal value As Slippage()(,))
+        Set(ByVal value As Slippage(,,))
             m_SlipGrid = value
         End Set
     End Property
