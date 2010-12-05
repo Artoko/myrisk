@@ -1,14 +1,14 @@
 Imports WeifenLuo.WinFormsUI
 
 Public Class frmResult
-    Inherits DockContent
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Private Sub frmProperty_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
     End Sub
 
 #Region "ContextMenuStrip Window Position"
     Private Sub FloatingToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FloatingToolStripMenuItem.Click
-        Me.DockState = WeifenLuo.WinFormsUI.DockState.Float
+        Me.DockState = Docking.DockState.Float
     End Sub
 
     Private Sub DockableToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DockableToolStripMenuItem.Click
@@ -24,19 +24,19 @@ Public Class frmResult
 
     Private Sub AutoHideToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoHideToolStripMenuItem.Click
         Select Case Me.DockState
-            Case WeifenLuo.WinFormsUI.DockState.DockBottom
-                DockState = WeifenLuo.WinFormsUI.DockState.DockBottomAutoHide
-            Case WeifenLuo.WinFormsUI.DockState.DockTop
-                DockState = WeifenLuo.WinFormsUI.DockState.DockTopAutoHide
-            Case WeifenLuo.WinFormsUI.DockState.DockLeft
-                DockState = WeifenLuo.WinFormsUI.DockState.DockLeftAutoHide
-            Case WeifenLuo.WinFormsUI.DockState.DockRight
-                DockState = WeifenLuo.WinFormsUI.DockState.DockRightAutoHide
+            Case Docking.DockState.DockBottom
+                DockState = Docking.DockState.DockBottomAutoHide
+            Case Docking.DockState.DockTop
+                DockState = Docking.DockState.DockTopAutoHide
+            Case Docking.DockState.DockLeft
+                DockState = Docking.DockState.DockLeftAutoHide
+            Case Docking.DockState.DockRight
+                DockState = Docking.DockState.DockRightAutoHide
         End Select
     End Sub
 
     Private Sub TabbedDocumentToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TabbedDocumentToolStripMenuItem.Click
-        DockState = WeifenLuo.WinFormsUI.DockState.Document
+        DockState = Docking.DockState.Document
     End Sub
 #End Region
 
@@ -46,23 +46,23 @@ Public Class frmResult
         Next
         Select Case Me.DockState
 
-            Case WeifenLuo.WinFormsUI.DockState.Document
+            Case Docking.DockState.Document
                 TabbedDocumentToolStripMenuItem.Checked = True
 
-            Case WeifenLuo.WinFormsUI.DockState.Float
+            Case Docking.DockState.Float
                 FloatingToolStripMenuItem.Checked = True
 
-            Case WeifenLuo.WinFormsUI.DockState.DockBottomAutoHide, _
-                 WeifenLuo.WinFormsUI.DockState.DockLeftAutoHide, _
-                 WeifenLuo.WinFormsUI.DockState.DockRightAutoHide, _
-                 WeifenLuo.WinFormsUI.DockState.DockTopAutoHide
+            Case Docking.DockState.DockBottomAutoHide, _
+                 Docking.DockState.DockLeftAutoHide, _
+                 Docking.DockState.DockRightAutoHide, _
+                 Docking.DockState.DockTopAutoHide
 
                 AutoHideToolStripMenuItem.Checked = True
 
-            Case WeifenLuo.WinFormsUI.DockState.DockBottom, _
-                 WeifenLuo.WinFormsUI.DockState.DockLeft, _
-                 WeifenLuo.WinFormsUI.DockState.DockRight, _
-                 WeifenLuo.WinFormsUI.DockState.DockTop
+            Case Docking.DockState.DockBottom, _
+                 Docking.DockState.DockLeft, _
+                 Docking.DockState.DockRight, _
+                 Docking.DockState.DockTop
 
                 DockableToolStripMenuItem.Checked = True
         End Select

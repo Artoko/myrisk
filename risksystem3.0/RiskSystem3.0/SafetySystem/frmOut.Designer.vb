@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class frmOut
-    Inherits WeifenLuo.WinFormsUI.DockContent
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     '窗体重写释放，以清理组件列表。
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -118,7 +118,7 @@ Partial Class frmOut
         Me.Controls.Add(Me.ToolStrip1)
         Me.HideOnClose = True
         Me.Name = "frmOut"
-        Me.ShowHint = WeifenLuo.WinFormsUI.DockState.DockBottom
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom
         Me.ShowIcon = False
         Me.TabPageContextMenuStrip = Me.ContextMenuDock
         Me.TabText = "输出"

@@ -87,6 +87,7 @@ Partial Class frmMain
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator
+        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton
         Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton
         Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator
@@ -101,10 +102,10 @@ Partial Class frmMain
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
         Me.Status2 = New System.Windows.Forms.ToolStripStatusLabel
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.DockPanel = New WeifenLuo.WinFormsUI.DockPanel
+        Me.DockPanel = New WeifenLuo.WinFormsUI.Docking.DockPanel
         Me.BackgroundWorkerAermod = New System.ComponentModel.BackgroundWorker
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton
+        Me.ToolResult = New System.Windows.Forms.ToolStripButton
         Me.MenuStrip.SuspendLayout()
         Me.ToolStrip.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
@@ -484,7 +485,7 @@ Partial Class frmMain
         '
         'ToolStrip
         '
-        Me.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.新建NToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.ToolStripSeparator1, Me.ToolStripButton6, Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripSeparator2, Me.ToolStripButton7, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripSeparator11, Me.ToolRun, Me.ToolStripSeparator12, Me.HelpToolStripButton, Me.ToolStripSeparator17, Me.txtLocation})
+        Me.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.新建NToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.ToolStripSeparator1, Me.ToolStripButton6, Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripSeparator2, Me.ToolStripButton7, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripSeparator11, Me.ToolRun, Me.ToolStripSeparator12, Me.HelpToolStripButton, Me.ToolStripSeparator17, Me.txtLocation, Me.ToolResult})
         Me.ToolStrip.Location = New System.Drawing.Point(0, 24)
         Me.ToolStrip.Name = "ToolStrip"
         Me.ToolStrip.Size = New System.Drawing.Size(802, 25)
@@ -563,6 +564,15 @@ Partial Class frmMain
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripButton7
+        '
+        Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton7.Image = CType(resources.GetObject("ToolStripButton7.Image"), System.Drawing.Image)
+        Me.ToolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton7.Name = "ToolStripButton7"
+        Me.ToolStripButton7.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton7.Text = "ToolStripButton7"
         '
         'ToolStripButton4
         '
@@ -674,14 +684,14 @@ Partial Class frmMain
         '
         Me.Timer1.Interval = 1000
         '
-        'ToolStripButton7
+        'ToolResult
         '
-        Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton7.Image = CType(resources.GetObject("ToolStripButton7.Image"), System.Drawing.Image)
-        Me.ToolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton7.Name = "ToolStripButton7"
-        Me.ToolStripButton7.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton7.Text = "ToolStripButton7"
+        Me.ToolResult.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolResult.Image = CType(resources.GetObject("ToolResult.Image"), System.Drawing.Image)
+        Me.ToolResult.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolResult.Name = "ToolResult"
+        Me.ToolResult.Size = New System.Drawing.Size(23, 22)
+        Me.ToolResult.Text = "查看结果"
         '
         'frmMain
         '
@@ -723,7 +733,7 @@ Partial Class frmMain
     Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents MenuStrip As System.Windows.Forms.MenuStrip
     Friend WithEvents ToolsMenu As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents DockPanel As WeifenLuo.WinFormsUI.DockPanel
+    Friend WithEvents DockPanel As WeifenLuo.WinFormsUI.Docking.DockPanel
     Friend WithEvents 执行ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ProgressBar As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents 注册RToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -791,5 +801,6 @@ Partial Class frmMain
     Friend WithEvents OutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItemChart As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripButton7 As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolResult As System.Windows.Forms.ToolStripButton
 
 End Class
