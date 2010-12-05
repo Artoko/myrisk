@@ -260,16 +260,13 @@ Imports System.Runtime.Serialization.Formatters.Binary
         ReDim Me.m_Results.AllGridResult.InstantaneousGridC(MaxTen - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
 
         '初始化设置网格点滑移平均最大浓度。风险值最大的前n个浓度分布
-        ReDim Me.m_Results.AllGridResult.SlipGrid(MaxTen - 1)
-        For i As Integer = 0 To MaxTen - 1
-            ReDim Me.m_Results.AllGridResult.SlipGrid(i)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-        Next
+        ReDim Me.m_Results.AllGridResult.SlipGrid(MaxTen - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
         For SN As Integer = 0 To MaxTen - 1 '气象条件
             '网格点滑移平均最大浓度网格初始化。风险值最大的前10浓度分布
             For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
                 For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
-                    Me.m_Results.AllGridResult.SlipGrid(SN)(j, k) = New Slippage
-                    Me.m_Results.AllGridResult.SlipGrid(SN)(j, k).StartAndEndTimeTime = New StartAndEndTime
+                    Me.m_Results.AllGridResult.SlipGrid(SN, j, k) = New Slippage
+                    Me.m_Results.AllGridResult.SlipGrid(SN, j, k).StartAndEndTimeTime = New StartAndEndTime
                 Next
             Next
         Next
@@ -341,7 +338,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
             For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
                 For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
-                    Me.m_Results.AllGridResult.SlipGrid(SN)(j, k) = New Slippage
+                    Me.m_Results.AllGridResult.SlipGrid(SN, j, k) = New Slippage
                 Next
             Next
         Next
@@ -1946,14 +1943,14 @@ Imports System.Runtime.Serialization.Formatters.Binary
                         Me.m_Results.AllGridResult.D(jMet + 1) = Me.m_Results.AllGridResult.D(jMet).Clone
                         Me.m_Results.AllGridResult.DiePeople(jMet + 1) = Me.m_Results.AllGridResult.DiePeople(jMet)
                         Me.m_ForeCast.MaxMet(jMet + 1) = Me.m_ForeCast.MaxMet(jMet).Clone
-                        Me.m_Results.AllGridResult.SlipGrid(jMet + 1) = Me.m_Results.AllGridResult.SlipGrid(jMet).Clone
+                        Me.m_Results.AllGridResult.SlipGrid = Me.m_Results.AllGridResult.SlipGrid
                     Next
                     Me.m_Results.AllGridResult.ArrayRisk(iMet) = MetRisk
                     Me.m_Results.AllGridResult.Pr(iMet) = Pr.Clone
                     Me.m_Results.AllGridResult.D(iMet) = D.Clone
                     Me.m_Results.AllGridResult.DiePeople(iMet) = DiePeople
                     Me.m_ForeCast.MaxMet(iMet) = Me.m_ForeCast.Met(Sn).Clone
-                    Me.m_Results.AllGridResult.SlipGrid(iMet) = SlipGrid.Clone
+                    Me.m_Results.AllGridResult.SlipGrid = SlipGrid.Clone
                     Exit Sub
                 End If
             Next

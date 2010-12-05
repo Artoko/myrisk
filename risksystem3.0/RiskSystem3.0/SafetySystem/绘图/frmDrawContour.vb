@@ -562,7 +562,7 @@ Public Class frmDrawContour
             If cmbMet.SelectedIndex >= 0 Then
                 For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                     For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(cmbMet.SelectedIndex)(k, l).MaxCon
+                        Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(cmbMet.SelectedIndex, k, l).MaxCon
                     Next
                 Next
                 '设置等值线名称和值的数组
