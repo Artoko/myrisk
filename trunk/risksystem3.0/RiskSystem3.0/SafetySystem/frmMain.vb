@@ -94,47 +94,15 @@ Public Class frmMain
         ' Set DockPanel properties
         DockPanel.ActiveAutoHideContent = Nothing
         DockPanel.Parent = Me
-        VS2005Style.Extender.SetSchema(DockPanel, VS2005Style.Extender.Schema.FromBase)
+        'VS2005Style.Extender.SetSchema(DockPanel, VS2005Style.Extender.Schema.FromBase)
 
         DockPanel.SuspendLayout(True)
         '把控件设置为中文
         'Steema.TeeChart.Languages.ChineseSimp.Activate()
         NewRisk()
     End Sub
-    Private Sub frmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        e.Cancel = False
-        boolClose = True '关闭窗口
-        Dim configFile As String = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config")
-        DockPanel.SaveAsXml(configFile)
-
-        Do While DockPanel.Contents.Count > 0
-            Dim dc As DockContent = DockPanel.Contents(0)
-            dc.Close()
-        Loop
-
-    End Sub
-    Private Function ReloadContent(ByVal persistString As String) As IDockContent
-
-        Select Case persistString
-
-            Case "EIAA_For_Aermod.frmDocument"
-                Return Nothing
-
-            Case "EIAA_For_Aermod.frmSolution"
-
-                SolutionExplorer = New frmSolution
-                Return SolutionExplorer
-
-            Case "EIAA_For_Aermod.frmProperty"
-
-                Result = New frmResult
-                Return Result
-
-        End Select
-
-        Return Nothing
-
-    End Function
+    
+    
 
     Private Sub SaveAsToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles SaveAsToolStripMenuItem.Click
         Project0.IsSaved = False
@@ -171,7 +139,7 @@ Public Class frmMain
 
     Private Sub PorjectToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PorjectToolStripMenuItem.Click
         If PorjectToolStripMenuItem.CheckState = CheckState.Unchecked Then
-            SolutionExplorer.Show()
+            Me.SolutionExplorer.Show()
             PorjectToolStripMenuItem.Checked = True
         Else
             SolutionExplorer.Hide()
@@ -201,8 +169,8 @@ Public Class frmMain
 
     Private Sub 重置窗口布局RToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 重置窗口布局RToolStripMenuItem.Click
         'OutWindow.DockState = DockState.DockBottom
-        Result.DockState = DockState.DockLeft
-        SolutionExplorer.DockState = DockState.DockLeft
+        Result.DockState = Docking.DockState.DockLeft
+        SolutionExplorer.DockState = Docking.DockState.DockLeft
     End Sub
 
     Private Sub ViewMenu_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles ViewMenu.Paint
@@ -641,14 +609,14 @@ Public Class frmMain
         SolutionExplorer.ExplorerBar1.Groups(1).Visible = False
         SolutionExplorer.ExplorerBar1.Groups(2).Visible = False
         SolutionExplorer.ExplorerBar1.Groups(0).Expanded = True
-        SolutionExplorer.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        SolutionExplorer.Show(DockPanel, Docking.DockState.DockLeft)
 
         PorjectToolStripMenuItem.Checked = True
         '结果树形列表窗口
-        Result.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        Result.Show(DockPanel, Docking.DockState.DockLeft)
         PropertyToolStripMenuItem.Checked = True
         '等值线图图层窗口
-        'DrawLay.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        'DrawLay.Show(DockPanel, Docking.DockState.DockLeft)
         DrawLayToolStripMenuItem.Checked = True
 
         SolutionExplorer.Activate() '激活项目管理器
@@ -658,7 +626,7 @@ Public Class frmMain
         '概述窗口
         'Me.GeneralWindow.Show(DockPanel, DockState.Document)
         '等值线窗口
-        Me.DrawContourWindow.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+        Me.DrawContourWindow.Show(DockPanel, Docking.DockState.Document)
         绘图窗口ToolStripMenuItem.Checked = True
         ''打开轴线图表窗口
         'Me.ResultTNT.Show(DockPanel, DockState.Document)
@@ -908,7 +876,7 @@ Public Class frmMain
     Private Sub 最大浓度及浓度限值分析ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 最大浓度及浓度限值分析ToolStripMenuItem.Click
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             Me.ResultVaneMax.ReLoad = True
-            Me.ResultVaneMax.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            Me.ResultVaneMax.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
@@ -918,7 +886,7 @@ Public Class frmMain
     Private Sub 关心点浓度分析ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 关心点浓度分析ToolStripMenuItem.Click
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             ResultCareCon.ReLoad = True
-            ResultCareCon.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            ResultCareCon.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
@@ -927,7 +895,7 @@ Public Class frmMain
     Private Sub 关心点浓度限值分析AToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 关心点浓度限值分析AToolStripMenuItem.Click
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             ResultCareMax.ReLoad = True
-            ResultCareMax.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            ResultCareMax.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
@@ -936,18 +904,18 @@ Public Class frmMain
     Private Sub 下风向浓度分析VToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 下风向浓度分析VToolStripMenuItem.Click
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             ResultVine.ReLoad = True
-            ResultVine.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            ResultVine.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
     End Sub
-   
-   
+
+
 
     Private Sub 重气体浓度分析ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 重气体浓度分析ToolStripMenuItem.Click
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             ResultHeavy.ReLoad = True
-            ResultHeavy.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            ResultHeavy.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
@@ -956,7 +924,7 @@ Public Class frmMain
     Private Sub 连续重气体浓度分析SToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 连续重气体浓度分析SToolStripMenuItem.Click
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             ResultSlab.ReLoad = True
-            ResultSlab.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            ResultSlab.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
@@ -966,31 +934,31 @@ Public Class frmMain
     Private Sub RefreshAllize()
         If Project0.Dis0.Results.AllGridResult.ArrayRisk.Length > 0 Then
             Me.frmRisk.ReLoad = True
-            Me.frmRisk.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            Me.frmRisk.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             Me.ResultVaneMax.ReLoad = True
-            Me.ResultVaneMax.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            Me.ResultVaneMax.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             ResultCareCon.ReLoad = True
-            ResultCareCon.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            ResultCareCon.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             ResultCareMax.ReLoad = True
-            ResultCareMax.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            ResultCareMax.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             ResultVine.ReLoad = True
-            ResultVine.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+            ResultVine.Show(DockPanel, Docking.DockState.Document)
         Else
             MsgBox("没有计算结果，请计算后再分析!")
         End If
@@ -999,13 +967,13 @@ Public Class frmMain
         If Project0.Dis0.IntialSource.IsHeavy Then
             If Project0.Dis0.Results.MetResults.Length > 0 Then
                 ResultHeavy.ReLoad = True
-                ResultHeavy.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+                ResultHeavy.Show(DockPanel, Docking.DockState.Document)
             Else
                 MsgBox("没有计算结果，请计算后再分析!")
             End If
             If Project0.Dis0.Results.MetResults.Length > 0 Then
                 ResultSlab.ReLoad = True
-                ResultSlab.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+                ResultSlab.Show(DockPanel, Docking.DockState.Document)
             Else
                 MsgBox("没有计算结果，请计算后再分析!")
             End If
@@ -1022,17 +990,17 @@ Public Class frmMain
 
     Private Sub 爆炸事故冲击波超压PToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 爆炸事故冲击波超压PToolStripMenuItem.Click
         ResultTNT.ReLoad = True
-        ResultTNT.Show(DockPanel, DockState.Document)
+        ResultTNT.Show(DockPanel, Docking.DockState.Document)
     End Sub
 
     Private Sub 火灾事故热辐热分析HToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 火灾事故热辐热分析HToolStripMenuItem.Click
         ResultFire.ReLoad = True
-        ResultFire.Show(DockPanel, DockState.Document)
+        ResultFire.Show(DockPanel, Docking.DockState.Document)
     End Sub
 
     Private Sub 火灾爆炸事故概述GToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 火灾爆炸事故概述GToolStripMenuItem.Click
 
-        GeneralWindow.Show(DockPanel, DockState.Document)
+        GeneralWindow.Show(DockPanel, Docking.DockState.Document)
     End Sub
 
     Private Sub ToolStripButton5_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton5.Click
@@ -1215,14 +1183,14 @@ Public Class frmMain
         SolutionExplorer.ExplorerBar1.Groups(1).Items(0).Checked = True
         SolutionExplorer.ExplorerBar1.Groups(1).Expanded = True
         SolutionExplorer.ExplorerBar1.Groups(2).Expanded = True
-        SolutionExplorer.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        SolutionExplorer.Show(DockPanel, Docking.DockState.DockLeft)
         PorjectToolStripMenuItem.Checked = True
         '结果树形列表窗口
         Result.TreeView1.Nodes.Clear() '清空窗口
-        Result.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        Result.Show(DockPanel, Docking.DockState.DockLeft)
         PropertyToolStripMenuItem.Checked = True
         '等值线图图层窗口
-        'DrawLay.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.DockLeft)
+        'DrawLay.Show(DockPanel, Docking.DockState.DockLeft)
         DrawLayToolStripMenuItem.Checked = True
 
         SolutionExplorer.Activate() '激活项目管理器
@@ -1232,7 +1200,7 @@ Public Class frmMain
         '概述窗口
         'Me.GeneralWindow.Show(DockPanel, DockState.Document)
         '等值线窗口
-        Me.DrawContourWindow.Show(DockPanel, WeifenLuo.WinFormsUI.DockState.Document)
+        Me.DrawContourWindow.Show(DockPanel, Docking.DockState.Document)
         绘图窗口ToolStripMenuItem.Checked = True
         ''打开轴线图表窗口
         'Me.ResultTNT.Show(DockPanel, DockState.Document)
@@ -1279,5 +1247,11 @@ Public Class frmMain
         Me.DrawContourWindow.SourceType = 11 '建筑物
         Me.DrawContourWindow.ContourPaint1.ContextMenuStrip = Me.DrawContourWindow.MenuPoly
         ReDim Me.DrawContourWindow.ArrayPoint(-1) '初始化坐标
+    End Sub
+
+    Private Sub ToolResult_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolResult.Click
+        Dim frmReslt As New frmResultMain
+        frmReslt.ShowDialog()
+
     End Sub
 End Class

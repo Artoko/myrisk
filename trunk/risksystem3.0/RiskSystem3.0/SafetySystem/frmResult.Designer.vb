@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class frmResult
-    Inherits WeifenLuo.WinFormsUI.DockContent
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -93,7 +93,7 @@ Partial Class frmResult
         Me.HideOnClose = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmResult"
-        Me.ShowHint = WeifenLuo.WinFormsUI.DockState.DockLeft
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
         Me.TabPageContextMenuStrip = Me.ContextMenuDock
         Me.TabText = "结果"
         Me.Text = "结果"

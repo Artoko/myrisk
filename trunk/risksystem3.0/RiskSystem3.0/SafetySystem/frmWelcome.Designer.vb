@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class frmWelcome
-    Inherits frmDocking
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     '窗体重写释放，以清理组件列表。
     <System.Diagnostics.DebuggerNonUserCode()> _

@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class frmSolution
-    Inherits WeifenLuo.WinFormsUI.DockContent
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -132,7 +132,7 @@ Partial Class frmSolution
         Me.HideOnClose = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmSolution"
-        Me.ShowHint = WeifenLuo.WinFormsUI.DockState.DockLeft
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
         Me.TabText = "项目"
         Me.Text = "项目"
         CType(Me.ExplorerBar1, System.ComponentModel.ISupportInitialize).EndInit()
