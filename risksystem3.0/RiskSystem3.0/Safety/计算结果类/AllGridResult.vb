@@ -3,6 +3,8 @@
 ''' </summary>
 ''' <remarks></remarks>
 <Serializable()> Public Class AllGridResult
+
+
     ''' <summary>
     ''' 瞬时计算结果数组依次表示为：气象条件，时间，Y轴，X轴
     ''' </summary>
