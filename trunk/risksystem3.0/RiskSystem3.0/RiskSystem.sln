@@ -7,8 +7,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DisPuff", "Safety\DisPuff.v
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FireBlast", "FireBlast\FireBlast.vbproj", "{4A09A702-6749-4DD8-A884-12479C7D059F}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestWork", "TestWork\TestWork.vbproj", "{2D4E051F-F02E-495A-B0A3-ED29187B40E0}"
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "YT_ContourDLL", "CommonCountour\Contour\YT_ContourDLL.vbproj", "{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DrawContour", "CommonCountour\DrawContour\DrawContour.vbproj", "{EF81DCDD-DF2C-4EE5-8643-34F9609908AD}"
@@ -41,10 +39,6 @@ Global
 		{4A09A702-6749-4DD8-A884-12479C7D059F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A09A702-6749-4DD8-A884-12479C7D059F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A09A702-6749-4DD8-A884-12479C7D059F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D4E051F-F02E-495A-B0A3-ED29187B40E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}.Release|Any CPU.ActiveCfg = Release|Any CPU
