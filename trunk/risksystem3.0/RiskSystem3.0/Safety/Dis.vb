@@ -252,6 +252,10 @@ Imports System.Runtime.Serialization.Formatters.Binary
         '------------------------------------------------------------------------------------
         '初始化计算结果的对象
         '------------------------------------------------------------------------------------
+        '各点高值
+        ReDim Me.m_Results.Rectable.GridRectbleConAndTime(0, Me.Forecast.Grid.CountY, Me.Forecast.Grid.CountX)
+        ReDim Me.m_Results.Rectable.CareRectbleConAndTime(0, Me.Forecast.CareReceptor.Length - 1)
+
         Dim MaxTen As Integer = ModelSetting.MaxTable
         If Me.m_ForeCast.Met.Length < ModelSetting.MaxTable Then
             MaxTen = Me.m_ForeCast.Met.Length
@@ -2175,8 +2179,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Dim n As Integer = 0
         If Me.Forecast.IsCalGrid = True Then
             ReDim Preserve ArrayPoint(Me.Forecast.Grid.CountX * Me.Forecast.Grid.CountY - 1)
-            For i As Integer = 0 To Me.Forecast.Grid.CountX - 1
-                For j As Integer = 0 To Me.Forecast.Grid.CountY - 1
+            For j As Integer = 0 To Me.Forecast.Grid.CountY - 1
+                For i As Integer = 0 To Me.Forecast.Grid.CountX - 1
                     ArrayPoint(n) = New Point3D
                     ArrayPoint(n).x = Me.Forecast.Grid.MinX + Me.Forecast.Grid.StepX * i
                     ArrayPoint(n).y = Me.Forecast.Grid.MinY + Me.Forecast.Grid.StepY * j
@@ -2193,45 +2197,27 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Next
         End If
 
-        Dim MaxArrayResult(ArrayPoint.Length - 1) As Double '储存当前气象条件的最大值
+        Dim MaxArrayResult(ArrayPoint.Length - 1) As RectableConAndTime  '储存当前气象条件的最大值
         Dim AllArrayResult(Me.m_ForeCast.OutPut.ForeCount - 1, ArrayPoint.Length - 1) As Double '当前气象条件下所有时刻的值。方便后面进行毒性负荷和滑移平均
-        For nCount As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
-            '处理计算时刻
-            dblForecastTime = (Me.m_ForeCast.OutPut.ForeStart + Me.m_ForeCast.OutPut.ForeInterval * nCount) * 60 '将预测列表中的预测时刻按顺序赋值上述变量，乘以60，将单位转化为秒
-            '根据计算时刻来计算关心点的浓度-----------------------------
-            '计算前需要先获取烟团的初始状态，然后再根据烟团的初始状态获取计算时刻时所有烟团的轨迹和扩散参数，再计算得到浓度
-            Dim ListFlogLave As New List(Of FlogLeave())
-            If Me.Sources(Sn).MultiPLeak.Q Then '点源泄漏
-                Dim FlogLeave(Me.Sources(Sn).MultiPLeak.Qi.Length - 2) As FlogLeave
-                For i As Integer = 0 To FlogLeave.Length - 1
-                    FlogLeave(i).Q = Me.Sources(Sn).MultiPLeak.Qi(i + 1)
-                    FlogLeave(i).z = Me.Sources(Sn).MultiPLeak.He
-                    FlogLeave(i).x = Me.IntialSource.Coordinate.x
-                    FlogLeave(i).y = Me.IntialSource.Coordinate.y
-                    FlogLeave(i).ax = 0
-                    FlogLeave(i).az = 0
-                    FlogLeave(i).LeaveTime = Me.Forecast.OutPut.IntervalTime * i
+        Me.CalculateInstance(Sn, ArrayPoint, MaxArrayResult, AllArrayResult) '计算当前气象条件下的浓度
+
+        '找出全部的气象数组对应的各点高值来-----------------------------------
+        Dim L As Integer = 0
+        If Me.m_ForeCast.IsCalGrid Then
+            For j As Integer = 0 To Me.Forecast.Grid.CountY - 1
+                For i As Integer = 0 To Me.Forecast.Grid.CountX - 1
+                    If MaxArrayResult(L).MaxConcentration > Me.m_Results.Rectable.GridRectbleConAndTime(0, j, i).MaxConcentration Then
+                        Me.m_Results.Rectable.GridRectbleConAndTime(0, j, i) = MaxArrayResult(L)
+                    End If
+                    L += 1
                 Next
-                ListFlogLave.Add(FlogLeave)
+            Next
+        End If
+        For i As Integer = 0 To Me.Forecast.CareReceptor.Length - 1
+            If MaxArrayResult(L + i).MaxConcentration > Me.m_Results.Rectable.CareRectbleConAndTime(0, i).MaxConcentration Then
+                Me.m_Results.Rectable.CareRectbleConAndTime(0, i) = MaxArrayResult(L + i)
             End If
-            Dim TotalArrayResult(ArrayPoint.Length - 1) As Double
-            For i As Integer = 0 To ListFlogLave.Count - 1
-                '生成烟团的轨迹
-                Dim ArrayFlogTrack() As FlogTrack = Formula.CreateMultiFlogTrack(Me.Forecast.Met, Sn, dblForecastTime, Me.Forecast.OutPut.GroundCharacter, ListFlogLave(i))
-                Dim ArrayResult() As Double = Formula.Multi_Point_CommonGaussFog(ArrayFlogTrack, ArrayPoint)
-                For j As Integer = 0 To ArrayResult.Length - 1
-                    TotalArrayResult(j) += ArrayResult(j)
-                Next
-            Next
-            For j As Integer = 0 To TotalArrayResult.Length - 1
-                AllArrayResult(nCount, j) = TotalArrayResult(j)
-                If TotalArrayResult(j) > MaxArrayResult(j) Then
-                    MaxArrayResult(j) = TotalArrayResult(j)
-                End If
-            Next
-            '设置计算进度
-            Me.m_Results.AllProgress += 1
-        Next nCount
+        Next
 
         '根据上面的瞬时计算结果来计算风险值----------------------------------------------------------------------------------------
         Dim Result As Double '定义计算结果
@@ -2250,14 +2236,14 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Dim nToxinConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
                 Dim k As Integer = 0
                 '以下开始按网格点计算浓度分布-------------------------------------------------------------------
-                For i As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
-                    For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
+                For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
+                    For i As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
                         Dim ArrayC(Me.m_ForeCast.OutPut.ForeCount - 1) As Double '用于储存某一网格点的浓度值
                         For nCount As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
                             ArrayC(nCount) = AllArrayResult(nCount, k)
                         Next
                         '计算某一网格点的最大浓度出现时间及该网格点对应的时间步长各时刻的瞬时浓度。
-                        If MaxArrayResult(k) > 0.0001 Then
+                        If MaxArrayResult(k).MaxConcentration > 0.0001 Then
                             'Dim dblCnt As Double = ToxinCharge(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2) '用变步长求得毒性负荷的积分
                             Dim dblCnt As Double = ToxinCharge(ArrayC, Me.m_ForeCast.OutPut.ForeInterval * 60) '用变步长求得毒性负荷的积分
                             Pr(j, i) = m_Chemical.PrA + m_Chemical.PrB * Math.Log(dblCnt) '计算概率值
@@ -2276,8 +2262,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
                         '修改进度
                         Me.m_Results.Status2 = "正在计算网格点的死亡概率和死亡百分率，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nToxinConut * 100, 1) & "%"
                         k += 1
-                    Next j
-                Next i
+                    Next i
+                Next j
 
             Else
                 ''----------------------------------------------------------------------------------------------------------------------------------------
@@ -2386,6 +2372,50 @@ Imports System.Runtime.Serialization.Formatters.Binary
         '    End If
         'End If
     End Sub
+    Private Sub CalculateInstance(ByVal Sn As Integer, ByVal ArrayPoint As Point3D(), ByRef MaxArrayResult As RectableConAndTime(), ByRef AllArrayResult As Double(,))
+        
+        For nCount As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+            '处理计算时刻
+            Dim dblForecastTime As Double = (Me.m_ForeCast.OutPut.ForeStart + Me.m_ForeCast.OutPut.ForeInterval * nCount) * 60 '将预测列表中的预测时刻按顺序赋值上述变量，乘以60，将单位转化为秒
+            '根据计算时刻来计算关心点的浓度-----------------------------
+            '计算前需要先获取烟团的初始状态，然后再根据烟团的初始状态获取计算时刻时所有烟团的轨迹和扩散参数，再计算得到浓度
+            Dim ListFlogLave As New List(Of FlogLeave())
+            If Me.Sources(Sn).MultiPLeak.Q Then '点源泄漏
+                Dim FlogLeave(Me.Sources(Sn).MultiPLeak.Qi.Length - 2) As FlogLeave
+                For i As Integer = 0 To FlogLeave.Length - 1
+                    FlogLeave(i).Q = Me.Sources(Sn).MultiPLeak.Qi(i + 1)
+                    FlogLeave(i).z = Me.Sources(Sn).MultiPLeak.He
+                    FlogLeave(i).x = Me.IntialSource.Coordinate.x
+                    FlogLeave(i).y = Me.IntialSource.Coordinate.y
+                    FlogLeave(i).ax = 0
+                    FlogLeave(i).az = 0
+                    FlogLeave(i).LeaveTime = Me.Forecast.OutPut.IntervalTime * i
+                Next
+                ListFlogLave.Add(FlogLeave)
+            End If
+            Dim TotalArrayResult(ArrayPoint.Length - 1) As Double
+            For i As Integer = 0 To ListFlogLave.Count - 1
+                '生成烟团的轨迹
+                Dim ArrayFlogTrack() As FlogTrack = Formula.CreateMultiFlogTrack(Me.Forecast.Met, Sn, dblForecastTime, Me.Forecast.OutPut.GroundCharacter, ListFlogLave(i))
+                Dim ArrayResult() As Double = Formula.Multi_Point_CommonGaussFog(ArrayFlogTrack, ArrayPoint)
+                For j As Integer = 0 To ArrayResult.Length - 1
+                    TotalArrayResult(j) += ArrayResult(j)
+                Next
+            Next
+            For j As Integer = 0 To TotalArrayResult.Length - 1
+                AllArrayResult(nCount, j) = TotalArrayResult(j)
+                If TotalArrayResult(j) > MaxArrayResult(j).MaxConcentration Then
+                    MaxArrayResult(j).MaxConcentration = TotalArrayResult(j)
+                    MaxArrayResult(j).LeakTime = Me.m_ForeCast.Met(Sn).m_DateTime
+                    MaxArrayResult(j).ForeTime = (Me.m_ForeCast.OutPut.ForeStart + Me.m_ForeCast.OutPut.ForeInterval * nCount) * 60
+                End If
+            Next
+            '设置计算进度
+            Me.m_Results.AllProgress += 1
+        Next nCount
+    End Sub
+
+
 
     ''' <summary>
     ''' 计算绝对坐标的关心点浓度

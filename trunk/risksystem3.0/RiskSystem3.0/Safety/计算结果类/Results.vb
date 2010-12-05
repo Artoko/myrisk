@@ -4,6 +4,13 @@
 ''' <remarks></remarks>
 <Serializable()> Public Class Results
     ''' <summary>
+    ''' 各点高值
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Rectable As Rectable
+
+
+    ''' <summary>
     ''' 所有与网格数据相关的计算结果对象
     ''' </summary>
     ''' <remarks></remarks>
