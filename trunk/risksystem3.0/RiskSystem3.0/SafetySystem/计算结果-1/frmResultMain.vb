@@ -1,9 +1,9 @@
 ﻿Imports System.Windows.Forms
-
+Imports WeifenLuo.WinFormsUI
 Public Class frmResultMain
     Public frmResultSolution As New frmResultSolution   '项目管理器窗口
-    Public Result As New frmResult '结果窗口
-    Public DrawContourWindow As New frmDrawContour '绘图窗口
+    Public frmResultContour As New frmResultContour '结果窗口
+    Public frmResultSet As New frmResultSet  '绘图窗口
 
 
     Private Sub ShowNewForm(ByVal sender As Object, ByVal e As EventArgs) Handles NewToolStripMenuItem.Click, NewToolStripButton.Click, NewWindowToolStripMenuItem.Click
@@ -90,6 +90,10 @@ Public Class frmResultMain
     Private m_ChildFormNumber As Integer
 
     Private Sub frmResultMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.frmResultContour.Show(DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document) '显示各点高值窗口
+        Me.frmResultSolution.Show(DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockLeft)
+        Me.frmResultSet.Show(frmResultSolution.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockLeft)
+        Me.frmResultSet.DockTo(frmResultSolution.Pane, DockStyle.Bottom, 0)
 
     End Sub
 End Class
