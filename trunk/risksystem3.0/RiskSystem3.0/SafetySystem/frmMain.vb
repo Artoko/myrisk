@@ -83,6 +83,7 @@ Public Class frmMain
                                                  "frmSolution.vb", _
                                                  "frmSolution.vb [Design]"}
 
+    Public frmResultMain As New frmResultMain
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.Text = My.Application.Info.ProductName
         Dim configFile As String = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config")
@@ -1250,8 +1251,8 @@ Public Class frmMain
     End Sub
 
     Private Sub ToolResult_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolResult.Click
-        Dim frmReslt As New frmResultMain
-        frmReslt.ShowDialog()
-
+        Me.frmResultMain = New frmResultMain
+        Me.frmResultMain.WindowState = FormWindowState.Maximized
+        Me.frmResultMain.ShowDialog()
     End Sub
 End Class

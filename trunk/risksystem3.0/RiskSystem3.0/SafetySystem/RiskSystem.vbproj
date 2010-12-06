@@ -327,8 +327,20 @@
       <DependentUpon>frmPS.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="计算结果-1\frmResultContour.resx">
+      <DependentUpon>frmResultContour.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="计算结果-1\frmResultMain.resx">
       <DependentUpon>frmResultMain.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果-1\frmResultSet.resx">
+      <DependentUpon>frmResultSet.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="计算结果-1\frmResultSolution.resx">
+      <DependentUpon>frmResultSolution.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="计算结果\frmCareCon.resx">
