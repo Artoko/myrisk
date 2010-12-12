@@ -3285,53 +3285,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Return False
         End If
     End Function
-    ''' <summary>
-    ''' 获取等值线数组
-    ''' </summary>
-    ''' <param name="ContourValue"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function GetContours(ByVal ContourValue As Double) As YT_ContourDLL.Point3D()
-        '通过等值线控件，获得某一给定值的等值线，并将值给数据OneContourLine
-        Dim AContour As New YT_ContourDLL.YT_ContourDLL
-        Dim AIn(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double
-        '对数组进行倒置变换和反转变换
-        Dim i, j, k As Integer
-        For i = 0 To Me.m_ForeCast.Grid.CountY - 1
-            For j = 0 To Me.m_ForeCast.Grid.CountX - 1
-                AIn(i, j) = Me.m_Results.AllGridResult.InstantaneousGridC(0, 0, Me.m_ForeCast.Grid.CountY - 1 - j, i)
-            Next
-        Next
-        '初始化等值线
-        Dim AOut(-1, -1) As YT_ContourDLL.Point3D
-        AContour.Intial(AIn, Me.m_ForeCast.Grid.CountY, Me.m_ForeCast.Grid.CountX, Me.m_ForeCast.Grid.MinX, Me.m_ForeCast.Grid.MinY _
-                        , Me.m_ForeCast.Grid.MinX + (Me.m_ForeCast.Grid.CountX - 1) * Me.m_ForeCast.Grid.StepX, Me.m_ForeCast.Grid.MinY + (Me.m_ForeCast.Grid.CountY - 1) * Me.m_ForeCast.Grid.StepY) '初始化等值线
-        AContour.Calculate(ContourValue) '计算等值线
-        AContour.PutContour(AOut) '输出等值线
-        Dim OneContourLinesCount As Integer '同一值的等值线条数
-        OneContourLinesCount = AContour.PutLineNumber()
-        '以下代码将有效的等值线值加入数组OneContourLine中，对于多条等值线，用Z＝-1分开
-        Dim OneContourLine(-1) As YT_ContourDLL.Point3D
-        ReDim OneContourLine(-1)
-        k = 0
-        For i = 0 To OneContourLinesCount - 1
-            j = 0
-            Dim ALine(-1) As YT_ContourDLL.Point3D '用于储存一条等值线。纯一条。 
-            Do '采用这种循环可使最后一个Z＝-1的数加入数组中
-                ReDim Preserve OneContourLine(k)
-                ReDim Preserve ALine(j)
-                OneContourLine(k).x = AOut(i, j).x
-                OneContourLine(k).y = AOut(i, j).y
-                OneContourLine(k).z = AOut(i, j).z
-                ALine(j).x = AOut(i, j).x
-                ALine(j).y = AOut(i, j).y
-                ALine(j).z = AOut(i, j).z
-                j = j + 1
-                k = k + 1
-            Loop While AOut(i, j - 1).z <> -1
-        Next
-        Return OneContourLine
-    End Function
+    
     Public Sub SetToxicity(ByVal HurtConcentration As HurtConcentration())
         ReDim Me.Forecast.HurtConcentration(HurtConcentration.Length - 1)
         For i As Integer = 0 To HurtConcentration.Length - 1

@@ -200,8 +200,8 @@ Public Class frmDrawContour
 
         CareSymbols.IntialCareSymbols() '初始化
 
-        ContourPaint1.ContourPaintSetting.SetGrid(Project0.Dis0.Forecast.Grid.MinX, Project0.Dis0.Forecast.Grid.StepX, Project0.Dis0.Forecast.Grid.CountX _
-                                                  , Project0.Dis0.Forecast.Grid.MinY, Project0.Dis0.Forecast.Grid.StepY, Project0.Dis0.Forecast.Grid.CountY)
+        'ContourPaint1.ContourPaintSetting.SetGrid(Project0.Dis0.Forecast.Grid.MinX, Project0.Dis0.Forecast.Grid.StepX, Project0.Dis0.Forecast.Grid.CountX _
+        '                                          , Project0.Dis0.Forecast.Grid.MinY, Project0.Dis0.Forecast.Grid.StepY, Project0.Dis0.Forecast.Grid.CountY)
 
         Refresh() '重绘       
     End Sub
@@ -446,7 +446,7 @@ Public Class frmDrawContour
         Me.ContourPaint1.ContourPaintSetting.m_Ymax = Ymin + (YCount - 1) * Ystep  '设置y轴的终点坐标
         Me.ContourPaint1.ContourPaintSetting.m_nRows = YCount '设置数据的个数
         '初始化网格数组
-        ReDim Me.ContourPaint1.ContourPaintSetting.GridPoint(Me.ContourPaint1.ContourPaintSetting.m_nRows - 1, Me.ContourPaint1.ContourPaintSetting.m_nCols - 1)
+        'ReDim Me.ContourPaint1.ContourPaintSetting.GridPoint(Me.ContourPaint1.ContourPaintSetting.m_nRows - 1, Me.ContourPaint1.ContourPaintSetting.m_nCols - 1)
 
         Me.Refresh()
     End Sub
@@ -469,7 +469,7 @@ Public Class frmDrawContour
             '初始化绘图面板
             .InitialPaint()
             '设置绘图面板数据
-            .ResetCountData()
+            '.ResetCountData()
             '设置等值线图左轴、标题可见
             .ContourPannel.Axes.LeftAxis.AxisTitle.TitleVisible = True
             .ContourPannel.Axes.BottomAxis.AxisTitle.TitleVisible = True
@@ -508,9 +508,9 @@ Public Class frmDrawContour
 
         End With
         '重新计算等值线
-        ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-        ContourPaint1.ContourPaintSetting.ResetCountData()
-        ContourPaint1.Refresh()
+        'ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+        'ContourPaint1.ContourPaintSetting.ResetCountData()
+        'ContourPaint1.Refresh()
     End Sub
 #Region "计算结果绘图"
 
@@ -524,7 +524,7 @@ Public Class frmDrawContour
                 '设置等值线的网格点
                 For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                     For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.InstantaneousGridC(cmbMet.SelectedIndex, cmbTime.SelectedIndex, k, l)
+                        'Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.InstantaneousGridC(cmbMet.SelectedIndex, cmbTime.SelectedIndex, k, l)
                     Next
                 Next
                 '设置等值线名称和值的数组
@@ -554,15 +554,15 @@ Public Class frmDrawContour
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
                 '重新计算等值线
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-                Me.ContourPaint1.ContourPaintSetting.ResetCountData()
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+                'Me.ContourPaint1.ContourPaintSetting.ResetCountData()
                 Me.ContourPaint1.Refresh()
             End If
         ElseIf cmbRusult.Text = "滑移平均浓度" Then
             If cmbMet.SelectedIndex >= 0 Then
                 For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                     For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(cmbMet.SelectedIndex, k, l).MaxCon
+                        'Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(cmbMet.SelectedIndex, k, l).MaxCon
                     Next
                 Next
                 '设置等值线名称和值的数组
@@ -575,9 +575,9 @@ Public Class frmDrawContour
                 For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                     For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
                         For k1 As Integer = 0 To Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
-                            If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) Then
-                                Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) + 0.000001
-                            End If
+                            'If Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) Then
+                            '    Me.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) + 0.000001
+                            'End If
                         Next
                     Next
                 Next
@@ -601,15 +601,15 @@ Public Class frmDrawContour
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
                 '重新计算等值线
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-                Me.ContourPaint1.ContourPaintSetting.ResetCountData()
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+                'Me.ContourPaint1.ContourPaintSetting.ResetCountData()
                 Me.ContourPaint1.Refresh()
             End If
         ElseIf cmbRusult.Text = "死亡百分率" Then
             If cmbMet.SelectedIndex >= 0 Then
                 For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                     For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                        Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.D(cmbMet.SelectedIndex)(k, l)
+                        'Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.D(cmbMet.SelectedIndex)(k, l)
                     Next
                 Next
                 '设置等值线名称和值的数组
@@ -646,15 +646,15 @@ Public Class frmDrawContour
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
                 Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
                 '重新计算等值线
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-                Me.ContourPaint1.ContourPaintSetting.ResetCountData()
-                Me.ContourPaint1.Refresh()
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+                'Me.ContourPaint1.ContourPaintSetting.ResetCountData()
+                'Me.ContourPaint1.Refresh()
             End If
         ElseIf cmbRusult.Text = "个人风险值" Then
 
             For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
                 For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                    Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.PersonalRisk(k, l) * Project0.Dis0.IntialSource.Probability '个人风险
+                    'Me.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.PersonalRisk(k, l) * Project0.Dis0.IntialSource.Probability '个人风险
                 Next
             Next
             '设置等值线名称和值的数组
@@ -685,9 +685,9 @@ Public Class frmDrawContour
             Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
             Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
             '重新计算等值线
-            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-            Me.ContourPaint1.ContourPaintSetting.ResetCountData()
-            Me.ContourPaint1.Refresh()
+            'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+            'Me.ContourPaint1.ContourPaintSetting.ResetCountData()
+            'Me.ContourPaint1.Refresh()
         End If
 
 

@@ -3,6 +3,7 @@
 ''' </summary>
 ''' <remarks></remarks>
 <Serializable()> Public Class Project
+    Protected projFileName As String
     ''' <summary>
     ''' 工程类型：0泄漏预测项目，1为火灾爆炸项目
     ''' </summary>
@@ -142,4 +143,65 @@
         Next
 
     End Sub
+    ''' <summary>
+    ''' 返回工程所在目录下的工程子目录，比如 c:\hello\ 其中 hello为工程名称
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetProjWorkPath() As String
+        Dim strProj As String = Me.GetProjPath()
+
+        Return strProj & System.IO.Path.GetFileNameWithoutExtension(Me.projFileName) & "\"
+    End Function
+    ''' <summary>
+    ''' 返回工程所在目录
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetProjPath() As String
+        Return System.IO.Path.GetDirectoryName(projFileName) & "\"
+    End Function
+    ''' <summary>
+    ''' 返回不包含文件后缀名的工程名称,返回不具有扩展名的指定路径字符串的文件名。
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetProjName() As String
+        Return System.IO.Path.GetFileNameWithoutExtension(projFileName)
+    End Function
+    Public Sub CreateNew(ByVal projPathName As String)
+        Me.Dis0 = New DisPuff.Dis
+        Me.m_SurfMet = New Met.MetGeneral
+        Me.m_Dis0.Forecast.IsCalGrid = True
+
+        '保存对应的信息
+        projFileName = projPathName
+
+        '创建对应的文件夹，并保存对应的文件
+
+        Me.CreateDirectory(projPathName)
+
+        RaiseEvent ProjChanged()
+    End Sub
+    Protected Sub CreateDirectory(ByVal projPathName As String)
+        Dim path As String = Me.GetProjPath() & Me.GetProjName()
+        '当对应的文件夹已经存在时，里面可能已经含有了对应的内容，需要去掉原有的文件
+        If System.IO.Directory.Exists(path) Then
+            System.IO.Directory.Delete(path, True)
+        End If
+
+
+        If System.IO.Directory.Exists(path) = False Then
+            System.IO.Directory.CreateDirectory(path)
+        End If
+            
+        If System.IO.Directory.Exists(path & "\dis") = False Then
+            System.IO.Directory.CreateDirectory(path & "\dis")
+        End If
+    End Sub
+
+#Region "事件"
+    Public Event ProjChanged()
+#End Region
+
 End Class

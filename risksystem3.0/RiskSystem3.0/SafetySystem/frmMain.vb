@@ -10,8 +10,11 @@ Imports System.Threading
 Imports DisForm
 Imports DataLib
 Public Class frmMain
-    Private m_Sucess As Boolean = False
 
+    Private m_Sucess As Boolean = False
+    Public m_frmGis As New frmGis
+    Public m_frmprop As New frmProperty
+    Public m_frmMapLayerManage As New frmMapLayersManage
     Public SolutionExplorer As New frmSolution  '项目管理器窗口
     Public Result As New frmResult '结果窗口
     'Public OutWindow As New frmOut '输出窗口
@@ -102,8 +105,8 @@ Public Class frmMain
         'Steema.TeeChart.Languages.ChineseSimp.Activate()
         NewRisk()
     End Sub
-    
-    
+
+
 
     Private Sub SaveAsToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles SaveAsToolStripMenuItem.Click
         Project0.IsSaved = False
@@ -226,7 +229,7 @@ Public Class frmMain
         End If
         '打开时钟
         Timer1.Start()
-        
+
     End Sub
     Private Sub ToolStripButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolRun.Click
         DrawContourWindow.ContourPaint1.SetMouseType(0) '箭头形
@@ -361,7 +364,7 @@ Public Class frmMain
             ' Create a linked list object and populate it with random nodes
             Dim AllProject As New Project
             AllProject = Project0
-              ' Create a formatter object based on command line arguments
+            ' Create a formatter object based on command line arguments
             Dim formatter As IFormatter
             formatter = CType(New BinaryFormatter, IFormatter)
             ' Serialize the object graph to stream
@@ -501,7 +504,7 @@ Public Class frmMain
         Me.DrawContourWindow.cmbTime.Items.Clear()
         If Project0.Dis0.Forecast.OutPut.IsInstantaneous = True Then '瞬时浓度
             Me.DrawContourWindow.cmbRusult.Items.Add("瞬时浓度")
-            
+
         End If
         If Project0.Dis0.Forecast.OutPut.IsRisk = True Then
             If Project0.Dis0.Forecast.OutPut.ChargeOrSlip = 1 Then '滑移平均浓度
@@ -574,7 +577,7 @@ Public Class frmMain
                 End Select
         End Select
     End Sub
-  
+
     Private Sub RereshCourtour()
 
     End Sub
@@ -587,14 +590,14 @@ Public Class frmMain
     Private Sub LToolStripMenuItemL_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LToolStripMenuItemL.Click
         Project0 = New Project
         Project0.Dis0 = New DisPuff.Dis '新建一个泄漏项目
-        IntialLeakProject() '初始化一个泄漏项目
-
+        ShowSubForm() '初始化一个泄漏项目
+        Me.m_frmGis.Map1.ZoomToMaxExtent()
     End Sub
     ''' <summary>
-    ''' 初始化一个泄漏项目
+    ''' 初始化一个泄漏项目的窗口
     ''' </summary>
     ''' <remarks></remarks>
-    Private Sub IntialLeakProject()
+    Private Sub ShowSubForm()
         Project0.PType = 0 '泄漏
         '设置绘图网格
         Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.ChartType = 0
@@ -628,16 +631,22 @@ Public Class frmMain
         'Me.GeneralWindow.Show(DockPanel, DockState.Document)
         '等值线窗口
         Me.DrawContourWindow.Show(DockPanel, Docking.DockState.Document)
+        Me.m_frmGis.Show(DockPanel, Docking.DockState.Document)
+        Me.m_frmGis.InitWindow(Project0)
         绘图窗口ToolStripMenuItem.Checked = True
+
+        Me.m_frmMapLayerManage.Show(Me.DockPanel, Docking.DockState.DockRight)
+        Me.m_frmprop.Show(Me.m_frmMapLayerManage.DockPanel, Docking.DockState.DockRight)
+        Me.m_frmprop.DockTo(Me.m_frmMapLayerManage.Pane, DockStyle.Bottom, 0)
         ''打开轴线图表窗口
         'Me.ResultTNT.Show(DockPanel, DockState.Document)
         'Me.ToolStripMenuItemChart.Checked = True
-
         Me.DrawContourWindow.Activate() '激活等值线绘图窗口
 
         '根据项目激活对应的菜单
         ActiveMenu()
     End Sub
+    
     ''' <summary>
     ''' 根据项目激活对应的菜单
     ''' </summary>
@@ -648,7 +657,7 @@ Public Class frmMain
         ' 下风向浓度计算结果概述
         ResultVaneMax.Hide()
         ' 关心点的浓度变化
-        ResultCareCon.Hide() 
+        ResultCareCon.Hide()
         ' 关心点的浓度限值
         ResultCareMax.Hide()
         ' 下风向浓度分布
@@ -714,8 +723,8 @@ Public Class frmMain
         Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.m_Ymax = Ymin + (YCount - 1) * Ystep  '设置y轴的终点坐标
         Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.m_nRows = YCount '设置数据的个数
         '初始化网格数组
-        ReDim Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint( _
-                 Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.m_nRows - 1, Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.m_nCols - 1)
+        'ReDim Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint( _
+        '         Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.m_nRows - 1, Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.m_nCols - 1)
         Me.DrawContourWindow.ContourPaint1.ContourPaintSetting.InitialPaint()
         Me.Refresh()
     End Sub
@@ -726,7 +735,7 @@ Public Class frmMain
     Private Sub SetPropety(ByVal Xstep As Integer, ByVal Ystep As Integer)
         With Me.DrawContourWindow.ContourPaint1.ContourPaintSetting
             '设置绘图面板数据
-            .ResetCountData()
+            '.ResetCountData()
             '设置等值线图左轴、标题可见
             .ContourPannel.Axes.LeftAxis.AxisTitle.TitleVisible = True
             .ContourPannel.Axes.BottomAxis.AxisTitle.TitleVisible = True
@@ -773,7 +782,7 @@ Public Class frmMain
         Project0.FAndB = New FireBlast.FAndB '新建火灾爆炸模型
         InitialFireProject() ' 初始化火灾爆炸项目
     End Sub
-   
+
 
     Private Sub ToolStripButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
         DrawContourWindow.ContourPaint1.SetMouseType(0) '箭头形
@@ -873,7 +882,7 @@ Public Class frmMain
         frmRang.ShowDialog()
     End Sub
 
-    
+
     Private Sub 最大浓度及浓度限值分析ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 最大浓度及浓度限值分析ToolStripMenuItem.Click
         If Project0.Dis0.Results.MetResults.Length > 0 Then
             Me.ResultVaneMax.ReLoad = True
@@ -1042,17 +1051,29 @@ Public Class frmMain
     End Sub
 
     Private Sub NewRisk()
-        '新建一个项目
-        Project0 = New Project
-        Project0.Dis0.Forecast.IsCalGrid = True
-        SetTree()
-        Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & SolutionExplorer.TreeView.Nodes(0).Text
-        IntialLeakProject()
-        SetPropety()
+        Dim mSaveFile As New SaveFileDialog
+        mSaveFile.Filter = "CalpuffSystem(*.cal)|*.cal"
+        If mSaveFile.ShowDialog = Windows.Forms.DialogResult.OK Then
+
+            ShowSubForm()
+
+            '新建一个项目
+            'Project0 = New Project
+            Dim mFilePath = mSaveFile.FileName
+
+            '关闭当前项目
+            'Project0.CloseProj()
+            Project0.CreateNew(mFilePath)
+            SetTree()
+            Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & SolutionExplorer.TreeView.Nodes(0).Text
+            SetPropety()
+
+
+            Me.DrawContourWindow.SetPolluteDraw() '设置图形
+        End If
+
         '网格嵌套
 
-
-        Me.DrawContourWindow.SetPolluteDraw() '设置图形
         'Me.ModifyResults() '修改结果
         'Me.ResultTypeDayWindow.Hide()
         'Me.ResultDataWindow.Hide()
@@ -1222,7 +1243,7 @@ Public Class frmMain
             '初始化绘图面板
             .InitialPaint()
             '设置绘图面板数据
-            .ResetCountData()
+            '.ResetCountData()
 
             '设置左轴的增加值,并使左刻度可见
             .ContourPannel.Axes.LeftAxis.MainAxisScale.Increase = Project0.Dis0.Forecast.Grid.StepY
@@ -1241,7 +1262,7 @@ Public Class frmMain
         NewRisk()
     End Sub
 
-    
+
     Private Sub ToolStripButton7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton7.Click
         Me.DrawContourWindow.ContourPaint1.SetMouseType(1) '十字形
         Me.DrawContourWindow.AddProject = True
