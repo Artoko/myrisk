@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmResultContour
+Partial Class frmResultMapGis
     Inherits WeifenLuo.WinFormsUI.Docking.DockContent
     'Form 重写 Dispose，以清理组件列表。
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -21,22 +21,10 @@ Partial Class frmResultContour
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Me.ContourPaint1 = New DrawContour.ContourPaintForm
-        Me.TrackBar1 = New System.Windows.Forms.TrackBar
+        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
+        Me.Map1 = New DotSpatial.Controls.Map()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'ContourPaint1
-        '
-        Me.ContourPaint1.DBlClkSet = False
-        Me.ContourPaint1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ContourPaint1.Location = New System.Drawing.Point(0, 0)
-        Me.ContourPaint1.Menu = True
-        Me.ContourPaint1.MouseMoveType = 0
-        Me.ContourPaint1.Name = "ContourPaint1"
-        Me.ContourPaint1.Size = New System.Drawing.Size(853, 598)
-        Me.ContourPaint1.TabIndex = 1
         '
         'TrackBar1
         '
@@ -46,21 +34,41 @@ Partial Class frmResultContour
         Me.TrackBar1.Size = New System.Drawing.Size(853, 45)
         Me.TrackBar1.TabIndex = 2
         '
-        'frmResultContour
+        'Map1
+        '
+        Me.Map1.AllowDrop = True
+        Me.Map1.BackColor = System.Drawing.Color.White
+        Me.Map1.CollectAfterDraw = False
+        Me.Map1.CollisionDetection = False
+        Me.Map1.ExtendBuffer = False
+        Me.Map1.FunctionMode = DotSpatial.Controls.FunctionMode.None
+        Me.Map1.IsBusy = False
+        Me.Map1.Legend = Nothing
+        Me.Map1.Location = New System.Drawing.Point(0, -2)
+        Me.Map1.Name = "Map1"
+        Me.Map1.ProgressHandler = Nothing
+        Me.Map1.ProjectionModeDefine = DotSpatial.Controls.ActionMode.Prompt
+        Me.Map1.ProjectionModeReproject = DotSpatial.Controls.ActionMode.Prompt
+        Me.Map1.RedrawLayersWhileResizing = False
+        Me.Map1.SelectionEnabled = True
+        Me.Map1.Size = New System.Drawing.Size(853, 549)
+        Me.Map1.TabIndex = 3
+        '
+        'frmResultMapGis
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(853, 598)
+        Me.Controls.Add(Me.Map1)
         Me.Controls.Add(Me.TrackBar1)
-        Me.Controls.Add(Me.ContourPaint1)
         Me.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Name = "frmResultContour"
+        Me.Name = "frmResultMapGis"
         Me.Text = "frmResultContour"
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ContourPaint1 As DrawContour.ContourPaintForm
     Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
+    Friend WithEvents Map1 As DotSpatial.Controls.Map
 End Class
