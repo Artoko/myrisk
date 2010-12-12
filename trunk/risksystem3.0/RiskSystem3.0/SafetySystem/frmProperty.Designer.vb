@@ -30,14 +30,14 @@ Partial Class frmProperty
         Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PropertyGrid1.Location = New System.Drawing.Point(0, 0)
         Me.PropertyGrid1.Name = "PropertyGrid1"
-        Me.PropertyGrid1.Size = New System.Drawing.Size(322, 419)
+        Me.PropertyGrid1.Size = New System.Drawing.Size(266, 419)
         Me.PropertyGrid1.TabIndex = 1
         '
         'frmProperty
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(322, 419)
+        Me.ClientSize = New System.Drawing.Size(266, 419)
         Me.Controls.Add(Me.PropertyGrid1)
         Me.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Name = "frmProperty"

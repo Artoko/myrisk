@@ -29,19 +29,23 @@ Public Class GisHelper
 
         Dim PointLayer As New FEPointLayer("PointSource")
         PointLayer.descString = "点源"
-        gis.LayerSys.AddLayer(PointLayer)
 
         Dim LineLayer As New FELineLayer("LineSource")
         LineLayer.descString = "线源"
-        gis.LayerSys.AddLayer(LineLayer)
 
         Dim AreaLayer As New FEPolygonLayer("AreaSource")
         AreaLayer.descString = "面源"
-        gis.LayerSys.AddLayer(AreaLayer)
 
         Dim VolumeLayer As New FEPolygonLayer("VolumeSource")
         VolumeLayer.descString = "体源"
-        gis.LayerSys.AddLayer(VolumeLayer)
+
+        Dim cl As FCompoundLayer = New FCompoundLayer("Source")
+        cl.descString = "事故源"
+        cl.AddChild(VolumeLayer)
+        cl.AddChild(AreaLayer)
+        cl.AddChild(LineLayer)
+        cl.AddChild(PointLayer)
+        gis.LayerSys.AddLayer(cl)
 
         Dim DiscreteLayer As New FEPointLayer("DiscreteSource")
         DiscreteLayer.descString = "接受点"
@@ -50,6 +54,8 @@ Public Class GisHelper
         gis.LayerSys.AddLayer(DiscreteLayer)
 
 
+
+           
     End Sub
 
 
