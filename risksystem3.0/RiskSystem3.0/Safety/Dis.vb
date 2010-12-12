@@ -237,7 +237,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' 计算结果
     ''' </summary>
     ''' <remarks></remarks>
-    Public Function Intial_CalRisk() As Boolean
+    Public Function Intial_CalRisk(ByVal workpath As String) As Boolean
 
         '初始化泄漏源的状态参数
         If m_IntialSource.IntialPara(Me.m_Chemical, Me.m_ForeCast.Ta, Me.m_ForeCast.Pa) = False Then
@@ -368,7 +368,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Dim stab As String = Me.m_ForeCast.Met(SN).Stab  '第0行第3列，风速稳定度
             CalLeakSource(SN, u10, stab) '计算泄漏量，因为不同的气象泄漏量可能不一样。
             If Me.Forecast.IsCalCare = True Then
-                CalculateRisk(SN) '计算关心点
+                CalculateRisk(SN, workpath) '计算关心点
             End If
             '设置计算进度
             Me.m_Results.AllProgress += 1
@@ -2088,7 +2088,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' 计算绝对坐标的关心点浓度
     ''' </summary>
     ''' <remarks></remarks>
-    Private Sub CalculateRisk(ByVal Sn As Integer)
+    Private Sub CalculateRisk(ByVal Sn As Integer, ByVal workpath As String)
         Dim dblForecastTime As Double '定义一下变量用来储存预测时刻
         '计算某一浓度关心点的最大浓度及出现时刻--------------------------------------------------------------------
         Dim startTime, endTime As Double '最大值可能出现的起始和结束时间
@@ -2153,8 +2153,37 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Dim AllArrayResult(Me.m_ForeCast.OutPut.ForeCount - 1, ArrayPoint.Length - 1) As Double '当前气象条件下所有时刻的值。方便后面进行毒性负荷和滑移平均
         Me.CalculateInstance(Sn, ArrayPoint, MaxArrayResult, AllArrayResult) '计算当前气象条件下的浓度
 
-        '找出全部的气象数组对应的各点高值来-----------------------------------
+        '根据计算结果把所有的计算结果储存成网格和关心点的形式
+        Dim Post As New PostCon
         Dim L As Integer = 0
+        ReDim Post.GridCon(Me.m_ForeCast.OutPut.ForeCount - 1, Me.Forecast.Grid.CountY - 1, Me.Forecast.Grid.CountX - 1)
+        ReDim Post.CareCon(Me.m_ForeCast.OutPut.ForeCount - 1, Me.Forecast.CareReceptor.Length - 1)
+
+        For nIndex As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+            L = 0
+            If Me.m_ForeCast.IsCalGrid Then
+                For j As Integer = 0 To Me.Forecast.Grid.CountY - 1
+                    For i As Integer = 0 To Me.Forecast.Grid.CountX - 1
+                        Post.GridCon(nIndex, j, i) = AllArrayResult(nIndex, L)
+                        L += 1
+                    Next
+                Next
+            End If
+            For i As Integer = 0 To Me.Forecast.CareReceptor.Length - 1
+                If MaxArrayResult(L + i).MaxConcentration > Me.m_Results.Rectable.CareRectbleConAndTime(0, i).MaxConcentration Then
+                    Me.m_Results.Rectable.CareRectbleConAndTime(nIndex, i) = MaxArrayResult(L + i)
+                End If
+            Next
+        Next
+        Post.m_MetDateTime = Me.Forecast.Met(Sn).m_DateTime
+        Post.m_StartTime = Me.Forecast.OutPut.ForeStart
+        Post.m_TimeStep = Me.Forecast.OutPut.ForeInterval
+        Post.m_TimeCount = Me.Forecast.OutPut.ForeCount
+        '在这里把计算结果写到磁盘上
+        Post.Save(workpath & "Post\")
+
+        '找出全部的气象数组对应的各点高值来-----------------------------------
+        L = 0
         If Me.m_ForeCast.IsCalGrid Then
             For j As Integer = 0 To Me.Forecast.Grid.CountY - 1
                 For i As Integer = 0 To Me.Forecast.Grid.CountX - 1
@@ -2170,8 +2199,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Me.m_Results.Rectable.CareRectbleConAndTime(0, i) = MaxArrayResult(L + i)
             End If
         Next
-
-        '根据上面的瞬时计算结果来计算风险值----------------------------------------------------------------------------------------
+         '根据上面的瞬时计算结果来计算风险值----------------------------------------------------------------------------------------
         Dim Result As Double '定义计算结果
         If Me.m_ForeCast.OutPut.IsRisk = True Then
 
@@ -2325,7 +2353,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
         'End If
     End Sub
     Private Sub CalculateInstance(ByVal Sn As Integer, ByVal ArrayPoint As Point3D(), ByRef MaxArrayResult As RectableConAndTime(), ByRef AllArrayResult As Double(,))
-        
+
         For nCount As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
             '处理计算时刻
             Dim dblForecastTime As Double = (Me.m_ForeCast.OutPut.ForeStart + Me.m_ForeCast.OutPut.ForeInterval * nCount) * 60 '将预测列表中的预测时刻按顺序赋值上述变量，乘以60，将单位转化为秒
