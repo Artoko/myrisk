@@ -1,4 +1,8 @@
-﻿''' <summary>
+﻿Imports System.IO
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+
+''' <summary>
 ''' 工程类，用于管理所有的工程
 ''' </summary>
 ''' <remarks></remarks>
@@ -30,9 +34,6 @@
     ''' </summary>
     ''' <remarks></remarks>
     Private m_IsSaved As Boolean = False
-
-    Private m_SaveName As String
-
     Public ImportImage0 As New ImportImages '地理位置和厂区平面图
 
     ''' <summary>
@@ -103,22 +104,6 @@
         End Set
     End Property
     ''' <summary>
-    ''' 保存文件的名称
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Property SaveName() As String
-        Get
-            Return Me.m_SaveName
-        End Get
-        Set(ByVal value As String)
-            Me.m_SaveName = value
-        End Set
-    End Property
-
-
-    ''' <summary>
     ''' 对气象数据进行预处理。计算出等值线来
     ''' </summary>
     ''' <remarks></remarks>
@@ -178,7 +163,7 @@
         projFileName = projPathName
 
         '创建对应的文件夹，并保存对应的文件
-
+        Me.SaveProj()
         Me.CreateDirectory(projPathName)
 
         RaiseEvent ProjChanged()
@@ -195,13 +180,48 @@
             System.IO.Directory.CreateDirectory(path)
         End If
             
-        If System.IO.Directory.Exists(path & "\dis") = False Then
-            System.IO.Directory.CreateDirectory(path & "\dis")
+        If System.IO.Directory.Exists(path & "\Post") = False Then
+            System.IO.Directory.CreateDirectory(path & "\Post")
         End If
     End Sub
+    ''' <summary>
+    ''' 保存项目文件
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function SaveProj() As Boolean
+        ' Create a filestream object
+        Dim fileStr As Stream = File.Open(Me.projFileName, FileMode.Create)
+        ' Create a linked list object and populate it with random nodes
+        Dim AllProject As New Project
+        AllProject = Project0
+        ' Create a formatter object based on command line arguments
+        Dim formatter As IFormatter
+        formatter = CType(New BinaryFormatter, IFormatter)
+        ' Serialize the object graph to stream
+        formatter.Serialize(fileStr, AllProject)
+        fileStr.Dispose()
+        ' All done
+        fileStr.Close()
+
+        Try
+            fileStr = File.Open(Me.projFileName, FileMode.Open)
+
+            formatter = CType(New BinaryFormatter, IFormatter)
+            fileStr.Seek(0, SeekOrigin.Begin)
+            Dim obj As Object = formatter.Deserialize(fileStr)
+            ' All done
+            fileStr.Close()
+        Catch ex As Exception
+            fileStr.Close()
+            MsgBox("保存文件时出现意外错误，请重新保存!")
+            Return False
+        End Try
+        Return True
+    End Function
 
 #Region "事件"
-    Public Event ProjChanged()
+    <NonSerialized()> Public Event ProjChanged()
 #End Region
 
 End Class

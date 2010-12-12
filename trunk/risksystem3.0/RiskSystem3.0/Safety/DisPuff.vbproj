@@ -83,6 +83,7 @@
     <Compile Include="敏感区\PopulationRegions.vb" />
     <Compile Include="泄漏和扩散模型\FlogLeave.vb" />
     <Compile Include="泄漏和扩散模型\FlogTrack.vb" />
+    <Compile Include="计算结果类\逐步值类\PostCon.vb" />
     <Compile Include="计算结果类\Rectable.vb" />
     <Compile Include="计算结果类\各点高值\RectableConAndTime.vb" />
     <Compile Include="预测类\OutPut.vb" />

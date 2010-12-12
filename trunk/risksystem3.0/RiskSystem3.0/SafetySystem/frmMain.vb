@@ -88,21 +88,11 @@ Public Class frmMain
 
     Public frmResultMain As New frmResultMain
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Me.Text = My.Application.Info.ProductName
-        Dim configFile As String = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config")
-
-        ' Apply a gray professional renderer as a default renderer
-        ToolStripManager.Renderer = oDefaultRenderer
-        oDefaultRenderer.RoundedEdges = False
-
-        ' Set DockPanel properties
-        DockPanel.ActiveAutoHideContent = Nothing
-        DockPanel.Parent = Me
-        'VS2005Style.Extender.SetSchema(DockPanel, VS2005Style.Extender.Schema.FromBase)
-
-        DockPanel.SuspendLayout(True)
         '把控件设置为中文
-        'Steema.TeeChart.Languages.ChineseSimp.Activate()
+        Steema.TeeChart.Languages.ChineseSimp.Activate()
+        Me.Text = My.Application.Info.ProductName
+        DockPanel.Parent = Me
+        DockPanel.SuspendLayout(True)
         NewRisk()
     End Sub
 
@@ -232,11 +222,8 @@ Public Class frmMain
 
     End Sub
     Private Sub ToolStripButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolRun.Click
-        DrawContourWindow.ContourPaint1.SetMouseType(0) '箭头形
-        DrawContourWindow.AddProject = False
-        DrawContourWindow.FireBlastType = -1
         '先保存文件
-        SaveAs(False)
+        SaveAs()
         '运行
         Run()
     End Sub
@@ -255,7 +242,7 @@ Public Class frmMain
                     End If
                 Next
                 Project0.PreMet() '预处理气象数据
-                Project0.Dis0.Intial_CalRisk() '计算风险值
+                Project0.Dis0.Intial_CalRisk(Project0.GetProjWorkPath) '计算风险值
                 m_Sucess = True
             Else
                 MsgBox("请输入地面气象数据")
@@ -269,7 +256,7 @@ Public Class frmMain
     End Sub
 
     Private Sub BackgroundWorkerAermod_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerAermod.RunWorkerCompleted
-        SaveAs(False)
+        SaveAs()
         Dim Mainform As frmMain = My.Application.ApplicationContext.MainForm
         Mainform.Status2.Text = ""
         Mainform.ProgressBar.Visible = False
@@ -331,61 +318,12 @@ Public Class frmMain
 
 
     Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripButton.Click, SaveToolStripMenuItem.Click
-        SaveAs(False)
+        SaveAs()
     End Sub
-    Private Function SaveAs(ByVal S As Boolean) As Boolean
+    Private Function SaveAs() As Boolean
         Me.Status.Text = "正在保存文件"
         Try
-            Dim SaveFileDialog1 As New SaveFileDialog
-            Dim sFile As String
-            Dim strNameLast As String
-            If Project0.IsSaved = False Or S = True Then
-
-                With SaveFileDialog1
-                    .Filter = "环境风险评价系统文件 (*.rsk)|*.rsk"
-                    .ShowDialog()
-                    If Len(.FileName) = 0 Then
-                        Return False
-                    End If
-                    sFile = .FileName
-                End With
-            Else
-                sFile = Project0.SaveName
-            End If
-            ' To write to a file, create a StreamWriter object.
-            strNameLast = GetFileName(sFile)
-            Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & strNameLast
-            Project0.SaveName = sFile
-            SolutionExplorer.TreeView.Nodes(0).Text = strNameLast
-            Project0.IsSaved = True
-
-            ' Create a filestream object
-            Dim fileStr As Stream = File.Open(sFile, FileMode.Create)
-            ' Create a linked list object and populate it with random nodes
-            Dim AllProject As New Project
-            AllProject = Project0
-            ' Create a formatter object based on command line arguments
-            Dim formatter As IFormatter
-            formatter = CType(New BinaryFormatter, IFormatter)
-            ' Serialize the object graph to stream
-            formatter.Serialize(fileStr, AllProject)
-            fileStr.Dispose()
-            ' All done
-            fileStr.Close()
-
-            Try
-                fileStr = File.Open(sFile, FileMode.Open)
-
-                formatter = CType(New BinaryFormatter, IFormatter)
-                fileStr.Seek(0, SeekOrigin.Begin)
-                Dim obj As Object = formatter.Deserialize(fileStr)
-                ' All done
-                fileStr.Close()
-            Catch ex As Exception
-                fileStr.Close()
-                MsgBox("保存文件时出现意外错误，请重新保存!")
-                Return False
-            End Try
+            Project0.SaveProj()
             Me.Status.Text = "文件保存完毕"
             Return True
         Catch ex As Exception
@@ -436,8 +374,6 @@ Public Class frmMain
                 fileStr.Seek(0, SeekOrigin.Begin)
                 obj = formatter.Deserialize(fileStr)
                 AllProject = CType(obj, Project)
-                AllProject.SaveName = sFile '设置文件名
-
                 Project0 = AllProject
                 'DrawContourWindow.ContourPaint1.SetPannelSetting(AllProject.PannelSetting)
                 fileStr.Close()
@@ -581,6 +517,7 @@ Public Class frmMain
     Private Sub RereshCourtour()
 
     End Sub
+
     ''' <summary>
     ''' 新建泄漏预测项目
     ''' </summary>
@@ -593,6 +530,7 @@ Public Class frmMain
         ShowSubForm() '初始化一个泄漏项目
         Me.m_frmGis.Map1.ZoomToMaxExtent()
     End Sub
+
     ''' <summary>
     ''' 初始化一个泄漏项目的窗口
     ''' </summary>
@@ -1052,36 +990,19 @@ Public Class frmMain
 
     Private Sub NewRisk()
         Dim mSaveFile As New SaveFileDialog
-        mSaveFile.Filter = "CalpuffSystem(*.cal)|*.cal"
+        mSaveFile.Title = "新建项目"
+        mSaveFile.Filter = "环境风险评价系统(*.rsk)|*.rsk"
         If mSaveFile.ShowDialog = Windows.Forms.DialogResult.OK Then
 
             ShowSubForm()
-
-            '新建一个项目
-            'Project0 = New Project
-            Dim mFilePath = mSaveFile.FileName
-
             '关闭当前项目
             'Project0.CloseProj()
-            Project0.CreateNew(mFilePath)
+            Project0.CreateNew(mSaveFile.FileName)
             SetTree()
             Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & SolutionExplorer.TreeView.Nodes(0).Text
             SetPropety()
-
-
             Me.DrawContourWindow.SetPolluteDraw() '设置图形
         End If
-
-        '网格嵌套
-
-        'Me.ModifyResults() '修改结果
-        'Me.ResultTypeDayWindow.Hide()
-        'Me.ResultDataWindow.Hide()
-        'Me.MaxResultWindow.Hide()
-        'Me.MaxiFileWindow.Hide()
-        'PostFileWinow.Hide()
-
-
     End Sub
     ''' <summary>
     ''' 设置项目在列表中的内容
