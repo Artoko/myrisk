@@ -19,18 +19,18 @@ Partial Class frmDrawContour
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Me.ContourPaint1 = New DrawContour.ContourPaintForm
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel
-        Me.cmbRusult = New System.Windows.Forms.ToolStripComboBox
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel
-        Me.cmbMet = New System.Windows.Forms.ToolStripComboBox
-        Me.ToolStripLabel3 = New System.Windows.Forms.ToolStripLabel
-        Me.cmbTime = New System.Windows.Forms.ToolStripComboBox
+        Me.components = New System.ComponentModel.Container()
+        Me.ContourPaint1 = New DrawContour.ContourPaintForm()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
+        Me.cmbRusult = New System.Windows.Forms.ToolStripComboBox()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.cmbMet = New System.Windows.Forms.ToolStripComboBox()
+        Me.ToolStripLabel3 = New System.Windows.Forms.ToolStripLabel()
+        Me.cmbTime = New System.Windows.Forms.ToolStripComboBox()
         Me.MenuPoly = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.取消CToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.取消CToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStrip1.SuspendLayout()
         Me.MenuPoly.SuspendLayout()
         Me.SuspendLayout()
@@ -115,6 +115,7 @@ Partial Class frmDrawContour
         Me.ClientSize = New System.Drawing.Size(1008, 705)
         Me.Controls.Add(Me.ContourPaint1)
         Me.Controls.Add(Me.ToolStrip1)
+        Me.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Name = "frmDrawContour"
         Me.TabText = "绘图"
         Me.Text = "绘图"

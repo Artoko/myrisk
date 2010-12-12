@@ -104,11 +104,11 @@ Public Class frmResult
         For k As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
             If strSlip = "滑移平均最大浓度" Then
                 For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(i, l, k).MaxCon
+                    'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.SlipGrid(i, l, k).MaxCon
                 Next
             Else
                 For l As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
-                    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.InstantaneousGridC(i, j, k, l)
+                    'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(k, l) = Project0.Dis0.Results.AllGridResult.InstantaneousGridC(i, j, k, l)
                 Next
             End If
         Next
@@ -123,9 +123,9 @@ Public Class frmResult
         For i1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountY - 1
             For j1 As Integer = 0 To Project0.Dis0.Forecast.Grid.CountX - 1
                 For k1 As Integer = 0 To myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue.Length - 1
-                    If myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) Then
-                        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) + 0.000001
-                    End If
+                    'If myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) Then
+                    '    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.GridPoint(i1, j1) = myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ContourValueSetting.ContourValue(k1) + 0.000001
+                    'End If
                 Next
             Next
         Next
@@ -149,9 +149,9 @@ Public Class frmResult
         myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
         myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
         '重新计算等值线
-        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ResetCountData()
-        myFrmMain.DrawContourWindow.ContourPaint1.Refresh()
+        'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+        'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ResetCountData()
+        'myFrmMain.DrawContourWindow.ContourPaint1.Refresh()
     End Sub
     
 
@@ -338,7 +338,7 @@ Public Class frmResult
                     'myFrmMain.DrawContourWindow.ContourPaint1.ResetCountData()
                     .ContourPannel.Contours.x0 = Project0.FAndB.Jet.JetFire.SourcePoint.x
                     .ContourPannel.Contours.y0 = Project0.FAndB.Jet.JetFire.SourcePoint.y
-                    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ResetCountData()
+                    'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ResetCountData()
                     Dim JJJ As Integer = 0
                     For k As Integer = 0 To Project0.FAndB.Jet.JetFire.ArrHeatEradiate.Length - 1
                         If Project0.FAndB.Jet.JetFire.ArrHeatEradiate(k).Checkd Then
@@ -369,19 +369,19 @@ Public Class frmResult
 
                     Next
 
-                    .ContourPannel.Contours.ContourStartColor = Color.FromArgb(255, 0, 0)   '设置等值线的起始颜色
-                    .ContourPannel.Contours.ContourEndColor = Color.FromArgb(255, 255, 0)   '设置等值线的结束颜色
-                    .ContourPannel.Contours.ContourColorGradual() '等值线颜色渐变
-                    myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = False
-                    myFrmMain.DrawContourWindow.ContourPaint1.Refresh()
+                    '.ContourPannel.Contours.ContourStartColor = Color.FromArgb(255, 0, 0)   '设置等值线的起始颜色
+                    '.ContourPannel.Contours.ContourEndColor = Color.FromArgb(255, 255, 0)   '设置等值线的结束颜色
+                    '.ContourPannel.Contours.ContourColorGradual() '等值线颜色渐变
+                    'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = False
+                    'myFrmMain.DrawContourWindow.ContourPaint1.Refresh()
                     Exit Sub
             End Select
         End With
 
         '重新计算等值线
-        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
-        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ResetCountData()
-        myFrmMain.DrawContourWindow.ContourPaint1.Refresh()
+        'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
+        'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ResetCountData()
+        'myFrmMain.DrawContourWindow.ContourPaint1.Refresh()
     End Sub
 
     

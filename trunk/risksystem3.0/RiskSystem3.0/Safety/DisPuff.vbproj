@@ -162,12 +162,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonCountour\Contour\YT_ContourDLL.vbproj">
-      <Project>{EC709757-8AF8-44FF-A7CB-D4F94EAF501B}</Project>
-      <Name>YT_ContourDLL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="注册类\" />
   </ItemGroup>
   <ItemGroup>
