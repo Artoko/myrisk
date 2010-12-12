@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RiskSystem", "SafetySystem\RiskSystem.vbproj", "{F0892BA2-AE94-49DB-9511-6451AC66D169}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DisPuff", "Safety\DisPuff.vbproj", "{AD496B5F-0455-46CC-AE7E-8A72FC6293EC}"
