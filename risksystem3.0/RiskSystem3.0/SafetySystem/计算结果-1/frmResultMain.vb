@@ -112,6 +112,8 @@ Public Class frmResultMain
 
     Private Sub frmResultMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.frmResultMapGis.Show(DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document) '显示各点高值窗口
+        Me.frmResultMapGis.InitWindow(Project0, Me)
+
         Me.frmResultSolution.Show(DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockLeft)
         Me.frmResultSet.Show(frmResultSolution.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockLeft)
         Me.frmResultSet.DockTo(frmResultSolution.Pane, DockStyle.Bottom, 0)
@@ -119,4 +121,7 @@ Public Class frmResultMain
         Me.frmResultProperty.Show(Me.frmResultLayersManage.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockRight)
         Me.frmResultProperty.DockTo(Me.frmResultLayersManage.Pane, DockStyle.Bottom, 0)
     End Sub
+
+
+  
 End Class
