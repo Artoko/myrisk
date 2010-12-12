@@ -1,10 +1,31 @@
 ﻿Imports System.Windows.Forms
 Imports WeifenLuo.WinFormsUI
 Public Class frmResultMain
-    Public frmResultSolution As New frmResultSolution   '项目管理器窗口
-    Public frmResultContour As New frmResultContour '结果窗口
-    Public frmResultSet As New frmResultSet  '绘图窗口
-
+    ''' <summary>
+    ''' 计算结果的项目管理器窗口
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public frmResultSolution As New frmResultSolution
+    ''' <summary>
+    ''' 结果窗口的绘图窗口
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public frmResultMapGis As New frmResultMapGis
+    ''' <summary>
+    ''' 计算结果的对应项目管理窗口的设置窗口
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public frmResultSet As New frmResultSet
+    ''' <summary>
+    ''' 计算结果的图层管理窗口
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public frmResultLayersManage As New frmMapLayersManage
+    ''' <summary>
+    ''' 计算结果的图层对应的属性窗口
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public frmResultProperty As New frmProperty
 
     Private Sub ShowNewForm(ByVal sender As Object, ByVal e As EventArgs) Handles NewToolStripMenuItem.Click, NewToolStripButton.Click, NewWindowToolStripMenuItem.Click
         ' 创建此子窗体的一个新实例。
@@ -31,7 +52,7 @@ Public Class frmResultMain
     Private Sub SaveAsToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles SaveAsToolStripMenuItem.Click
         Dim SaveFileDialog As New SaveFileDialog
         SaveFileDialog.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.MyDocuments
-        SaveFileDialog.Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*" 
+        SaveFileDialog.Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*"
 
         If (SaveFileDialog.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK) Then
             Dim FileName As String = SaveFileDialog.FileName
@@ -90,10 +111,12 @@ Public Class frmResultMain
     Private m_ChildFormNumber As Integer
 
     Private Sub frmResultMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Me.frmResultContour.Show(DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document) '显示各点高值窗口
+        Me.frmResultMapGis.Show(DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document) '显示各点高值窗口
         Me.frmResultSolution.Show(DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockLeft)
         Me.frmResultSet.Show(frmResultSolution.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockLeft)
         Me.frmResultSet.DockTo(frmResultSolution.Pane, DockStyle.Bottom, 0)
-
+        Me.frmResultLayersManage.Show(DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockRight)
+        Me.frmResultProperty.Show(Me.frmResultLayersManage.DockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockRight)
+        Me.frmResultProperty.DockTo(Me.frmResultLayersManage.Pane, DockStyle.Bottom, 0)
     End Sub
 End Class

@@ -22,7 +22,7 @@ Partial Class frmResultSet
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.ListBox1 = New System.Windows.Forms.ListBox
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.SuspendLayout()
         '
         'ListBox1
@@ -32,7 +32,7 @@ Partial Class frmResultSet
         Me.ListBox1.ItemHeight = 12
         Me.ListBox1.Location = New System.Drawing.Point(0, 0)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(292, 256)
+        Me.ListBox1.Size = New System.Drawing.Size(292, 266)
         Me.ListBox1.TabIndex = 0
         '
         'frmResultSet
