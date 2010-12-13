@@ -35,7 +35,12 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' </summary>
     ''' <remarks></remarks>
     Public CareCon(,) As Double
-
+    ''' <summary>
+    ''' 根据对应的气象时刻储存相应的文件
+    ''' </summary>
+    ''' <param name="Path"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Function Save(ByVal Path As String) As Boolean
         Dim again As Boolean = True
         Do
@@ -59,5 +64,24 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End If
             End Try
         Loop While again = True
+    End Function
+    Public Shared Function Open(ByVal FileName As String) As PostCon
+        Dim fileStr As Stream = Nothing
+        Dim formatter As IFormatter
+        Dim PostCon As New PostCon
+        Dim obj As Object
+
+        Try
+            fileStr = File.Open(FileName, FileMode.Open)
+            formatter = CType(New BinaryFormatter, IFormatter)
+            fileStr.Seek(0, SeekOrigin.Begin)
+            obj = formatter.Deserialize(fileStr)
+            PostCon = CType(obj, PostCon)
+            fileStr.Close()
+            Return PostCon
+        Catch ex As Exception
+            fileStr.Close()
+            Return Nothing
+        End Try
     End Function
 End Class

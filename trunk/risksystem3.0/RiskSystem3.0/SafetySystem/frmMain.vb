@@ -336,7 +336,7 @@ Public Class frmMain
     Private Sub OpenFile(ByVal sender As Object, ByVal e As EventArgs) Handles OpenToolStripButton.Click, OpenToolStripMenuItem.Click
         Dim Result As MsgBoxResult = MessageBox.Show("是否要保存当前的项目?", "保存", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
         If Result = MsgBoxResult.Yes Then
-            SaveToolStripMenuItem_Click(sender, e) '保存项目
+            'SaveToolStripMenuItem_Click(sender, e) '保存项目
             OpenFilefun()
         ElseIf Result = MsgBoxResult.No Then '不保存
             OpenFilefun()
@@ -380,7 +380,7 @@ Public Class frmMain
                 'Me.DrawContourWindow.SetPolluteDraw() '设置图形
                 Dim strNameLast As String = GetFileName(sFile)
                 Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & strNameLast
-                SolutionExplorer.TreeView.Nodes(0).Text = strNameLast
+                'SolutionExplorer.TreeView.Nodes(0).Text = strNameLast
                 'Me.SolutionExplorer.RefreshSolutionTree()
             Catch ex As Exception
                 fileStr.Close()
