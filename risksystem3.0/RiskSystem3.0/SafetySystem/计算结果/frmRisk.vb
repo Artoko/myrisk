@@ -55,8 +55,8 @@
                 End If
                 .SetData(i + 1, 5, Project0.Dis0.Forecast.Met(i).Stab)
                 .SetData(i + 1, 6, Project0.Dis0.Forecast.Met(i).Frequency)
-                .SetData(i + 1, 7, Project0.Dis0.Results.AllGridResult.DiePeople(i))
-                .SetData(i + 1, 8, Project0.Dis0.Results.AllGridResult.ArrayRisk(i) * Project0.Dis0.IntialSource.Probability)
+                '.SetData(i + 1, 7, Project0.Dis0.Results.AllGridResult.DiePeople(i))
+                '.SetData(i + 1, 8, Project0.Dis0.Results.AllGridResult.ArrayRisk(i) * Project0.Dis0.IntialSource.Probability)
             End With
         Next
         With EFlexRisk
