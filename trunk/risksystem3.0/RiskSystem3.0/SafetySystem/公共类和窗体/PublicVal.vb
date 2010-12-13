@@ -9,6 +9,7 @@ Module PublicVal
     Public sCreateAermodWindow As Boolean = False  '是否创建aermod窗体
 
     Public Project0 As New Project '公共项目
+    Public Project_Calculated As Project '已经计算完的方案
     Public Vesion As Integer = 2 '1为单位版，2为单机版
 
     Public strjmCode As String = "woasdfgjyikhgighkghjkdfasdfc" '加密码

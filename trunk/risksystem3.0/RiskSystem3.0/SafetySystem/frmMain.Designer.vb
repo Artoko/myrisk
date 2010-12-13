@@ -20,92 +20,107 @@ Partial Class frmMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Me.MenuStrip = New System.Windows.Forms.MenuStrip
-        Me.FileMenu = New System.Windows.Forms.ToolStripMenuItem
-        Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.LToolStripMenuItemL = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItemF = New System.Windows.Forms.ToolStripMenuItem
-        Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator
-        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.SaveAsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
-        Me.PrintToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.PrintPreviewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.PrintSetupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ViewMenu = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolBarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.StatusBarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator
-        Me.PorjectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.绘图窗口ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.PropertyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator
-        Me.DrawLayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.OutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItemChart = New System.Windows.Forms.ToolStripMenuItem
-        Me.mnuSourceItemLeak = New System.Windows.Forms.ToolStripMenuItem
-        Me.mnuLeakGas = New System.Windows.Forms.ToolStripMenuItem
-        Me.mnuLeakTwo = New System.Windows.Forms.ToolStripMenuItem
-        Me.mnuLeakLiquid = New System.Windows.Forms.ToolStripMenuItem
-        Me.mnuLeakFlash = New System.Windows.Forms.ToolStripMenuItem
-        Me.mnuLeakHeat = New System.Windows.Forms.ToolStripMenuItem
-        Me.mnuLeakQuality = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolsMenu = New System.Windows.Forms.ToolStripMenuItem
-        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.全国各地气压数据库PToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.大气稳定度计算SToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.重置窗口布局RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.执行ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.MenuRun = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator
-        Me.最大浓度及浓度限值分析ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.下风向浓度分析VToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.关心点浓度分析ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.关心点浓度限值分析AToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.重气体浓度分析ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.连续重气体浓度分析SToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.火灾爆炸事故概述GToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.火灾事故热辐热分析HToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.爆炸事故冲击波超压PToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.HelpMenu = New System.Windows.Forms.ToolStripMenuItem
-        Me.IndexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator
-        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.注册RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStrip = New System.Windows.Forms.ToolStrip
-        Me.新建NToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
-        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator
-        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator
-        Me.ToolRun = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator
-        Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripSeparator17 = New System.Windows.Forms.ToolStripSeparator
-        Me.txtLocation = New System.Windows.Forms.ToolStripLabel
-        Me.StatusStrip = New System.Windows.Forms.StatusStrip
-        Me.Status = New System.Windows.Forms.ToolStripStatusLabel
-        Me.ProgressBar = New System.Windows.Forms.ToolStripProgressBar
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
-        Me.Status2 = New System.Windows.Forms.ToolStripStatusLabel
+        Dim DockPanelSkin1 As WeifenLuo.WinFormsUI.Docking.DockPanelSkin = New WeifenLuo.WinFormsUI.Docking.DockPanelSkin()
+        Dim AutoHideStripSkin1 As WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin = New WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin()
+        Dim DockPanelGradient1 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient1 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPaneStripSkin1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin = New WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin()
+        Dim DockPaneStripGradient1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient = New WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient()
+        Dim TabGradient2 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPanelGradient2 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient3 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPaneStripToolWindowGradient1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient = New WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient()
+        Dim TabGradient4 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim TabGradient5 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPanelGradient3 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient6 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim TabGradient7 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Me.MenuStrip = New System.Windows.Forms.MenuStrip()
+        Me.FileMenu = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LToolStripMenuItemL = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemF = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveAsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.PrintToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PrintPreviewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PrintSetupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ViewMenu = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolBarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StatusBarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
+        Me.PorjectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.绘图窗口ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PropertyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
+        Me.DrawLayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemChart = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuSourceItemLeak = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuLeakGas = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuLeakTwo = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuLeakLiquid = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuLeakFlash = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuLeakHeat = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuLeakQuality = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolsMenu = New System.Windows.Forms.ToolStripMenuItem()
+        Me.常用危险化学品物理化学性质数据库ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.全国各地气压数据库PToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.大气稳定度计算SToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.重置窗口布局RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.执行ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuRun = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator()
+        Me.最大浓度及浓度限值分析ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.下风向浓度分析VToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.关心点浓度分析ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.关心点浓度限值分析AToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.重气体浓度分析ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.连续重气体浓度分析SToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.火灾爆炸事故概述GToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.火灾事故热辐热分析HToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.爆炸事故冲击波超压PToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpMenu = New System.Windows.Forms.ToolStripMenuItem()
+        Me.IndexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
+        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.注册RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStrip = New System.Windows.Forms.ToolStrip()
+        Me.新建NToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolRun = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
+        Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator17 = New System.Windows.Forms.ToolStripSeparator()
+        Me.txtLocation = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolResult = New System.Windows.Forms.ToolStripButton()
+        Me.StatusStrip = New System.Windows.Forms.StatusStrip()
+        Me.Status = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ProgressBar = New System.Windows.Forms.ToolStripProgressBar()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.Status2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.DockPanel = New WeifenLuo.WinFormsUI.Docking.DockPanel
-        Me.BackgroundWorkerAermod = New System.ComponentModel.BackgroundWorker
+        Me.DockPanel = New WeifenLuo.WinFormsUI.Docking.DockPanel()
+        Me.BackgroundWorkerAermod = New System.ComponentModel.BackgroundWorker()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.ToolResult = New System.Windows.Forms.ToolStripButton
         Me.MenuStrip.SuspendLayout()
         Me.ToolStrip.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
@@ -633,6 +648,15 @@ Partial Class frmMain
         Me.txtLocation.Size = New System.Drawing.Size(35, 22)
         Me.txtLocation.Text = "坐标:"
         '
+        'ToolResult
+        '
+        Me.ToolResult.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolResult.Image = CType(resources.GetObject("ToolResult.Image"), System.Drawing.Image)
+        Me.ToolResult.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolResult.Name = "ToolResult"
+        Me.ToolResult.Size = New System.Drawing.Size(23, 22)
+        Me.ToolResult.Text = "查看结果"
+        '
         'StatusStrip
         '
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Status, Me.ProgressBar, Me.ToolStripStatusLabel1, Me.Status2})
@@ -670,11 +694,56 @@ Partial Class frmMain
         '
         Me.DockPanel.ActiveAutoHideContent = Nothing
         Me.DockPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DockPanel.DockBackColor = System.Drawing.SystemColors.Control
         Me.DockPanel.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World)
         Me.DockPanel.Location = New System.Drawing.Point(0, 49)
         Me.DockPanel.Name = "DockPanel"
         Me.DockPanel.ShowDocumentIcon = True
         Me.DockPanel.Size = New System.Drawing.Size(802, 456)
+        DockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight
+        DockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight
+        AutoHideStripSkin1.DockStripGradient = DockPanelGradient1
+        TabGradient1.EndColor = System.Drawing.SystemColors.Control
+        TabGradient1.StartColor = System.Drawing.SystemColors.Control
+        TabGradient1.TextColor = System.Drawing.SystemColors.ControlDarkDark
+        AutoHideStripSkin1.TabGradient = TabGradient1
+        DockPanelSkin1.AutoHideStripSkin = AutoHideStripSkin1
+        TabGradient2.EndColor = System.Drawing.SystemColors.ControlLightLight
+        TabGradient2.StartColor = System.Drawing.SystemColors.ControlLightLight
+        TabGradient2.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripGradient1.ActiveTabGradient = TabGradient2
+        DockPanelGradient2.EndColor = System.Drawing.SystemColors.Control
+        DockPanelGradient2.StartColor = System.Drawing.SystemColors.Control
+        DockPaneStripGradient1.DockStripGradient = DockPanelGradient2
+        TabGradient3.EndColor = System.Drawing.SystemColors.ControlLight
+        TabGradient3.StartColor = System.Drawing.SystemColors.ControlLight
+        TabGradient3.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripGradient1.InactiveTabGradient = TabGradient3
+        DockPaneStripSkin1.DocumentGradient = DockPaneStripGradient1
+        TabGradient4.EndColor = System.Drawing.SystemColors.ActiveCaption
+        TabGradient4.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical
+        TabGradient4.StartColor = System.Drawing.SystemColors.GradientActiveCaption
+        TabGradient4.TextColor = System.Drawing.SystemColors.ActiveCaptionText
+        DockPaneStripToolWindowGradient1.ActiveCaptionGradient = TabGradient4
+        TabGradient5.EndColor = System.Drawing.SystemColors.Control
+        TabGradient5.StartColor = System.Drawing.SystemColors.Control
+        TabGradient5.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripToolWindowGradient1.ActiveTabGradient = TabGradient5
+        DockPanelGradient3.EndColor = System.Drawing.SystemColors.ControlLight
+        DockPanelGradient3.StartColor = System.Drawing.SystemColors.ControlLight
+        DockPaneStripToolWindowGradient1.DockStripGradient = DockPanelGradient3
+        TabGradient6.EndColor = System.Drawing.SystemColors.GradientInactiveCaption
+        TabGradient6.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical
+        TabGradient6.StartColor = System.Drawing.SystemColors.GradientInactiveCaption
+        TabGradient6.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripToolWindowGradient1.InactiveCaptionGradient = TabGradient6
+        TabGradient7.EndColor = System.Drawing.Color.Transparent
+        TabGradient7.StartColor = System.Drawing.Color.Transparent
+        TabGradient7.TextColor = System.Drawing.SystemColors.ControlDarkDark
+        DockPaneStripToolWindowGradient1.InactiveTabGradient = TabGradient7
+        DockPaneStripSkin1.ToolWindowGradient = DockPaneStripToolWindowGradient1
+        DockPanelSkin1.DockPaneStripSkin = DockPaneStripSkin1
+        Me.DockPanel.Skin = DockPanelSkin1
         Me.DockPanel.TabIndex = 9
         '
         'BackgroundWorkerAermod
@@ -683,15 +752,6 @@ Partial Class frmMain
         'Timer1
         '
         Me.Timer1.Interval = 1000
-        '
-        'ToolResult
-        '
-        Me.ToolResult.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolResult.Image = CType(resources.GetObject("ToolResult.Image"), System.Drawing.Image)
-        Me.ToolResult.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolResult.Name = "ToolResult"
-        Me.ToolResult.Size = New System.Drawing.Size(23, 22)
-        Me.ToolResult.Text = "查看结果"
         '
         'frmMain
         '

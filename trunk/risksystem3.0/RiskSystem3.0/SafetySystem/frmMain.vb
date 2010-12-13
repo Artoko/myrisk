@@ -1195,6 +1195,7 @@ Public Class frmMain
     Private Sub ToolResult_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolResult.Click
         Me.frmResultMain = New frmResultMain
         Me.frmResultMain.WindowState = FormWindowState.Maximized
+        PublicVal.Project_Calculated = PublicVal.Project0
         Me.frmResultMain.ShowDialog()
     End Sub
 End Class
