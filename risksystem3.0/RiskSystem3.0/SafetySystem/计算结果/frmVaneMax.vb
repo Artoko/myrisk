@@ -111,96 +111,96 @@
     ''' <param name="num">选择的位数</param>
     ''' <remarks></remarks>
     Private Sub ChangeResult(ByVal strResult As String, ByVal i As Integer, ByVal j As Integer, ByVal num As Integer)
-        If strResult = "瞬时浓度" Then
-            EFlexGeneral.Rows.Count = 1
-            With EFlexGeneral
-                For imet As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
-                    For jTime As Integer = 0 To Project0.Dis0.Forecast.OutPut.ForeCount - 1
-                        If i = imet Or i = cmbMet.Items.Count - 1 Then
-                            If j = jTime Or j = cmbTime.Items.Count - 1 Then
-                                .Rows.Count += 1
-                                .SetData(.Rows.Count - 1, 0, .Rows.Count - 1) '序号
-                                .SetData(.Rows.Count - 1, 1, Project0.Dis0.Forecast.Met(imet).Vane) '设置风向
-                                .SetData(.Rows.Count - 1, 2, FormatNumber(Project0.Dis0.Forecast.Met(imet).WindSpeed, 4, TriState.True, TriState.False, TriState.False))
-                                .SetData(.Rows.Count - 1, 3, Project0.Dis0.Forecast.Met(imet).Stab)
-                                .SetData(.Rows.Count - 1, 4, Project0.Dis0.Sources(0).PLeak.H)
-                                .SetData(.Rows.Count - 1, 5, FormatNumber(Project0.Dis0.Forecast.Met(imet).u2, 4, TriState.True, TriState.False, TriState.False))
-                                .SetData(.Rows.Count - 1, 6, FormatNumber(Project0.Dis0.Sources(0).PLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '设置泄漏口速率,所有的速率
-                                .SetData(.Rows.Count - 1, 7, Project0.Dis0.Forecast.OutPut.ForeStart + Project0.Dis0.Forecast.OutPut.ForeInterval * jTime) '
+        'If strResult = "瞬时浓度" Then
+        '    EFlexGeneral.Rows.Count = 1
+        '    With EFlexGeneral
+        '        For imet As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
+        '            For jTime As Integer = 0 To Project0.Dis0.Forecast.OutPut.ForeCount - 1
+        '                If i = imet Or i = cmbMet.Items.Count - 1 Then
+        '                    If j = jTime Or j = cmbTime.Items.Count - 1 Then
+        '                        .Rows.Count += 1
+        '                        .SetData(.Rows.Count - 1, 0, .Rows.Count - 1) '序号
+        '                        .SetData(.Rows.Count - 1, 1, Project0.Dis0.Forecast.Met(imet).Vane) '设置风向
+        '                        .SetData(.Rows.Count - 1, 2, FormatNumber(Project0.Dis0.Forecast.Met(imet).WindSpeed, 4, TriState.True, TriState.False, TriState.False))
+        '                        .SetData(.Rows.Count - 1, 3, Project0.Dis0.Forecast.Met(imet).Stab)
+        '                        .SetData(.Rows.Count - 1, 4, Project0.Dis0.Sources(0).PLeak.H)
+        '                        .SetData(.Rows.Count - 1, 5, FormatNumber(Project0.Dis0.Forecast.Met(imet).u2, 4, TriState.True, TriState.False, TriState.False))
+        '                        .SetData(.Rows.Count - 1, 6, FormatNumber(Project0.Dis0.Sources(0).PLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '设置泄漏口速率,所有的速率
+        '                        .SetData(.Rows.Count - 1, 7, Project0.Dis0.Forecast.OutPut.ForeStart + Project0.Dis0.Forecast.OutPut.ForeInterval * jTime) '
 
-                                Select Case Project0.Dis0.IntialSource.LeakType
-                                    Case 0, 3, 10, 11, 12 '气体泄漏
-                                        .SetData(.Rows.Count - 1, 8, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).MaxConAndDistance.MaxCon, num, TriState.True, TriState.False, TriState.False)) '设置泄漏口速率,所有的速率
-                                        .SetData(.Rows.Count - 1, 9, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).MaxConAndDistance.MaxDistance, num, TriState.True, TriState.False, TriState.False)) '设置泄漏口速率,所有的速率
+        '                        Select Case Project0.Dis0.IntialSource.LeakType
+        '                            Case 0, 3, 10, 11, 12 '气体泄漏
+        '                                .SetData(.Rows.Count - 1, 8, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).MaxConAndDistance.MaxCon, num, TriState.True, TriState.False, TriState.False)) '设置泄漏口速率,所有的速率
+        '                                .SetData(.Rows.Count - 1, 9, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).MaxConAndDistance.MaxDistance, num, TriState.True, TriState.False, TriState.False)) '设置泄漏口速率,所有的速率
 
-                                        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                                            .SetData(.Rows.Count - 1, 10 + n, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).HurtLength(n), num, TriState.True, TriState.False, TriState.False))
-                                        Next
-                                        If Project0.Dis0.IsCalUpVane Then
-                                            For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                                                .SetData(0, 13 + n, "上风向" & Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
-                                            Next
-                                        End If
-                                    Case 1, 2, 4 '液体泄漏或两相流泄漏
-                                        .SetData(.Rows.Count - 1, 8, FormatNumber(Project0.Dis0.Sources(imet).PLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '泄漏口挥发的速率
-                                        .SetData(.Rows.Count - 1, 9, FormatNumber(Project0.Dis0.Sources(imet).SLeak.He, 4, TriState.True, TriState.False, TriState.False)) '液池有效高度
-                                        .SetData(.Rows.Count - 1, 10, FormatNumber(Project0.Dis0.Sources(imet).SLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '液池蒸发平均速率[kg/s]
-                                        .SetData(.Rows.Count - 1, 11, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).MaxConAndDistance.MaxCon, num, TriState.True, TriState.False, TriState.False))
-                                        .SetData(.Rows.Count - 1, 12, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).MaxConAndDistance.MaxDistance, num, TriState.True, TriState.False, TriState.False))
+        '                                For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '                                    .SetData(.Rows.Count - 1, 10 + n, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).HurtLength(n), num, TriState.True, TriState.False, TriState.False))
+        '                                Next
+        '                                If Project0.Dis0.IsCalUpVane Then
+        '                                    For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '                                        .SetData(0, 13 + n, "上风向" & Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
+        '                                    Next
+        '                                End If
+        '                            Case 1, 2, 4 '液体泄漏或两相流泄漏
+        '                                .SetData(.Rows.Count - 1, 8, FormatNumber(Project0.Dis0.Sources(imet).PLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '泄漏口挥发的速率
+        '                                .SetData(.Rows.Count - 1, 9, FormatNumber(Project0.Dis0.Sources(imet).SLeak.He, 4, TriState.True, TriState.False, TriState.False)) '液池有效高度
+        '                                .SetData(.Rows.Count - 1, 10, FormatNumber(Project0.Dis0.Sources(imet).SLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '液池蒸发平均速率[kg/s]
+        '                                .SetData(.Rows.Count - 1, 11, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).MaxConAndDistance.MaxCon, num, TriState.True, TriState.False, TriState.False))
+        '                                .SetData(.Rows.Count - 1, 12, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).MaxConAndDistance.MaxDistance, num, TriState.True, TriState.False, TriState.False))
 
-                                        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                                            .SetData(.Rows.Count - 1, 13 + n, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).HurtLength(n), num, TriState.True, TriState.False, TriState.False))
-                                        Next
-                                        If Project0.Dis0.IsCalUpVane Then
-                                            For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                                                .SetData(0, 13 + n, "上风向" & Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
-                                            Next
-                                        End If
-                                End Select
-                            End If
-                        End If
-                    Next
-                Next
+        '                                For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '                                    .SetData(.Rows.Count - 1, 13 + n, FormatNumber(Project0.Dis0.Results.MetResults(imet).ForeTimeResults(jTime).HurtLength(n), num, TriState.True, TriState.False, TriState.False))
+        '                                Next
+        '                                If Project0.Dis0.IsCalUpVane Then
+        '                                    For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '                                        .SetData(0, 13 + n, "上风向" & Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
+        '                                    Next
+        '                                End If
+        '                        End Select
+        '                    End If
+        '                End If
+        '            Next
+        '        Next
 
-            End With
-        ElseIf strResult = "滑移平均最大浓度" Then
-            EFlexGeneral.Rows.Count = 1
-            With EFlexGeneral
-                For imet As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
-                    If i = imet Or i = cmbMet.Items.Count - 1 Then
-                        .Rows.Count += 1
-                        .SetData(.Rows.Count - 1, 0, .Rows.Count - 1) '序号
-                        .SetData(.Rows.Count - 1, 1, Project0.Dis0.Forecast.Met(imet).Vane) '设置风向
-                        .SetData(.Rows.Count - 1, 2, FormatNumber(Project0.Dis0.Forecast.Met(imet).WindSpeed, 4, TriState.True, TriState.False, TriState.False))
-                        .SetData(.Rows.Count - 1, 3, Project0.Dis0.Forecast.Met(imet).Stab)
-                        .SetData(.Rows.Count - 1, 4, Project0.Dis0.Sources(0).PLeak.H)
-                        .SetData(.Rows.Count - 1, 5, FormatNumber(Project0.Dis0.Forecast.Met(imet).u2, 4, TriState.True, TriState.False, TriState.False))
-                        .SetData(.Rows.Count - 1, 6, FormatNumber(Project0.Dis0.Sources(0).PLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '设置泄漏口速率,所有的速率
-                        .SetData(.Rows.Count - 1, 7, "---") '
+        '    End With
+        'ElseIf strResult = "滑移平均最大浓度" Then
+        '    EFlexGeneral.Rows.Count = 1
+        '    With EFlexGeneral
+        '        For imet As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
+        '            If i = imet Or i = cmbMet.Items.Count - 1 Then
+        '                .Rows.Count += 1
+        '                .SetData(.Rows.Count - 1, 0, .Rows.Count - 1) '序号
+        '                .SetData(.Rows.Count - 1, 1, Project0.Dis0.Forecast.Met(imet).Vane) '设置风向
+        '                .SetData(.Rows.Count - 1, 2, FormatNumber(Project0.Dis0.Forecast.Met(imet).WindSpeed, 4, TriState.True, TriState.False, TriState.False))
+        '                .SetData(.Rows.Count - 1, 3, Project0.Dis0.Forecast.Met(imet).Stab)
+        '                .SetData(.Rows.Count - 1, 4, Project0.Dis0.Sources(0).PLeak.H)
+        '                .SetData(.Rows.Count - 1, 5, FormatNumber(Project0.Dis0.Forecast.Met(imet).u2, 4, TriState.True, TriState.False, TriState.False))
+        '                .SetData(.Rows.Count - 1, 6, FormatNumber(Project0.Dis0.Sources(0).PLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '设置泄漏口速率,所有的速率
+        '                .SetData(.Rows.Count - 1, 7, "---") '
 
-                        Select Case Project0.Dis0.IntialSource.LeakType
-                            Case 0, 3, 10, 11, 12 '气体泄漏
-                                .SetData(.Rows.Count - 1, 8, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.MaxConAndDistanceSlip.MaxCon, num, TriState.True, TriState.False, TriState.False))
-                                .SetData(.Rows.Count - 1, 9, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.MaxConAndDistanceSlip.MaxDistance, num, TriState.True, TriState.False, TriState.False))
-                                For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                                    .SetData(.Rows.Count - 1, 10 + n, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.HurtLengthSlip(n), num, TriState.True, TriState.False, TriState.False))
-                                Next
-                            Case 1, 2, 4 '液体泄漏或两相流泄漏
-                                .SetData(.Rows.Count - 1, 8, FormatNumber(Project0.Dis0.Sources(imet).PLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '泄漏口挥发的速率
-                                .SetData(.Rows.Count - 1, 9, FormatNumber(Project0.Dis0.Sources(imet).SLeak.He, 4, TriState.True, TriState.False, TriState.False)) '液池有效高度
-                                .SetData(.Rows.Count - 1, 10, FormatNumber(Project0.Dis0.Sources(imet).SLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '液池蒸发平均速率[kg/s]
-                                .SetData(.Rows.Count - 1, 11, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.MaxConAndDistanceSlip.MaxCon, num, TriState.True, TriState.False, TriState.False))
-                                .SetData(.Rows.Count - 1, 12, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.MaxConAndDistanceSlip.MaxDistance, num, TriState.True, TriState.False, TriState.False))
-                                For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                                    .SetData(.Rows.Count - 1, 13 + n, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.HurtLengthSlip(n), num, TriState.True, TriState.False, TriState.False))
-                                Next
-                        End Select
-                    End If
-                Next
-            End With
-        End If
+        '                Select Case Project0.Dis0.IntialSource.LeakType
+        '                    Case 0, 3, 10, 11, 12 '气体泄漏
+        '                        .SetData(.Rows.Count - 1, 8, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.MaxConAndDistanceSlip.MaxCon, num, TriState.True, TriState.False, TriState.False))
+        '                        .SetData(.Rows.Count - 1, 9, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.MaxConAndDistanceSlip.MaxDistance, num, TriState.True, TriState.False, TriState.False))
+        '                        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '                            .SetData(.Rows.Count - 1, 10 + n, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.HurtLengthSlip(n), num, TriState.True, TriState.False, TriState.False))
+        '                        Next
+        '                    Case 1, 2, 4 '液体泄漏或两相流泄漏
+        '                        .SetData(.Rows.Count - 1, 8, FormatNumber(Project0.Dis0.Sources(imet).PLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '泄漏口挥发的速率
+        '                        .SetData(.Rows.Count - 1, 9, FormatNumber(Project0.Dis0.Sources(imet).SLeak.He, 4, TriState.True, TriState.False, TriState.False)) '液池有效高度
+        '                        .SetData(.Rows.Count - 1, 10, FormatNumber(Project0.Dis0.Sources(imet).SLeak.Q / 1000000, 5, TriState.True, TriState.False, TriState.False)) '液池蒸发平均速率[kg/s]
+        '                        .SetData(.Rows.Count - 1, 11, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.MaxConAndDistanceSlip.MaxCon, num, TriState.True, TriState.False, TriState.False))
+        '                        .SetData(.Rows.Count - 1, 12, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.MaxConAndDistanceSlip.MaxDistance, num, TriState.True, TriState.False, TriState.False))
+        '                        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+        '                            .SetData(.Rows.Count - 1, 13 + n, FormatNumber(Project0.Dis0.Results.MetResults(imet).Slip.HurtLengthSlip(n), num, TriState.True, TriState.False, TriState.False))
+        '                        Next
+        '                End Select
+        '            End If
+        '        Next
+        '    End With
+        'End If
 
-        EFlexGeneral.AutoSizeCols()
+        'EFlexGeneral.AutoSizeCols()
     End Sub
 
     Private Sub cmbMet_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbMet.SelectedIndexChanged
