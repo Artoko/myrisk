@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports WeifenLuo.WinFormsUI
+Imports HaGisPack
 Public Class frmResultMain
     ''' <summary>
     ''' 计算结果的项目管理器窗口
@@ -124,4 +125,8 @@ Public Class frmResultMain
 
 
   
+    Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
+        Me.frmResultMapGis.Map1.FunctionMode = DotSpatial.Controls.FunctionMode.None
+        Me.frmResultMapGis.Map1.FunctionMode = DotSpatial.Controls.FunctionMode.Pan
+    End Sub
 End Class
