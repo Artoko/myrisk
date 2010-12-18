@@ -52,7 +52,7 @@ Partial Class frmResultMapGis
         Me.Controls.Add(Me.Map1)
         Me.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Name = "frmResultMapGis"
-        Me.Text = "frmResultContour"
+        Me.Text = "计算结果绘图"
         Me.ResumeLayout(False)
 
     End Sub

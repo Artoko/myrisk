@@ -192,31 +192,17 @@ Public Class frmResultMapGis
             '等值线
             'Dim con As SDSContourLayer
             'frmM.frmGis_Map.m_manager.GetLayer(ContourFileKey, con)
-            conLayer.MyContours = New DrawContour.Contours
-            conLayer.MyContours.GridPoint = Grid
-            conLayer.MyContours.nRow = nRow
-            conLayer.MyContours.nCol = nCol
+            Dim con As New DrawContour.Contours
+            con.GridPoint = Grid
+            con.nRow = nRow
+            con.nCol = nCol
+            con.Xmin = CInt(Xmin + 0)
+            con.Xmax = CInt(Xmin + (nCol - 1) * xstep)
+            con.Ymin = CInt(Ymin + 0)
+            con.Ymax = CInt(Ymin + (nRow - 1) * Ystep)
+            con.SetContours(dblA)
 
-            conLayer.MyContours.Xmin = CInt(Xmin + 0)
-            conLayer.MyContours.Xmax = CInt(Xmin + (nCol - 1) * xstep)
-            conLayer.MyContours.Ymin = CInt(Ymin + 0)
-            conLayer.MyContours.Ymax = CInt(Ymin + (nRow - 1) * Ystep)
-
-            'con.MyContours.Xmin = Xmin
-            'con.MyContours.Xmax = Xmax
-            'con.MyContours.Ymin = Ymin
-            'con.MyContours.Ymax = Ymax
             conLayer.IsShowLegend = True
-            Dim lns As List(Of ContourLine)
-            'Dim cth As New CTHelperV2(conLayer)
-            Dim ls As New List(Of Double)
-            For i As Integer = 0 To dblA.Length - 1
-                ls.Add(dblA(i))
-            Next
-            'lns = cth.GetResultList(ls)
-
-            'conLayer. = lns
-
             conLayer.ContourLineList = New List(Of ContourLine)
             Dim CL As ContourLine
             For i As Integer = 0 To dblA.Length - 1
@@ -225,6 +211,19 @@ Public Class frmResultMapGis
                 conLayer.ContourLineList.Add(CL)
             Next
 
+            conLayer.LineFillColorList.Add(Color.Purple)
+            conLayer.LineFillColorList.Add(Color.Red)
+            conLayer.LineFillColorList.Add(Color.Yellow)
+            conLayer.LineFillColorList.Add(Color.Green)
+
+            conLayer.LineColorList.Add(Color.Purple)
+            conLayer.LineColorList.Add(Color.Red)
+            conLayer.LineColorList.Add(Color.Yellow)
+            conLayer.LineColorList.Add(Color.Green)
+            conLayer.SetContours(con)
+            conLayer.DrawContourLines()
+
+            Me.Refresh()
         Catch ex As Exception
         End Try
         Me.Refresh()
@@ -296,8 +295,13 @@ Public Class frmResultMapGis
     Public Sub ChangeContours(ByVal Grid(,) As Double, ByVal Xmin As Double, ByVal Xdelta As Double, ByVal Xnum As Double _
                           , ByVal Ymin As Double, ByVal Ydelta As Double, ByVal Ynum As Double _
                           , ByVal OffsetX As Double, ByVal OffsetY As Double, ByVal ContourKey As String, ByVal IsSave As Boolean)
-        Dim dblA() As Double = GetContourValue(Grid, Ynum, Ymin, Ymin + (Ynum - 1) * Ydelta _
-                    , Xnum, Xmin, Xmin + (Xnum - 1) * Xdelta)
+        'Dim dblA() As Double = GetContourValue(Grid, Ynum, Ymin, Ymin + (Ynum - 1) * Ydelta _
+        '            , Xnum, Xmin, Xmin + (Xnum - 1) * Xdelta)
+        Dim dblA(3) As Double
+        dblA(0) = 30
+        dblA(1) = 10
+        dblA(2) = 3
+        dblA(3) = 0.3
         Me.SetContour(Grid, Ynum, Ymin, Ydelta _
                     , Xnum, Xmin, Xdelta, OffsetX, OffsetY, ContourKey, IsSave, dblA)
 

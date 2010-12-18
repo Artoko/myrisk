@@ -363,6 +363,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Me.m_Results.AllProgress = 0
         For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
             InitiaMetList(SN)   '计算概述
+        Next SN
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
             '泄漏量计算
             Dim u10 As Double = Me.m_ForeCast.Met(SN).WindSpeed  '第0行第2列，风速
             Dim stab As String = Me.m_ForeCast.Met(SN).Stab  '第0行第3列，风速稳定度
