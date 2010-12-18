@@ -1586,21 +1586,29 @@ Public Module Formula
             Dim ax1 As Double = 0
             Dim az1 As Double = 0
             If FlogLeave.LeaveTime < 3600 Then
-                Dim DX As Double = Math.Sin((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
-                Dim DY As Double = Math.Cos((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
+                Dim DX As Double = Math.Cos((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
+                Dim DY As Double = Math.Sin((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime)
                 FlogLeave.x = FlogLeave.x + DX
                 FlogLeave.y = FlogLeave.y + DY
                 FlogLeave.z = FlogLeave.z
                 '根据上一步计算得到的水平和垂直向扩散参数计算出当前气象条件下烟团虚拟的距离
                 Dim DX_1 As Double = Anti_DiffuseY15(FlogLeave.ax, arrayMet(Sn).Stab, ground) '虚拟的距离
-                ax1 = DiffuseY15(arrayMet(Sn).u2 * 3600 + DX_1, arrayMet(Sn).Stab, ground)
+                ax1 = DiffuseY15(arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime) + DX_1, arrayMet(Sn).Stab, ground)
 
                 Dim DZ_1 As Double = Anti_DiffuseZ15(FlogLeave.az, arrayMet(Sn).Stab, ground) '虚拟的距离
-                az1 = DiffuseZ15(arrayMet(Sn).u2 * 3600 + DZ_1, arrayMet(Sn).Stab, ground)
+                az1 = DiffuseZ15(arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime) + DZ_1, arrayMet(Sn).Stab, ground)
+
+                FlogLeave.ax = ax1
+                FlogLeave.az = az1
             End If
             Sn += 1
             ForecastTime -= 3600
-            FlogLeave.LeaveTime -= 3600
+            If FlogLeave.LeaveTime >= 3600 Then
+                FlogLeave.LeaveTime -= 3600
+            Else
+                FlogLeave.LeaveTime = 0
+            End If
+
 
             '如果气象条件超出的边界，用边界的气象条件
             If Sn > arrayMet.Length - 1 Then

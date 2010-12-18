@@ -353,39 +353,15 @@ Public Class frmMain
         Dim OpenFileDialog As New OpenFileDialog
         OpenFileDialog.Filter = "环境风险评价系统文件 (*.rsk)|*.rsk"
         If (OpenFileDialog.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK) Then
+            ShowSubForm()
             With OpenFileDialog
                 If Len(.FileName) = 0 Then
                     Exit Sub
                 End If
                 sFile = .FileName
             End With
-            Dim fileStr As Stream = Nothing
-            Dim formatter As IFormatter
-            Dim AllProject As New Project
-            Dim obj As Object
-
-            Try
-                fileStr = File.Open(sFile, FileMode.Open)
-
-                ' Create a formatter object based on command line arguments
-
-                formatter = CType(New BinaryFormatter, IFormatter)
-                ' Deserialize the object graph from stream
-                fileStr.Seek(0, SeekOrigin.Begin)
-                obj = formatter.Deserialize(fileStr)
-                AllProject = CType(obj, Project)
-                Project0 = AllProject
-                'DrawContourWindow.ContourPaint1.SetPannelSetting(AllProject.PannelSetting)
-                fileStr.Close()
-                'Me.DrawContourWindow.SetPolluteDraw() '设置图形
-                Dim strNameLast As String = GetFileName(sFile)
-                Me.Text = My.Application.Info.ProductName & My.Application.Info.Version.ToString.Substring(0, 3) & "--" & strNameLast
-                'SolutionExplorer.TreeView.Nodes(0).Text = strNameLast
-                'Me.SolutionExplorer.RefreshSolutionTree()
-            Catch ex As Exception
-                fileStr.Close()
-                MsgBox("打开文件错误。可能您用的是较低版本的软件打开了较高版本保存的方案!")
-            End Try
+            Project0.OpenProj(sFile)
+            SetTree()
         End If
         Try
             Me.RefreshResult() '显示结果
