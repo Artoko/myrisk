@@ -39,7 +39,6 @@ Partial Class frmPS
         Me.DateTimePickerNight = New System.Windows.Forms.DateTimePicker()
         Me.txtU10 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.TChart1 = New Steema.TeeChart.TChart()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -207,23 +206,11 @@ Partial Class frmPS
         Me.Label6.TabIndex = 22
         Me.Label6.Text = "地面10m风速[m/s]:"
         '
-        'TChart1
-        '
-        '
-        '
-        '
-        Me.TChart1.Aspect.ZOffset = 0.0R
-        Me.TChart1.Location = New System.Drawing.Point(402, 49)
-        Me.TChart1.Name = "TChart1"
-        Me.TChart1.Size = New System.Drawing.Size(111, 122)
-        Me.TChart1.TabIndex = 23
-        '
         'frmPS
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(526, 346)
-        Me.Controls.Add(Me.TChart1)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.txtU10)
         Me.Controls.Add(Me.DateTimePickerNight)
@@ -271,5 +258,4 @@ Partial Class frmPS
     Friend WithEvents DateTimePickerMorning As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents txtU10 As System.Windows.Forms.TextBox
-    Friend WithEvents TChart1 As Steema.TeeChart.TChart
 End Class
