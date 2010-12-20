@@ -99,7 +99,7 @@ Public Class frmLeakSource
         Me.m_Dis.IntialSource.Angle = txtAngle.Value
     End Sub
     Private Sub txtDurationT_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtDurationT.Validating
-        Me.m_Dis.IntialSource.DurationT0 = txtDurationT.Value '排放时间
+        Me.m_Dis.IntialSource.DurationT = txtDurationT.Value '排放时间
     End Sub
     Private Sub txtLeakLiquidHeight_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtLeakLiquidHeight.Validating
         Me.m_Dis.IntialSource.LeakLiquidHeight = txtLeakLiquidHeight.Value
@@ -531,6 +531,10 @@ Public Class frmLeakSource
 
     Private Sub txtPa_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txtPa.Validating
         Me.m_Dis.Forecast.Pa = txtPa.Value
+
+    End Sub
+
+    Private Sub txtDurationT_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtDurationT.TextChanged
 
     End Sub
 End Class

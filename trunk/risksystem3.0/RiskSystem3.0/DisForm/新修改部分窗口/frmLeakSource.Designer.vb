@@ -22,76 +22,76 @@ Partial Class frmLeakSource
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmLeakSource))
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox
-        Me.txtDurationT = New Chart.CText
-        Me.txtAngle = New Chart.CText
-        Me.txtH = New Chart.CText
-        Me.txtLeakGasA = New Chart.CText
-        Me.txtLeakTwoCd = New Chart.CText
-        Me.cmbLeakGasShape = New System.Windows.Forms.ComboBox
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label39 = New System.Windows.Forms.Label
-        Me.Label59 = New System.Windows.Forms.Label
-        Me.txtLeakLiquidCd = New Chart.CText
-        Me.Label52 = New System.Windows.Forms.Label
-        Me.Label38 = New System.Windows.Forms.Label
-        Me.Label46 = New System.Windows.Forms.Label
-        Me.txtLeakLiquidHeight = New Chart.CText
-        Me.Label45 = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.GroupBox11 = New System.Windows.Forms.GroupBox
-        Me.chkAutoCalLeakP = New System.Windows.Forms.CheckBox
-        Me.txtLeakGasP = New Chart.CText
-        Me.txtInT = New Chart.CText
-        Me.txtQ = New Chart.CText
-        Me.Label44 = New System.Windows.Forms.Label
-        Me.Label47 = New System.Windows.Forms.Label
-        Me.Label37 = New System.Windows.Forms.Label
-        Me.GroupBox12 = New System.Windows.Forms.GroupBox
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.txtY = New Chart.CText
-        Me.txtX = New Chart.CText
-        Me.txtLeakSourceName = New System.Windows.Forms.TextBox
-        Me.Label67 = New System.Windows.Forms.Label
-        Me.lblQ8 = New System.Windows.Forms.Label
-        Me.txtQ0 = New Chart.CText
-        Me.cbmSourceType = New System.Windows.Forms.ComboBox
-        Me.Label49 = New System.Windows.Forms.Label
-        Me.LabelS = New System.Windows.Forms.Label
-        Me.txtS_S = New Chart.CText
-        Me.Label29 = New System.Windows.Forms.Label
-        Me.txtThickness = New Chart.CText
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox
-        Me.chkAutoCalVapP = New System.Windows.Forms.CheckBox
-        Me.txtLeakEvaporationP = New Chart.CText
-        Me.txtSHe = New Chart.CText
-        Me.txtVolatilizationT = New Chart.CText
-        Me.txtS = New Chart.CText
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.Label34 = New System.Windows.Forms.Label
-        Me.cmbLeakEvaporationGround = New System.Windows.Forms.ComboBox
-        Me.txtAirProportion = New Chart.CText
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.cmbLeakType = New System.Windows.Forms.ComboBox
-        Me.Label11 = New System.Windows.Forms.Label
-        Me.m_OK = New System.Windows.Forms.Button
-        Me.m_Cancel = New System.Windows.Forms.Button
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.txtDurationT = New Chart.CText()
+        Me.txtAngle = New Chart.CText()
+        Me.txtH = New Chart.CText()
+        Me.txtLeakGasA = New Chart.CText()
+        Me.txtLeakTwoCd = New Chart.CText()
+        Me.cmbLeakGasShape = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.Label59 = New System.Windows.Forms.Label()
+        Me.txtLeakLiquidCd = New Chart.CText()
+        Me.Label52 = New System.Windows.Forms.Label()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.Label46 = New System.Windows.Forms.Label()
+        Me.txtLeakLiquidHeight = New Chart.CText()
+        Me.Label45 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.chkAutoCalLeakP = New System.Windows.Forms.CheckBox()
+        Me.txtLeakGasP = New Chart.CText()
+        Me.txtInT = New Chart.CText()
+        Me.txtQ = New Chart.CText()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.Label47 = New System.Windows.Forms.Label()
+        Me.Label37 = New System.Windows.Forms.Label()
+        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtY = New Chart.CText()
+        Me.txtX = New Chart.CText()
+        Me.txtLeakSourceName = New System.Windows.Forms.TextBox()
+        Me.Label67 = New System.Windows.Forms.Label()
+        Me.lblQ8 = New System.Windows.Forms.Label()
+        Me.txtQ0 = New Chart.CText()
+        Me.cbmSourceType = New System.Windows.Forms.ComboBox()
+        Me.Label49 = New System.Windows.Forms.Label()
+        Me.LabelS = New System.Windows.Forms.Label()
+        Me.txtS_S = New Chart.CText()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.txtThickness = New Chart.CText()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.chkAutoCalVapP = New System.Windows.Forms.CheckBox()
+        Me.txtLeakEvaporationP = New Chart.CText()
+        Me.txtSHe = New Chart.CText()
+        Me.txtVolatilizationT = New Chart.CText()
+        Me.txtS = New Chart.CText()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.cmbLeakEvaporationGround = New System.Windows.Forms.ComboBox()
+        Me.txtAirProportion = New Chart.CText()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cmbLeakType = New System.Windows.Forms.ComboBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.m_OK = New System.Windows.Forms.Button()
+        Me.m_Cancel = New System.Windows.Forms.Button()
         Me.C1SuperTooltip1 = New C1.Win.C1SuperTooltip.C1SuperTooltip(Me.components)
-        Me.chkIsHeavy = New System.Windows.Forms.CheckBox
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.txtProbability = New Chart.CText
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox
-        Me.txtPa = New Chart.CText
-        Me.txtTa = New Chart.CText
-        Me.Label12 = New System.Windows.Forms.Label
-        Me.Label27 = New System.Windows.Forms.Label
+        Me.chkIsHeavy = New System.Windows.Forms.CheckBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txtProbability = New Chart.CText()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.txtPa = New Chart.CText()
+        Me.txtTa = New Chart.CText()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
@@ -129,66 +129,66 @@ Partial Class frmLeakSource
         '
         Me.txtDurationT.DataType = Chart.DataType.DataDouble
         Me.txtDurationT.Location = New System.Drawing.Point(143, 20)
-        Me.txtDurationT.MaxValue = 0
-        Me.txtDurationT.MinValue = 0
+        Me.txtDurationT.MaxValue = 0.0R
+        Me.txtDurationT.MinValue = 0.0R
         Me.txtDurationT.Name = "txtDurationT"
         Me.txtDurationT.Size = New System.Drawing.Size(96, 21)
         Me.txtDurationT.TabIndex = 85
         Me.txtDurationT.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtDurationT, resources.GetString("txtDurationT.ToolTip"))
-        Me.txtDurationT.Value = 0
+        Me.txtDurationT.Value = 0.0R
         '
         'txtAngle
         '
         Me.txtAngle.DataType = Chart.DataType.DataDouble
         Me.txtAngle.Location = New System.Drawing.Point(143, 103)
-        Me.txtAngle.MaxValue = 90
-        Me.txtAngle.MinValue = 0
+        Me.txtAngle.MaxValue = 90.0R
+        Me.txtAngle.MinValue = 0.0R
         Me.txtAngle.Name = "txtAngle"
         Me.txtAngle.Size = New System.Drawing.Size(96, 21)
         Me.txtAngle.TabIndex = 83
         Me.txtAngle.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtAngle, resources.GetString("txtAngle.ToolTip"))
-        Me.txtAngle.Value = 0
+        Me.txtAngle.Value = 0.0R
         '
         'txtH
         '
         Me.txtH.DataType = Chart.DataType.DataDouble
         Me.txtH.Location = New System.Drawing.Point(143, 62)
-        Me.txtH.MaxValue = 0
-        Me.txtH.MinValue = 0
+        Me.txtH.MaxValue = 0.0R
+        Me.txtH.MinValue = 0.0R
         Me.txtH.Name = "txtH"
         Me.txtH.Size = New System.Drawing.Size(96, 21)
         Me.txtH.TabIndex = 82
         Me.txtH.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtH, resources.GetString("txtH.ToolTip"))
-        Me.txtH.Value = 0
+        Me.txtH.Value = 0.0R
         '
         'txtLeakGasA
         '
         Me.txtLeakGasA.DataType = Chart.DataType.DataDouble
         Me.txtLeakGasA.Location = New System.Drawing.Point(143, 41)
-        Me.txtLeakGasA.MaxValue = 0
-        Me.txtLeakGasA.MinValue = 0
+        Me.txtLeakGasA.MaxValue = 0.0R
+        Me.txtLeakGasA.MinValue = 0.0R
         Me.txtLeakGasA.Name = "txtLeakGasA"
         Me.txtLeakGasA.Size = New System.Drawing.Size(96, 21)
         Me.txtLeakGasA.TabIndex = 81
         Me.txtLeakGasA.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtLeakGasA, resources.GetString("txtLeakGasA.ToolTip"))
-        Me.txtLeakGasA.Value = 0
+        Me.txtLeakGasA.Value = 0.0R
         '
         'txtLeakTwoCd
         '
         Me.txtLeakTwoCd.DataType = Chart.DataType.DataDouble
         Me.txtLeakTwoCd.Location = New System.Drawing.Point(143, 166)
-        Me.txtLeakTwoCd.MaxValue = 0
-        Me.txtLeakTwoCd.MinValue = 0
+        Me.txtLeakTwoCd.MaxValue = 0.0R
+        Me.txtLeakTwoCd.MinValue = 0.0R
         Me.txtLeakTwoCd.Name = "txtLeakTwoCd"
         Me.txtLeakTwoCd.Size = New System.Drawing.Size(96, 21)
         Me.txtLeakTwoCd.TabIndex = 241
         Me.txtLeakTwoCd.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtLeakTwoCd, resources.GetString("txtLeakTwoCd.ToolTip"))
-        Me.txtLeakTwoCd.Value = 0
+        Me.txtLeakTwoCd.Value = 0.0R
         '
         'cmbLeakGasShape
         '
@@ -250,14 +250,14 @@ Partial Class frmLeakSource
         '
         Me.txtLeakLiquidCd.DataType = Chart.DataType.DataDouble
         Me.txtLeakLiquidCd.Location = New System.Drawing.Point(143, 145)
-        Me.txtLeakLiquidCd.MaxValue = 0
-        Me.txtLeakLiquidCd.MinValue = 0
+        Me.txtLeakLiquidCd.MaxValue = 0.0R
+        Me.txtLeakLiquidCd.MinValue = 0.0R
         Me.txtLeakLiquidCd.Name = "txtLeakLiquidCd"
         Me.txtLeakLiquidCd.Size = New System.Drawing.Size(96, 21)
         Me.txtLeakLiquidCd.TabIndex = 239
         Me.txtLeakLiquidCd.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtLeakLiquidCd, resources.GetString("txtLeakLiquidCd.ToolTip"))
-        Me.txtLeakLiquidCd.Value = 0
+        Me.txtLeakLiquidCd.Value = 0.0R
         '
         'Label52
         '
@@ -305,14 +305,14 @@ Partial Class frmLeakSource
         '
         Me.txtLeakLiquidHeight.DataType = Chart.DataType.DataDouble
         Me.txtLeakLiquidHeight.Location = New System.Drawing.Point(143, 124)
-        Me.txtLeakLiquidHeight.MaxValue = 0
-        Me.txtLeakLiquidHeight.MinValue = 0
+        Me.txtLeakLiquidHeight.MaxValue = 0.0R
+        Me.txtLeakLiquidHeight.MinValue = 0.0R
         Me.txtLeakLiquidHeight.Name = "txtLeakLiquidHeight"
         Me.txtLeakLiquidHeight.Size = New System.Drawing.Size(96, 21)
         Me.txtLeakLiquidHeight.TabIndex = 237
         Me.txtLeakLiquidHeight.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtLeakLiquidHeight, resources.GetString("txtLeakLiquidHeight.ToolTip"))
-        Me.txtLeakLiquidHeight.Value = 0
+        Me.txtLeakLiquidHeight.Value = 0.0R
         '
         'Label45
         '
@@ -373,40 +373,40 @@ Partial Class frmLeakSource
         Me.txtLeakGasP.DataType = Chart.DataType.DataDouble
         Me.txtLeakGasP.ForeColor = System.Drawing.Color.Blue
         Me.txtLeakGasP.Location = New System.Drawing.Point(143, 88)
-        Me.txtLeakGasP.MaxValue = 0
-        Me.txtLeakGasP.MinValue = 0
+        Me.txtLeakGasP.MaxValue = 0.0R
+        Me.txtLeakGasP.MinValue = 0.0R
         Me.txtLeakGasP.Name = "txtLeakGasP"
         Me.txtLeakGasP.Size = New System.Drawing.Size(96, 21)
         Me.txtLeakGasP.TabIndex = 21
         Me.txtLeakGasP.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtLeakGasP, resources.GetString("txtLeakGasP.ToolTip"))
-        Me.txtLeakGasP.Value = 0
+        Me.txtLeakGasP.Value = 0.0R
         '
         'txtInT
         '
         Me.txtInT.DataType = Chart.DataType.DataDouble
         Me.txtInT.Location = New System.Drawing.Point(143, 38)
-        Me.txtInT.MaxValue = 0
-        Me.txtInT.MinValue = 0
+        Me.txtInT.MaxValue = 0.0R
+        Me.txtInT.MinValue = 0.0R
         Me.txtInT.Name = "txtInT"
         Me.txtInT.Size = New System.Drawing.Size(96, 21)
         Me.txtInT.TabIndex = 20
         Me.txtInT.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtInT, resources.GetString("txtInT.ToolTip"))
-        Me.txtInT.Value = 0
+        Me.txtInT.Value = 0.0R
         '
         'txtQ
         '
         Me.txtQ.DataType = Chart.DataType.DataDouble
         Me.txtQ.Location = New System.Drawing.Point(143, 14)
-        Me.txtQ.MaxValue = 9999999999
-        Me.txtQ.MinValue = 0
+        Me.txtQ.MaxValue = 9999999999.0R
+        Me.txtQ.MinValue = 0.0R
         Me.txtQ.Name = "txtQ"
         Me.txtQ.Size = New System.Drawing.Size(96, 21)
         Me.txtQ.TabIndex = 19
         Me.txtQ.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtQ, resources.GetString("txtQ.ToolTip"))
-        Me.txtQ.Value = 0
+        Me.txtQ.Value = 0.0R
         '
         'Label44
         '
@@ -485,25 +485,25 @@ Partial Class frmLeakSource
         '
         Me.txtY.DataType = Chart.DataType.DataInteger
         Me.txtY.Location = New System.Drawing.Point(92, 40)
-        Me.txtY.MaxValue = 0
-        Me.txtY.MinValue = 0
+        Me.txtY.MaxValue = 0.0R
+        Me.txtY.MinValue = 0.0R
         Me.txtY.Name = "txtY"
         Me.txtY.Size = New System.Drawing.Size(144, 21)
         Me.txtY.TabIndex = 204
         Me.txtY.Text = "0"
-        Me.txtY.Value = 0
+        Me.txtY.Value = 0.0R
         '
         'txtX
         '
         Me.txtX.DataType = Chart.DataType.DataInteger
         Me.txtX.Location = New System.Drawing.Point(92, 20)
-        Me.txtX.MaxValue = 0
-        Me.txtX.MinValue = 0
+        Me.txtX.MaxValue = 0.0R
+        Me.txtX.MinValue = 0.0R
         Me.txtX.Name = "txtX"
         Me.txtX.Size = New System.Drawing.Size(144, 21)
         Me.txtX.TabIndex = 203
         Me.txtX.Text = "0"
-        Me.txtX.Value = 0
+        Me.txtX.Value = 0.0R
         '
         'txtLeakSourceName
         '
@@ -550,14 +550,14 @@ Partial Class frmLeakSource
         '
         Me.txtQ0.DataType = Chart.DataType.DataDouble
         Me.txtQ0.Location = New System.Drawing.Point(468, 83)
-        Me.txtQ0.MaxValue = 0
-        Me.txtQ0.MinValue = 0
+        Me.txtQ0.MaxValue = 0.0R
+        Me.txtQ0.MinValue = 0.0R
         Me.txtQ0.Name = "txtQ0"
         Me.txtQ0.Size = New System.Drawing.Size(100, 21)
         Me.txtQ0.TabIndex = 227
         Me.txtQ0.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtQ0, resources.GetString("txtQ0.ToolTip"))
-        Me.txtQ0.Value = 0
+        Me.txtQ0.Value = 0.0R
         '
         'cbmSourceType
         '
@@ -591,14 +591,14 @@ Partial Class frmLeakSource
         '
         Me.txtS_S.DataType = Chart.DataType.DataDouble
         Me.txtS_S.Location = New System.Drawing.Point(468, 110)
-        Me.txtS_S.MaxValue = 0
-        Me.txtS_S.MinValue = 0
+        Me.txtS_S.MaxValue = 0.0R
+        Me.txtS_S.MinValue = 0.0R
         Me.txtS_S.Name = "txtS_S"
         Me.txtS_S.Size = New System.Drawing.Size(100, 21)
         Me.txtS_S.TabIndex = 231
         Me.txtS_S.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtS_S, resources.GetString("txtS_S.ToolTip"))
-        Me.txtS_S.Value = 0
+        Me.txtS_S.Value = 0.0R
         '
         'Label29
         '
@@ -618,14 +618,14 @@ Partial Class frmLeakSource
         '
         Me.txtThickness.DataType = Chart.DataType.DataDouble
         Me.txtThickness.Location = New System.Drawing.Point(468, 137)
-        Me.txtThickness.MaxValue = 0
-        Me.txtThickness.MinValue = 0
+        Me.txtThickness.MaxValue = 0.0R
+        Me.txtThickness.MinValue = 0.0R
         Me.txtThickness.Name = "txtThickness"
         Me.txtThickness.Size = New System.Drawing.Size(100, 21)
         Me.txtThickness.TabIndex = 232
         Me.txtThickness.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtThickness, resources.GetString("txtThickness.ToolTip"))
-        Me.txtThickness.Value = 0
+        Me.txtThickness.Value = 0.0R
         '
         'GroupBox5
         '
@@ -663,53 +663,53 @@ Partial Class frmLeakSource
         Me.txtLeakEvaporationP.DataType = Chart.DataType.DataDouble
         Me.txtLeakEvaporationP.ForeColor = System.Drawing.Color.Blue
         Me.txtLeakEvaporationP.Location = New System.Drawing.Point(137, 131)
-        Me.txtLeakEvaporationP.MaxValue = 0
-        Me.txtLeakEvaporationP.MinValue = 0
+        Me.txtLeakEvaporationP.MaxValue = 0.0R
+        Me.txtLeakEvaporationP.MinValue = 0.0R
         Me.txtLeakEvaporationP.Name = "txtLeakEvaporationP"
         Me.txtLeakEvaporationP.Size = New System.Drawing.Size(96, 21)
         Me.txtLeakEvaporationP.TabIndex = 65
         Me.txtLeakEvaporationP.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtLeakEvaporationP, resources.GetString("txtLeakEvaporationP.ToolTip"))
-        Me.txtLeakEvaporationP.Value = 0
+        Me.txtLeakEvaporationP.Value = 0.0R
         '
         'txtSHe
         '
         Me.txtSHe.DataType = Chart.DataType.DataDouble
         Me.txtSHe.Location = New System.Drawing.Point(140, 82)
-        Me.txtSHe.MaxValue = 0
-        Me.txtSHe.MinValue = 0
+        Me.txtSHe.MaxValue = 0.0R
+        Me.txtSHe.MinValue = 0.0R
         Me.txtSHe.Name = "txtSHe"
         Me.txtSHe.Size = New System.Drawing.Size(96, 21)
         Me.txtSHe.TabIndex = 64
         Me.txtSHe.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtSHe, resources.GetString("txtSHe.ToolTip"))
-        Me.txtSHe.Value = 0
+        Me.txtSHe.Value = 0.0R
         '
         'txtVolatilizationT
         '
         Me.txtVolatilizationT.DataType = Chart.DataType.DataDouble
         Me.txtVolatilizationT.Location = New System.Drawing.Point(140, 61)
-        Me.txtVolatilizationT.MaxValue = 0
-        Me.txtVolatilizationT.MinValue = 0
+        Me.txtVolatilizationT.MaxValue = 0.0R
+        Me.txtVolatilizationT.MinValue = 0.0R
         Me.txtVolatilizationT.Name = "txtVolatilizationT"
         Me.txtVolatilizationT.Size = New System.Drawing.Size(96, 21)
         Me.txtVolatilizationT.TabIndex = 62
         Me.txtVolatilizationT.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtVolatilizationT, resources.GetString("txtVolatilizationT.ToolTip"))
-        Me.txtVolatilizationT.Value = 0
+        Me.txtVolatilizationT.Value = 0.0R
         '
         'txtS
         '
         Me.txtS.DataType = Chart.DataType.DataDouble
         Me.txtS.Location = New System.Drawing.Point(140, 40)
-        Me.txtS.MaxValue = 0
-        Me.txtS.MinValue = 0
+        Me.txtS.MaxValue = 0.0R
+        Me.txtS.MinValue = 0.0R
         Me.txtS.Name = "txtS"
         Me.txtS.Size = New System.Drawing.Size(96, 21)
         Me.txtS.TabIndex = 61
         Me.txtS.Text = "0"
         Me.C1SuperTooltip1.SetToolTip(Me.txtS, resources.GetString("txtS.ToolTip"))
-        Me.txtS.Value = 0
+        Me.txtS.Value = 0.0R
         '
         'Label2
         '
@@ -789,13 +789,13 @@ Partial Class frmLeakSource
         '
         Me.txtAirProportion.DataType = Chart.DataType.DataDouble
         Me.txtAirProportion.Location = New System.Drawing.Point(136, 24)
-        Me.txtAirProportion.MaxValue = 999999999999
-        Me.txtAirProportion.MinValue = 0
+        Me.txtAirProportion.MaxValue = 999999999999.0R
+        Me.txtAirProportion.MinValue = 0.0R
         Me.txtAirProportion.Name = "txtAirProportion"
         Me.txtAirProportion.Size = New System.Drawing.Size(96, 21)
         Me.txtAirProportion.TabIndex = 243
         Me.txtAirProportion.Text = "0"
-        Me.txtAirProportion.Value = 0
+        Me.txtAirProportion.Value = 0.0R
         '
         'Label4
         '
@@ -886,13 +886,13 @@ Partial Class frmLeakSource
         Me.txtProbability.DataType = Chart.DataType.DataDouble
         Me.txtProbability.ForeColor = System.Drawing.Color.Red
         Me.txtProbability.Location = New System.Drawing.Point(468, 486)
-        Me.txtProbability.MaxValue = 1
-        Me.txtProbability.MinValue = 0.00000000001
+        Me.txtProbability.MaxValue = 1.0R
+        Me.txtProbability.MinValue = 0.00000000001R
         Me.txtProbability.Name = "txtProbability"
         Me.txtProbability.Size = New System.Drawing.Size(96, 21)
         Me.txtProbability.TabIndex = 253
         Me.txtProbability.Text = "0"
-        Me.txtProbability.Value = 0
+        Me.txtProbability.Value = 0.0R
         '
         'GroupBox9
         '
@@ -911,25 +911,25 @@ Partial Class frmLeakSource
         '
         Me.txtPa.DataType = Chart.DataType.DataDouble
         Me.txtPa.Location = New System.Drawing.Point(114, 47)
-        Me.txtPa.MaxValue = 201325
-        Me.txtPa.MinValue = 0
+        Me.txtPa.MaxValue = 201325.0R
+        Me.txtPa.MinValue = 0.0R
         Me.txtPa.Name = "txtPa"
         Me.txtPa.Size = New System.Drawing.Size(100, 21)
         Me.txtPa.TabIndex = 50
         Me.txtPa.Text = "0"
-        Me.txtPa.Value = 0
+        Me.txtPa.Value = 0.0R
         '
         'txtTa
         '
         Me.txtTa.DataType = Chart.DataType.DataDouble
         Me.txtTa.Location = New System.Drawing.Point(114, 20)
-        Me.txtTa.MaxValue = 60
-        Me.txtTa.MinValue = -50
+        Me.txtTa.MaxValue = 60.0R
+        Me.txtTa.MinValue = -50.0R
         Me.txtTa.Name = "txtTa"
         Me.txtTa.Size = New System.Drawing.Size(100, 21)
         Me.txtTa.TabIndex = 49
         Me.txtTa.Text = "0"
-        Me.txtTa.Value = 0
+        Me.txtTa.Value = 0.0R
         '
         'Label12
         '

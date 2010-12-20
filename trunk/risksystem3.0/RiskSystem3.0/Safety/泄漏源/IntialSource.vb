@@ -36,11 +36,6 @@
     ''' <remarks></remarks>
     Private m_Ts0 As Double = 25
     ''' <summary>
-    ''' 排放持续时间，min。
-    ''' </summary>
-    ''' <remarks></remarks>
-    Private m_DurationT0 As Double = 10
-    ''' <summary>
     ''' 排气量，m3/s。对于泄漏源可不考虑。
     ''' </summary>
     ''' <remarks></remarks>
@@ -255,20 +250,6 @@
         End Get
         Set(ByVal value As Double)
             Me.m_Ts0 = value
-        End Set
-    End Property
-    ''' <summary>
-    ''' 排放持续时间，min。
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Property DurationT0() As Double
-        Get
-            Return Me.m_DurationT0
-        End Get
-        Set(ByVal value As Double)
-            Me.m_DurationT0 = value
         End Set
     End Property
     ''' <summary>

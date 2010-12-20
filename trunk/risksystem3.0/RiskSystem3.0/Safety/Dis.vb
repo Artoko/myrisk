@@ -487,7 +487,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                             .Name = Me.m_Chemical.Name0  '泄漏物质名称
                             .Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
                             .Ts = Me.m_IntialSource.Ts0 + 273.15  '设置温度，摄氏度
-                            .DurationTime = Me.m_IntialSource.DurationT0 * 60   '排放持续时间转化为S
+                            .DurationTime = Me.m_IntialSource.DurationT * 60   '排放持续时间转化为S
                             .Qv = Me.m_IntialSource.Qv_P  '排气量　m3/s
                             .H = Me.m_IntialSource.H '排放高度
                             .D = Me.m_IntialSource.D_P '直径
@@ -505,7 +505,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                 .Si(i) = 0
                                 .Thickness(i) = 0
                                 If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                    .Qi(i) = ((Me.m_IntialSource.DurationT0 * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
+                                    .Qi(i) = ((Me.m_IntialSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
                                 End If
                             Next i
                         End With
@@ -514,7 +514,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                         Me.m_Sources(sn).PLeak.Name = Me.m_Chemical.Name0   '泄漏物质名称
                         Me.m_Sources(sn).PLeak.Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
                         Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.Ts0 + 273.15 '设置温度，摄氏度
-                        Me.m_Sources(sn).PLeak.DurationTime = Me.m_IntialSource.DurationT0 * 60  '排放持续时间转化为S
+                        Me.m_Sources(sn).PLeak.DurationTime = Me.m_IntialSource.DurationT * 60  '排放持续时间转化为S
                         Me.m_Sources(sn).PLeak.Qv = Me.m_IntialSource.Qv_P '排气量　m3/s
                         Me.m_Sources(sn).PLeak.H = Me.m_IntialSource.H '排放高度
                         Me.m_Sources(sn).PLeak.D = Me.m_IntialSource.D_P '直径
@@ -527,7 +527,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                             .Name = Me.m_Chemical.Name0    '泄漏物质名称
                             .Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
                             .Ts = Me.m_IntialSource.Ts0 + 273.15  '设置温度，摄氏度
-                            .DurationTime = Me.m_IntialSource.DurationT0 * 60  '排放持续时间转化为S
+                            .DurationTime = Me.m_IntialSource.DurationT * 60  '排放持续时间转化为S
                             .He = Me.m_IntialSource.H  '有效排放高度
                             If .DurationTime Mod Me.Forecast.OutPut.IntervalTime > 0 Then
                                 .n = Fix(.DurationTime / Me.Forecast.OutPut.IntervalTime) + 1 '烟团个数
@@ -540,7 +540,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                 .Si(i) = Me.m_IntialSource.S_S
                                 .Thickness(i) = 0
                                 If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                    .Qi(i) = ((Me.m_IntialSource.DurationT0 * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
+                                    .Qi(i) = ((Me.m_IntialSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
                                 End If
                             Next i
                         End With
@@ -549,7 +549,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                         Me.m_Sources(sn).SLeak.Name = Me.m_Chemical.Name0   '泄漏物质名称
                         Me.m_Sources(sn).SLeak.Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
                         Me.m_Sources(sn).SLeak.Ts = Me.m_IntialSource.Ts0 + 273.15 '设置温度，摄氏度
-                        Me.m_Sources(sn).SLeak.DurationTime = Me.m_IntialSource.DurationT0 * 60  '排放持续时间转化为S
+                        Me.m_Sources(sn).SLeak.DurationTime = Me.m_IntialSource.DurationT * 60  '排放持续时间转化为S
                         Me.m_Sources(sn).SLeak.He = Me.m_IntialSource.H '有效排放高度
                         Me.m_Sources(sn).SLeak.S = Me.m_IntialSource.S_S '面源的面积
                     Case 2 '体源
@@ -558,7 +558,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                             .Name = Me.m_Chemical.Name0  '泄漏物质名称
                             .Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
                             .Ts = Me.m_IntialSource.Ts0 + 273.15 '设置温度，摄氏度
-                            .DurationTime = Me.m_IntialSource.DurationT0 * 60 '排放持续时间转化为S
+                            .DurationTime = Me.m_IntialSource.DurationT * 60 '排放持续时间转化为S
                             .He = Me.m_IntialSource.H   '有效排放高度
                             If .DurationTime Mod Me.Forecast.OutPut.IntervalTime > 0 Then
                                 .n = Fix(.DurationTime / Me.Forecast.OutPut.IntervalTime) + 1 '烟团个数
@@ -571,7 +571,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                 .Si(i) = Me.m_IntialSource.S_S
                                 .Thickness(i) = Me.m_IntialSource.Thickness  '体源的厚度
                                 If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                    .Qi(i) = ((Me.m_IntialSource.DurationT0 * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
+                                    .Qi(i) = ((Me.m_IntialSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
                                 End If
                             Next i
                         End With
@@ -582,7 +582,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                         Me.m_Sources(sn).VLeak.Name = Me.m_Chemical.Name0  '泄漏物质名称
                         Me.m_Sources(sn).VLeak.Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
                         Me.m_Sources(sn).VLeak.Ts = Me.m_IntialSource.Ts0 + 273.15 '设置温度，摄氏度
-                        Me.m_Sources(sn).VLeak.DurationTime = Me.m_IntialSource.DurationT0 * 60  '排放持续时间转化为S
+                        Me.m_Sources(sn).VLeak.DurationTime = Me.m_IntialSource.DurationT * 60  '排放持续时间转化为S
                         Me.m_Sources(sn).VLeak.He = Me.m_IntialSource.H  '有效排放高度
                         Me.m_Sources(sn).VLeak.S = Me.m_IntialSource.S_S  '体源的底面积
                         Me.m_Sources(sn).VLeak.Hv = Me.m_IntialSource.Thickness  '体源的厚度
