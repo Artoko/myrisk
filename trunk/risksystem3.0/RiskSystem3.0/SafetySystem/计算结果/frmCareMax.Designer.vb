@@ -18,14 +18,13 @@ Partial Class frmCareMax
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCareMax))
-        Me.EFlexGeneral = New Chart.EFlex
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel
-        Me.cmbMet = New System.Windows.Forms.ToolStripComboBox
-        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel
-        Me.cmbNum = New System.Windows.Forms.ToolStripComboBox
+        Me.EFlexGeneral = New Chart.EFlex()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.cmbMet = New System.Windows.Forms.ToolStripComboBox()
+        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
+        Me.cmbNum = New System.Windows.Forms.ToolStripComboBox()
         CType(Me.EFlexGeneral, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -83,6 +82,7 @@ Partial Class frmCareMax
         Me.ClientSize = New System.Drawing.Size(890, 559)
         Me.Controls.Add(Me.EFlexGeneral)
         Me.Controls.Add(Me.ToolStrip1)
+        Me.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Name = "frmCareMax"
         Me.TabText = "关心点限值"
         Me.Text = "关心点限值"
