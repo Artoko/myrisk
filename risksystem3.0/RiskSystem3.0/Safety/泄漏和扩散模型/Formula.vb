@@ -1,3 +1,5 @@
+Imports System.Threading.Tasks
+
 Public Module Formula
 #Region "变天条件下的多烟团模型"
     ''' <summary>
@@ -51,9 +53,15 @@ Public Module Formula
     ''' <remarks></remarks>
     Public Function Multi_Point_CommonGaussFog(ByVal arrayFlogTrack As FlogTrack(), ByVal ArrayPoint As Point3D()) As Double()
         Dim arrayC(ArrayPoint.Length - 1) As Double
-        For i As Integer = 0 To ArrayPoint.Length - 1
-            arrayC(i) = MultiCommonGaussFog(arrayFlogTrack, ArrayPoint(i))
-        Next
+        'For i As Integer = 0 To ArrayPoint.Length - 1
+        '    arrayC(i) = MultiCommonGaussFog(arrayFlogTrack, ArrayPoint(i))
+        'Next
+
+
+        Parallel.For(0, ArrayPoint.Length, Sub(i)
+                                               arrayC(i) = MultiCommonGaussFog(arrayFlogTrack, ArrayPoint(i))
+                                           End Sub)
+
         Return arrayC
     End Function
 #End Region
