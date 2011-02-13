@@ -12,7 +12,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
     Private Const MaxLength = 50 * 1000 '50公里
     Private Const Precision = 0.00001 '精度为1E-5
     Private GriddingSign As Short '网格标志
-    <NonSerialized()> Private m_Sources(-1) As Source '污染源数组
+    <NonSerialized()> Private m_Sources(-1) As Source '污染源数组。临时变量
     Private vane As String '声明风向，因为在网格点计算中用到风向
     Private GridSign As Boolean '网格数据是否由单击事件引起的
     Private LeakQ(0, 0, 0) As Double '定义3维数组，用于储存不同气象条件下的泄漏情况
@@ -364,14 +364,14 @@ Imports System.Runtime.Serialization.Formatters.Binary
         For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
             InitiaMetList(SN)   '计算概述
         Next SN
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '逐气象条件计算风险
             '泄漏量计算
             Dim u10 As Double = Me.m_ForeCast.Met(SN).WindSpeed  '第0行第2列，风速
             Dim stab As String = Me.m_ForeCast.Met(SN).Stab  '第0行第3列，风速稳定度
             CalLeakSource(SN, u10, stab) '计算泄漏量，因为不同的气象泄漏量可能不一样。
-            If Me.Forecast.IsCalCare = True Then
-                CalculateRisk(SN, workpath) '计算关心点
-            End If
+
+            CalculateRisk(SN, workpath) '逐步计算浓度、风险等
+
             '设置计算进度
             Me.m_Results.AllProgress += 1
         Next SN
@@ -2091,7 +2091,6 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub CalculateRisk(ByVal Sn As Integer, ByVal workpath As String)
-        Dim dblForecastTime As Double '定义一下变量用来储存预测时刻
         '计算某一浓度关心点的最大浓度及出现时刻--------------------------------------------------------------------
         Dim startTime, endTime As Double '最大值可能出现的起始和结束时间
         startTime = 0
@@ -2356,9 +2355,43 @@ Imports System.Runtime.Serialization.Formatters.Binary
     End Sub
     Private Sub CalculateInstance(ByVal Sn As Integer, ByVal ArrayPoint As Point3D(), ByRef MaxArrayResult As RectableConAndTime(), ByRef AllArrayResult As Double(,))
 
+      
+        '计算中气体参数-------------------------------------------------------
+        Dim HeavyT, HeavyX As Double '重气团直径、高度、最大扩散时间、最大扩散距离、是否按重气团模型计算
+        Dim Is_Heavy As Boolean = False   '是否按重气体模型
+        Dim ModolType As Integer = -1
+        Dim dx As Double '云团下风向距离间隔  
+        Dim dt As Double '云团时间间隔
+        If Me.m_Sources(Sn).MultiPLeak.HeavyType = 0 Then '点源为瞬时重气体模型
+            '重气体模型--------------------------------------------------------
+            If Me.m_IntialSource.IsHeavy = True Then
+                If Me.m_Heavy(Sn).BoxHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
+                    HeavyT = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t
+                    HeavyX = HeavyT * Me.m_ForeCast.Met(Sn).u2
+                    dt = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(1).m_t - Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(0).m_t '计算云团时间间隔
+                    Is_Heavy = True
+                End If
+                ModolType = 0
+            End If
+        ElseIf Me.m_Sources(Sn).MultiPLeak.HeavyType = 1 Then '点源为连续重气体模型
+            '重气体模型--------------------------------------------------------
+            If Me.m_IntialSource.IsHeavy = True Then
+                If Me.m_Heavy(Sn).SlabHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
+                    HeavyX = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_x
+                    HeavyT = HeavyX / Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.u10
+                    dx = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(1).m_x - Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(0).m_x '计算云团下风向距离间隔
+                    Is_Heavy = True
+                End If
+                ModolType = 1
+            End If
+        End If
+        '计算中气体参数结束-------------------------------------------------------
+
         For nCount As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
             '处理计算时刻
             Dim dblForecastTime As Double = (Me.m_ForeCast.OutPut.ForeStart + Me.m_ForeCast.OutPut.ForeInterval * nCount) * 60 '将预测列表中的预测时刻按顺序赋值上述变量，乘以60，将单位转化为秒
+
+
             '根据计算时刻来计算关心点的浓度-----------------------------
             '计算前需要先获取烟团的初始状态，然后再根据烟团的初始状态获取计算时刻时所有烟团的轨迹和扩散参数，再计算得到浓度
             Dim ListFlogLave As New List(Of FlogLeave())
@@ -2377,9 +2410,12 @@ Imports System.Runtime.Serialization.Formatters.Binary
             End If
             Dim TotalArrayResult(ArrayPoint.Length - 1) As Double
             For i As Integer = 0 To ListFlogLave.Count - 1
-                '生成烟团的轨迹
-                Dim ArrayFlogTrack() As FlogTrack = Formula.CreateMultiFlogTrack(Me.Forecast.Met, Sn, dblForecastTime, Me.Forecast.OutPut.GroundCharacter, ListFlogLave(i))
-                Dim ArrayResult() As Double = Formula.Multi_Point_CommonGaussFog(ArrayFlogTrack, ArrayPoint)
+                '生成烟团的轨迹和扩散参数
+                Dim ArrayFlogTrack() As FlogTrack = Formula.CreateMultiFlogTrack(Me.Forecast.Met, Sn, dblForecastTime, Me.Forecast.OutPut.GroundCharacter, ListFlogLave(i), Me.m_Sources(Sn).MultiPLeak.HeavyType, Me.m_IntialSource.IsHeavy, Me.m_Heavy(Sn), HeavyT, HeavyX, dt, dx)
+                '对扩散参数进行重气体修正
+                'HeavyPara(ArrayFlogTrack, Sn, dx, dt, dblForecastTime, HeavyT, HeavyX)
+                '根据烟团的扩散参数和位置，计算浓度
+                 Dim ArrayResult() As Double = Formula.Multi_Point_CommonGaussFog(ArrayFlogTrack, ArrayPoint)
                 For j As Integer = 0 To ArrayResult.Length - 1
                     TotalArrayResult(j) += ArrayResult(j)
                 Next
@@ -2396,8 +2432,69 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Me.m_Results.AllProgress += 1
         Next nCount
     End Sub
+    ''' <summary>
+    ''' 根据重气体对扩散参数进行修正
+    ''' </summary>
+    ''' <param name="ArryFlogLeave"></param>
+    ''' <param name="Sn"></param>
+    ''' <param name="dx"></param>
+    ''' <param name="dt"></param>
+    ''' <param name="dblForecastTime"></param>
+    ''' <param name="HeavyT"></param>
+    ''' <param name="HeavyX"></param>
+    ''' <remarks></remarks>
+    Private Sub HeavyPara(ByVal ArryFlogLeave As FlogTrack(), ByVal Sn As Integer, ByVal dx As Double, ByVal dt As Double, ByVal dblForecastTime As Double, ByVal HeavyT As Double, ByVal HeavyX As Double)
+        '对扩散参数进行重气体的修正
+        Dim HeavyB, HeavyH As Double
+        For j As Integer = 0 To ArryFlogLeave.Length - 1
+            If Me.m_Sources(Sn).MultiPLeak.HeavyType = 0 Then '点源为瞬时重气体模型
+                '重气体模型--------------------------------------------------------
+                If Me.m_IntialSource.IsHeavy = True Then
+                    If Me.m_Heavy(Sn).BoxHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
+                        If dblForecastTime <= HeavyT Then '如果预测时间小于重气体最大扩散时间
+                            Dim nIndex As Integer = dblForecastTime / dt
+                            HeavyB = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(nIndex).m_R * 2 '云团直径
+                            HeavyH = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(nIndex).m_H '云团高度
+                        Else
+                            HeavyB = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_R * 2 '云团直径
+                            HeavyH = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_H '云团高度
+                        End If
+                    End If
+                End If
+            ElseIf Me.m_Sources(Sn).MultiPLeak.HeavyType = 1 Then '点源为连续重气体模型
+                '重气体模型--------------------------------------------------------
+                If Me.m_IntialSource.IsHeavy = True Then
+                    If Me.m_Heavy(Sn).SlabHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
+                        If ArryFlogLeave(j).Distance > 0 And ArryFlogLeave(j).Distance <= HeavyX Then '如果烟团中心距离小于重气体最大扩散距离
+                            Dim nIndex As Integer = ArryFlogLeave(j).Distance / dx
+                            HeavyB = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(nIndex).m_L * 2 '云羽宽度
+                            HeavyH = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(nIndex).m_H '云羽高度
+                        ElseIf ArryFlogLeave(j).Distance > 0 Then
+                            HeavyB = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_L * 2 '云羽宽度
+                            HeavyH = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_H '云羽高度
+                        End If
+                    End If
+                End If
+            End If
+            If Me.m_IntialSource.IsHeavy = True Then '重气体修正---------------------------------------
+                If ArryFlogLeave(j).Distance <= HeavyX Then
+                    Dim ay As Double = HeavyB / 4.3 'y轴扩散参数
+                    Dim az As Double = HeavyH / 2.15 'Z轴扩散参数，点源修正
+                    '计算相应取样时间的扩散参数
+                    ay = aySamplingTime(0.5, Me.Forecast.OutPut.SamplingTime, ay)
+                    '点源修正后的扩散参数
+                    Dim ax As Double = ay
 
+                    '修改重气体泄漏源的有效源高为重气体的高度的一半
+                    ArryFlogLeave(j).z = HeavyH / 2
+                    ArryFlogLeave(j).ax = ax
+                    ArryFlogLeave(j).az = az
+                Else
 
+                End If
+            End If
+        Next
+    End Sub
 
     ''' <summary>
     ''' 计算绝对坐标的关心点浓度
@@ -2417,115 +2514,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Return ASlip
     End Function
 
-    ''' <summary>
-    ''' 计算上风向轴线最大浓度值及出现距离
-    ''' </summary>
-    ''' <remarks></remarks>
-    Private Sub CalculateUpVaneMaxC(ByVal sn As Integer)
-        Dim dblForecastTime As Double '定义一下变量用来储存预测时刻
-        Dim Result As Double '定义计算结果
-        Dim dblx As Double 'X轴坐标
-        Dim dbly As Double 'Y轴坐标
-        Dim dblz As Double 'Z轴坐标
-        Dim i As Integer
-        For nCount As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
-            '首先找出等间距的最大值，再从中找出最大值。
-
-            '处理数组
-            dblForecastTime = (Me.m_ForeCast.OutPut.ForeStart + Me.m_ForeCast.OutPut.ForeInterval * nCount) * 60 '将预测列表中的预测时刻按顺序赋值上述变量，乘以60，将单位转化为秒
-            '计算下风向的扩散参数和浓度-----------------------
-            dblx = 0
-            dbly = 0
-            dblz = Me.m_ForeCast.Grid.WGH
-
-
-            '在计算前先计算出该风速下最大的浓度出现的最大可能距离。即风速*预测时间。然后再每隔10米计算一个数值。
-            Dim iStep As Integer = 10
-            Dim iCount As Integer = Math.Round(dblForecastTime * Me.m_ForeCast.Met(sn).u2 / iStep) + 1
-            Dim max As New MaxConAndDistance '用于储存最大值
-            For i = 0 To iCount Step 1 '按下风向计算，从0开始直到最后一个
-                dblx = i * iStep
-                Result = ResultC(sn, dblForecastTime, dblx, dbly, dblz) '计算浓度
-                If Result > max.MaxCon Then '得到等间距的最大值
-                    max.MaxCon = Result
-                    max.MaxDistance = dblx
-                End If
-                '将网格点赋值给相应的坐标
-                Result = 0 '将结果置0
-            Next i
-            '根据前面得到的等间距的最大值，用斐波那契法(黄金分割法)计算极大值浓度----------------------------------------------------------
-            Dim High As Double
-            Dim Low As Double
-            Low = max.MaxDistance - iStep
-            If Low <= 0 Then
-                Low = 0.00000001
-            End If
-            High = max.MaxDistance + iStep
-            Dim x1 As Double
-            Dim x2 As Double
-            x1 = Low + 0.618 * (High - Low)
-            x2 = High - 0.618 * (High - Low)
-            Dim F1 As Double
-            Dim F2 As Double
-            Dim Fmax As Double
-            Dim xmax As Double
-            While (High - Low) > 0.01
-
-                F1 = ResultC(sn, dblForecastTime, x1, dbly, dblz) '计算浓度
-
-                F2 = ResultC(sn, dblForecastTime, x2, dbly, dblz) '计算浓度
-                If F1 < F2 Or F1 <= 0 Then
-                    High = x1
-                    x1 = x2
-                    x2 = High - 0.618 * (High - Low)
-                Else
-                    Low = x2
-                    x2 = x1
-                    x1 = Low + 0.618 * (High - Low)
-                End If
-            End While
-            xmax = (x1 + x2) / 2
-            If F2 > F1 Then
-                Fmax = F2
-            Else
-                Fmax = F1
-            End If
-            Me.m_Results.MetResults(sn).ForeTimeResults(nCount).MaxConAndDistance.MaxDistance = xmax
-            Me.m_Results.MetResults(sn).ForeTimeResults(nCount).MaxConAndDistance.MaxCon = Fmax
-
-            '找出某一浓度值出现的范围
-            Dim X_1, X_2, XCenter, FX1, FX2, FXCenter As Double
-            Dim Range As Double = 0 '浓度出现的范围
-            For nDamage As Integer = 0 To Forecast.HurtConcentration.Length - 1 '循环求出所有设置的伤害浓度的范围
-                Dim SpecifyC As Double = Forecast.HurtConcentration(nDamage).ConcentrationVale   '给定的浓度值
-                If Me.m_Results.MetResults(sn).ForeTimeResults(nCount).MaxConAndDistance.MaxCon >= SpecifyC Then '首先看看最大落地浓度是否大于该浓度，如果大于则开始求，否则为0
-                    X_1 = (-1) * MaxLength '最远距离为-50km
-                    X_2 = Me.m_Results.MetResults(sn).ForeTimeResults(nCount).MaxConAndDistance.MaxDistance
-                    FX1 = 0
-                    FX2 = Me.m_Results.MetResults(sn).ForeTimeResults(nCount).MaxConAndDistance.MaxCon
-                    '采用二分法求给定值
-                    Do
-                        XCenter = (X_1 + X_2) / 2
-                        FXCenter = ResultC(sn, dblForecastTime, XCenter, dbly, dblz) '计算浓度
-                        If FXCenter >= SpecifyC Then '如果中间值>=指定值
-                            X_1 = XCenter
-                            FX1 = FXCenter
-                        Else
-                            X_2 = XCenter
-                            FX2 = FXCenter
-                        End If
-                    Loop While Math.Abs(X_2 - X_1) > 0.01
-                    '将求得的值给结果数组
-                    If XCenter > 0 Then
-                        XCenter = 0
-                    End If
-                    Me.m_Results.MetResults(sn).ForeTimeResults(nCount).HurtLength(nDamage) = XCenter
-                End If
-            Next nDamage
-            '设置计算进度
-            Me.m_Results.AllProgress += 1
-        Next nCount
-    End Sub
+    
     ''' <summary>
     ''' 这一模块用于计算不同的污染源的情况下的浓度值。
     ''' </summary>
