@@ -35,4 +35,10 @@ Public Structure FlogTrack
     ''' </summary>
     ''' <remarks></remarks>
     Public az As Double
+
+    ''' <summary>
+    ''' 烟团走过的距离
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Distance As Double
 End Structure

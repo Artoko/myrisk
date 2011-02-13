@@ -1567,10 +1567,12 @@ Public Module Formula
     ''' <param name="ArrayFlogLeave">烟团释放的初始时刻</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function CreateMultiFlogTrack(ByVal arrayMet As Met(), ByVal Sn As Integer, ByVal ForecastTime As Integer, ByVal ground As String, ByVal ArrayFlogLeave As FlogLeave()) As FlogTrack()
+    Public Function CreateMultiFlogTrack(ByVal arrayMet As Met(), ByVal Sn As Integer, ByVal ForecastTime As Integer, ByVal ground As String _
+                                         , ByVal ArrayFlogLeave As FlogLeave(), ByVal HeavyType As Integer, ByVal IsHeavy As Boolean, ByVal Heavy As AllHeavy _
+                                         , ByVal HeavyT As Double, ByVal HeavyX As Double, ByVal dt As Double, ByVal d As Double) As FlogTrack()
         Dim ArrayFlogTrack(ArrayFlogLeave.Length - 1) As FlogTrack
         For i As Integer = 0 To ArrayFlogLeave.Length - 1
-            CreateFlogTrack(arrayMet, Sn, ForecastTime, ground, ArrayFlogLeave(i), ArrayFlogTrack(i))
+            CreateFlogTrack(arrayMet, Sn, ForecastTime, ground, ArrayFlogLeave(i), ArrayFlogTrack(i), HeavyType, IsHeavy, Heavy, HeavyT, HeavyX, dt, d)
             ArrayFlogTrack(i).Q = ArrayFlogLeave(i).Q
         Next
         Return ArrayFlogTrack
@@ -1587,8 +1589,12 @@ Public Module Formula
     ''' <param name="FlogLeave">某一烟团的初始状态</param>
     ''' <param name="FlogTrack">预测时刻的烟团的状态</param>
     ''' <remarks></remarks>
-    Private Sub CreateFlogTrack(ByVal arrayMet As Met(), ByVal Sn As Integer, ByVal ForecastTime As Integer, ByVal ground As String, ByVal FlogLeave As FlogLeave, ByRef FlogTrack As FlogTrack)
-        '先不考虑重气体，以后再考虑。
+    Private Sub CreateFlogTrack(ByVal arrayMet As Met(), ByVal Sn As Integer, ByVal ForecastTime As Integer _
+                                , ByVal ground As String, ByVal FlogLeave As FlogLeave, ByRef FlogTrack As FlogTrack _
+                                , ByVal HeavyType As Integer, ByVal IsHeavy As Boolean, ByVal Heavy As AllHeavy _
+                                , ByVal HeavyT As Double, ByVal HeavyX As Double, ByVal dt As Double, ByVal d As Double)
+
+
         '第一步：计算烟团的中心位置
         If ForecastTime > 3600 Then '如果预测时刻大于1小时就进行追踪
             Dim ax1 As Double = 0
@@ -1599,6 +1605,8 @@ Public Module Formula
                 FlogLeave.x = FlogLeave.x + DX
                 FlogLeave.y = FlogLeave.y + DY
                 FlogLeave.z = FlogLeave.z
+                FlogTrack.Distance += Math.Sqrt(DX * DX + DY * DY) '烟团的实际距离
+
                 '根据上一步计算得到的水平和垂直向扩散参数计算出当前气象条件下烟团虚拟的距离
                 Dim DX_1 As Double = Anti_DiffuseY15(FlogLeave.ax, arrayMet(Sn).Stab, ground) '虚拟的距离
                 ax1 = DiffuseY15(arrayMet(Sn).u2 * (3600 - FlogLeave.LeaveTime) + DX_1, arrayMet(Sn).Stab, ground)
@@ -1613,37 +1621,108 @@ Public Module Formula
             ForecastTime -= 3600
             If FlogLeave.LeaveTime >= 3600 Then
                 FlogLeave.LeaveTime -= 3600
+
             Else
                 FlogLeave.LeaveTime = 0
+                HeavyT = 0
             End If
 
+            HeavyT -= 3600
 
-            '如果气象条件超出的边界，用边界的气象条件
-            If Sn > arrayMet.Length - 1 Then
-                Sn = arrayMet.Length - 1
-            End If
-            CreateFlogTrack(arrayMet, Sn, ForecastTime, ground, FlogLeave, FlogTrack)
+        '如果气象条件超出的边界，用边界的气象条件
+        If Sn > arrayMet.Length - 1 Then
+            Sn = arrayMet.Length - 1
+        End If
+        CreateFlogTrack(arrayMet, Sn, ForecastTime, ground, FlogLeave, FlogTrack, HeavyType, IsHeavy, Heavy, HeavyT, HeavyX, dt, d)
         Else
-            '由于风向是风的来向，下风向是风的去向，所以应加180度为去向
+        '由于风向是风的来向，下风向是风的去向，所以应加180度为去向
+        If (ForecastTime - FlogLeave.LeaveTime) > 0 Then
             Dim DX As Double = Math.Cos((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime)
             Dim DY As Double = Math.Sin((arrayMet(Sn).WindDer + 180 - 90) / 360 * 2 * Math.PI) * arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime)
             FlogLeave.x = FlogLeave.x + DX
             FlogLeave.y = FlogLeave.y + DY
             FlogLeave.z = FlogLeave.z
+            FlogTrack.Distance += Math.Sqrt(DX * DX + DY * DY) '烟团的实际距离
 
-            '根据上一步计算得到的水平和垂直向扩散参数计算出当前气象条件下烟团虚拟的距离
-            Dim DX_1 As Double = Anti_DiffuseY15(FlogLeave.ax, arrayMet(Sn).Stab, ground) '虚拟的距离
-            Dim ax1 As Double = DiffuseY15(arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime) + DX_1, arrayMet(Sn).Stab, ground)
+            '重气体扩散参数修正部分----------------------------------------------------------------------------------------------------------------
+            Dim HeavyB, HeavyH As Double
+            If HeavyType = 0 Then '点源为瞬时重气体模型
+                If IsHeavy = True Then
+                    If Heavy.BoxHeavy IsNot Nothing AndAlso Heavy.BoxHeavy.boxMetAndMass.BoxAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
+                        If ForecastTime <= HeavyT Then '如果预测时间小于重气体最大扩散时间
+                            Dim nIndex As Integer = ForecastTime / dt
+                            HeavyB = Heavy.BoxHeavy.boxMetAndMass.BoxAirMass(nIndex).m_R * 2 '云团直径
+                            HeavyH = Heavy.BoxHeavy.boxMetAndMass.BoxAirMass(nIndex).m_H '云团高度
+                        Else
+                            HeavyB = Heavy.BoxHeavy.boxMetAndMass.BoxAirMass(Heavy.BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_R * 2 '云团直径
+                            HeavyH = Heavy.BoxHeavy.boxMetAndMass.BoxAirMass(Heavy.BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_H '云团高度
+                        End If
+                    End If
+                End If
+            ElseIf HeavyType = 1 Then '点源为连续重气体模型
+                If IsHeavy = True Then
+                    If Heavy.SlabHeavy IsNot Nothing AndAlso Heavy.SlabHeavy.SlabMetAndMass.slabAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
+                        If FlogTrack.Distance > 0 And FlogTrack.Distance <= HeavyX Then '如果烟团中心距离小于重气体最大扩散距离
+                            Dim nIndex As Integer = FlogTrack.Distance / d
+                            HeavyB = Heavy.SlabHeavy.SlabMetAndMass.slabAirMass(nIndex).m_L * 2 '云羽宽度
+                            HeavyH = Heavy.SlabHeavy.SlabMetAndMass.slabAirMass(nIndex).m_H '云羽高度
+                        ElseIf FlogTrack.Distance > 0 Then
+                            HeavyB = Heavy.SlabHeavy.SlabMetAndMass.slabAirMass(Heavy.SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_L * 2 '云羽宽度
+                            HeavyH = Heavy.SlabHeavy.SlabMetAndMass.slabAirMass(Heavy.SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_H '云羽高度
+                        End If
+                    End If
+                End If
+            End If
+            If IsHeavy = True Then '重气体修正---------------------------------------
+                If FlogTrack.Distance <= HeavyX Then
+                    Dim ay As Double = HeavyB / 4.3 'y轴扩散参数
+                    Dim az As Double = HeavyH / 2.15 'Z轴扩散参数，点源修正
+                    '计算相应取样时间的扩散参数
+                    'ay = aySamplingTime(0.5, Me.Forecast.OutPut.SamplingTime, ay)
+                    '点源修正后的扩散参数
+                    Dim ax As Double = ay
 
-            Dim DZ_1 As Double = Anti_DiffuseZ15(FlogLeave.az, arrayMet(Sn).Stab, ForecastTime) '虚拟的距离
-            Dim az1 As Double = DiffuseZ15(arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime) + DZ_1, arrayMet(Sn).Stab, ground)
+                    '修改重气体泄漏源的有效源高为重气体的高度的一半
+                    FlogTrack.x = FlogLeave.x
+                    FlogTrack.y = FlogLeave.y
+                    FlogTrack.z = HeavyH / 2
+                    FlogTrack.ax = ax
+                    FlogTrack.az = az
+                Else
+                    '根据上一步计算得到的水平和垂直向扩散参数计算出当前气象条件下烟团虚拟的距离
+                    Dim DX_1 As Double = Anti_DiffuseY15(HeavyB / 4.3, arrayMet(Sn).Stab, ground) '虚拟的距离
+                    Dim ax1 As Double = DiffuseY15(arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime - HeavyT) + DX_1, arrayMet(Sn).Stab, ground)
 
-            FlogTrack.x = FlogLeave.x
-            FlogTrack.y = FlogLeave.y
-            FlogTrack.z = FlogLeave.z
-            FlogTrack.ax = ax1
-            FlogTrack.az = az1
-            Exit Sub
+                    Dim DZ_1 As Double = Anti_DiffuseZ15(HeavyH / 2.15, arrayMet(Sn).Stab, ForecastTime) '虚拟的距离
+                    Dim az1 As Double = DiffuseZ15(arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime - HeavyT) + DZ_1, arrayMet(Sn).Stab, ground)
+
+                    FlogTrack.x = FlogLeave.x
+                    FlogTrack.y = FlogLeave.y
+                    FlogTrack.z = HeavyH / 2
+                    FlogTrack.ax = ax1
+                    FlogTrack.az = az1
+                End If
+            Else
+                '(非重气体)根据上一步计算得到的水平和垂直向扩散参数计算出当前气象条件下烟团虚拟的距离
+                Dim DX_1 As Double = Anti_DiffuseY15(FlogLeave.ax, arrayMet(Sn).Stab, ground) '虚拟的距离
+                Dim ax1 As Double = DiffuseY15(arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime) + DX_1, arrayMet(Sn).Stab, ground)
+
+                Dim DZ_1 As Double = Anti_DiffuseZ15(FlogLeave.az, arrayMet(Sn).Stab, ForecastTime) '虚拟的距离
+                Dim az1 As Double = DiffuseZ15(arrayMet(Sn).u2 * (ForecastTime - FlogLeave.LeaveTime) + DZ_1, arrayMet(Sn).Stab, ground)
+
+                FlogTrack.x = FlogLeave.x
+                FlogTrack.y = FlogLeave.y
+                FlogTrack.z = FlogLeave.z
+                FlogTrack.ax = ax1
+                FlogTrack.az = az1
+            End If
+        End If
+        Exit Sub
         End If
     End Sub
+
+    Private Function az1() As Double
+        Throw New NotImplementedException
+    End Function
+
 End Module

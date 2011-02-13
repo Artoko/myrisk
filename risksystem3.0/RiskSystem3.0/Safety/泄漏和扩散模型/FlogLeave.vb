@@ -40,4 +40,5 @@ Public Structure FlogLeave
     ''' </summary>
     ''' <remarks></remarks>
     Public LeaveTime As Double
+    
 End Structure
