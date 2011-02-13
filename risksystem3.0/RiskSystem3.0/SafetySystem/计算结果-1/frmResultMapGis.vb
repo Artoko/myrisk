@@ -152,10 +152,10 @@ Public Class frmResultMapGis
         Try
             Dim Index As Integer = 0
             '先删除旧的等值线层
-            Me.GisManager.LayerSys.SaveLayer(Me.OldContourdKey, Me.m_Proj.GetProjWorkPath & "Post\")
-            If OldContourdKey IsNot Nothing AndAlso OldContourdKey <> "" Then
-                Me.GisManager.LayerSys.RemoveLayer(Me.OldContourdKey)
-            End If
+            'Me.GisManager.LayerSys.SaveLayer(Me.OldContourdKey, Me.m_Proj.GetProjWorkPath & "Post\")
+            'If OldContourdKey IsNot Nothing AndAlso OldContourdKey <> "" Then
+            '    Me.GisManager.LayerSys.RemoveLayer(Me.OldContourdKey)
+            'End If
             Dim grd As FDGridLayer = Me.GisManager.LayerSys.GetLayer("grid")
             grd.SetGridProperty(nCol - 1, nRow - 1, Xmin, Ymin, xstep, Ystep, 0, 0)
             '如果用户已经保存了图层，就导入，否则就生成新的。
@@ -175,21 +175,8 @@ Public Class frmResultMapGis
 
 
             '等值线
-            Dim conLayer As FDContourLayer = New FDContourLayer(ContourKey) ' = PublicVal.CommonDrawProperty._Contour.CopyLayerProp
-            Me.GisManager.LayerSys.AddLayer(conLayer)
-            '缺少等值线的UTM坐标设置
-            'If Index <= 0 Then
-            '    Index = PublicVal.BackImage0.InsertImageCollection.Count
-            '    Index += AermodProject0.Aermap.Control.DataFile.Length
-            'End If
-            'MyMainFrm.frmAnalyse.m_tree.MoveLayerPosition(Me.m_manager.GetLayerCount - 1, Index)
-            conLayer.descString = "等值线"
-            '图例样式
-            'conLayer.IsLengendTextFormat = True
-            'conLayer.LTextFormatNum = 5
-            Me.OldContourdKey = ContourKey
-
-            '等值线
+            Dim conLayer As FDContourLayer = Me.GisManager.LayerSys.GetLayer("contour")
+            
             'Dim con As SDSContourLayer
             'frmM.frmGis_Map.m_manager.GetLayer(ContourFileKey, con)
             Dim con As New DrawContour.Contours
@@ -200,28 +187,46 @@ Public Class frmResultMapGis
             con.Xmax = CInt(Xmin + (nCol - 1) * xstep)
             con.Ymin = CInt(Ymin + 0)
             con.Ymax = CInt(Ymin + (nRow - 1) * Ystep)
-            con.SetContours(dblA)
+            'con.SetContours(dblA)
 
-            conLayer.IsShowLegend = True
-            conLayer.ContourLineList = New List(Of ContourLine)
-            Dim CL As ContourLine
+            conLayer.SetContours(con)
+
+
+            Dim dataList As New List(Of Double)
+
             For i As Integer = 0 To dblA.Length - 1
-                CL = New ContourLine()
-                CL.ContourLineValue = dblA(i)
-                conLayer.ContourLineList.Add(CL)
+                dataList.Add(dblA(i))
             Next
 
+            conLayer.SetContourLineList(dataList)
+
+            'conLayer.IsShowLegend = True
+            'conLayer.ContourLineList = New List(Of ContourLine)
+            'Dim CL As ContourLine
+            'For i As Integer = 0 To dblA.Length - 1
+            '    CL = New ContourLine()
+            '    CL.ContourLineValue = dblA(i)
+            '    conLayer.ContourLineList.Add(CL)
+            'Next
+
+
+            '设置颜色
+            conLayer.LineFillColorList.Clear()
             conLayer.LineFillColorList.Add(Color.Purple)
             conLayer.LineFillColorList.Add(Color.Red)
             conLayer.LineFillColorList.Add(Color.Yellow)
             conLayer.LineFillColorList.Add(Color.Green)
 
+            conLayer.LineColorList.Clear()
             conLayer.LineColorList.Add(Color.Purple)
             conLayer.LineColorList.Add(Color.Red)
             conLayer.LineColorList.Add(Color.Yellow)
             conLayer.LineColorList.Add(Color.Green)
-            conLayer.SetContours(con)
-            conLayer.DrawContourLines()
+
+            '绘制
+            conLayer.Update()
+
+            'conLayer.DrawContourLines()
 
             Me.Refresh()
         Catch ex As Exception
