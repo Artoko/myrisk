@@ -41,11 +41,11 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' <param name="Path"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function Save(ByVal Path As String) As Boolean
+    Public Function Save(ByVal Path As String, ByVal SourceID As String) As Boolean
         Dim again As Boolean = True
         Do
             '保存主项目文件------------------------------
-            Dim fileStr As Stream = File.Open(Path & Me.m_MetDateTime.Year.ToString & "-" & Me.m_MetDateTime.Month.ToString & "-" & Me.m_MetDateTime.Day.ToString & "-" & Me.m_MetDateTime.Hour.ToString & ".pst", FileMode.Create)
+            Dim fileStr As Stream = File.Open(Path & SourceID & "-" & Me.m_MetDateTime.Year.ToString & "-" & Me.m_MetDateTime.Month.ToString & "-" & Me.m_MetDateTime.Day.ToString & "-" & Me.m_MetDateTime.Hour.ToString & ".pst", FileMode.Create)
             Try
                 Dim formatter As IFormatter
                 formatter = CType(New BinaryFormatter, IFormatter)

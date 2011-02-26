@@ -146,9 +146,9 @@ Public Class frmResult
                 myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(i).ForeTimeResults(j).HurtLength(m)
             End If
         Next
-        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-        myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
-        '重新计算等值线
+        'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+        'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+        ''重新计算等值线
         'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
         'myFrmMain.DrawContourWindow.ContourPaint1.ContourPaintSetting.ResetCountData()
         'myFrmMain.DrawContourWindow.ContourPaint1.Refresh()

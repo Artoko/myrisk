@@ -43,7 +43,7 @@
         For i As Integer = 0 To Project0.Dis0.Forecast.Met.Length - 1
             With EFlexRisk
                 .SetData(i + 1, 0, i + 1) '设置序号
-                .SetData(i + 1, 1, Project0.Dis0.IntialSource.Probability) '时间
+                '.SetData(i + 1, 1, Project0.Dis0.IntialSource.Probability) '时间
                 .SetData(i + 1, 2, Project0.Dis0.Forecast.Met(i).m_DateTime.ToString)
                 Dim WindSpeed As Double = Project0.Dis0.Forecast.Met(i).WindSpeed
                 If WindSpeed >= 0.3 Then
@@ -60,9 +60,9 @@
             End With
         Next
         With EFlexRisk
-            .SetData(Project0.Dis0.Forecast.Met.Length + 2, 1, Project0.Dis0.IntialSource.Probability) '时间
+            '.SetData(Project0.Dis0.Forecast.Met.Length + 2, 1, Project0.Dis0.IntialSource.Probability) '时间
             .SetData(Project0.Dis0.Forecast.Met.Length + 2, 2, "全部")
-            .SetData(Project0.Dis0.Forecast.Met.Length + 2, 8, Project0.Dis0.Results.AllGridResult.AllRisk * Project0.Dis0.IntialSource.Probability)
+            '.SetData(Project0.Dis0.Forecast.Met.Length + 2, 8, Project0.Dis0.Results.AllGridResult.AllRisk * Project0.Dis0.IntialSource.Probability)
         End With
         EFlexRisk.AutoSizeCols()
 

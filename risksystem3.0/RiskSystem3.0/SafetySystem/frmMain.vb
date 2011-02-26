@@ -230,8 +230,8 @@ Public Class frmMain
     Private Sub BackgroundWorkerAermod_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerAermod.DoWork
         m_Sucess = False
         If Project0.PType = 0 Then
-            '初始化计算的气象参数。也就是根据观测的气象数据计算出当天的稳定度来
             If Project0.SurfMet IsNot Nothing AndAlso Project0.SurfMet.ArrayMetData.Length > 0 Then
+                '初始化计算的气象参数。也就是根据观测的气象数据计算出当天的稳定度来
                 Dim SurMet As Met.MetGeneral = Project0.SurfMet.Clone
                 If SurMet.IsInsert = True Then '对气象数据插值处理
                     SurMet.InsetAllMetData()
@@ -888,20 +888,20 @@ Public Class frmMain
         End If
 
 
-        If Project0.Dis0.IntialSource.IsHeavy Then
-            If Project0.Dis0.Results.MetResults.Length > 0 Then
-                ResultHeavy.ReLoad = True
-                ResultHeavy.Show(DockPanel, Docking.DockState.Document)
-            Else
-                MsgBox("没有计算结果，请计算后再分析!")
-            End If
-            If Project0.Dis0.Results.MetResults.Length > 0 Then
-                ResultSlab.ReLoad = True
-                ResultSlab.Show(DockPanel, Docking.DockState.Document)
-            Else
-                MsgBox("没有计算结果，请计算后再分析!")
-            End If
-        End If
+        'If Project0.Dis0.IntialSource.IsHeavy Then
+        '    If Project0.Dis0.Results.MetResults.Length > 0 Then
+        '        ResultHeavy.ReLoad = True
+        '        ResultHeavy.Show(DockPanel, Docking.DockState.Document)
+        '    Else
+        '        MsgBox("没有计算结果，请计算后再分析!")
+        '    End If
+        '    If Project0.Dis0.Results.MetResults.Length > 0 Then
+        '        ResultSlab.ReLoad = True
+        '        ResultSlab.Show(DockPanel, Docking.DockState.Document)
+        '    Else
+        '        MsgBox("没有计算结果，请计算后再分析!")
+        '    End If
+        'End If
     End Sub
 
     Private Sub 大气稳定度计算SToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 大气稳定度计算SToolStripMenuItem.Click

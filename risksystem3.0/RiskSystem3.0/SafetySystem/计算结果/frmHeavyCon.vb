@@ -46,43 +46,43 @@
         EFlexGeneral.Cols.Count = 9
         EFlexGeneral.Rows.Count = 1
         With EFlexGeneral
-            If Project0.Dis0.IntialSource.LeakType = 11 Then '瞬时重气体
-                EFlexGeneral.Rows.Count = 1
-                .SetData(0, 0, "序号")
-                .SetData(0, 1, "时刻[s]")
-                .SetData(0, 2, "云团中心位置[m]")
-                .SetData(0, 3, "云团半径[m]")
-                .SetData(0, 4, "云团高度[m]")
-                .SetData(0, 5, "云团体积[m^3]")
-                .SetData(0, 6, "云团密度[kg/m^3]")
-                .SetData(0, 7, "云团温度[℃]")
-                .SetData(0, 8, "污染物浓度[mg/m^3]")
-                Dim nMount As Integer = Math.Truncate(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length / (jTimeInter * 10)) + 1
-                EFlexGeneral.Rows.Count = nMount + 1 '设置表格的行
-                For n As Integer = 0 To nMount - 1
-                    If n = nMount - 1 Then
-                        .SetData(n + 1, 0, n)
-                        .SetData(n + 1, 1, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 2, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t * Project0.Dis0.Forecast.Met(i).WindSpeed, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 3, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_R, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 4, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_H, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 5, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_V, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 6, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_Density, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 7, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_Temp - 273.15, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 8, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_C, num, TriState.True, TriState.False, TriState.False))
-                    Else
-                        .SetData(n + 1, 0, n)
-                        .SetData(n + 1, 1, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_t, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 2, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_t * Project0.Dis0.Forecast.Met(i).WindSpeed, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 3, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_R, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 4, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_H, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 5, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_V, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 6, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_Density, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 7, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_Temp - 273.15, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 8, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_C, num, TriState.True, TriState.False, TriState.False))
-                    End If
-                Next
-            End If
+            'If Project0.Dis0.IntialSource.LeakType = 11 Then '瞬时重气体
+            EFlexGeneral.Rows.Count = 1
+            .SetData(0, 0, "序号")
+            .SetData(0, 1, "时刻[s]")
+            .SetData(0, 2, "云团中心位置[m]")
+            .SetData(0, 3, "云团半径[m]")
+            .SetData(0, 4, "云团高度[m]")
+            .SetData(0, 5, "云团体积[m^3]")
+            .SetData(0, 6, "云团密度[kg/m^3]")
+            .SetData(0, 7, "云团温度[℃]")
+            .SetData(0, 8, "污染物浓度[mg/m^3]")
+            Dim nMount As Integer = Math.Truncate(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length / (jTimeInter * 10)) + 1
+            EFlexGeneral.Rows.Count = nMount + 1 '设置表格的行
+            For n As Integer = 0 To nMount - 1
+                If n = nMount - 1 Then
+                    .SetData(n + 1, 0, n)
+                    .SetData(n + 1, 1, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 2, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t * Project0.Dis0.Forecast.Met(i).WindSpeed, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 3, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_R, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 4, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_H, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 5, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_V, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 6, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_Density, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 7, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_Temp - 273.15, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 8, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_C, num, TriState.True, TriState.False, TriState.False))
+                Else
+                    .SetData(n + 1, 0, n)
+                    .SetData(n + 1, 1, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_t, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 2, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_t * Project0.Dis0.Forecast.Met(i).WindSpeed, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 3, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_R, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 4, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_H, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 5, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_V, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 6, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_Density, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 7, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_Temp - 273.15, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 8, FormatNumber(Project0.Dis0.Heavy(i).BoxHeavy.boxMetAndMass.BoxAirMass(n * jTimeInter * 10).m_C, num, TriState.True, TriState.False, TriState.False))
+                End If
+            Next
+            'End If
         End With
         EFlexGeneral.AutoSizeCols()
         RefreshVane(i) '更新曲线图

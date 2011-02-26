@@ -12,7 +12,11 @@ Imports System.Runtime.Serialization.Formatters.Binary
     Private Const MaxLength = 50 * 1000 '50公里
     Private Const Precision = 0.00001 '精度为1E-5
     Private GriddingSign As Short '网格标志
-    <NonSerialized()> Private m_Sources(-1) As Source '污染源数组。临时变量
+    ''' <summary>
+    ''' 污染源数组。临时变量。这个变量用于储存事故源转换成点、面源后不同的气象数据下的事故源。因为不同的气象条件，事故排放源强会不一样。
+    ''' </summary>
+    ''' <remarks></remarks>
+    <NonSerialized()> Private m_Sources(-1) As Source '
     Private vane As String '声明风向，因为在网格点计算中用到风向
     Private GridSign As Boolean '网格数据是否由单击事件引起的
     Private LeakQ(0, 0, 0) As Double '定义3维数组，用于储存不同气象条件下的泄漏情况
@@ -24,32 +28,34 @@ Imports System.Runtime.Serialization.Formatters.Binary
 #End Region
 
 #Region "属性变量"
-
-
-    Private m_IntialSource As New IntialSource  '事故泄漏初始对象
+    ''' <summary>
+    ''' 所有的事故泄漏源
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private m_ListLeakSource As New ListLeakSource
     ''' <summary>
     ''' 物化数据类
     ''' </summary>
     ''' <remarks></remarks>
     Private m_Chemical As New Chemical
-    
+
 
     ''' <summary>
-    ''' 重气体对象数组对象
+    ''' 重气体对象数组对象。这应为临时对象
     ''' </summary>
     ''' <remarks></remarks>
     Private m_Heavy(-1) As DisPuff.AllHeavy
-    
-   
+
+
     ''' <summary>
     ''' 预测方案
     ''' </summary>
     ''' <remarks></remarks>
     Private m_ForeCast As New Forecast
-   
+
 
     Private m_IsCalUpVane As Boolean = False
-    
+
 
     ''' <summary>
     ''' 计算结果对象
@@ -66,17 +72,15 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
 #Region "属性"
     ''' <summary>
-    ''' 事故泄漏初始对象
+    ''' 所有的事故泄漏源
     ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
     ''' <remarks></remarks>
-    Property IntialSource() As IntialSource
+    Property ListLeakSource As ListLeakSource
         Get
-            Return m_IntialSource
+            Return Me.m_ListLeakSource
         End Get
-        Set(ByVal value As IntialSource)
-            m_IntialSource = value
+        Set(ByVal value As ListLeakSource)
+            Me.m_ListLeakSource = value
         End Set
     End Property
     ''' <summary>
@@ -238,143 +242,146 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' </summary>
     ''' <remarks></remarks>
     Public Function Intial_CalRisk(ByVal workpath As String) As Boolean
+        '初始化泄漏源列表的状态参数
+        For iSource As Integer = 0 To Me.m_ListLeakSource.IntialSource.Count - 1
+            If Me.m_ListLeakSource.IntialSource(iSource).IntialPara(Me.m_Chemical, Me.m_ForeCast.Ta, Me.m_ForeCast.Pa) = False Then
+                Return False
+            End If
+        Next
+        For iSource As Integer = 0 To Me.m_ListLeakSource.IntialSource.Count - 1
+            '污染源数组。不同的气象条件同一泄漏源有可能污染源强不一样
+            ReDim Me.m_Sources(Me.m_ForeCast.Met.Length - 1)
+            '重气体数组。不同的气象条件同一泄漏源有可能污染源强不一样
+            ReDim Me.m_Heavy(Me.m_ForeCast.Met.Length - 1)
+            '计算结果初始化对象，建立新的实例
+            ReDim Me.m_Results.MetResults(Me.m_ForeCast.Met.Length - 1)
+            '------------------------------------------------------------------------------------
+            '初始化计算结果的对象
+            '------------------------------------------------------------------------------------
+            '各点高值
+            ReDim Me.m_Results.Rectable.GridRectbleConAndTime(0, Me.Forecast.Grid.CountY, Me.Forecast.Grid.CountX)
+            ReDim Me.m_Results.Rectable.CareRectbleConAndTime(0, Me.Forecast.CareReceptor.Length - 1)
 
-        '初始化泄漏源的状态参数
-        If m_IntialSource.IntialPara(Me.m_Chemical, Me.m_ForeCast.Ta, Me.m_ForeCast.Pa) = False Then
-            Return False
-        End If
-        '污染源数组。不同的气象条件有可能污染源强不一样
-        ReDim Me.m_Sources(Me.m_ForeCast.Met.Length - 1)
-        '重气体数组。不同的气象条件有可能污染源强不一样
-        ReDim Me.m_Heavy(Me.m_ForeCast.Met.Length - 1)
-        '计算结果初始化对象，建立新的实例
-        ReDim Me.m_Results.MetResults(Me.m_ForeCast.Met.Length - 1)
-        '------------------------------------------------------------------------------------
-        '初始化计算结果的对象
-        '------------------------------------------------------------------------------------
-        '各点高值
-        ReDim Me.m_Results.Rectable.GridRectbleConAndTime(0, Me.Forecast.Grid.CountY, Me.Forecast.Grid.CountX)
-        ReDim Me.m_Results.Rectable.CareRectbleConAndTime(0, Me.Forecast.CareReceptor.Length - 1)
+            Dim MaxTen As Integer = ModelSetting.MaxTable
+            If Me.m_ForeCast.Met.Length < ModelSetting.MaxTable Then
+                MaxTen = Me.m_ForeCast.Met.Length
+            End If
+            '初始化设置网格点对象中的瞬时网格点数组。风险值最大的前n个浓度分布
+            ReDim Me.m_Results.AllGridResult.InstantaneousGridC(MaxTen - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
 
-        Dim MaxTen As Integer = ModelSetting.MaxTable
-        If Me.m_ForeCast.Met.Length < ModelSetting.MaxTable Then
-            MaxTen = Me.m_ForeCast.Met.Length
-        End If
-        '初始化设置网格点对象中的瞬时网格点数组。风险值最大的前n个浓度分布
-        ReDim Me.m_Results.AllGridResult.InstantaneousGridC(MaxTen - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-
-        '初始化设置网格点滑移平均最大浓度。风险值最大的前n个浓度分布
-        ReDim Me.m_Results.AllGridResult.SlipGrid(MaxTen - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-        For SN As Integer = 0 To MaxTen - 1 '气象条件
-            '网格点滑移平均最大浓度网格初始化。风险值最大的前10浓度分布
-            For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
-                For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
-                    Me.m_Results.AllGridResult.SlipGrid(SN, j, k) = New Slippage
-                    Me.m_Results.AllGridResult.SlipGrid(SN, j, k).StartAndEndTimeTime = New StartAndEndTime
+            '初始化设置网格点滑移平均最大浓度。风险值最大的前n个浓度分布
+            ReDim Me.m_Results.AllGridResult.SlipGrid(MaxTen - 1, Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
+            For SN As Integer = 0 To MaxTen - 1 '气象条件
+                '网格点滑移平均最大浓度网格初始化。风险值最大的前10浓度分布
+                For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
+                    For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
+                        Me.m_Results.AllGridResult.SlipGrid(SN, j, k) = New Slippage
+                        Me.m_Results.AllGridResult.SlipGrid(SN, j, k).StartAndEndTimeTime = New StartAndEndTime
+                    Next
                 Next
             Next
-        Next
 
-        '初始化设置网格点死亡概率和死亡百分率
-        ReDim Me.m_Results.AllGridResult.Pr(MaxTen - 1)
-        For SN As Integer = 0 To MaxTen - 1 '气象条件
-            ReDim Me.m_Results.AllGridResult.Pr(SN)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-        Next
-        ReDim Me.m_Results.AllGridResult.D(MaxTen - 1)
-        For SN As Integer = 0 To MaxTen - 1 '气象条件
-            ReDim Me.m_Results.AllGridResult.D(SN)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-        Next
-        ReDim Me.m_Results.AllGridResult.DiePeople(MaxTen - 1)
-        ReDim Me.m_Results.AllGridResult.PersonalRisk(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
-        ReDim Me.m_Results.AllGridResult.ArrayRisk(MaxTen - 1)
-        Me.m_Results.AllGridResult.AllRisk = 0
-        '初始化设置关心点对象中的瞬时浓度。风险值最大的前10浓度分布
-        ReDim Me.m_Results.AllCareResult.InstantaneousCareC(MaxTen - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.CareReceptor.Length - 1) '某关心点的多个时刻的浓度
-
-        '初始化设置关心点对象中的滑移平均最大浓度。风险值最大的前10浓度分布
-
-        ReDim Me.m_Results.AllCareResult.SlipCare(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
-        For SN As Integer = 0 To MaxTen - 1 '气象条件
-            For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
-                Me.m_Results.AllCareResult.SlipCare(SN, j) = New Slippage
-                Me.m_Results.AllCareResult.SlipCare(SN, j).StartAndEndTimeTime = New StartAndEndTime
+            '初始化设置网格点死亡概率和死亡百分率
+            ReDim Me.m_Results.AllGridResult.Pr(MaxTen - 1)
+            For SN As Integer = 0 To MaxTen - 1 '气象条件
+                ReDim Me.m_Results.AllGridResult.Pr(SN)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
             Next
-        Next
-        '初始化设置关心点对象中的最大浓度及出现的时间该:气象条件、关心点
-        ReDim Me.m_Results.AllCareResult.CarePointMaxCT(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
-        For SN As Integer = 0 To MaxTen - 1 '气象条件
-            For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
-                Me.m_Results.AllCareResult.CarePointMaxCT(SN, j) = New MaxCD
+            ReDim Me.m_Results.AllGridResult.D(MaxTen - 1)
+            For SN As Integer = 0 To MaxTen - 1 '气象条件
+                ReDim Me.m_Results.AllGridResult.D(SN)(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
             Next
-        Next
-        '初始化设置关心点对象中关心点出现某伤害一浓度的浓度限值的开始和结束时间:气象条件，关心点，给定浓度值
-        ReDim Me.m_Results.AllCareResult.CarePointTime(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1, Me.m_ForeCast.HurtConcentration.Length - 1)
-        For SN As Integer = 0 To MaxTen - 1 '气象条件
-            For i As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
-                For j As Integer = 0 To Me.m_ForeCast.HurtConcentration.Length - 1
-                    Me.m_Results.AllCareResult.CarePointTime(SN, i, j) = New StartAndEndTime
+            ReDim Me.m_Results.AllGridResult.DiePeople(MaxTen - 1)
+            ReDim Me.m_Results.AllGridResult.PersonalRisk(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1)
+            ReDim Me.m_Results.AllGridResult.ArrayRisk(MaxTen - 1)
+            Me.m_Results.AllGridResult.AllRisk = 0
+            '初始化设置关心点对象中的瞬时浓度。风险值最大的前10浓度分布
+            ReDim Me.m_Results.AllCareResult.InstantaneousCareC(MaxTen - 1, Me.m_ForeCast.OutPut.ForeCount - 1, Me.m_ForeCast.CareReceptor.Length - 1) '某关心点的多个时刻的浓度
+
+            '初始化设置关心点对象中的滑移平均最大浓度。风险值最大的前10浓度分布
+
+            ReDim Me.m_Results.AllCareResult.SlipCare(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
+            For SN As Integer = 0 To MaxTen - 1 '气象条件
+                For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
+                    Me.m_Results.AllCareResult.SlipCare(SN, j) = New Slippage
+                    Me.m_Results.AllCareResult.SlipCare(SN, j).StartAndEndTimeTime = New StartAndEndTime
                 Next
             Next
-        Next
-
-        '初始化设置关心点对象中死亡概率：气象条件，关心点
-        ReDim Me.m_Results.AllCareResult.Pr(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
-
-        '初始化设置关心点对象中死亡百分率 %：气象条件，关心点
-        ReDim Me.m_Results.AllCareResult.D(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
-        '-----------------------------------------------------------------------------------
-        '初始化计算结果的对象结束
-        '-----------------------------------------------------------------------------------
-        For SN As Integer = 0 To MaxTen - 1 '气象条件
-            Me.m_Results.MetResults(SN) = New MetResult
-            ReDim Me.m_Results.MetResults(SN).ForeTimeResults(Me.m_ForeCast.OutPut.ForeCount - 1)
-
-            For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
-                Me.m_Results.MetResults(SN).ForeTimeResults(i) = New ForeTimeResult '轴线最大浓度及距离
-                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).HurtLength(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
-                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
-                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridUpVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的上风向个数,从0开始，所以增加一个
-            Next
-            '网格点滑移平均最大浓度网格初始化
-
-            ReDim Me.m_Results.MetResults(SN).Slip.HurtLengthSlip(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
-            ReDim Me.m_Results.MetResults(SN).Slip.GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
-
-            For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
-                For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
-                    Me.m_Results.AllGridResult.SlipGrid(SN, j, k) = New Slippage
+            '初始化设置关心点对象中的最大浓度及出现的时间该:气象条件、关心点
+            ReDim Me.m_Results.AllCareResult.CarePointMaxCT(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
+            For SN As Integer = 0 To MaxTen - 1 '气象条件
+                For j As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
+                    Me.m_Results.AllCareResult.CarePointMaxCT(SN, j) = New MaxCD
                 Next
             Next
+            '初始化设置关心点对象中关心点出现某伤害一浓度的浓度限值的开始和结束时间:气象条件，关心点，给定浓度值
+            ReDim Me.m_Results.AllCareResult.CarePointTime(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1, Me.m_ForeCast.HurtConcentration.Length - 1)
+            For SN As Integer = 0 To MaxTen - 1 '气象条件
+                For i As Integer = 0 To Me.m_ForeCast.CareReceptor.Length - 1
+                    For j As Integer = 0 To Me.m_ForeCast.HurtConcentration.Length - 1
+                        Me.m_Results.AllCareResult.CarePointTime(SN, i, j) = New StartAndEndTime
+                    Next
+                Next
+            Next
+
+            '初始化设置关心点对象中死亡概率：气象条件，关心点
+            ReDim Me.m_Results.AllCareResult.Pr(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
+
+            '初始化设置关心点对象中死亡百分率 %：气象条件，关心点
+            ReDim Me.m_Results.AllCareResult.D(MaxTen - 1, Me.m_ForeCast.CareReceptor.Length - 1)
+            '-----------------------------------------------------------------------------------
+            '初始化计算结果的对象结束
+            '-----------------------------------------------------------------------------------
+            For SN As Integer = 0 To MaxTen - 1 '气象条件
+                Me.m_Results.MetResults(SN) = New MetResult
+                ReDim Me.m_Results.MetResults(SN).ForeTimeResults(Me.m_ForeCast.OutPut.ForeCount - 1)
+
+                For i As Integer = 0 To Me.m_ForeCast.OutPut.ForeCount - 1
+                    Me.m_Results.MetResults(SN).ForeTimeResults(i) = New ForeTimeResult '轴线最大浓度及距离
+                    ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).HurtLength(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
+                    ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
+                    ReDim Me.m_Results.MetResults(SN).ForeTimeResults(i).GridUpVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的上风向个数,从0开始，所以增加一个
+                Next
+                '网格点滑移平均最大浓度网格初始化
+
+                ReDim Me.m_Results.MetResults(SN).Slip.HurtLengthSlip(Me.m_ForeCast.HurtConcentration.Length - 1) '某一浓度伤害范围
+                ReDim Me.m_Results.MetResults(SN).Slip.GridVane(0 To Me.m_ForeCast.Vane.VaneCount) '预测的时间个数和预测的下风向个数,从0开始，所以增加一个
+
+                For j As Integer = 0 To Me.m_ForeCast.Grid.CountY - 1
+                    For k As Integer = 0 To Me.m_ForeCast.Grid.CountX - 1
+                        Me.m_Results.AllGridResult.SlipGrid(SN, j, k) = New Slippage
+                    Next
+                Next
+            Next
+            '设置总的计算量
+            'If Me.m_ForeCast.IsCalGrid = True Then
+            '    Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 3 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * MaxTen
+            'Else
+            '    Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 2 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * MaxTen
+            'End If
+            Me.m_Results.AllCalMount = Me.m_ForeCast.Met.Length
+
+            '初始化最不利的气象条件
+            ReDim Me.m_ForeCast.MaxMet(MaxTen - 1)
+            For i As Integer = 0 To MaxTen - 1
+                Me.m_ForeCast.MaxMet(i) = New Met
+            Next
+            '初始化进度
+            Me.m_Results.AllProgress = 0
+            For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
+                InitiaMetList(SN, Me.m_ListLeakSource.IntialSource(iSource))   '计算概述
+            Next SN
+            For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '逐气象条件计算风险
+                '泄漏量计算
+                Dim u10 As Double = Me.m_ForeCast.Met(SN).WindSpeed  '第0行第2列，风速
+                Dim stab As String = Me.m_ForeCast.Met(SN).Stab  '第0行第3列，风速稳定度
+                CalLeakSource(SN, u10, stab, Me.m_ListLeakSource.IntialSource(iSource)) '计算泄漏量，因为不同的气象泄漏量可能不一样。
+
+                CalculateRisk(SN, workpath, Me.m_ListLeakSource.IntialSource(iSource)) '逐步计算浓度、风险等
+
+                '设置计算进度
+                Me.m_Results.AllProgress += 1
+            Next SN
         Next
-        '设置总的计算量
-        'If Me.m_ForeCast.IsCalGrid = True Then
-        '    Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 3 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * MaxTen
-        'Else
-        '    Me.m_Results.AllCalMount = (Me.m_ForeCast.OutPut.ForeCount * 2 + Me.m_ForeCast.OutPut.ForeCount * Me.m_ForeCast.CareReceptor.Length) * MaxTen
-        'End If
-        Me.m_Results.AllCalMount = Me.m_ForeCast.Met.Length
-
-        '初始化最不利的气象条件
-        ReDim Me.m_ForeCast.MaxMet(MaxTen - 1)
-        For i As Integer = 0 To MaxTen - 1
-            Me.m_ForeCast.MaxMet(i) = New Met
-        Next
-        '初始化进度
-        Me.m_Results.AllProgress = 0
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '气象条件
-            InitiaMetList(SN)   '计算概述
-        Next SN
-        For SN As Integer = 0 To Me.m_ForeCast.Met.Length - 1 '逐气象条件计算风险
-            '泄漏量计算
-            Dim u10 As Double = Me.m_ForeCast.Met(SN).WindSpeed  '第0行第2列，风速
-            Dim stab As String = Me.m_ForeCast.Met(SN).Stab  '第0行第3列，风速稳定度
-            CalLeakSource(SN, u10, stab) '计算泄漏量，因为不同的气象泄漏量可能不一样。
-
-            CalculateRisk(SN, workpath) '逐步计算浓度、风险等
-
-            '设置计算进度
-            Me.m_Results.AllProgress += 1
-        Next SN
         Return (True)
     End Function
 
@@ -383,11 +390,11 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' </summary>
     ''' <remarks></remarks>
     Public Function Cal(ByVal SN) As Double(,)
-        InitiaMetList(SN)   '计算概述
+        'InitiaMetList(SN)   '计算概述
         '泄漏量计算
         Dim u10 As Double = Me.m_ForeCast.Met(SN).WindSpeed  '第0行第2列，风速
         Dim stab As String = Me.m_ForeCast.Met(SN).Stab  '第0行第3列，风速稳定度
-        CalLeakSource(SN, u10, stab) '计算泄漏量，因为不同的气象泄漏量可能不一样。
+        'CalLeakSource(SN, u10, stab) '计算泄漏量，因为不同的气象泄漏量可能不一样。
 
         Dim ArrayPoint(-1) As Point3D
         Dim n As Integer = 0
@@ -413,8 +420,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
         Dim MaxArrayResult(ArrayPoint.Length - 1) As RectableConAndTime  '储存当前气象条件的最大值
         Dim AllArrayResult(Me.m_ForeCast.OutPut.ForeCount - 1, ArrayPoint.Length - 1) As Double '当前气象条件下所有时刻的值。方便后面进行毒性负荷和滑移平均
-        Me.CalculateInstance(SN, ArrayPoint, MaxArrayResult, AllArrayResult) '计算当前气象条件下的浓度
-
+        'Me.CalculateInstance(SN, ArrayPoint, MaxArrayResult, AllArrayResult) '计算当前气象条件下的浓度
         Return AllArrayResult
     End Function
 
@@ -424,7 +430,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' </summary>
     ''' <param name="Sn">气象条件的序号</param>
     ''' <remarks></remarks>
-    Public Sub InitiaMetList(ByVal Sn As Integer)
+    Public Sub InitiaMetList(ByVal Sn As Integer, ByVal InSource As IntialSource)
 
         '清空表格
 
@@ -433,19 +439,19 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Dim u10 As Double = Me.m_ForeCast.Met(Sn).WindSpeed  '第0行第2列，风速
         Dim stab As String = Me.m_ForeCast.Met(Sn).Stab  '第0行第3列，风速稳定度
 
-        Me.m_ForeCast.Met(Sn).u2 = UP(u10, Me.m_IntialSource.H, Me.m_ForeCast.OutPut.GroundCharacter, stab)
+        Me.m_ForeCast.Met(Sn).u2 = UP(u10, InSource.H, Me.m_ForeCast.OutPut.GroundCharacter, stab)
         '计算地面液池高度处的风速
-        Me.m_ForeCast.Met(Sn).U_Ground = UP(u10, Me.m_IntialSource.SHe, Me.m_ForeCast.OutPut.GroundCharacter, stab)
+        Me.m_ForeCast.Met(Sn).U_Ground = UP(u10, InSource.SHe, Me.m_ForeCast.OutPut.GroundCharacter, stab)
 
     End Sub
 
     ''' <summary>
     ''' 初始化泄漏源强和重气体的初始参数
     ''' </summary>
-    ''' <param name="sn"></param>
+    ''' <param name="sn">气象数组序号</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function CalLeakSource(ByVal sn As Integer, ByVal u10 As Double, ByVal stab As String) As Boolean
+    Private Function CalLeakSource(ByVal sn As Integer, ByVal u10 As Double, ByVal stab As String, ByVal InSource As IntialSource) As Boolean
         Dim Ta_K As Double
         '转换环境温度的单位
         Ta_K = Me.m_ForeCast.Ta + 273.15 '将摄氏温度转化为绝对温度,环境温度
@@ -478,19 +484,19 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Me.m_Sources(sn).PLeak = New PointLeak '实例化点源对象
         Me.m_Sources(sn).SLeak = New SurfaceLeak '实例化面源对象
 
-        Select Case m_IntialSource.LeakType
+        Select Case InSource.LeakType
             Case 0 '手动计算
-                Select Case Me.m_IntialSource.SourceType
+                Select Case InSource.SourceType
                     Case 0 '点源
                         '多烟团泄漏源
                         With MultiPLeak
                             .Name = Me.m_Chemical.Name0  '泄漏物质名称
-                            .Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
-                            .Ts = Me.m_IntialSource.Ts0 + 273.15  '设置温度，摄氏度
-                            .DurationTime = Me.m_IntialSource.DurationT * 60   '排放持续时间转化为S
-                            .Qv = Me.m_IntialSource.Qv_P  '排气量　m3/s
-                            .H = Me.m_IntialSource.H '排放高度
-                            .D = Me.m_IntialSource.D_P '直径
+                            .Q = InSource.Q0 * 1000000 '泄漏物质的速率mg/s
+                            .Ts = InSource.Ts0 + 273.15  '设置温度，摄氏度
+                            .DurationTime = InSource.DurationT * 60   '排放持续时间转化为S
+                            .Qv = InSource.Qv_P  '排气量　m3/s
+                            .H = InSource.H '排放高度
+                            .D = InSource.D_P '直径
                             '计算烟气抬升高度和有效高度
                             .DH = RiseH(Pa_BP, .Qv, .D, .H, .Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, 90)
                             .He = .DH + .H
@@ -505,19 +511,19 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                 .Si(i) = 0
                                 .Thickness(i) = 0
                                 If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                    .Qi(i) = ((Me.m_IntialSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
+                                    .Qi(i) = ((InSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
                                 End If
                             Next i
                         End With
                         '非正常泄漏源
                         Me.m_Sources(sn).PLeak = New PointLeak '实例化点源对象
                         Me.m_Sources(sn).PLeak.Name = Me.m_Chemical.Name0   '泄漏物质名称
-                        Me.m_Sources(sn).PLeak.Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
-                        Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.Ts0 + 273.15 '设置温度，摄氏度
-                        Me.m_Sources(sn).PLeak.DurationTime = Me.m_IntialSource.DurationT * 60  '排放持续时间转化为S
-                        Me.m_Sources(sn).PLeak.Qv = Me.m_IntialSource.Qv_P '排气量　m3/s
-                        Me.m_Sources(sn).PLeak.H = Me.m_IntialSource.H '排放高度
-                        Me.m_Sources(sn).PLeak.D = Me.m_IntialSource.D_P '直径
+                        Me.m_Sources(sn).PLeak.Q = InSource.Q0 * 1000000 '泄漏物质的速率mg/s
+                        Me.m_Sources(sn).PLeak.Ts = InSource.Ts0 + 273.15 '设置温度，摄氏度
+                        Me.m_Sources(sn).PLeak.DurationTime = InSource.DurationT * 60  '排放持续时间转化为S
+                        Me.m_Sources(sn).PLeak.Qv = InSource.Qv_P '排气量　m3/s
+                        Me.m_Sources(sn).PLeak.H = InSource.H '排放高度
+                        Me.m_Sources(sn).PLeak.D = InSource.D_P '直径
                         '计算烟气抬升高度和有效高度
                         Me.m_Sources(sn).PLeak.DH = RiseH(Pa_BP, Me.m_Sources(sn).PLeak.Qv, Me.m_Sources(sn).PLeak.D, Me.m_Sources(sn).PLeak.H, Me.m_Sources(sn).PLeak.Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, 90)
                         Me.m_Sources(sn).PLeak.He = Me.m_Sources(sn).PLeak.DH + Me.m_Sources(sn).PLeak.H
@@ -525,10 +531,10 @@ Imports System.Runtime.Serialization.Formatters.Binary
                         '多烟团
                         With MultiSLeak
                             .Name = Me.m_Chemical.Name0    '泄漏物质名称
-                            .Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
-                            .Ts = Me.m_IntialSource.Ts0 + 273.15  '设置温度，摄氏度
-                            .DurationTime = Me.m_IntialSource.DurationT * 60  '排放持续时间转化为S
-                            .He = Me.m_IntialSource.H  '有效排放高度
+                            .Q = InSource.Q0 * 1000000 '泄漏物质的速率mg/s
+                            .Ts = InSource.Ts0 + 273.15  '设置温度，摄氏度
+                            .DurationTime = InSource.DurationT * 60  '排放持续时间转化为S
+                            .He = InSource.H  '有效排放高度
                             If .DurationTime Mod Me.Forecast.OutPut.IntervalTime > 0 Then
                                 .n = Fix(.DurationTime / Me.Forecast.OutPut.IntervalTime) + 1 '烟团个数
                             Else
@@ -537,29 +543,29 @@ Imports System.Runtime.Serialization.Formatters.Binary
                             .ResetMulti(.n) '设置烟团个数为n个
                             For i = 1 To .n Step 1
                                 .Qi(i) = .Q * Me.Forecast.OutPut.IntervalTime
-                                .Si(i) = Me.m_IntialSource.S_S
+                                .Si(i) = InSource.S_S
                                 .Thickness(i) = 0
                                 If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                    .Qi(i) = ((Me.m_IntialSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
+                                    .Qi(i) = ((InSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
                                 End If
                             Next i
                         End With
                         '非正常
                         Me.m_Sources(sn).SLeak = New SurfaceLeak '实例化面源对象
                         Me.m_Sources(sn).SLeak.Name = Me.m_Chemical.Name0   '泄漏物质名称
-                        Me.m_Sources(sn).SLeak.Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
-                        Me.m_Sources(sn).SLeak.Ts = Me.m_IntialSource.Ts0 + 273.15 '设置温度，摄氏度
-                        Me.m_Sources(sn).SLeak.DurationTime = Me.m_IntialSource.DurationT * 60  '排放持续时间转化为S
-                        Me.m_Sources(sn).SLeak.He = Me.m_IntialSource.H '有效排放高度
-                        Me.m_Sources(sn).SLeak.S = Me.m_IntialSource.S_S '面源的面积
+                        Me.m_Sources(sn).SLeak.Q = InSource.Q0 * 1000000 '泄漏物质的速率mg/s
+                        Me.m_Sources(sn).SLeak.Ts = InSource.Ts0 + 273.15 '设置温度，摄氏度
+                        Me.m_Sources(sn).SLeak.DurationTime = InSource.DurationT * 60  '排放持续时间转化为S
+                        Me.m_Sources(sn).SLeak.He = InSource.H '有效排放高度
+                        Me.m_Sources(sn).SLeak.S = InSource.S_S '面源的面积
                     Case 2 '体源
                         '多烟团
                         With MultiVLeak
                             .Name = Me.m_Chemical.Name0  '泄漏物质名称
-                            .Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
-                            .Ts = Me.m_IntialSource.Ts0 + 273.15 '设置温度，摄氏度
-                            .DurationTime = Me.m_IntialSource.DurationT * 60 '排放持续时间转化为S
-                            .He = Me.m_IntialSource.H   '有效排放高度
+                            .Q = InSource.Q0 * 1000000 '泄漏物质的速率mg/s
+                            .Ts = InSource.Ts0 + 273.15 '设置温度，摄氏度
+                            .DurationTime = InSource.DurationT * 60 '排放持续时间转化为S
+                            .He = InSource.H   '有效排放高度
                             If .DurationTime Mod Me.Forecast.OutPut.IntervalTime > 0 Then
                                 .n = Fix(.DurationTime / Me.Forecast.OutPut.IntervalTime) + 1 '烟团个数
                             Else
@@ -568,10 +574,10 @@ Imports System.Runtime.Serialization.Formatters.Binary
                             .ResetMulti(.n) '设置烟团个数为n个
                             For i = 1 To .n Step 1
                                 .Qi(i) = .Q * Me.Forecast.OutPut.IntervalTime
-                                .Si(i) = Me.m_IntialSource.S_S
-                                .Thickness(i) = Me.m_IntialSource.Thickness  '体源的厚度
+                                .Si(i) = InSource.S_S
+                                .Thickness(i) = InSource.Thickness  '体源的厚度
                                 If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                    .Qi(i) = ((Me.m_IntialSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
+                                    .Qi(i) = ((InSource.DurationT * 60) - (i - 1) * Me.Forecast.OutPut.IntervalTime) * .Q
                                 End If
                             Next i
                         End With
@@ -580,35 +586,35 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
                         Me.m_Sources(sn).VLeak = New VolumeLeak '实例化体源对象
                         Me.m_Sources(sn).VLeak.Name = Me.m_Chemical.Name0  '泄漏物质名称
-                        Me.m_Sources(sn).VLeak.Q = Me.m_IntialSource.Q0 * 1000000 '泄漏物质的速率mg/s
-                        Me.m_Sources(sn).VLeak.Ts = Me.m_IntialSource.Ts0 + 273.15 '设置温度，摄氏度
-                        Me.m_Sources(sn).VLeak.DurationTime = Me.m_IntialSource.DurationT * 60  '排放持续时间转化为S
-                        Me.m_Sources(sn).VLeak.He = Me.m_IntialSource.H  '有效排放高度
-                        Me.m_Sources(sn).VLeak.S = Me.m_IntialSource.S_S  '体源的底面积
-                        Me.m_Sources(sn).VLeak.Hv = Me.m_IntialSource.Thickness  '体源的厚度
+                        Me.m_Sources(sn).VLeak.Q = InSource.Q0 * 1000000 '泄漏物质的速率mg/s
+                        Me.m_Sources(sn).VLeak.Ts = InSource.Ts0 + 273.15 '设置温度，摄氏度
+                        Me.m_Sources(sn).VLeak.DurationTime = InSource.DurationT * 60  '排放持续时间转化为S
+                        Me.m_Sources(sn).VLeak.He = InSource.H  '有效排放高度
+                        Me.m_Sources(sn).VLeak.S = InSource.S_S  '体源的底面积
+                        Me.m_Sources(sn).VLeak.Hv = InSource.Thickness  '体源的厚度
                 End Select
             Case 1 '(2)气体容器小孔、中孔泄漏
                 Dim QG As Double '排放速率kg/s
                 Dim Q1 As Double  '排气量，m3/s
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
-                    .H = Me.m_IntialSource.H   '泄漏源高度
+                    .H = InSource.H   '泄漏源高度
                     '计算结果泄漏速率
-                    .Ts = Me.m_IntialSource.InT + 273.15  '将摄氏度转化为绝对温度
-                    QG = CalculateLeakGas(Me.m_IntialSource.LeakGasShape, .Ts, Me.m_Chemical.LeakGasK, Me.m_ForeCast.Pa, Me.m_IntialSource.LeakGasP, Me.m_IntialSource.LeakGasA, Me.m_Chemical.LeakM) '计算气体泄漏速率,kg/s
+                    .Ts = InSource.InT + 273.15  '将摄氏度转化为绝对温度
+                    QG = CalculateLeakGas(InSource.LeakGasShape, .Ts, Me.m_Chemical.LeakGasK, Me.m_ForeCast.Pa, InSource.LeakGasP, InSource.LeakGasA, Me.m_Chemical.LeakM) '计算气体泄漏速率,kg/s
                     If QG = ErrorValue Then
                         Return False
                     End If
                     .Q = QG * 1000000 '泄漏速率，mg/s
                     Q1 = QG / Me.m_Chemical.LeakM * 22.4 / 1000
-                    .Qv = Q1 * Me.m_ForeCast.Pa / Me.m_IntialSource.LeakGasP  '等效排气量
-                    .D = System.Math.Sqrt(Me.m_IntialSource.LeakGasA / Math.PI) * 2 '等效排气筒直径
-                    .DH = RiseH(Pa_BP, .Qv, .D, .H, .Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, Me.m_IntialSource.Angle) '烟气抬升高度
+                    .Qv = Q1 * Me.m_ForeCast.Pa / InSource.LeakGasP  '等效排气量
+                    .D = System.Math.Sqrt(InSource.LeakGasA / Math.PI) * 2 '等效排气筒直径
+                    .DH = RiseH(Pa_BP, .Qv, .D, .H, .Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, InSource.Angle) '烟气抬升高度
                     .He = .H + .DH  '泄漏源有效高度
-                    If Me.m_IntialSource.DurationT * 60 <= Me.m_IntialSource.Q / QG Then
-                        .DurationTime = Me.m_IntialSource.DurationT * 60 '泄漏持续时间
+                    If InSource.DurationT * 60 <= InSource.Q / QG Then
+                        .DurationTime = InSource.DurationT * 60 '泄漏持续时间
                     Else
-                        .DurationTime = Me.m_IntialSource.Q / QG '泄漏持续时间
+                        .DurationTime = InSource.Q / QG '泄漏持续时间
                     End If
 
                     If .DurationTime Mod Me.Forecast.OutPut.IntervalTime > 0 Then
@@ -631,32 +637,32 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End With
                 '非正常排放模型,点源
                 Me.m_Sources(sn).PLeak.Name = Me.m_Chemical.Name0  '泄漏物质名称
-                Me.m_Sources(sn).PLeak.H = Me.m_IntialSource.H    '排放高度
-                Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.InT + 273.15 '设置温度，摄氏度
+                Me.m_Sources(sn).PLeak.H = InSource.H    '排放高度
+                Me.m_Sources(sn).PLeak.Ts = InSource.InT + 273.15 '设置温度，摄氏度
 
-                QG = CalculateLeakGas(Me.m_IntialSource.LeakGasShape, Me.m_Sources(sn).PLeak.Ts, Me.m_Chemical.LeakGasK, Me.m_ForeCast.Pa, Me.m_IntialSource.LeakGasP, Me.m_IntialSource.LeakGasA, Me.m_Chemical.LeakM) '计算气体泄漏速率,kg/s
+                QG = CalculateLeakGas(InSource.LeakGasShape, Me.m_Sources(sn).PLeak.Ts, Me.m_Chemical.LeakGasK, Me.m_ForeCast.Pa, InSource.LeakGasP, InSource.LeakGasA, Me.m_Chemical.LeakM) '计算气体泄漏速率,kg/s
                 Me.m_Sources(sn).PLeak.QAll = QG * 1000000 '泄漏速率，mg/s
                 Me.m_Sources(sn).PLeak.Q = QG * 1000000 '泄漏速率，mg/s
                 Q1 = QG / Me.m_Chemical.LeakM * 22.4 / 1000
-                Me.m_Sources(sn).PLeak.Qv = Q1 * Me.m_ForeCast.Pa / Me.m_IntialSource.LeakGasP  '等效排气量m3/s，
-                Me.m_Sources(sn).PLeak.D = System.Math.Sqrt(Me.m_IntialSource.LeakGasA / Math.PI) * 2 ' 等效排气筒直径
-                Me.m_Sources(sn).PLeak.DH = RiseH(Pa_BP, Me.m_Sources(sn).PLeak.Qv, Me.m_Sources(sn).PLeak.D, Me.m_Sources(sn).PLeak.H, Me.m_Sources(sn).PLeak.Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, Me.m_IntialSource.Angle) '烟气抬升高度
+                Me.m_Sources(sn).PLeak.Qv = Q1 * Me.m_ForeCast.Pa / InSource.LeakGasP  '等效排气量m3/s，
+                Me.m_Sources(sn).PLeak.D = System.Math.Sqrt(InSource.LeakGasA / Math.PI) * 2 ' 等效排气筒直径
+                Me.m_Sources(sn).PLeak.DH = RiseH(Pa_BP, Me.m_Sources(sn).PLeak.Qv, Me.m_Sources(sn).PLeak.D, Me.m_Sources(sn).PLeak.H, Me.m_Sources(sn).PLeak.Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, InSource.Angle) '烟气抬升高度
                 Me.m_Sources(sn).PLeak.He = Me.m_Sources(sn).PLeak.H + Me.m_Sources(sn).PLeak.DH  '泄漏源有效高度
-                If Me.m_IntialSource.DurationT * 60 <= Me.m_IntialSource.Q / QG Then
-                    Me.m_Sources(sn).PLeak.DurationTime = Me.m_IntialSource.DurationT * 60 '泄漏持续时间，S
+                If InSource.DurationT * 60 <= InSource.Q / QG Then
+                    Me.m_Sources(sn).PLeak.DurationTime = InSource.DurationT * 60 '泄漏持续时间，S
                 Else
-                    Me.m_Sources(sn).PLeak.DurationTime = Me.m_IntialSource.Q / QG '泄漏持续时间，S
+                    Me.m_Sources(sn).PLeak.DurationTime = InSource.Q / QG '泄漏持续时间，S
                 End If
 
             Case 2 '(3)气体容器爆裂
                 '多烟团模型
-                QLG = Me.m_IntialSource.Q   '总的储存量
+                QLG = InSource.Q   '总的储存量
                 E1 = QLG
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
                     .Q = QLG * 1000000 '泄漏速率，mg/s
-                    .H = Me.m_IntialSource.H
-                    .He = Me.m_IntialSource.H  '泄漏源有效高度
+                    .H = InSource.H
+                    .He = InSource.H  '泄漏源有效高度
                     .DurationTime = 1
                     .QpAll = QLG * 1000000
                     .QpAllT = 1
@@ -675,7 +681,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Me.m_Sources(sn).PLeak.QAll = MultiPLeak.QpAll
                 Me.m_Sources(sn).PLeak.Q = MultiPLeak.V1(1) * 1000000 '泄漏物质的速率mg/s
                 Me.m_Sources(sn).PLeak.DurationTime = MultiPLeak.DurationTime '排放持续时间转化为S
-                Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.InT + 273.15 '设置温度，摄氏度
+                Me.m_Sources(sn).PLeak.Ts = InSource.InT + 273.15 '设置温度，摄氏度
                 Me.m_Sources(sn).PLeak.Qv = 0 '排气量　m3/s
                 Me.m_Sources(sn).PLeak.H = MultiPLeak.He  '排放高度
                 Me.m_Sources(sn).PLeak.D = 1 '直径
@@ -684,12 +690,12 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Case 3 '(4)压力液化气容器液下小孔、中孔泄漏
 
                 '计算液体泄漏速率kg/s
-                QLG = CalculateLeakLiquid(1, Me.m_IntialSource.LeakLiquidCd, Me.m_IntialSource.LeakLiquidHeight, Me.m_IntialSource.LeakGasA, Me.m_Chemical.LeakLiquidPl, Me.m_IntialSource.LeakGasP, Me.m_ForeCast.Pa)
+                QLG = CalculateLeakLiquid(1, InSource.LeakLiquidCd, InSource.LeakLiquidHeight, InSource.LeakGasA, Me.m_Chemical.LeakLiquidPl, InSource.LeakGasP, Me.m_ForeCast.Pa)
                 If QLG = ErrorValue Then
                     Return False
                 End If
                 '计算泄漏液体的蒸发量速率kg/s
-                Fv_Renamed = CalculateLeakFv(Me.m_Chemical.LeakLiquidCP, Me.m_IntialSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH) '计算蒸发系数
+                Fv_Renamed = CalculateLeakFv(Me.m_Chemical.LeakLiquidCP, InSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH) '计算蒸发系数
                 If Fv_Renamed >= 0.2 Then
                     Return False
                 End If
@@ -702,17 +708,17 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End If
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
-                    .H = Me.m_IntialSource.H   '泄漏源高度
+                    .H = InSource.H   '泄漏源高度
                     '计算结果泄漏速率
-                    .Ts = Me.m_IntialSource.InT + 273.15 '将摄氏度转化为绝对温度
+                    .Ts = InSource.InT + 273.15 '将摄氏度转化为绝对温度
                     .QpAll = QLG * 1000000
                     .Q = E1 * 1000000 '泄漏速率，mg/s
                     .DH = 0 '烟气抬升高度
                     .He = .H + .DH  '泄漏源有效高度
-                    If Me.m_IntialSource.DurationT * 60 <= Me.m_IntialSource.Q / E1 Then
-                        .DurationTime = Me.m_IntialSource.DurationT * 60 '泄漏持续时间
+                    If InSource.DurationT * 60 <= InSource.Q / E1 Then
+                        .DurationTime = InSource.DurationT * 60 '泄漏持续时间
                     Else
-                        .DurationTime = Me.m_IntialSource.Q / E1 '泄漏持续时间
+                        .DurationTime = InSource.Q / E1 '泄漏持续时间
                     End If
                     If .DurationTime Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
                         .n = Fix(.DurationTime / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
@@ -737,39 +743,39 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 If Fv_Renamed < 0.2 Then   '如果有液体形成液池
                     With MultiSLeak
                         .Name = Me.m_Chemical.Name0
-                        .He = Me.m_IntialSource.SHe  '面源的有效高度
-                        .DurationTime = Me.m_IntialSource.VolatilizationT * 60 '面源的蒸发时间
-                        If (Me.m_IntialSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
+                        .He = InSource.SHe  '面源的有效高度
+                        .DurationTime = InSource.VolatilizationT * 60 '面源的蒸发时间
+                        If (InSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
                         Else
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
                         End If
                         .ResetMulti(.n) '设置烟团个数为n个
 
                         For i = 1 To .n Step 1
                             Ti = Fix(Me.m_ForeCast.OutPut.IntervalTime) * i
                             If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                Ti = Me.m_IntialSource.VolatilizationT * 60
+                                Ti = InSource.VolatilizationT * 60
                             End If
                             For j = stepT + (i - 1) * Me.m_ForeCast.OutPut.IntervalTime To Ti Step stepT '步长为0.1秒，求出每0.1秒的扩散面积及热量蒸发和质量蒸发量
-                                If j * E1 <= Me.m_IntialSource.Q Then  '计算某一时刻的泄漏到地面的量，以便计算液池半径
+                                If j * E1 <= InSource.Q Then  '计算某一时刻的泄漏到地面的量，以便计算液池半径
                                     QGround = j * (QLG - E1)  'kg
                                 Else
-                                    QGround = Me.m_IntialSource.Q  'kg
+                                    QGround = InSource.Q  'kg
                                 End If
                                 r = PoolR(Me.m_Chemical.LeakLiquidPl, QGround, j, MultiPLeak.QpAllT)
                                 Sj = PI * r * r
-                                If Sj >= Me.m_IntialSource.S Then '如果扩散面积>=液池面积，则取液池面积
-                                    Sj = Me.m_IntialSource.S
-                                    r = Math.Sqrt(Me.m_IntialSource.S / Math.PI)
+                                If Sj >= InSource.S Then '如果扩散面积>=液池面积，则取液池面积
+                                    Sj = InSource.S
+                                    r = Math.Sqrt(InSource.S / Math.PI)
                                 End If
                                 '先根据热量蒸发和质量蒸发速率求出最大液池面积，二分法--------------------------------------
                                 Dim S1, S2 As Double
                                 S1 = 0
                                 S2 = 1000000
                                 Smax = 0
-                                Vh = CalculateLeakHeat(Me.m_IntialSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
+                                Vh = CalculateLeakHeat(InSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
                                 If Vh = ErrorValue Or Vq = ErrorValue Then
                                     Return False
                                 End If
@@ -777,8 +783,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                     S2 = Sj
                                     While Math.Abs(Vh + Vq - (QLG - E1)) > 0.000001
                                         Smax = (S2 + S1) / 2
-                                        Vh = CalculateLeakHeat(Me.m_IntialSource.LeakEvaporationGround, Smax, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
-                                        Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Smax) '计算质量蒸发速率,kg/s,1km^2
+                                        Vh = CalculateLeakHeat(InSource.LeakEvaporationGround, Smax, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
+                                        Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Smax) '计算质量蒸发速率,kg/s,1km^2
                                         If Vh = ErrorValue Or Vq = ErrorValue Then
                                             Return False
                                         End If
@@ -790,9 +796,9 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                     End While
                                     Sj = Smax
                                 End If
-                                Vh = CalculateLeakHeat(Me.m_IntialSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
+                                Vh = CalculateLeakHeat(InSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
                                 Q2 = Q2 + Vh * stepT  '通过计算热量蒸发速率,计算出单位烟团的排放量kg
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
                                 Q3 = Q3 + Vq * stepT '计算质量蒸发速率,计算出单位烟团的排放量kg
                                 Q4 = Q2 + Q3 '计算出总的蒸发量
                                 .QsAllT = j '总的蒸发时间
@@ -855,23 +861,23 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Dim Q1 As Double  '排气量，m3/s
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
-                    .H = Me.m_IntialSource.H   '泄漏源高度
+                    .H = InSource.H   '泄漏源高度
                     '计算结果泄漏速率
-                    .Ts = Me.m_IntialSource.InT + 273.15  '将摄氏度转化为绝对温度
-                    QG = CalculateLeakGas(Me.m_IntialSource.LeakGasShape, .Ts, Me.m_Chemical.LeakGasK, Me.m_ForeCast.Pa, Me.m_IntialSource.LeakGasP, Me.m_IntialSource.LeakGasA, Me.m_Chemical.LeakM) '计算气体泄漏速率,kg/s
+                    .Ts = InSource.InT + 273.15  '将摄氏度转化为绝对温度
+                    QG = CalculateLeakGas(InSource.LeakGasShape, .Ts, Me.m_Chemical.LeakGasK, Me.m_ForeCast.Pa, InSource.LeakGasP, InSource.LeakGasA, Me.m_Chemical.LeakM) '计算气体泄漏速率,kg/s
                     If QG = ErrorValue Then
                         Return False
                     End If
                     .Q = QG * 1000000 '泄漏速率，mg/s
                     Q1 = QG / Me.m_Chemical.LeakM * 22.4 / 1000
-                    .Qv = Q1 * Me.m_ForeCast.Pa / Me.m_IntialSource.LeakGasP  '等效排气量
-                    .D = System.Math.Sqrt(Me.m_IntialSource.LeakGasA / Math.PI) * 2 '等效排气筒直径
-                    .DH = RiseH(Pa_BP, .Qv, .D, .H, .Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, Me.m_IntialSource.Angle) '烟气抬升高度
+                    .Qv = Q1 * Me.m_ForeCast.Pa / InSource.LeakGasP  '等效排气量
+                    .D = System.Math.Sqrt(InSource.LeakGasA / Math.PI) * 2 '等效排气筒直径
+                    .DH = RiseH(Pa_BP, .Qv, .D, .H, .Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, InSource.Angle) '烟气抬升高度
                     .He = .H + .DH  '泄漏源有效高度
-                    If Me.m_IntialSource.DurationT * 60 <= Me.m_IntialSource.Q / QG Then
-                        .DurationTime = Me.m_IntialSource.DurationT * 60 '泄漏持续时间
+                    If InSource.DurationT * 60 <= InSource.Q / QG Then
+                        .DurationTime = InSource.DurationT * 60 '泄漏持续时间
                     Else
-                        .DurationTime = Me.m_IntialSource.Q / QG '泄漏持续时间
+                        .DurationTime = InSource.Q / QG '泄漏持续时间
                     End If
 
                     If .DurationTime Mod Me.Forecast.OutPut.IntervalTime > 0 Then
@@ -894,26 +900,26 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End With
                 '非正常排放模型,点源
                 Me.m_Sources(sn).PLeak.Name = Me.m_Chemical.Name0  '泄漏物质名称
-                Me.m_Sources(sn).PLeak.H = Me.m_IntialSource.H    '排放高度
-                Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.InT + 273.15 '设置温度，摄氏度
+                Me.m_Sources(sn).PLeak.H = InSource.H    '排放高度
+                Me.m_Sources(sn).PLeak.Ts = InSource.InT + 273.15 '设置温度，摄氏度
 
-                QG = CalculateLeakGas(Me.m_IntialSource.LeakGasShape, Me.m_Sources(sn).PLeak.Ts, Me.m_Chemical.LeakGasK, Me.m_ForeCast.Pa, Me.m_IntialSource.LeakGasP, Me.m_IntialSource.LeakGasA, Me.m_Chemical.LeakM) '计算气体泄漏速率,kg/s
+                QG = CalculateLeakGas(InSource.LeakGasShape, Me.m_Sources(sn).PLeak.Ts, Me.m_Chemical.LeakGasK, Me.m_ForeCast.Pa, InSource.LeakGasP, InSource.LeakGasA, Me.m_Chemical.LeakM) '计算气体泄漏速率,kg/s
                 Me.m_Sources(sn).PLeak.QAll = QG * 1000000 '泄漏速率，mg/s
                 Me.m_Sources(sn).PLeak.Q = QG * 1000000 '泄漏速率，mg/s
                 Q1 = QG / Me.m_Chemical.LeakM * 22.4 / 1000
-                Me.m_Sources(sn).PLeak.Qv = Q1 * Me.m_ForeCast.Pa / Me.m_IntialSource.LeakGasP  '等效排气量m3/s，
-                Me.m_Sources(sn).PLeak.D = System.Math.Sqrt(Me.m_IntialSource.LeakGasA / Math.PI) * 2 ' 等效排气筒直径
-                Me.m_Sources(sn).PLeak.DH = RiseH(Pa_BP, Me.m_Sources(sn).PLeak.Qv, Me.m_Sources(sn).PLeak.D, Me.m_Sources(sn).PLeak.H, Me.m_Sources(sn).PLeak.Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, Me.m_IntialSource.Angle) '烟气抬升高度
+                Me.m_Sources(sn).PLeak.Qv = Q1 * Me.m_ForeCast.Pa / InSource.LeakGasP  '等效排气量m3/s，
+                Me.m_Sources(sn).PLeak.D = System.Math.Sqrt(InSource.LeakGasA / Math.PI) * 2 ' 等效排气筒直径
+                Me.m_Sources(sn).PLeak.DH = RiseH(Pa_BP, Me.m_Sources(sn).PLeak.Qv, Me.m_Sources(sn).PLeak.D, Me.m_Sources(sn).PLeak.H, Me.m_Sources(sn).PLeak.Ts, Ta_K, u10, Me.m_ForeCast.OutPut.GroundCharacter, stab, InSource.Angle) '烟气抬升高度
                 Me.m_Sources(sn).PLeak.He = Me.m_Sources(sn).PLeak.H + Me.m_Sources(sn).PLeak.DH  '泄漏源有效高度
-                If Me.m_IntialSource.DurationT * 60 <= Me.m_IntialSource.Q / QG Then
-                    Me.m_Sources(sn).PLeak.DurationTime = Me.m_IntialSource.DurationT * 60 '泄漏持续时间，S
+                If InSource.DurationT * 60 <= InSource.Q / QG Then
+                    Me.m_Sources(sn).PLeak.DurationTime = InSource.DurationT * 60 '泄漏持续时间，S
                 Else
-                    Me.m_Sources(sn).PLeak.DurationTime = Me.m_IntialSource.Q / QG '泄漏持续时间，S
+                    Me.m_Sources(sn).PLeak.DurationTime = InSource.Q / QG '泄漏持续时间，S
                 End If
             Case 5 '(6)压力液化气容器爆裂
                 '多烟团模型
-                QLG = Me.m_IntialSource.Q   '总的储存量
-                Fv_Renamed = CalculateLeakFv(Me.m_Chemical.LeakLiquidCP, Me.m_IntialSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH) '计算蒸发系数
+                QLG = InSource.Q   '总的储存量
+                Fv_Renamed = CalculateLeakFv(Me.m_Chemical.LeakLiquidCP, InSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH) '计算蒸发系数
                 If QLG = ErrorValue Or Fv_Renamed = ErrorValue Then
                     Return ErrorValue
                 End If
@@ -927,8 +933,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
                     .Q = E1 * 1000000 '泄漏速率，mg/s
-                    .H = Me.m_IntialSource.H
-                    .He = Me.m_IntialSource.H  '泄漏源有效高度
+                    .H = InSource.H
+                    .He = InSource.H  '泄漏源有效高度
                     .DurationTime = 1
                     .QpAll = QLG * 1000000
                     .QpAllT = 1
@@ -943,29 +949,29 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 If Fv_Renamed < 0.2 Then   '如果有液体形成液池
                     With MultiSLeak
                         .Name = Me.m_Chemical.Name0
-                        .He = Me.m_IntialSource.SHe  '面源的有效高度
-                        .DurationTime = Me.m_IntialSource.VolatilizationT * 60 '面源的蒸发时间
-                        If (Me.m_IntialSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
+                        .He = InSource.SHe  '面源的有效高度
+                        .DurationTime = InSource.VolatilizationT * 60 '面源的蒸发时间
+                        If (InSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
                         Else
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
                         End If
                         .ResetMulti(.n) '设置烟团个数为n个
                         For i = 1 To .n Step 1
                             Ti = Fix(Me.m_ForeCast.OutPut.IntervalTime) * i
                             If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                Ti = Me.m_IntialSource.VolatilizationT * 60
+                                Ti = InSource.VolatilizationT * 60
                             End If
                             For j = stepT + (i - 1) * CDbl(Me.m_ForeCast.OutPut.IntervalTime) To Ti Step stepT '步长为0.1秒，求出每0.1秒的扩散面积及热量蒸发和质量蒸发量
                                 r = PoolR(Me.m_Chemical.LeakLiquidPl, QLG - E1, j, MultiPLeak.QpAllT)
                                 Sj = PI * r * r
-                                If Sj >= Me.m_IntialSource.S Then '如果扩散面积>=液池面积，则取液池面积
-                                    Sj = Me.m_IntialSource.S
-                                    r = Math.Sqrt(Me.m_IntialSource.S / Math.PI)
+                                If Sj >= InSource.S Then '如果扩散面积>=液池面积，则取液池面积
+                                    Sj = InSource.S
+                                    r = Math.Sqrt(InSource.S / Math.PI)
                                 End If
-                                Vh = CalculateLeakHeat(Me.m_IntialSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率
+                                Vh = CalculateLeakHeat(InSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率
                                 Q2 = Q2 + Vh * stepT  '通过计算热量蒸发速率,计算出单位烟团的排放量kg
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率
                                 Q3 = Q3 + Vq * stepT '计算质量蒸发速率,计算出单位烟团的排放量kg
                                 .QsAllT = j '总的蒸发时间
                                 If Vh = ErrorValue Or Vq = ErrorValue Then
@@ -1004,7 +1010,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Me.m_Sources(sn).PLeak.QAll = MultiPLeak.QpAll
                 Me.m_Sources(sn).PLeak.Q = MultiPLeak.V1(1) * 1000000 '泄漏物质的速率mg/s
                 Me.m_Sources(sn).PLeak.DurationTime = MultiPLeak.DurationTime '排放持续时间转化为S
-                Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.InT + 273.15 '设置温度，摄氏度
+                Me.m_Sources(sn).PLeak.Ts = InSource.InT + 273.15 '设置温度，摄氏度
                 Me.m_Sources(sn).PLeak.Qv = 0 '排气量　m3/s
                 Me.m_Sources(sn).PLeak.H = MultiPLeak.He  '排放高度
                 Me.m_Sources(sn).PLeak.D = 1 '直径
@@ -1020,27 +1026,27 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Case 6 '(7)常压液体容器小孔、中孔泄漏
 
                 '计算液体泄漏速率kg/s
-                QLG = CalculateLeakLiquid(1, Me.m_IntialSource.LeakLiquidCd, Me.m_IntialSource.LeakLiquidHeight, Me.m_IntialSource.LeakGasA, Me.m_Chemical.LeakLiquidPl, Me.m_IntialSource.LeakGasP, Me.m_ForeCast.Pa)
+                QLG = CalculateLeakLiquid(1, InSource.LeakLiquidCd, InSource.LeakLiquidHeight, InSource.LeakGasA, Me.m_Chemical.LeakLiquidPl, InSource.LeakGasP, Me.m_ForeCast.Pa)
                 If QLG = ErrorValue Then
                     Return False
                 End If
                 '计算泄漏液体的蒸发量速率kg/s
-                Fv_Renamed = CalculateLeakFv(Me.m_Chemical.LeakLiquidCP, Me.m_IntialSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH) '计算蒸发系数
+                Fv_Renamed = CalculateLeakFv(Me.m_Chemical.LeakLiquidCP, InSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH) '计算蒸发系数
                 E1 = 0
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
                     .Q = E1 * 1000000 '泄漏速率，mg/s
-                    .H = Me.m_IntialSource.H   '泄漏源高度
+                    .H = InSource.H   '泄漏源高度
                     '计算结果泄漏速率
-                    .Ts = Me.m_IntialSource.InT + 273.15 '将摄氏度转化为绝对温度
+                    .Ts = InSource.InT + 273.15 '将摄氏度转化为绝对温度
                     .QpAll = QLG * 1000000
                     .Q = E1 * 1000000 '泄漏速率，mg/s
                     .DH = 0 '烟气抬升高度
                     .He = .H + .DH  '泄漏源有效高度
-                    If Me.m_IntialSource.DurationT * 60 <= Me.m_IntialSource.Q / E1 Then
-                        .DurationTime = Me.m_IntialSource.DurationT * 60 '泄漏持续时间
+                    If InSource.DurationT * 60 <= InSource.Q / E1 Then
+                        .DurationTime = InSource.DurationT * 60 '泄漏持续时间
                     Else
-                        .DurationTime = Me.m_IntialSource.Q / E1 '泄漏持续时间
+                        .DurationTime = InSource.Q / E1 '泄漏持续时间
                     End If
                     If .DurationTime Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
                         .n = Fix(.DurationTime / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
@@ -1065,31 +1071,31 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 If Fv_Renamed < 0.2 Then   '如果有液体形成液池
                     With MultiSLeak
                         .Name = Me.m_Chemical.Name0
-                        .He = Me.m_IntialSource.SHe  '面源的有效高度
-                        .DurationTime = Me.m_IntialSource.VolatilizationT * 60 '面源的蒸发时间
-                        If (Me.m_IntialSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
+                        .He = InSource.SHe  '面源的有效高度
+                        .DurationTime = InSource.VolatilizationT * 60 '面源的蒸发时间
+                        If (InSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
                         Else
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
                         End If
                         .ResetMulti(.n) '设置烟团个数为n个
 
                         For i = 1 To .n Step 1
                             Ti = Fix(Me.m_ForeCast.OutPut.IntervalTime) * i
                             If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                Ti = Me.m_IntialSource.VolatilizationT * 60
+                                Ti = InSource.VolatilizationT * 60
                             End If
                             For j = stepT + (i - 1) * Me.m_ForeCast.OutPut.IntervalTime To Ti Step stepT '步长为0.1秒，求出每0.1秒的扩散面积及热量蒸发和质量蒸发量
-                                If j * E1 <= Me.m_IntialSource.Q Then  '计算某一时刻的泄漏到地面的量，以便计算液池半径
+                                If j * E1 <= InSource.Q Then  '计算某一时刻的泄漏到地面的量，以便计算液池半径
                                     QGround = j * (QLG - E1)  'kg
                                 Else
-                                    QGround = Me.m_IntialSource.Q  'kg
+                                    QGround = InSource.Q  'kg
                                 End If
                                 r = PoolR(Me.m_Chemical.LeakLiquidPl, QGround, j, MultiPLeak.QpAllT)
                                 Sj = PI * r * r
-                                If Sj >= Me.m_IntialSource.S Then '如果扩散面积>=液池面积，则取液池面积
-                                    Sj = Me.m_IntialSource.S
-                                    r = Math.Sqrt(Me.m_IntialSource.S / Math.PI)
+                                If Sj >= InSource.S Then '如果扩散面积>=液池面积，则取液池面积
+                                    Sj = InSource.S
+                                    r = Math.Sqrt(InSource.S / Math.PI)
                                 End If
                                 '先根据热量蒸发和质量蒸发速率求出最大液池面积，二分法--------------------------------------
                                 Dim S1, S2 As Double
@@ -1097,7 +1103,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                 S2 = 1000000
                                 Smax = 0
                                 Vh = 0 '热量蒸发速率,kg/s
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
                                 If Vh = ErrorValue Or Vq = ErrorValue Then
                                     Return False
                                 End If
@@ -1106,7 +1112,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                     While Math.Abs(Vh + Vq - (QLG - E1)) > 0.000001
                                         Smax = (S2 + S1) / 2
                                         Vh = 0 '热量蒸发速率,kg/s
-                                        Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Smax) '计算质量蒸发速率,kg/s,1km^2
+                                        Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Smax) '计算质量蒸发速率,kg/s,1km^2
                                         If Vh = ErrorValue Or Vq = ErrorValue Then
                                             Return False
                                         End If
@@ -1120,7 +1126,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                 End If
                                 Vh = 0 '热量蒸发速率,kg/s
                                 Q2 = Q2 + Vh * stepT  '通过计算热量蒸发速率,计算出单位烟团的排放量kg
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
                                 Q3 = Q3 + Vq * stepT '计算质量蒸发速率,计算出单位烟团的排放量kg
                                 Q4 = Q2 + Q3 '计算出总的蒸发量
                                 .QsAllT = j '总的蒸发时间
@@ -1181,7 +1187,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
             Case 7 '(8)常压液体容器爆裂
                 '多烟团模型
-                QLG = Me.m_IntialSource.Q   '总的储存量
+                QLG = InSource.Q   '总的储存量
                 Fv_Renamed = 0 '计算蒸发系数
                 If QLG = ErrorValue Or Fv_Renamed = ErrorValue Then
                     Return ErrorValue
@@ -1196,8 +1202,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
                     .Q = E1 * 1000000 '泄漏速率，mg/s
-                    .H = Me.m_IntialSource.H
-                    .He = Me.m_IntialSource.H  '泄漏源有效高度
+                    .H = InSource.H
+                    .He = InSource.H  '泄漏源有效高度
                     .DurationTime = 1
                     .QpAll = QLG * 1000000
                     .QpAllT = 1
@@ -1212,29 +1218,29 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 If Fv_Renamed < 0.2 Then   '如果有液体形成液池
                     With MultiSLeak
                         .Name = Me.m_Chemical.Name0
-                        .He = Me.m_IntialSource.SHe  '面源的有效高度
-                        .DurationTime = Me.m_IntialSource.VolatilizationT * 60 '面源的蒸发时间
-                        If (Me.m_IntialSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
+                        .He = InSource.SHe  '面源的有效高度
+                        .DurationTime = InSource.VolatilizationT * 60 '面源的蒸发时间
+                        If (InSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
                         Else
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
                         End If
                         .ResetMulti(.n) '设置烟团个数为n个
                         For i = 1 To .n Step 1
                             Ti = Fix(Me.m_ForeCast.OutPut.IntervalTime) * i
                             If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                Ti = Me.m_IntialSource.VolatilizationT * 60
+                                Ti = InSource.VolatilizationT * 60
                             End If
                             For j = stepT + (i - 1) * CDbl(Me.m_ForeCast.OutPut.IntervalTime) To Ti Step stepT '步长为0.1秒，求出每0.1秒的扩散面积及热量蒸发和质量蒸发量
                                 r = PoolR(Me.m_Chemical.LeakLiquidPl, QLG - E1, j, MultiPLeak.QpAllT)
                                 Sj = PI * r * r
-                                If Sj >= Me.m_IntialSource.S Then '如果扩散面积>=液池面积，则取液池面积
-                                    Sj = Me.m_IntialSource.S
-                                    r = Math.Sqrt(Me.m_IntialSource.S / Math.PI)
+                                If Sj >= InSource.S Then '如果扩散面积>=液池面积，则取液池面积
+                                    Sj = InSource.S
+                                    r = Math.Sqrt(InSource.S / Math.PI)
                                 End If
                                 Vh = 0 '热量蒸发速率
                                 Q2 = Q2 + Vh * stepT  '通过计算热量蒸发速率,计算出单位烟团的排放量kg
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率
                                 Q3 = Q3 + Vq * stepT '计算质量蒸发速率,计算出单位烟团的排放量kg
                                 .QsAllT = j '总的蒸发时间
                                 If Vh = ErrorValue Or Vq = ErrorValue Then
@@ -1273,7 +1279,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Me.m_Sources(sn).PLeak.QAll = MultiPLeak.QpAll
                 Me.m_Sources(sn).PLeak.Q = MultiPLeak.V1(1) * 1000000 '泄漏物质的速率mg/s
                 Me.m_Sources(sn).PLeak.DurationTime = MultiPLeak.DurationTime '排放持续时间转化为S
-                Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.InT + 273.15 '设置温度，摄氏度
+                Me.m_Sources(sn).PLeak.Ts = InSource.InT + 273.15 '设置温度，摄氏度
                 Me.m_Sources(sn).PLeak.Qv = 0 '排气量　m3/s
                 Me.m_Sources(sn).PLeak.H = MultiPLeak.He  '排放高度
                 Me.m_Sources(sn).PLeak.D = 1 '直径
@@ -1290,9 +1296,9 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
             Case 8 '(9)压力液化气容器两相流泄漏
                 '计算两相泄漏速率kg/s
-                QLG = CalculateLeakTwo(Me.m_Chemical.LeakLiquidCP, Me.m_IntialSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, m_Chemical.Pg, m_Chemical.LeakLiquidPl, m_IntialSource.LeakTwoCd, m_IntialSource.LeakGasA, m_IntialSource.LeakGasP, m_IntialSource.LeakGasP * 0.55)
+                QLG = CalculateLeakTwo(Me.m_Chemical.LeakLiquidCP, InSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, m_Chemical.Pg, m_Chemical.LeakLiquidPl, InSource.LeakTwoCd, InSource.LeakGasA, InSource.LeakGasP, InSource.LeakGasP * 0.55)
                 '计算泄漏液体的蒸发量速率kg/s
-                Fv_Renamed = CalculateLeakFv(Me.m_Chemical.LeakLiquidCP, Me.m_IntialSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH) '计算蒸发系数
+                Fv_Renamed = CalculateLeakFv(Me.m_Chemical.LeakLiquidCP, InSource.InT, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH) '计算蒸发系数
                 If Fv_Renamed >= 0.2 Then
                     E1 = QLG
                 ElseIf Fv_Renamed <= 0 Then
@@ -1305,17 +1311,17 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End If
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
-                    .H = Me.m_IntialSource.H   '泄漏源高度
+                    .H = InSource.H   '泄漏源高度
                     '计算结果泄漏速率
-                    .Ts = Me.IntialSource.InT + 273.15 '将摄氏度转化为绝对温度
+                    .Ts = InSource.InT + 273.15 '将摄氏度转化为绝对温度
                     .QpAll = QLG * 1000000
                     .Q = E1 * 1000000 '泄漏速率，mg/s
                     .DH = 0 '烟气抬升高度
                     .He = .H + .DH  '泄漏源有效高度
-                    If Me.m_IntialSource.DurationT * 60 <= Me.m_IntialSource.Q / E1 Then
-                        .DurationTime = Me.m_IntialSource.DurationT * 60 '泄漏持续时间
+                    If InSource.DurationT * 60 <= InSource.Q / E1 Then
+                        .DurationTime = InSource.DurationT * 60 '泄漏持续时间
                     Else
-                        .DurationTime = Me.m_IntialSource.Q / E1 '泄漏持续时间
+                        .DurationTime = InSource.Q / E1 '泄漏持续时间
                     End If
                     If .DurationTime Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
                         .n = Fix(.DurationTime / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
@@ -1340,39 +1346,39 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 If Fv_Renamed < 0.2 Then   '如果有液体形成液池
                     With MultiSLeak
                         .Name = Me.m_Chemical.Name0
-                        .He = Me.m_IntialSource.SHe  '面源的有效高度
-                        .DurationTime = Me.m_IntialSource.VolatilizationT * 60 '面源的蒸发时间
-                        If (Me.m_IntialSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
+                        .He = InSource.SHe  '面源的有效高度
+                        .DurationTime = InSource.VolatilizationT * 60 '面源的蒸发时间
+                        If (InSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
                         Else
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
                         End If
                         .ResetMulti(.n) '设置烟团个数为n个
 
                         For i = 1 To .n Step 1
                             Ti = Fix(Me.m_ForeCast.OutPut.IntervalTime) * i
                             If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                Ti = Me.m_IntialSource.VolatilizationT * 60
+                                Ti = InSource.VolatilizationT * 60
                             End If
                             For j = stepT + (i - 1) * Me.m_ForeCast.OutPut.IntervalTime To Ti Step stepT '步长为0.1秒，求出每0.1秒的扩散面积及热量蒸发和质量蒸发量
-                                If j * E1 <= Me.m_IntialSource.Q Then  '计算某一时刻的泄漏到地面的量，以便计算液池半径
+                                If j * E1 <= InSource.Q Then  '计算某一时刻的泄漏到地面的量，以便计算液池半径
                                     QGround = j * (QLG - E1)  'kg
                                 Else
-                                    QGround = Me.m_IntialSource.Q  'kg
+                                    QGround = InSource.Q  'kg
                                 End If
                                 r = PoolR(Me.m_Chemical.LeakLiquidPl, QGround, j, MultiPLeak.QpAllT)
                                 Sj = PI * r * r
-                                If Sj >= Me.m_IntialSource.S Then '如果扩散面积>=液池面积，则取液池面积
-                                    Sj = Me.m_IntialSource.S
-                                    r = Math.Sqrt(Me.m_IntialSource.S / Math.PI)
+                                If Sj >= InSource.S Then '如果扩散面积>=液池面积，则取液池面积
+                                    Sj = InSource.S
+                                    r = Math.Sqrt(InSource.S / Math.PI)
                                 End If
                                 '先根据热量蒸发和质量蒸发速率求出最大液池面积，二分法--------------------------------------
                                 Dim S1, S2 As Double
                                 S1 = 0
                                 S2 = 1000000
                                 Smax = 0
-                                Vh = CalculateLeakHeat(Me.m_IntialSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
+                                Vh = CalculateLeakHeat(InSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
                                 If Vh = ErrorValue Or Vq = ErrorValue Then
                                     Return False
                                 End If
@@ -1380,8 +1386,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                     S2 = Sj
                                     While Math.Abs(Vh + Vq - (QLG - E1)) > 0.000001
                                         Smax = (S2 + S1) / 2
-                                        Vh = CalculateLeakHeat(Me.m_IntialSource.LeakEvaporationGround, Smax, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
-                                        Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Smax) '计算质量蒸发速率,kg/s,1km^2
+                                        Vh = CalculateLeakHeat(InSource.LeakEvaporationGround, Smax, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
+                                        Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Smax) '计算质量蒸发速率,kg/s,1km^2
                                         If Vh + Vq > QLG - E1 Then
                                             S2 = Smax
                                         Else
@@ -1390,9 +1396,9 @@ Imports System.Runtime.Serialization.Formatters.Binary
                                     End While
                                     Sj = Smax
                                 End If
-                                Vh = CalculateLeakHeat(Me.m_IntialSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
+                                Vh = CalculateLeakHeat(InSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率,kg/s
                                 Q2 = Q2 + Vh * stepT  '通过计算热量蒸发速率,计算出单位烟团的排放量kg
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率,kg/s
                                 Q3 = Q3 + Vq * stepT '计算质量蒸发速率,计算出单位烟团的排放量kg
                                 Q4 = Q2 + Q3 '计算出总的蒸发量
                                 .QsAllT = j '总的蒸发时间
@@ -1450,7 +1456,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
             Case 9 '(10)冷冻液化气容器小孔、中孔泄漏
                 '多烟团模型
-                QLG = Me.m_IntialSource.Q   '总的储存量
+                QLG = InSource.Q   '总的储存量
                 Fv_Renamed = 0 '计算蒸发系数
                 If QLG = ErrorValue Or Fv_Renamed = ErrorValue Then
                     Return ErrorValue
@@ -1465,8 +1471,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
                     .Q = E1 * 1000000 '泄漏速率，mg/s
-                    .H = Me.m_IntialSource.H
-                    .He = Me.m_IntialSource.H  '泄漏源有效高度
+                    .H = InSource.H
+                    .He = InSource.H  '泄漏源有效高度
                     .DurationTime = 1
                     .QpAll = QLG * 1000000
                     .QpAllT = 1
@@ -1481,29 +1487,29 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 If Fv_Renamed < 0.2 Then   '如果有液体形成液池
                     With MultiSLeak
                         .Name = Me.m_Chemical.Name0
-                        .He = Me.m_IntialSource.SHe  '面源的有效高度
-                        .DurationTime = Me.m_IntialSource.VolatilizationT * 60 '面源的蒸发时间
-                        If (Me.m_IntialSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
+                        .He = InSource.SHe  '面源的有效高度
+                        .DurationTime = InSource.VolatilizationT * 60 '面源的蒸发时间
+                        If (InSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
                         Else
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
                         End If
                         .ResetMulti(.n) '设置烟团个数为n个
                         For i = 1 To .n Step 1
                             Ti = Fix(Me.m_ForeCast.OutPut.IntervalTime) * i
                             If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                Ti = Me.m_IntialSource.VolatilizationT * 60
+                                Ti = InSource.VolatilizationT * 60
                             End If
                             For j = stepT + (i - 1) * CDbl(Me.m_ForeCast.OutPut.IntervalTime) To Ti Step stepT '步长为0.1秒，求出每0.1秒的扩散面积及热量蒸发和质量蒸发量
                                 r = PoolR(Me.m_Chemical.LeakLiquidPl, QLG - E1, j, MultiPLeak.QpAllT)
                                 Sj = PI * r * r
-                                If Sj >= Me.m_IntialSource.S Then '如果扩散面积>=液池面积，则取液池面积
-                                    Sj = Me.m_IntialSource.S
-                                    r = Math.Sqrt(Me.m_IntialSource.S / Math.PI)
+                                If Sj >= InSource.S Then '如果扩散面积>=液池面积，则取液池面积
+                                    Sj = InSource.S
+                                    r = Math.Sqrt(InSource.S / Math.PI)
                                 End If
-                                Vh = CalculateLeakHeat(Me.m_IntialSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率
+                                Vh = CalculateLeakHeat(InSource.LeakEvaporationGround, Sj, Me.m_ForeCast.Ta, Me.m_Chemical.LeakEvaporationTb, Me.m_Chemical.LeakLiquidH, j) '热量蒸发速率
                                 Q2 = Q2 + Vh * stepT  '通过计算热量蒸发速率,计算出单位烟团的排放量kg
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率
                                 Q3 = Q3 + Vq * stepT '计算质量蒸发速率,计算出单位烟团的排放量kg
                                 .QsAllT = j '总的蒸发时间
                                 If Vh = ErrorValue Or Vq = ErrorValue Then
@@ -1542,7 +1548,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Me.m_Sources(sn).PLeak.QAll = MultiPLeak.QpAll
                 Me.m_Sources(sn).PLeak.Q = MultiPLeak.V1(1) * 1000000 '泄漏物质的速率mg/s
                 Me.m_Sources(sn).PLeak.DurationTime = MultiPLeak.DurationTime '排放持续时间转化为S
-                Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.InT + 273.15 '设置温度，摄氏度
+                Me.m_Sources(sn).PLeak.Ts = InSource.InT + 273.15 '设置温度，摄氏度
                 Me.m_Sources(sn).PLeak.Qv = 0 '排气量　m3/s
                 Me.m_Sources(sn).PLeak.H = MultiPLeak.He  '排放高度
                 Me.m_Sources(sn).PLeak.D = 1 '直径
@@ -1558,7 +1564,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
             Case 10 '(11)冷冻液化气容器爆裂
                 '多烟团模型
-                QLG = Me.m_IntialSource.Q   '总的储存量
+                QLG = InSource.Q   '总的储存量
                 Fv_Renamed = 0 '计算蒸发系数
                 If QLG = ErrorValue Or Fv_Renamed = ErrorValue Then
                     Return ErrorValue
@@ -1573,8 +1579,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 With MultiPLeak
                     .Name = Me.m_Chemical.Name0
                     .Q = E1 * 1000000 '泄漏速率，mg/s
-                    .H = Me.m_IntialSource.H
-                    .He = Me.m_IntialSource.H  '泄漏源有效高度
+                    .H = InSource.H
+                    .He = InSource.H  '泄漏源有效高度
                     .DurationTime = 1
                     .QpAll = QLG * 1000000
                     .QpAllT = 1
@@ -1589,29 +1595,29 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 If Fv_Renamed < 0.2 Then   '如果有液体形成液池
                     With MultiSLeak
                         .Name = Me.m_Chemical.Name0
-                        .He = Me.m_IntialSource.SHe  '面源的有效高度
-                        .DurationTime = Me.m_IntialSource.VolatilizationT * 60 '面源的蒸发时间
-                        If (Me.m_IntialSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
+                        .He = InSource.SHe  '面源的有效高度
+                        .DurationTime = InSource.VolatilizationT * 60 '面源的蒸发时间
+                        If (InSource.VolatilizationT * 60) Mod Me.m_ForeCast.OutPut.IntervalTime > 0 Then
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime) + 1 '烟团个数
                         Else
-                            .n = Fix((Me.m_IntialSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
+                            .n = Fix((InSource.VolatilizationT * 60) / Me.m_ForeCast.OutPut.IntervalTime)
                         End If
                         .ResetMulti(.n) '设置烟团个数为n个
                         For i = 1 To .n Step 1
                             Ti = Fix(Me.m_ForeCast.OutPut.IntervalTime) * i
                             If i = .n Then  '第n个烟团的时间应为泄漏持续时间
-                                Ti = Me.m_IntialSource.VolatilizationT * 60
+                                Ti = InSource.VolatilizationT * 60
                             End If
                             For j = stepT + (i - 1) * CDbl(Me.m_ForeCast.OutPut.IntervalTime) To Ti Step stepT '步长为0.1秒，求出每0.1秒的扩散面积及热量蒸发和质量蒸发量
                                 r = PoolR(Me.m_Chemical.LeakLiquidPl, QLG - E1, j, MultiPLeak.QpAllT)
                                 Sj = PI * r * r
-                                If Sj >= Me.m_IntialSource.S Then '如果扩散面积>=液池面积，则取液池面积
-                                    Sj = Me.m_IntialSource.S
-                                    r = Math.Sqrt(Me.m_IntialSource.S / Math.PI)
+                                If Sj >= InSource.S Then '如果扩散面积>=液池面积，则取液池面积
+                                    Sj = InSource.S
+                                    r = Math.Sqrt(InSource.S / Math.PI)
                                 End If
                                 Vh = 0 '热量蒸发速率
                                 Q2 = Q2 + Vh * stepT  '通过计算热量蒸发速率,计算出单位烟团的排放量kg
-                                Vq = CalculateLeakQuality(stab, Me.m_IntialSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率
+                                Vq = CalculateLeakQuality(stab, InSource.LeakEvaporationP, Me.m_Chemical.LeakM, Me.m_ForeCast.Ta, Me.m_ForeCast.Met(sn).U_Ground, Sj) '计算质量蒸发速率
                                 Q3 = Q3 + Vq * stepT '计算质量蒸发速率,计算出单位烟团的排放量kg
                                 .QsAllT = j '总的蒸发时间
                                 If Vh = ErrorValue Or Vq = ErrorValue Then
@@ -1650,7 +1656,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Me.m_Sources(sn).PLeak.QAll = MultiPLeak.QpAll
                 Me.m_Sources(sn).PLeak.Q = MultiPLeak.V1(1) * 1000000 '泄漏物质的速率mg/s
                 Me.m_Sources(sn).PLeak.DurationTime = MultiPLeak.DurationTime '排放持续时间转化为S
-                Me.m_Sources(sn).PLeak.Ts = Me.m_IntialSource.InT + 273.15 '设置温度，摄氏度
+                Me.m_Sources(sn).PLeak.Ts = InSource.InT + 273.15 '设置温度，摄氏度
                 Me.m_Sources(sn).PLeak.Qv = 0 '排气量　m3/s
                 Me.m_Sources(sn).PLeak.H = MultiPLeak.He  '排放高度
                 Me.m_Sources(sn).PLeak.D = 1 '直径
@@ -1671,7 +1677,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Me.m_Sources(sn).MultiVLeak = MultiVLeak
 
         '重气体参数化
-        If Me.m_IntialSource.IsHeavy Then
+        If InSource.IsHeavy Then
             '瞬时重气体模型
             m_Heavy(sn) = New DisPuff.AllHeavy
             m_Heavy(sn).BoxHeavy.MgMol = m_Chemical.LeakM '摩尔质量
@@ -1681,7 +1687,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             m_Heavy(sn).BoxHeavy.boxMetAndMass.u10 = m_ForeCast.Met(sn).WindSpeed '风速
             m_Heavy(sn).BoxHeavy.boxMetAndMass.stab = m_ForeCast.Met(sn).Stab '稳定度
             m_Heavy(sn).BoxHeavy.boxMetAndMass.BoxAirMass(0) = New DisPuff.BoxAirMass
-            m_Heavy(sn).BoxHeavy.boxMetAndMass.BoxAirMass(0).m_Temp = m_IntialSource.InT + 273.15 '云团的初始温度
+            m_Heavy(sn).BoxHeavy.boxMetAndMass.BoxAirMass(0).m_Temp = InSource.InT + 273.15 '云团的初始温度
 
 
             '连续重气体模型
@@ -1694,7 +1700,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             m_Heavy(sn).SlabHeavy.SlabMetAndMass.stab = m_ForeCast.Met(sn).Stab '稳定度
             '设置初始状态
             m_Heavy(sn).SlabHeavy.SlabMetAndMass.slabAirMass(0) = New DisPuff.SlabAirMass
-            m_Heavy(sn).SlabHeavy.SlabMetAndMass.slabAirMass(0).m_Temp = m_IntialSource.InT + 273.15 '云团的初始温度
+            m_Heavy(sn).SlabHeavy.SlabMetAndMass.slabAirMass(0).m_Temp = InSource.InT + 273.15 '云团的初始温度
 
 
             '设置泄漏的量
@@ -1722,9 +1728,9 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 m_Heavy(sn).SlabHeavy.MgS = m_Heavy(sn).SlabHeavy.MgS + Me.m_Sources(sn).MultiVLeak.Q / 1000000 '泄漏物质的质量kg/s
             End If
             '设置空气卷入的量
-            m_Heavy(sn).BoxHeavy.boxMetAndMass.BoxAirMass(0).m_Ma = m_IntialSource.AirProportion * m_Heavy(sn).BoxHeavy.Mg  '卷入空气的初始质量
+            m_Heavy(sn).BoxHeavy.boxMetAndMass.BoxAirMass(0).m_Ma = InSource.AirProportion * m_Heavy(sn).BoxHeavy.Mg  '卷入空气的初始质量
 
-            m_Heavy(sn).SlabHeavy.MaS = m_IntialSource.AirProportion * m_Heavy(sn).SlabHeavy.MgS '卷入空气的初始质量,kg/s
+            m_Heavy(sn).SlabHeavy.MaS = InSource.AirProportion * m_Heavy(sn).SlabHeavy.MgS '卷入空气的初始质量,kg/s
 
             '计算重气体参数
             m_Heavy(sn).BoxHeavy.CalHeavy()
@@ -1732,365 +1738,13 @@ Imports System.Runtime.Serialization.Formatters.Binary
         End If
     End Function
 
-    ''' <summary>
-    ''' 计算网格点的滑移平均浓度、毒性负荷死亡概率和死亡百分率。并从中找出前n个风险值最大时对应的气象条件
-    ''' </summary>
-    ''' <param name="Sn">逐时的</param>
-    ''' <param name="nMaxMet">气象条件对应的前n个</param>
-    ''' <remarks></remarks>
-    Private Sub CalculateRisk_ChangeMulti(ByVal Sn As Integer, ByVal nMaxMet As Integer)  '计算网格点浓度分布
-        For iTime As Double = 0 To Math.Truncate(ModelSetting.MaxForeTime - 0) / ModelSetting.TimeStep
-            '第一步：计算预测时刻时排放的烟团的位置和扩散参数
 
-            '第二步：计算预测时刻的网格点和关心点的浓度，并找出最大浓度值。
-
-            '第三步：根据网格点的计算结果，计算对应的风险值
-
-        Next
-
-        Dim dblx As Double 'X轴坐标
-        Dim dbly As Double 'Y轴坐标
-        Dim dblz As Double 'Z轴坐标
-        Dim MinX As Double
-        Dim MaxY As Double
-        Dim Result As Double '定义计算结果
-        Dim i, j As Integer
-        '---------------------------------------------------------------
-        '计算风险值
-        '---------------------------------------------------------------
-        If Me.m_ForeCast.OutPut.IsRisk = True Then
-
-            Dim Pr(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double '用于暂时储存网格点的概率值Y
-            Dim D(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double '用于暂时储存网格点的概率值D
-            Dim MetRisk As Double = 0 '某一种气象条件下的事故风险值
-            Dim Risk As Double = 0 '用于暂时储存该气象条件下的风险值
-            Dim SlipGrid(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Slippage
-            Dim DiePeople As Double = 0 '死亡人数
-            If Me.m_ForeCast.OutPut.ChargeOrSlip = 0 Then
-                '---------------------------------------------------------------
-                '计算毒性负荷
-                '---------------------------------------------------------------
-                MinX = Me.m_ForeCast.Grid.MinX  'X轴从坐标负数到正数开始计算浓度
-                MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) 'y轴从坐标正数到负数开始计算浓度
-                dblx = MinX
-                dbly = MaxY
-                dblz = Me.m_ForeCast.Grid.WGH
-                '开始按网格点来计算预测浓度--------------------------------------------------------------
-                '是绝对坐标系统，需转换坐标
-                dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-
-                Dim nToxinConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
-
-                '以下开始按网格点计算浓度分布-------------------------------------------------------------------
-                For i = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
-                    For j = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
-                        '计算某一网格点的最大浓度出现时间及该网格点对应的时间步长各时刻的瞬时浓度。
-                        Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 1 * 3600, dblx, dbly, dblz, 60)
-                        'If dblMax.MaxC > 0 Then
-                        '    'Dim dblCnt As Double = ToxinCharge(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2) '用变步长求得毒性负荷的积分
-                        '    Dim dblCnt As Double = ToxinCharge(dblMax) '用变步长求得毒性负荷的积分
-                        '    Pr(j, i) = m_Chemical.PrA + m_Chemical.PrB * Math.Log(dblCnt) '计算概率值
-
-                        '    If Pr(j, i) < 0 Then
-                        '        Pr(j, i) = 0
-                        '    Else
-                        '        D(j, i) = DiePr.NormalSchool(Pr(j, i)) * 100 '计算死亡率，含百分号
-                        '        Me.m_Results.AllGridResult.PersonalRisk(j, i) += D(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '个人风险值叠加
-                        '        DiePeople += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100
-                        '        MetRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '事故风险值叠加
-                        '        Me.m_Results.AllGridResult.AllRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '总的事故概率叠加
-                        '    End If
-                        'End If
-
-                        MaxY = MaxY - Me.m_ForeCast.Grid.StepY  'y值逐渐减小
-                        '将网格点赋值给相应的坐标
-                        dblx = MinX / 1.0#
-                        dbly = MaxY / 1.0#
-
-                        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-
-                        Result = 0 '将结果置0
-                        '修改进度
-                        Me.m_Results.Status2 = "正在计算网格点的死亡概率和死亡百分率，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nToxinConut * 100, 1) & "%"
-
-                    Next j
-                    MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) '给maxY初始值
-                    MinX = MinX + Me.m_ForeCast.Grid.StepX  'minx增加
-                    '将网格点赋值给相应的坐标
-                    dblx = MinX / 1.0#
-                    dbly = MaxY / 1.0#
-                    '转换坐标
-                    dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                    dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                Next i
-
-            Else
-                '----------------------------------------------------------------------------------------------------------------------------------------
-                '计算网格的滑移平均最大浓度－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
-                '----------------------------------------------------------------------------------------------------------------------------------------
-                '计算网格点的扩散参数和浓度-----------------------
-                MinX = Me.m_ForeCast.Grid.MinX  'X轴从坐标负数到正数开始计算浓度
-                MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) 'y轴从坐标正数到负数开始计算浓度
-                dblx = MinX
-                dbly = MaxY
-                dblz = Me.m_ForeCast.Grid.WGH
-                '开始按网格点来计算预测浓度--------------------------------------------------------------
-                '是绝对坐标系统，需转换坐标
-                dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-
-                Dim nSlipConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
-                '以下开始按网格点计算浓度分布-------------------------------------------------------------------
-
-                For i = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
-                    For j = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
-                        If SlipGrid(j, i) Is Nothing Then
-                            SlipGrid(j, i) = New Slippage
-                        End If
-
-                        '计算某一将网格点的最大浓度出现时间
-                        Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 24 * 3600, dblx, dbly, dblz, 10)
-
-                        '计算将网格点的滑移平均最大浓度
-                        If dblMax.MaxC > 1 Then
-                            SlipGrid(j, i) = ReceptorMaxSlipAverage(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2)
-                            If SlipGrid(j, i).MaxCon >= Me.m_ForeCast.HurtConcentration(0).ConcentrationVale Then '如果滑移平均浓度>=LC50，则死亡概率为50，否则为0
-                                D(j, i) = 50 '计算死亡百分率%
-                                Me.m_Results.AllGridResult.PersonalRisk(j, i) += D(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '个人风险值叠加
-                                DiePeople += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100
-                                MetRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '事故风险值叠加
-                                Me.m_Results.AllGridResult.AllRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100  '总的事故概率叠加
-                            Else
-                                D(j, i) = 0
-                            End If
-                        End If
-
-                        MaxY = MaxY - Me.m_ForeCast.Grid.StepY  'y值逐渐减小
-                        '将网格点赋值给相应的坐标
-                        dblx = MinX / 1.0#
-                        dbly = MaxY / 1.0#
-
-                        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-
-                        Result = 0 '将结果置0
-
-                        '修改进度
-                        Me.m_Results.Status2 = "正在计算网格点的滑移平均最大值，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nSlipConut * 100, 1) & "%"
-
-                    Next j
-                    MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) '给maxY初始值
-                    MinX = MinX + Me.m_ForeCast.Grid.StepX  'minx增加
-                    '将网格点赋值给相应的坐标
-                    dblx = MinX / 1.0#
-                    dbly = MaxY / 1.0#
-                    '转换坐标
-                    dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                    dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-                Next i
-            End If
-
-            '根据计算结果找出前n大值来
-            For iMet As Integer = 0 To nMaxMet - 1
-                If MetRisk > Me.m_Results.AllGridResult.ArrayRisk(iMet) Then
-                    For jMet As Integer = nMaxMet - 2 To iMet Step -1
-                        Me.m_Results.AllGridResult.ArrayRisk(jMet + 1) = Me.m_Results.AllGridResult.ArrayRisk(jMet)
-                        Me.m_Results.AllGridResult.Pr(jMet + 1) = Me.m_Results.AllGridResult.Pr(jMet).Clone
-                        Me.m_Results.AllGridResult.D(jMet + 1) = Me.m_Results.AllGridResult.D(jMet).Clone
-                        Me.m_Results.AllGridResult.DiePeople(jMet + 1) = Me.m_Results.AllGridResult.DiePeople(jMet)
-                        Me.m_ForeCast.MaxMet(jMet + 1) = Me.m_ForeCast.MaxMet(jMet).Clone
-                        Me.m_Results.AllGridResult.SlipGrid = Me.m_Results.AllGridResult.SlipGrid
-                    Next
-                    Me.m_Results.AllGridResult.ArrayRisk(iMet) = MetRisk
-                    Me.m_Results.AllGridResult.Pr(iMet) = Pr.Clone
-                    Me.m_Results.AllGridResult.D(iMet) = D.Clone
-                    Me.m_Results.AllGridResult.DiePeople(iMet) = DiePeople
-                    Me.m_ForeCast.MaxMet(iMet) = Me.m_ForeCast.Met(Sn).Clone
-                    Me.m_Results.AllGridResult.SlipGrid = SlipGrid.Clone
-                    Exit Sub
-                End If
-            Next
-        End If
-
-
-        '-------------------------------------------------------------------------------------------------------
-
-        'Dim dblx As Double 'X轴坐标
-        'Dim dbly As Double 'Y轴坐标
-        'Dim dblz As Double 'Z轴坐标
-        'Dim MinX As Double
-        'Dim MaxY As Double
-        'Dim Result As Double '定义计算结果
-        'Dim i, j As Integer
-        ''---------------------------------------------------------------
-        ''计算风险值
-        ''---------------------------------------------------------------
-        'If Me.m_ForeCast.OutPut.IsRisk = True Then
-
-        '    Dim Pr(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double '用于暂时储存网格点的概率值Y
-        '    Dim D(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Double '用于暂时储存网格点的概率值D
-        '    Dim MetRisk As Double = 0 '某一种气象条件下的事故风险值
-        '    Dim Risk As Double = 0 '用于暂时储存该气象条件下的风险值
-        '    Dim SlipGrid(Me.m_ForeCast.Grid.CountY - 1, Me.m_ForeCast.Grid.CountX - 1) As Slippage
-        '    Dim DiePeople As Double = 0 '死亡人数
-        '    If Me.m_ForeCast.OutPut.ChargeOrSlip = 0 Then
-        '        '---------------------------------------------------------------
-        '        '计算毒性负荷
-        '        '---------------------------------------------------------------
-        '        MinX = Me.m_ForeCast.Grid.MinX  'X轴从坐标负数到正数开始计算浓度
-        '        MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) 'y轴从坐标正数到负数开始计算浓度
-        '        dblx = MinX
-        '        dbly = MaxY
-        '        dblz = Me.m_ForeCast.Grid.WGH
-        '        '开始按网格点来计算预测浓度--------------------------------------------------------------
-        '        '是绝对坐标系统，需转换坐标
-        '        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        '        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-
-        '        Dim nToxinConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
-
-        '        '以下开始按网格点计算浓度分布-------------------------------------------------------------------
-        '        For i = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
-        '            For j = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
-        '                '计算某一网格点的最大浓度出现时间及该网格点对应的时间步长各时刻的瞬时浓度。
-        '                Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 1 * 3600, dblx, dbly, dblz, 60)
-        '                'If dblMax.MaxC > 0 Then
-        '                '    'Dim dblCnt As Double = ToxinCharge(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2) '用变步长求得毒性负荷的积分
-        '                '    Dim dblCnt As Double = ToxinCharge(dblMax) '用变步长求得毒性负荷的积分
-        '                '    Pr(j, i) = m_Chemical.PrA + m_Chemical.PrB * Math.Log(dblCnt) '计算概率值
-
-        '                '    If Pr(j, i) < 0 Then
-        '                '        Pr(j, i) = 0
-        '                '    Else
-        '                '        D(j, i) = DiePr.NormalSchool(Pr(j, i)) * 100 '计算死亡率，含百分号
-        '                '        Me.m_Results.AllGridResult.PersonalRisk(j, i) += D(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '个人风险值叠加
-        '                '        DiePeople += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100
-        '                '        MetRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '事故风险值叠加
-        '                '        Me.m_Results.AllGridResult.AllRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '总的事故概率叠加
-        '                '    End If
-        '                'End If
-
-        '                MaxY = MaxY - Me.m_ForeCast.Grid.StepY  'y值逐渐减小
-        '                '将网格点赋值给相应的坐标
-        '                dblx = MinX / 1.0#
-        '                dbly = MaxY / 1.0#
-
-        '                dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        '                dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-
-        '                Result = 0 '将结果置0
-        '                '修改进度
-        '                Me.m_Results.Status2 = "正在计算网格点的死亡概率和死亡百分率，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nToxinConut * 100, 1) & "%"
-
-        '            Next j
-        '            MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) '给maxY初始值
-        '            MinX = MinX + Me.m_ForeCast.Grid.StepX  'minx增加
-        '            '将网格点赋值给相应的坐标
-        '            dblx = MinX / 1.0#
-        '            dbly = MaxY / 1.0#
-        '            '转换坐标
-        '            dblx = CoordinateX(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        '            dbly = CoordinateY(MinX / 1.0#, MaxY / 1.0#, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        '        Next i
-
-        '    Else
-        '        '----------------------------------------------------------------------------------------------------------------------------------------
-        '        '计算网格的滑移平均最大浓度－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
-        '        '----------------------------------------------------------------------------------------------------------------------------------------
-        '        '计算网格点的扩散参数和浓度-----------------------
-        '        MinX = Me.m_ForeCast.Grid.MinX  'X轴从坐标负数到正数开始计算浓度
-        '        MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) 'y轴从坐标正数到负数开始计算浓度
-        '        dblx = MinX
-        '        dbly = MaxY
-        '        dblz = Me.m_ForeCast.Grid.WGH
-        '        '开始按网格点来计算预测浓度--------------------------------------------------------------
-        '        '是绝对坐标系统，需转换坐标
-        '        dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        '        dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-
-        '        Dim nSlipConut As Integer = Me.m_ForeCast.Grid.CountX * Me.m_ForeCast.Grid.CountY
-        '        '以下开始按网格点计算浓度分布-------------------------------------------------------------------
-
-        '        For i = 0 To Me.m_ForeCast.Grid.CountX - 1 Step 1 '按X轴计算
-        '            For j = 0 To Me.m_ForeCast.Grid.CountY - 1 Step 1 '按Y轴计算
-        '                If SlipGrid(j, i) Is Nothing Then
-        '                    SlipGrid(j, i) = New Slippage
-        '                End If
-
-        '                '计算某一将网格点的最大浓度出现时间
-        '                Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 24 * 3600, dblx, dbly, dblz, 10)
-
-        '                '计算将网格点的滑移平均最大浓度
-        '                If dblMax.MaxC > 1 Then
-        '                    SlipGrid(j, i) = ReceptorMaxSlipAverage(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2)
-        '                    If SlipGrid(j, i).MaxCon >= Me.m_ForeCast.HurtConcentration(0).ConcentrationVale Then '如果滑移平均浓度>=LC50，则死亡概率为50，否则为0
-        '                        D(j, i) = 50 '计算死亡百分率%
-        '                        Me.m_Results.AllGridResult.PersonalRisk(j, i) += D(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '个人风险值叠加
-        '                        DiePeople += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) / 100
-        '                        MetRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100 '事故风险值叠加
-        '                        Me.m_Results.AllGridResult.AllRisk += D(j, i) * Me.m_ForeCast.Grid.GridPopulation(j, i) * Me.m_ForeCast.Met(Sn).Frequency / 100  '总的事故概率叠加
-        '                    Else
-        '                        D(j, i) = 0
-        '                    End If
-        '                End If
-
-        '                MaxY = MaxY - Me.m_ForeCast.Grid.StepY  'y值逐渐减小
-        '                '将网格点赋值给相应的坐标
-        '                dblx = MinX / 1.0#
-        '                dbly = MaxY / 1.0#
-
-        '                dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        '                dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-
-        '                Result = 0 '将结果置0
-
-        '                '修改进度
-        '                Me.m_Results.Status2 = "正在计算网格点的滑移平均最大值，已完成" & FormatNumber((i * Me.m_ForeCast.Grid.CountY + j) / nSlipConut * 100, 1) & "%"
-
-        '            Next j
-        '            MaxY = Me.m_ForeCast.Grid.MinY + Me.m_ForeCast.Grid.StepY * (Me.m_ForeCast.Grid.CountY - 1) '给maxY初始值
-        '            MinX = MinX + Me.m_ForeCast.Grid.StepX  'minx增加
-        '            '将网格点赋值给相应的坐标
-        '            dblx = MinX / 1.0#
-        '            dbly = MaxY / 1.0#
-        '            '转换坐标
-        '            dblx = CoordinateX(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        '            dbly = CoordinateY(MinX, MaxY, Me.m_ForeCast.Met(Sn).Vane, Me.m_IntialSource.Coordinate.x, Me.m_IntialSource.Coordinate.y, Me.m_ForeCast.Met(Sn).WindDer, Me.m_ForeCast.Met(Sn).WindType)
-        '        Next i
-        '    End If
-
-        '    '根据计算结果找出前n大值来
-        '    For iMet As Integer = 0 To nMaxMet - 1
-        '        If MetRisk > Me.m_Results.AllGridResult.ArrayRisk(iMet) Then
-        '            For jMet As Integer = nMaxMet - 2 To iMet Step -1
-        '                Me.m_Results.AllGridResult.ArrayRisk(jMet + 1) = Me.m_Results.AllGridResult.ArrayRisk(jMet)
-        '                Me.m_Results.AllGridResult.Pr(jMet + 1) = Me.m_Results.AllGridResult.Pr(jMet).Clone
-        '                Me.m_Results.AllGridResult.D(jMet + 1) = Me.m_Results.AllGridResult.D(jMet).Clone
-        '                Me.m_Results.AllGridResult.DiePeople(jMet + 1) = Me.m_Results.AllGridResult.DiePeople(jMet)
-        '                Me.m_ForeCast.MaxMet(jMet + 1) = Me.m_ForeCast.MaxMet(jMet).Clone
-        '                Me.m_Results.AllGridResult.SlipGrid(jMet + 1) = Me.m_Results.AllGridResult.SlipGrid(jMet).Clone
-        '            Next
-        '            Me.m_Results.AllGridResult.ArrayRisk(iMet) = MetRisk
-        '            Me.m_Results.AllGridResult.Pr(iMet) = Pr.Clone
-        '            Me.m_Results.AllGridResult.D(iMet) = D.Clone
-        '            Me.m_Results.AllGridResult.DiePeople(iMet) = DiePeople
-        '            Me.m_ForeCast.MaxMet(iMet) = Me.m_ForeCast.Met(Sn).Clone
-        '            Me.m_Results.AllGridResult.SlipGrid(iMet) = SlipGrid.Clone
-        '            Exit Sub
-        '        End If
-        '    Next
-        'End If
-
-
-    End Sub
 
     ''' <summary>
     ''' 计算绝对坐标的关心点浓度
     ''' </summary>
     ''' <remarks></remarks>
-    Private Sub CalculateRisk(ByVal Sn As Integer, ByVal workpath As String)
+    Private Sub CalculateRisk(ByVal Sn As Integer, ByVal workpath As String, ByVal InSource As IntialSource)
         '计算某一浓度关心点的最大浓度及出现时刻--------------------------------------------------------------------
         Dim startTime, endTime As Double '最大值可能出现的起始和结束时间
         startTime = 0
@@ -2152,7 +1806,9 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
         Dim MaxArrayResult(ArrayPoint.Length - 1) As RectableConAndTime  '储存当前气象条件的最大值
         Dim AllArrayResult(Me.m_ForeCast.OutPut.ForeCount - 1, ArrayPoint.Length - 1) As Double '当前气象条件下所有时刻的值。方便后面进行毒性负荷和滑移平均
-        Me.CalculateInstance(Sn, ArrayPoint, MaxArrayResult, AllArrayResult) '计算当前气象条件下的浓度
+
+        '当前气象条件下所有时刻的值。方便后面进行毒性负荷和滑移平均
+        Me.CalculateInstance(Sn, ArrayPoint, MaxArrayResult, AllArrayResult, InSource) '计算当前气象条件下的浓度
 
         '根据计算结果把所有的计算结果储存成网格和关心点的形式
         Dim Post As New PostCon
@@ -2181,7 +1837,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Post.m_TimeStep = Me.Forecast.OutPut.ForeInterval
         Post.m_TimeCount = Me.Forecast.OutPut.ForeCount
         '在这里把计算结果写到磁盘上
-        Post.Save(workpath & "Post\")
+        Post.Save(workpath & "Post\", InSource.ID)
 
         '找出全部的气象数组对应的各点高值来-----------------------------------
         L = 0
@@ -2200,7 +1856,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 Me.m_Results.Rectable.CareRectbleConAndTime(0, i) = MaxArrayResult(L + i)
             End If
         Next
-         '根据上面的瞬时计算结果来计算风险值----------------------------------------------------------------------------------------
+        '根据上面的瞬时计算结果来计算风险值----------------------------------------------------------------------------------------
         Dim Result As Double '定义计算结果
         If Me.m_ForeCast.OutPut.IsRisk = True Then
 
@@ -2353,9 +2009,9 @@ Imports System.Runtime.Serialization.Formatters.Binary
         '    End If
         'End If
     End Sub
-    Private Sub CalculateInstance(ByVal Sn As Integer, ByVal ArrayPoint As Point3D(), ByRef MaxArrayResult As RectableConAndTime(), ByRef AllArrayResult As Double(,))
+    Private Sub CalculateInstance(ByVal Sn As Integer, ByVal ArrayPoint As Point3D(), ByRef MaxArrayResult As RectableConAndTime(), ByRef AllArrayResult As Double(,), ByVal InSource As IntialSource)
 
-      
+
         '计算中气体参数-------------------------------------------------------
         Dim HeavyT, HeavyX As Double '重气团直径、高度、最大扩散时间、最大扩散距离、是否按重气团模型计算
         Dim Is_Heavy As Boolean = False   '是否按重气体模型
@@ -2364,7 +2020,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
         Dim dt As Double '云团时间间隔
         If Me.m_Sources(Sn).MultiPLeak.HeavyType = 0 Then '点源为瞬时重气体模型
             '重气体模型--------------------------------------------------------
-            If Me.m_IntialSource.IsHeavy = True Then
+            If InSource.IsHeavy = True Then
                 If Me.m_Heavy(Sn).BoxHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                     HeavyT = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t
                     HeavyX = HeavyT * Me.m_ForeCast.Met(Sn).u2
@@ -2375,7 +2031,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             End If
         ElseIf Me.m_Sources(Sn).MultiPLeak.HeavyType = 1 Then '点源为连续重气体模型
             '重气体模型--------------------------------------------------------
-            If Me.m_IntialSource.IsHeavy = True Then
+            If InSource.IsHeavy = True Then
                 If Me.m_Heavy(Sn).SlabHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                     HeavyX = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_x
                     HeavyT = HeavyX / Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.u10
@@ -2400,8 +2056,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 For i As Integer = 0 To FlogLeave.Length - 1
                     FlogLeave(i).Q = Me.Sources(Sn).MultiPLeak.Qi(i + 1)
                     FlogLeave(i).z = Me.Sources(Sn).MultiPLeak.He
-                    FlogLeave(i).x = Me.IntialSource.Coordinate.x
-                    FlogLeave(i).y = Me.IntialSource.Coordinate.y
+                    FlogLeave(i).x = InSource.Coordinate.x
+                    FlogLeave(i).y = InSource.Coordinate.y
                     FlogLeave(i).ax = 0
                     FlogLeave(i).az = 0
                     FlogLeave(i).LeaveTime = Me.Forecast.OutPut.IntervalTime * i
@@ -2411,11 +2067,11 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Dim TotalArrayResult(ArrayPoint.Length - 1) As Double
             For i As Integer = 0 To ListFlogLave.Count - 1
                 '生成烟团的轨迹和扩散参数
-                Dim ArrayFlogTrack() As FlogTrack = Formula.CreateMultiFlogTrack(Me.Forecast.Met, Sn, dblForecastTime, Me.Forecast.OutPut.GroundCharacter, ListFlogLave(i), Me.m_Sources(Sn).MultiPLeak.HeavyType, Me.m_IntialSource.IsHeavy, Me.m_Heavy(Sn), HeavyT, HeavyX, dt, dx)
+                Dim ArrayFlogTrack() As FlogTrack = Formula.CreateMultiFlogTrack(Me.Forecast.Met, Sn, dblForecastTime, Me.Forecast.OutPut.GroundCharacter, ListFlogLave(i), Me.m_Sources(Sn).MultiPLeak.HeavyType, InSource.IsHeavy, Me.m_Heavy(Sn), HeavyT, HeavyX, dt, dx)
                 '对扩散参数进行重气体修正
                 'HeavyPara(ArrayFlogTrack, Sn, dx, dt, dblForecastTime, HeavyT, HeavyX)
                 '根据烟团的扩散参数和位置，计算浓度
-                 Dim ArrayResult() As Double = Formula.Multi_Point_CommonGaussFog(ArrayFlogTrack, ArrayPoint)
+                Dim ArrayResult() As Double = Formula.Multi_Point_CommonGaussFog(ArrayFlogTrack, ArrayPoint)
                 For j As Integer = 0 To ArrayResult.Length - 1
                     TotalArrayResult(j) += ArrayResult(j)
                 Next
@@ -2443,13 +2099,13 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' <param name="HeavyT"></param>
     ''' <param name="HeavyX"></param>
     ''' <remarks></remarks>
-    Private Sub HeavyPara(ByVal ArryFlogLeave As FlogTrack(), ByVal Sn As Integer, ByVal dx As Double, ByVal dt As Double, ByVal dblForecastTime As Double, ByVal HeavyT As Double, ByVal HeavyX As Double)
+    Private Sub HeavyPara(ByVal ArryFlogLeave As FlogTrack(), ByVal Sn As Integer, ByVal dx As Double, ByVal dt As Double, ByVal dblForecastTime As Double, ByVal HeavyT As Double, ByVal HeavyX As Double, ByVal IsHeavy As Boolean)
         '对扩散参数进行重气体的修正
         Dim HeavyB, HeavyH As Double
         For j As Integer = 0 To ArryFlogLeave.Length - 1
             If Me.m_Sources(Sn).MultiPLeak.HeavyType = 0 Then '点源为瞬时重气体模型
                 '重气体模型--------------------------------------------------------
-                If Me.m_IntialSource.IsHeavy = True Then
+                If IsHeavy = True Then
                     If Me.m_Heavy(Sn).BoxHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                         If dblForecastTime <= HeavyT Then '如果预测时间小于重气体最大扩散时间
                             Dim nIndex As Integer = dblForecastTime / dt
@@ -2463,7 +2119,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End If
             ElseIf Me.m_Sources(Sn).MultiPLeak.HeavyType = 1 Then '点源为连续重气体模型
                 '重气体模型--------------------------------------------------------
-                If Me.m_IntialSource.IsHeavy = True Then
+                If IsHeavy = True Then
                     If Me.m_Heavy(Sn).SlabHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                         If ArryFlogLeave(j).Distance > 0 And ArryFlogLeave(j).Distance <= HeavyX Then '如果烟团中心距离小于重气体最大扩散距离
                             Dim nIndex As Integer = ArryFlogLeave(j).Distance / dx
@@ -2476,7 +2132,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                     End If
                 End If
             End If
-            If Me.m_IntialSource.IsHeavy = True Then '重气体修正---------------------------------------
+            If IsHeavy = True Then '重气体修正---------------------------------------
                 If ArryFlogLeave(j).Distance <= HeavyX Then
                     Dim ay As Double = HeavyB / 4.3 'y轴扩散参数
                     Dim az As Double = HeavyH / 2.15 'Z轴扩散参数，点源修正
@@ -2495,26 +2151,6 @@ Imports System.Runtime.Serialization.Formatters.Binary
             End If
         Next
     End Sub
-
-    ''' <summary>
-    ''' 计算绝对坐标的关心点浓度
-    ''' </summary>
-    ''' <remarks></remarks>
-    Private Function CalculateCareSlip(ByVal Sn As Integer, ByVal dblx As Double, ByVal dbly As Double, ByVal dblz As Double) As Slippage
-        '计算某一浓度关心点的最大浓度及出现时刻--------------------------------------------------------------------
-        Dim startTime, endTime As Double '最大值可能出现的起始和结束时间
-        startTime = 0 : endTime = 0
-        Dim strMax As String = "" '用于储存最大浓度及出现时间
-
-        '计算某一关心点的最大浓度出现时间
-        Dim dblMax As MaxCD = CarePointGroldCutCT(Sn, 0, 600 * 3600, dblx, dbly, dblz)
-        '计算关心点的滑移平均最大浓度
-        Dim ASlip As New Slippage
-        ASlip = ReceptorMaxSlipAverage(Sn, dblx, dbly, dblz, dblMax.maxT - Me.Forecast.OutPut.InhalationTime * 60 / 2, dblMax.maxT + Me.Forecast.OutPut.InhalationTime * 60 / 2)
-        Return ASlip
-    End Function
-
-    
     ''' <summary>
     ''' 这一模块用于计算不同的污染源的情况下的浓度值。
     ''' </summary>
@@ -2525,7 +2161,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' <param name="dblz">z坐标,m</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function ResultC(ByVal Sn As Integer, ByVal dblForecastTime As Double, ByVal dblx As Double, ByVal dbly As Double, ByVal dblz As Double) As Double
+    Private Function ResultC(ByVal Sn As Integer, ByVal dblForecastTime As Double, ByVal dblx As Double, ByVal dbly As Double, ByVal dblz As Double, ByVal InSource As IntialSource) As Double
         '点源泄漏
         Dim result As Double = 0
 
@@ -2535,7 +2171,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Dim ModolType As Integer = -1
             If Me.m_Sources(Sn).MultiPLeak.HeavyType = 0 Then '点源为瞬时重气体模型
                 '重气体模型--------------------------------------------------------
-                If Me.m_IntialSource.IsHeavy = True Then
+                If InSource.IsHeavy = True Then
                     If Me.m_Heavy(Sn).BoxHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                         HeavyT = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t
                         HeavyX = HeavyT * Me.m_ForeCast.Met(Sn).u2
@@ -2554,7 +2190,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End If
             ElseIf Me.m_Sources(Sn).MultiPLeak.HeavyType = 1 Then '点源为连续重气体模型
                 '重气体模型--------------------------------------------------------
-                If Me.m_IntialSource.IsHeavy = True Then
+                If InSource.IsHeavy = True Then
                     If Me.m_Heavy(Sn).SlabHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                         HeavyX = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_x
                         HeavyT = HeavyX / Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.u10
@@ -2589,7 +2225,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Dim ModolType As Integer = -1
             If Me.m_Sources(Sn).MultiSLeak.HeavyType = 0 Then '点源为瞬时重气体模型
                 '重气体模型--------------------------------------------------------
-                If Me.m_IntialSource.IsHeavy = True Then
+                If InSource.IsHeavy = True Then
                     If Me.m_Heavy(Sn).BoxHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                         HeavyT = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t
                         HeavyX = HeavyT * Me.m_ForeCast.Met(Sn).u2
@@ -2608,7 +2244,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End If
             ElseIf Me.m_Sources(Sn).MultiSLeak.HeavyType = 1 Then '点源为连续重气体模型
                 '重气体模型--------------------------------------------------------
-                If Me.m_IntialSource.IsHeavy = True Then
+                If InSource.IsHeavy = True Then
                     If Me.m_Heavy(Sn).SlabHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                         HeavyX = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_x
                         HeavyT = HeavyX / Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.u10
@@ -2632,7 +2268,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Dim stab As String = Me.m_ForeCast.Met(Sn).Stab  '第0行第3列，风速稳定度
 
             If Me.Forecast.OutPut.GaussModelType = 0 Then '多烟团模型
-                Select Case m_IntialSource.LeakType
+                Select Case InSource.LeakType
                     Case 0 '手动计算 ，重气体模型的瞬时手动计算
                         '计算排放高度处的风速
                         result = result + MultiFlogPSV(u10, Me.m_ForeCast.Met(Sn).u2, Me.m_Sources(Sn).MultiSLeak.He, stab, Me.m_ForeCast.OutPut.SamplingTime, Me.Forecast.OutPut.IntervalTime, dblForecastTime, Me.m_Sources(Sn).MultiSLeak, dblx, dbly, dblz, Me.m_ForeCast.OutPut.GroundCharacter, HeavyB, HeavyH, HeavyT, HeavyX, Is_Heavy, ModolType)
@@ -2640,7 +2276,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                         result = result + MultiFlogPSV(u10, Me.m_ForeCast.Met(Sn).U_Ground, Me.m_Sources(Sn).MultiSLeak.He, stab, Me.m_ForeCast.OutPut.SamplingTime, Me.Forecast.OutPut.IntervalTime, dblForecastTime, Me.m_Sources(Sn).MultiSLeak, dblx, dbly, dblz, Me.m_ForeCast.OutPut.GroundCharacter, HeavyB, HeavyH, HeavyT, HeavyX, Is_Heavy, ModolType)
                 End Select
             Else '非正常模型
-                Select Case m_IntialSource.LeakType
+                Select Case InSource.LeakType
                     Case 0 '手动计算 ，重气体模型的瞬时手动计算
                         result = result + UnormalModelPSV(u10, Me.m_ForeCast.Met(Sn).u2, Me.m_Sources(Sn).SLeak.He, stab, Me.m_ForeCast.OutPut.SamplingTime, Me.m_Sources(Sn).SLeak.DurationTime, dblForecastTime, Me.m_Sources(Sn).SLeak.Q, dblx, dbly, dblz, Me.m_ForeCast.OutPut.GroundCharacter, Me.m_Sources(Sn).SLeak.S, 0, HeavyB, HeavyH, HeavyT, HeavyX, Is_Heavy, ModolType)
                     Case Else '液体泄漏,两相流泄漏,液体容器破裂泄漏
@@ -2656,7 +2292,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Dim ModolType As Integer = -1
             If Me.m_Sources(Sn).MultiVLeak.HeavyType = 0 Then '点源为瞬时重气体模型
                 '重气体模型--------------------------------------------------------
-                If Me.m_IntialSource.IsHeavy = True Then
+                If InSource.IsHeavy = True Then
                     If Me.m_Heavy(Sn).BoxHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                         HeavyT = Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass(Me.m_Heavy(Sn).BoxHeavy.boxMetAndMass.BoxAirMass.Length - 1).m_t
                         HeavyX = HeavyT * Me.m_ForeCast.Met(Sn).u2
@@ -2675,7 +2311,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 End If
             ElseIf Me.m_Sources(Sn).MultiVLeak.HeavyType = 1 Then '点源为连续重气体模型
                 '重气体模型--------------------------------------------------------
-                If Me.m_IntialSource.IsHeavy = True Then
+                If InSource.IsHeavy = True Then
                     If Me.m_Heavy(Sn).SlabHeavy IsNot Nothing AndAlso Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length > 2 Then '重气云团至少有3个及以上气团持续时间
                         HeavyX = Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass(Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_x
                         HeavyT = HeavyX / Me.m_Heavy(Sn).SlabHeavy.SlabMetAndMass.u10
@@ -2702,7 +2338,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
                 result = result + MultiFlogPSV(u10, Me.m_ForeCast.Met(Sn).u2, Me.m_Sources(Sn).MultiVLeak.He, stab, Me.m_ForeCast.OutPut.SamplingTime, Me.Forecast.OutPut.IntervalTime, dblForecastTime, Me.m_Sources(Sn).MultiVLeak, dblx, dbly, dblz, Me.m_ForeCast.OutPut.GroundCharacter, HeavyB, HeavyH, HeavyT, HeavyX, Is_Heavy, ModolType)
 
             Else '非正常模型
-                result = result + UnormalModelPSV(u10, Me.m_ForeCast.Met(Sn).u2, Me.m_Sources(Sn).VLeak.He, stab, Me.m_ForeCast.OutPut.SamplingTime, Me.m_Sources(Sn).VLeak.DurationTime, dblForecastTime, Me.m_Sources(Sn).VLeak.Q, dblx, dbly, dblz, Me.m_ForeCast.OutPut.GroundCharacter, Me.m_Sources(Sn).VLeak.S, Me.m_Sources(Sn).VLeak.Hv, HeavyB, HeavyH, HeavyT, HeavyX, Me.m_IntialSource.IsHeavy, ModolType)
+                result = result + UnormalModelPSV(u10, Me.m_ForeCast.Met(Sn).u2, Me.m_Sources(Sn).VLeak.He, stab, Me.m_ForeCast.OutPut.SamplingTime, Me.m_Sources(Sn).VLeak.DurationTime, dblForecastTime, Me.m_Sources(Sn).VLeak.Q, dblx, dbly, dblz, Me.m_ForeCast.OutPut.GroundCharacter, Me.m_Sources(Sn).VLeak.S, Me.m_Sources(Sn).VLeak.Hv, HeavyB, HeavyH, HeavyT, HeavyX, InSource.IsHeavy, ModolType)
 
             End If
         End If
@@ -2831,222 +2467,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
     '    End If
     'End Function
 
-    ''' <summary>
-    ''' 这一模块返回两个时间之间给定浓度值的时刻
-    ''' </summary>
-    ''' <param name="Sn">预测气象条件对应的序号</param>
-    ''' <param name="dblx">预测点的x轴坐标,m</param>
-    ''' <param name="dbly">预测点的y轴坐标,m</param>
-    ''' <param name="dblz">预测点的z轴坐标,m</param>
-    ''' <param name="LowT">浓度值较低的时刻,s</param>
-    ''' <param name="HeighT">浓度值较高的时刻,s</param>
-    ''' <param name="SpecifyC">给定的浓度值,mg/m^3</param>
-    ''' <returns>返回给定的浓度值出现的时间,s</returns>
-    ''' <remarks></remarks>
-    Private Function CarePointCandT(ByVal Sn As Integer, ByVal dblx As Double, ByVal dbly As Double, ByVal dblz As Double, ByVal LowT As Double, ByVal HeighT As Double, ByVal SpecifyC As Double) As Double
-
-        Dim TCenter, F1, F2, FCenter As Double
-        '根据上面求出的数组，从后向前找出浓度值的范围。再用二分法求出给定的值
-        F1 = ResultC(Sn, LowT, dblx, dbly, dblz)
 
 
-        F2 = ResultC(Sn, HeighT, dblx, dbly, dblz)
-        '采用二分法求给定值
-        Do
-            TCenter = (LowT + HeighT) / 2
-
-            FCenter = ResultC(Sn, TCenter, dblx, dbly, dblz) '计算出中间值的浓度
-            If FCenter <= SpecifyC Then '如果中间值>=指定值
-                LowT = TCenter
-                F1 = FCenter
-            Else
-                HeighT = TCenter
-                F2 = FCenter
-            End If
-        Loop While Math.Abs(LowT - HeighT) > 0.1
-        Return TCenter
-    End Function
-    ''' <summary>
-    ''' 采用黄金分割法求给定关心点在某一时间内的最大值的浓度及时间。黄金分割法找出最大浓度的方法计算时间快，但如果浓度不是成抛物线分布，易出错。与其这样求，不如采用按步长的方法来计算，并将计算得到的网格浓度储存于一个数组内。
-    ''' </summary>
-    ''' <param name="Sn">预测气象条件对应的序号</param>
-    ''' <param name="LowT">较小的时刻</param>
-    ''' <param name="HighT">较大的时刻</param>
-    ''' <param name="dblx">x坐标</param>
-    ''' <param name="dbly">y坐标</param>
-    ''' <param name="dblz">z坐标</param>
-    ''' <param name="StepTime">计算的时间步长</param>
-    ''' <returns>返回MaxCD结构</returns>
-    ''' <remarks></remarks>
-    Private Function CarePointGroldCutCT(ByVal Sn As Integer, ByVal LowT As Double, ByVal HighT As Double, ByVal dblx As Double, ByVal dbly As Double, ByVal dblz As Double, Optional ByVal StepTime As Double = 10) As MaxCD
-        '采用黄金分割法求出给定时间段的最大值------------------
-        'Dim T1 As Double
-        'Dim T2 As Double
-        'T1 = LowT + 0.618 * (HighT - LowT)
-        'T2 = HighT - 0.618 * (HighT - LowT)
-        'Dim F1 As Double
-        'Dim F2 As Double
-        'Dim Fmax As Double
-        'Dim Tmax As Double
-        'Dim i As Integer = 1
-        'While (HighT - LowT) > 1
-
-        '    F1 = ResultC(Sn, T1, dblx, dbly, dblz) '计算浓度
-        '    F2 = ResultC(Sn, T2, dblx, dbly, dblz) '计算浓度
-        '    If F1 < F2 Or F1 <= 0 Then
-        '        HighT = T1
-        '        T1 = T2
-        '        T2 = HighT - 0.618 * (HighT - LowT)
-        '    Else
-        '        LowT = T2
-        '        T2 = T1
-        '        T1 = LowT + 0.618 * (HighT - LowT)
-        '    End If
-        '    i += 1
-        'End While
-        'Tmax = (T1 + T2) / 2
-        'If F2 > F1 Then
-        '    Fmax = F2
-        'Else
-        '    Fmax = F1
-        'End If
-        ''黄金分割法结束------------------------------------------ 
-        'Dim M As New MaxCD
-        'M.MaxC = Fmax
-        'M.maxT = Tmax
-        'Return M
-
-        Dim Fmax As Double
-        Dim Tmax As Double
-        Dim M As New MaxCD
-        ReDim M.ArrayC(Math.Truncate(HighT - LowT) / StepTime)
-        For i As Double = 0 To Math.Truncate(HighT - LowT) / StepTime
-            M.ArrayC(i) = ResultC(Sn, i * StepTime + LowT, dblx, dbly, dblz) '计算浓度
-
-            If Fmax < M.ArrayC(i) Then
-                Fmax = M.ArrayC(i)
-                Tmax = i * StepTime + LowT
-            End If
-        Next
-        M.MaxC = Fmax
-        M.maxT = Tmax
-        M.StepTime = StepTime
-        Return M
-    End Function
-
-    ''' <summary>
-    ''' 用于求任意给定点的最大滑移平均对象
-    ''' </summary>
-    ''' <param name="Sn">预测气象条件对应的序号</param>
-    ''' <param name="LowT">较小的时刻</param>
-    ''' <param name="HeighT">较大的时刻</param>
-    ''' <param name="dblx">x坐标</param>
-    ''' <param name="dbly">y坐标</param>
-    ''' <param name="dblz">z坐标</param>
-    ''' <returns>返回MaxCD结构</returns>
-    ''' <remarks></remarks>
-    Public Function ReceptorMaxSlipAverage(ByVal Sn As Integer, ByVal dblx As Double, ByVal dbly As Double, ByVal dblz As Double, ByVal LowT As Double, ByVal HeighT As Double) As Slippage
-        If LowT < 0 Then
-            HeighT = HeighT + Math.Abs(LowT)
-            LowT = 0
-        End If
-        '每指定间隔秒向前或向后求一个时间平均与最大值进行比较。
-        Dim ItialMax As Double = ReceptorIntegralAverage(Sn, dblx, dbly, dblz, LowT, HeighT)
-        Dim Intp As Integer = 10
-        Dim Lt As Double
-        Dim Ht As Double
-        Dim MaxTime As New StartAndEndTime
-        MaxTime.StartTime = LowT
-        MaxTime.EndTime = HeighT
-        Lt = LowT + Intp
-        Ht = HeighT + Intp
-        Dim slipmax_1 As Double = ReceptorIntegralAverage(Sn, dblx, dbly, dblz, Lt, Ht)
-
-        While slipmax_1 > ItialMax
-            ItialMax = slipmax_1
-            Lt = Lt
-            Ht = Ht
-            slipmax_1 = ReceptorIntegralAverage(Sn, dblx, dbly, dblz, Lt, Ht)
-            MaxTime.StartTime = Lt
-            MaxTime.EndTime = HeighT
-        End While
-        If LowT - Intp > 0 Then
-            Lt = LowT - Intp
-            Ht = HeighT - Intp
-            slipmax_1 = ReceptorIntegralAverage(Sn, dblx, dbly, dblz, Lt, Ht)
-            While slipmax_1 > ItialMax And Lt > 0
-                ItialMax = slipmax_1
-                Lt = Lt
-                Ht = Ht
-                slipmax_1 = ReceptorIntegralAverage(Sn, dblx, dbly, dblz, Lt, Ht)
-                MaxTime.StartTime = Lt
-                MaxTime.EndTime = HeighT
-            End While
-        End If
-        Dim sss As New Slippage
-        sss.MaxCon = ItialMax / (MaxTime.EndTime - MaxTime.StartTime)
-        sss.StartAndEndTimeTime = New StartAndEndTime
-        sss.StartAndEndTimeTime = MaxTime
-        Return sss
-
-    End Function
-
-    ''' <summary>
-    ''' 用变步长辛普生公式计算时间段内的浓度积分
-    ''' </summary>
-    ''' <param name="Sn">预测气象条件对应的序号</param>
-    ''' <param name="LowT">较小的时刻</param>
-    ''' <param name="HeighT">较大的时刻</param>
-    ''' <param name="dblx">x坐标</param>
-    ''' <param name="dbly">y坐标</param>
-    ''' <param name="dblz">z坐标</param>
-    ''' <returns>返回MaxCD结构</returns>
-    ''' <remarks></remarks>
-    Public Function ReceptorIntegralAverage(ByVal Sn As Integer, ByVal dblx As Double, ByVal dbly As Double, ByVal dblz As Double, ByVal LowT As Double, ByVal HeighT As Double) As Double
-
-
-        Dim N As Long
-        Dim K As Long
-        Dim t2, t1, ep, s1, H, s2 As Double
-        Dim p As Double
-        Dim x As Double
-        Dim a, b As Double
-        a = LowT
-        b = HeighT
-
-        Dim eps As Double
-        eps = 0.0000000001
-        N = 1
-        H = HeighT - a
-
-
-        Dim F1 As Double
-
-        F1 = ResultC(Sn, a, dblx, dbly, dblz)
-
-        Dim F2 As Double
-
-        F2 = ResultC(Sn, HeighT, dblx, dbly, dblz)
-
-        t1 = H * (F1 + F2) / 2.0#
-        s1 = t1
-        ep = eps + 1.0#
-        While (ep >= s1 / 100 + 0.1 Or N < 100)
-            p = 0.0#
-            For K = 0 To N - 1
-                x = a + (K + 0.5) * H
-                p = p + ResultC(Sn, x, dblx, dbly, dblz)
-            Next K
-            t2 = (t1 + H * p) / 2.0#
-            s2 = (4.0# * t2 - t1) / 3
-            ep = System.Math.Abs(s2 - s1)
-            t1 = t2
-            s1 = s2
-            N = N + N
-            H = H / 2.0#
-        End While
-        Return s2
-    End Function
     '毒性负荷
     Public Overloads Function ToxinCharge(ByVal ArrayC As Double(), ByVal steptime As Integer) As Double
         '  注意浓度单位为ppm，时间单位为min
@@ -3131,9 +2553,9 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' <param name="y">Y轴坐标</param>
     ''' <remarks></remarks>
     Public Sub SetSourceNameAndLocation(ByVal strName As String, ByVal x As Double, ByVal y As Double)
-        Me.m_IntialSource.LeakSourceName = strName
-        Me.m_IntialSource.Coordinate.x = x
-        Me.m_IntialSource.Coordinate.y = y
+        'Me.m_IntialSource.LeakSourceName = strName
+        'Me.m_IntialSource.Coordinate.x = x
+        'Me.m_IntialSource.Coordinate.y = y
     End Sub
 
 
@@ -3144,10 +2566,10 @@ Imports System.Runtime.Serialization.Formatters.Binary
     ''' <param name="DurationT">污染物泄漏到空气中持续的时间，单位min。</param>
     ''' <remarks></remarks>
     Public Sub SetLeakCustomPoint(ByVal Q0 As Double, ByVal DurationT As Double)
-        Me.m_IntialSource.LeakType = 0 '泄漏类型设置为自定义类型
-        Me.m_IntialSource.SourceType = 0 '设置为点源
-        Me.m_IntialSource.Q0 = Q0 '泄漏到空气中的速率
-        Me.m_IntialSource.DurationT = DurationT  '泄漏到空气中持续的时间
+        'Me.m_IntialSource.LeakType = 0 '泄漏类型设置为自定义类型
+        'Me.m_IntialSource.SourceType = 0 '设置为点源
+        'Me.m_IntialSource.Q0 = Q0 '泄漏到空气中的速率
+        'Me.m_IntialSource.DurationT = DurationT  '泄漏到空气中持续的时间
     End Sub
     ''' <summary>
     ''' 设置预测的时刻。可以设置等间距的多个时刻
@@ -3304,7 +2726,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
             Return False
         End If
     End Function
-    
+
     Public Sub SetToxicity(ByVal HurtConcentration As HurtConcentration())
         ReDim Me.Forecast.HurtConcentration(HurtConcentration.Length - 1)
         For i As Integer = 0 To HurtConcentration.Length - 1

@@ -151,10 +151,10 @@ Public Class frmDrawContour
         ReDim PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0)
         '点源
         PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0) = New DrawContour.NameAndPoints
-        PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).Name = Project0.Dis0.IntialSource.LeakSourceName '设置点源
+        'PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).Name = Project0.Dis0.IntialSource.LeakSourceName '设置点源
         ReDim PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).ArrayPoint(0)
-        PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).ArrayPoint(0).x = Project0.Dis0.IntialSource.Coordinate.x
-        PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).ArrayPoint(0).y = Project0.Dis0.IntialSource.Coordinate.y
+        'PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).ArrayPoint(0).x = Project0.Dis0.IntialSource.Coordinate.x
+        'PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).ArrayPoint(0).y = Project0.Dis0.IntialSource.Coordinate.y
         PolluteSymbols.PointSourceSymbols.ArrayPointSourceNameAndPoints(0).Type = 0
         Dim CareSymbols As DrawContour.CareSymbols = ContourPaint1.ContourPaintSetting.ContourPannel.Symbols.CareSymbols
         If Project0.PType = 0 Then '泄漏事故
@@ -551,8 +551,8 @@ Public Class frmDrawContour
                     Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
                     'End If
                 Next
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
                 '重新计算等值线
                 'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
                 'Me.ContourPaint1.ContourPaintSetting.ResetCountData()
@@ -598,9 +598,9 @@ Public Class frmDrawContour
                     'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
                     'End If
                 Next
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
-                '重新计算等值线
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+                ''重新计算等值线
                 'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
                 'Me.ContourPaint1.ContourPaintSetting.ResetCountData()
                 Me.ContourPaint1.Refresh()
@@ -643,9 +643,9 @@ Public Class frmDrawContour
                     'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
                     'End If
                 Next
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-                Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
-                '重新计算等值线
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+                'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+                ''重新计算等值线
                 'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
                 'Me.ContourPaint1.ContourPaintSetting.ResetCountData()
                 'Me.ContourPaint1.Refresh()
@@ -682,9 +682,9 @@ Public Class frmDrawContour
                 'Me.ContourPaint1.ContourPaintSetting.ArrayHurtValue(m) = Project0.Dis0.Results.MetResults(cmbMet.SelectedIndex).ForeTimeResults(cmbTime.SelectedIndex).HurtLength(m)
                 'End If
             Next
-            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
-            Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
-            '重新计算等值线
+            'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.x0 = Project0.Dis0.IntialSource.Coordinate.x
+            'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.y0 = Project0.Dis0.IntialSource.Coordinate.y
+            ''重新计算等值线
             'Me.ContourPaint1.ContourPaintSetting.ContourPannel.Contours.ReCalContour = True
             'Me.ContourPaint1.ContourPaintSetting.ResetCountData()
             'Me.ContourPaint1.Refresh()
