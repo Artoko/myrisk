@@ -4,6 +4,12 @@
 ''' <remarks></remarks>
 <Serializable()> Public Class IntialSource
     ''' <summary>
+    ''' 污染源的ID值，表示唯一的污染源编号
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private m_ID As String
+   
+    ''' <summary>
     ''' 泄漏事故预测类型
     ''' </summary>
     ''' <remarks></remarks>
@@ -45,7 +51,7 @@
     ''' </summary>
     ''' <remarks></remarks>
     Private m_D_P As Double = 0.5
-    
+
     ''' <summary>
     ''' 面源面积，m2。
     ''' </summary>
@@ -167,6 +173,25 @@
     ''' </summary>
     ''' <remarks></remarks>
     Private m_Probability As Double = 0.00001
+
+
+    ''' <summary>
+    ''' 污染源的ID值，表示唯一的污染源编号
+    ''' </summary>
+    ''' <remarks></remarks>
+    Property ID() As String
+        Get
+            Return Me.m_ID
+        End Get
+        Set(ByVal value As String)
+            Me.m_ID = value
+        End Set
+    End Property
+
+
+    
+
+
     ''' <summary>
     ''' 泄漏事故预测类型
     ''' </summary>
@@ -266,7 +291,7 @@
             Me.m_Qv_P = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 排放口直径，m。
     ''' </summary>
@@ -281,7 +306,7 @@
             Me.m_D_P = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 面源面积，m2。
     ''' </summary>
@@ -296,7 +321,7 @@
             Me.m_S_S = value
         End Set
     End Property
-    
+
     ''' <summary>
     ''' 体源的高度（厚度）,m。
     ''' </summary>

@@ -92,6 +92,10 @@ Partial Class frmLeakSource
         Me.txtTa = New Chart.CText()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
+        Me.lstSource = New System.Windows.Forms.ListBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.cmdAdd = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
@@ -118,7 +122,7 @@ Partial Class frmLeakSource
         Me.GroupBox6.Controls.Add(Me.txtLeakLiquidHeight)
         Me.GroupBox6.Controls.Add(Me.Label45)
         Me.GroupBox6.Controls.Add(Me.Label6)
-        Me.GroupBox6.Location = New System.Drawing.Point(31, 296)
+        Me.GroupBox6.Location = New System.Drawing.Point(250, 280)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.Size = New System.Drawing.Size(253, 199)
         Me.GroupBox6.TabIndex = 217
@@ -350,7 +354,7 @@ Partial Class frmLeakSource
         Me.GroupBox11.Controls.Add(Me.Label44)
         Me.GroupBox11.Controls.Add(Me.Label47)
         Me.GroupBox11.Controls.Add(Me.Label37)
-        Me.GroupBox11.Location = New System.Drawing.Point(31, 165)
+        Me.GroupBox11.Location = New System.Drawing.Point(250, 149)
         Me.GroupBox11.Name = "GroupBox11"
         Me.GroupBox11.Size = New System.Drawing.Size(253, 125)
         Me.GroupBox11.TabIndex = 216
@@ -456,7 +460,7 @@ Partial Class frmLeakSource
         Me.GroupBox12.Controls.Add(Me.Label9)
         Me.GroupBox12.Controls.Add(Me.txtY)
         Me.GroupBox12.Controls.Add(Me.txtX)
-        Me.GroupBox12.Location = New System.Drawing.Point(31, 86)
+        Me.GroupBox12.Location = New System.Drawing.Point(250, 70)
         Me.GroupBox12.Name = "GroupBox12"
         Me.GroupBox12.Size = New System.Drawing.Size(253, 72)
         Me.GroupBox12.TabIndex = 225
@@ -511,7 +515,7 @@ Partial Class frmLeakSource
         Me.txtLeakSourceName.BackColor = System.Drawing.SystemColors.Window
         Me.txtLeakSourceName.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtLeakSourceName.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.txtLeakSourceName.Location = New System.Drawing.Point(128, 55)
+        Me.txtLeakSourceName.Location = New System.Drawing.Point(347, 39)
         Me.txtLeakSourceName.MaxLength = 0
         Me.txtLeakSourceName.Name = "txtLeakSourceName"
         Me.txtLeakSourceName.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -525,7 +529,7 @@ Partial Class frmLeakSource
         Me.Label67.BackColor = System.Drawing.Color.Transparent
         Me.Label67.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label67.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label67.Location = New System.Drawing.Point(51, 58)
+        Me.Label67.Location = New System.Drawing.Point(270, 42)
         Me.Label67.Name = "Label67"
         Me.Label67.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Label67.Size = New System.Drawing.Size(71, 12)
@@ -538,7 +542,7 @@ Partial Class frmLeakSource
         Me.lblQ8.BackColor = System.Drawing.Color.Transparent
         Me.lblQ8.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblQ8.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.lblQ8.Location = New System.Drawing.Point(361, 86)
+        Me.lblQ8.Location = New System.Drawing.Point(580, 70)
         Me.lblQ8.Name = "lblQ8"
         Me.lblQ8.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.lblQ8.Size = New System.Drawing.Size(101, 12)
@@ -549,7 +553,7 @@ Partial Class frmLeakSource
         'txtQ0
         '
         Me.txtQ0.DataType = Chart.DataType.DataDouble
-        Me.txtQ0.Location = New System.Drawing.Point(468, 83)
+        Me.txtQ0.Location = New System.Drawing.Point(687, 67)
         Me.txtQ0.MaxValue = 0.0R
         Me.txtQ0.MinValue = 0.0R
         Me.txtQ0.Name = "txtQ0"
@@ -564,7 +568,7 @@ Partial Class frmLeakSource
         Me.cbmSourceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbmSourceType.FormattingEnabled = True
         Me.cbmSourceType.Items.AddRange(New Object() {"点源", "面源", "体源"})
-        Me.cbmSourceType.Location = New System.Drawing.Point(468, 55)
+        Me.cbmSourceType.Location = New System.Drawing.Point(687, 39)
         Me.cbmSourceType.Name = "cbmSourceType"
         Me.cbmSourceType.Size = New System.Drawing.Size(100, 20)
         Me.cbmSourceType.TabIndex = 229
@@ -572,7 +576,7 @@ Partial Class frmLeakSource
         'Label49
         '
         Me.Label49.AutoSize = True
-        Me.Label49.Location = New System.Drawing.Point(427, 58)
+        Me.Label49.Location = New System.Drawing.Point(646, 42)
         Me.Label49.Name = "Label49"
         Me.Label49.Size = New System.Drawing.Size(35, 12)
         Me.Label49.TabIndex = 228
@@ -581,7 +585,7 @@ Partial Class frmLeakSource
         'LabelS
         '
         Me.LabelS.AutoSize = True
-        Me.LabelS.Location = New System.Drawing.Point(367, 113)
+        Me.LabelS.Location = New System.Drawing.Point(586, 97)
         Me.LabelS.Name = "LabelS"
         Me.LabelS.Size = New System.Drawing.Size(95, 12)
         Me.LabelS.TabIndex = 230
@@ -590,7 +594,7 @@ Partial Class frmLeakSource
         'txtS_S
         '
         Me.txtS_S.DataType = Chart.DataType.DataDouble
-        Me.txtS_S.Location = New System.Drawing.Point(468, 110)
+        Me.txtS_S.Location = New System.Drawing.Point(687, 94)
         Me.txtS_S.MaxValue = 0.0R
         Me.txtS_S.MinValue = 0.0R
         Me.txtS_S.Name = "txtS_S"
@@ -606,7 +610,7 @@ Partial Class frmLeakSource
         Me.Label29.BackColor = System.Drawing.Color.Transparent
         Me.Label29.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label29.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label29.Location = New System.Drawing.Point(367, 140)
+        Me.Label29.Location = New System.Drawing.Point(586, 124)
         Me.Label29.Name = "Label29"
         Me.Label29.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Label29.Size = New System.Drawing.Size(95, 12)
@@ -617,7 +621,7 @@ Partial Class frmLeakSource
         'txtThickness
         '
         Me.txtThickness.DataType = Chart.DataType.DataDouble
-        Me.txtThickness.Location = New System.Drawing.Point(468, 137)
+        Me.txtThickness.Location = New System.Drawing.Point(687, 121)
         Me.txtThickness.MaxValue = 0.0R
         Me.txtThickness.MinValue = 0.0R
         Me.txtThickness.Name = "txtThickness"
@@ -640,7 +644,7 @@ Partial Class frmLeakSource
         Me.GroupBox5.Controls.Add(Me.Label7)
         Me.GroupBox5.Controls.Add(Me.Label34)
         Me.GroupBox5.Controls.Add(Me.cmbLeakEvaporationGround)
-        Me.GroupBox5.Location = New System.Drawing.Point(332, 165)
+        Me.GroupBox5.Location = New System.Drawing.Point(551, 149)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Size = New System.Drawing.Size(253, 166)
         Me.GroupBox5.TabIndex = 235
@@ -811,7 +815,7 @@ Partial Class frmLeakSource
         Me.cmbLeakType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLeakType.FormattingEnabled = True
         Me.cmbLeakType.Items.AddRange(New Object() {"(1)自定义泄漏源", "(2)气体容器小孔、中孔泄漏", "(3)气体容器爆裂", "(4)压力液化气容器液下小孔、中孔泄漏", "(5)压力液化气容器液上小孔、中孔泄漏", "(6)压力液化气容器爆裂", "(7)常压液体容器小孔、中孔泄漏", "(8)常压液体容器爆裂", "(9)压力液化气容器两相流泄漏", "(10)冷冻液化气容器小孔、中孔泄漏", "(11)冷冻液化气容器爆裂"})
-        Me.cmbLeakType.Location = New System.Drawing.Point(117, 22)
+        Me.cmbLeakType.Location = New System.Drawing.Point(336, 6)
         Me.cmbLeakType.Name = "cmbLeakType"
         Me.cmbLeakType.Size = New System.Drawing.Size(320, 20)
         Me.cmbLeakType.TabIndex = 246
@@ -819,7 +823,7 @@ Partial Class frmLeakSource
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(28, 25)
+        Me.Label11.Location = New System.Drawing.Point(247, 9)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(83, 12)
         Me.Label11.TabIndex = 247
@@ -827,7 +831,7 @@ Partial Class frmLeakSource
         '
         'm_OK
         '
-        Me.m_OK.Location = New System.Drawing.Point(391, 521)
+        Me.m_OK.Location = New System.Drawing.Point(393, 505)
         Me.m_OK.Name = "m_OK"
         Me.m_OK.Size = New System.Drawing.Size(75, 23)
         Me.m_OK.TabIndex = 248
@@ -836,7 +840,7 @@ Partial Class frmLeakSource
         '
         'm_Cancel
         '
-        Me.m_Cancel.Location = New System.Drawing.Point(472, 521)
+        Me.m_Cancel.Location = New System.Drawing.Point(474, 505)
         Me.m_Cancel.Name = "m_Cancel"
         Me.m_Cancel.Size = New System.Drawing.Size(75, 23)
         Me.m_Cancel.TabIndex = 249
@@ -864,7 +868,7 @@ Partial Class frmLeakSource
         Me.GroupBox1.Controls.Add(Me.chkIsHeavy)
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.ForeColor = System.Drawing.Color.Red
-        Me.GroupBox1.Location = New System.Drawing.Point(332, 420)
+        Me.GroupBox1.Location = New System.Drawing.Point(551, 404)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(253, 60)
         Me.GroupBox1.TabIndex = 251
@@ -875,7 +879,7 @@ Partial Class frmLeakSource
         '
         Me.Label5.AutoSize = True
         Me.Label5.ForeColor = System.Drawing.Color.Red
-        Me.Label5.Location = New System.Drawing.Point(403, 492)
+        Me.Label5.Location = New System.Drawing.Point(622, 476)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(59, 12)
         Me.Label5.TabIndex = 252
@@ -885,7 +889,7 @@ Partial Class frmLeakSource
         '
         Me.txtProbability.DataType = Chart.DataType.DataDouble
         Me.txtProbability.ForeColor = System.Drawing.Color.Red
-        Me.txtProbability.Location = New System.Drawing.Point(468, 486)
+        Me.txtProbability.Location = New System.Drawing.Point(687, 470)
         Me.txtProbability.MaxValue = 1.0R
         Me.txtProbability.MinValue = 0.00000000001R
         Me.txtProbability.Name = "txtProbability"
@@ -900,7 +904,7 @@ Partial Class frmLeakSource
         Me.GroupBox9.Controls.Add(Me.txtTa)
         Me.GroupBox9.Controls.Add(Me.Label12)
         Me.GroupBox9.Controls.Add(Me.Label27)
-        Me.GroupBox9.Location = New System.Drawing.Point(332, 337)
+        Me.GroupBox9.Location = New System.Drawing.Point(551, 321)
         Me.GroupBox9.Name = "GroupBox9"
         Me.GroupBox9.Size = New System.Drawing.Size(251, 77)
         Me.GroupBox9.TabIndex = 270
@@ -959,11 +963,52 @@ Partial Class frmLeakSource
         Me.Label27.Text = "大气压力Pa[Pa]:"
         Me.Label27.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
+        'lstSource
+        '
+        Me.lstSource.FormattingEnabled = True
+        Me.lstSource.ItemHeight = 12
+        Me.lstSource.Location = New System.Drawing.Point(12, 24)
+        Me.lstSource.Name = "lstSource"
+        Me.lstSource.Size = New System.Drawing.Size(215, 448)
+        Me.lstSource.TabIndex = 271
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(10, 9)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(89, 12)
+        Me.Label13.TabIndex = 272
+        Me.Label13.Text = "事故泄漏源列表"
+        '
+        'cmdAdd
+        '
+        Me.cmdAdd.Location = New System.Drawing.Point(14, 505)
+        Me.cmdAdd.Name = "cmdAdd"
+        Me.cmdAdd.Size = New System.Drawing.Size(75, 23)
+        Me.cmdAdd.TabIndex = 273
+        Me.cmdAdd.Text = "添加(&A)"
+        Me.cmdAdd.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdAdd.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(134, 505)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 274
+        Me.Button2.Text = "删除(&D)"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'frmLeakSource
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(609, 556)
+        Me.ClientSize = New System.Drawing.Size(814, 556)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.cmdAdd)
+        Me.Controls.Add(Me.Label13)
+        Me.Controls.Add(Me.lstSource)
         Me.Controls.Add(Me.GroupBox9)
         Me.Controls.Add(Me.Label67)
         Me.Controls.Add(Me.txtProbability)
@@ -1073,4 +1118,8 @@ Partial Class frmLeakSource
     Friend WithEvents txtTa As Chart.CText
     Public WithEvents Label12 As System.Windows.Forms.Label
     Public WithEvents Label27 As System.Windows.Forms.Label
+    Friend WithEvents lstSource As System.Windows.Forms.ListBox
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents cmdAdd As System.Windows.Forms.Button
+    Friend WithEvents Button2 As System.Windows.Forms.Button
 End Class

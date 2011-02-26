@@ -46,37 +46,37 @@
         EFlexGeneral.Cols.Count = 7
         EFlexGeneral.Rows.Count = 1
         With EFlexGeneral
-            If Project0.Dis0.IntialSource.LeakType = 12 Then '瞬时重气体
-                EFlexGeneral.Rows.Count = 1
-                .SetData(0, 0, "序号")
-                .SetData(0, 1, "下风向距离[m]")
-                .SetData(0, 2, "云羽半宽[m]")
-                .SetData(0, 3, "云羽高度[m]")
-                .SetData(0, 4, "云羽密度[kg/m^3]")
-                .SetData(0, 5, "云羽温度[℃]")
-                .SetData(0, 6, "污染物浓度[mg/m^3]")
-                Dim nMount As Integer = Math.Truncate(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length / (jTimeInter * 10)) + 1
-                EFlexGeneral.Rows.Count = nMount + 1 '设置表格的行
-                For n As Integer = 0 To nMount - 1
-                    If n = nMount - 1 Then
-                        .SetData(n + 1, 0, n)
-                        .SetData(n + 1, 1, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_x, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 2, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_L, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 3, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_H, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 4, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_Density, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 5, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_Temp - 273.15, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 6, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_C, num, TriState.True, TriState.False, TriState.False))
-                    Else
-                        .SetData(n + 1, 0, n)
-                        .SetData(n + 1, 1, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_x, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 2, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_L, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 3, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_H, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 4, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_Density, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 5, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_Temp - 273.15, num, TriState.True, TriState.False, TriState.False))
-                        .SetData(n + 1, 6, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_C, num, TriState.True, TriState.False, TriState.False))
-                    End If
-                Next
-            End If
+            'If Project0.Dis0.IntialSource.LeakType = 12 Then '瞬时重气体
+            EFlexGeneral.Rows.Count = 1
+            .SetData(0, 0, "序号")
+            .SetData(0, 1, "下风向距离[m]")
+            .SetData(0, 2, "云羽半宽[m]")
+            .SetData(0, 3, "云羽高度[m]")
+            .SetData(0, 4, "云羽密度[kg/m^3]")
+            .SetData(0, 5, "云羽温度[℃]")
+            .SetData(0, 6, "污染物浓度[mg/m^3]")
+            Dim nMount As Integer = Math.Truncate(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length / (jTimeInter * 10)) + 1
+            EFlexGeneral.Rows.Count = nMount + 1 '设置表格的行
+            For n As Integer = 0 To nMount - 1
+                If n = nMount - 1 Then
+                    .SetData(n + 1, 0, n)
+                    .SetData(n + 1, 1, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_x, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 2, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_L, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 3, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_H, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 4, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_Density, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 5, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_Temp - 273.15, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 6, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass.Length - 1).m_C, num, TriState.True, TriState.False, TriState.False))
+                Else
+                    .SetData(n + 1, 0, n)
+                    .SetData(n + 1, 1, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_x, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 2, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_L, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 3, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_H, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 4, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_Density, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 5, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_Temp - 273.15, num, TriState.True, TriState.False, TriState.False))
+                    .SetData(n + 1, 6, FormatNumber(Project0.Dis0.Heavy(i).SlabHeavy.SlabMetAndMass.slabAirMass(n * jTimeInter * 10).m_C, num, TriState.True, TriState.False, TriState.False))
+                End If
+            Next
+            'End If
         End With
         EFlexGeneral.AutoSizeCols()
         RefreshVane(i) '更新曲线图

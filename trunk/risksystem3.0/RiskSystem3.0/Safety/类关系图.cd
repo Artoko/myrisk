@@ -2,21 +2,18 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="DisPuff.Dis">
     <Position X="1" Y="5.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
     <TypeIdentifier>
-      <HashCode>IBFAmADADgwQAQghgQAAQEgE7gQUBIEEABAwAUEAEhA=</HashCode>
+      <HashCode>IBFRGIDBDgwAgQghAQgAQAgI7gUUpIEMAAAQAUEAMhg=</HashCode>
       <FileName>Dis.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Field Name="m_Sources" />
       <Property Name="Forecast" />
       <Property Name="Results" />
     </ShowAsAssociation>
   </Class>
   <Class Name="DisPuff.Results">
-    <Position X="3.5" Y="5.5" Width="1.5" />
+    <Position X="3.5" Y="7.5" Width="1.5" />
     <Members>
       <Field Name="m_AllCalMount" Hidden="true" />
       <Field Name="m_AllCareResult" Hidden="true" />
@@ -26,7 +23,7 @@
       <Field Name="m_Status2" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>CAAAAAAAAiAQAgGAAAAAIAAAkAAAAAJAAAAAAAAAAAA=</HashCode>
+      <HashCode>CAAAAAgAAiAQAgGAAAAAIAAAkAAAAAJAAAAAAAAAAAA=</HashCode>
       <FileName>计算结果类\Results.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -61,9 +58,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DisPuff.AllGridResult">
-    <Position X="7.75" Y="9.5" Width="1.5" />
+    <Position X="7.75" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgKEAAEAEEAAAACAAAAAAAQAAQAAAAAAFABAIAAAA=</HashCode>
+      <HashCode>AAAgKEAAEAEEAAAACAAAAAAAQAQQAAAAAIFABAIAAAA=</HashCode>
       <FileName>计算结果类\AllGridResult.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -71,23 +68,24 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="DisPuff.AllCareResult">
-    <Position X="5.5" Y="10.75" Width="1.5" />
+    <Position X="5.5" Y="12" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAACAAAAAACAAQAAQQAAEgAEQBAAAABA=</HashCode>
       <FileName>计算结果类\AllCareResult.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DisPuff.Slippage" Collapsed="true">
-    <Position X="10.5" Y="9.25" Width="1.5" />
+  <Class Name="DisPuff.Slippage">
+    <Position X="10.5" Y="10.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAABA=</HashCode>
       <FileName>计算结果类\Slippage.vb</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="DisPuff.Forecast">
     <Position X="3.5" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACAAAgAACAAwAgEBAAAIAgAECAAAAGAAAAAAAAEAAAA=</HashCode>
+      <HashCode>ACABAiAACAAxAkEBBAAIAgAECAAABGAEABAAAAEIAQA=</HashCode>
       <FileName>预测类\Forecast.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -98,9 +96,10 @@
   <Class Name="DisPuff.Met">
     <Position X="7" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAKAAAAAAAMAAAEAAEAKAIAIAAAAAAAAIAAAg=</HashCode>
+      <HashCode>AAAAAAAAKAAAAgAAMIAQEAAEAKBIAIAAAAAAAAIAABg=</HashCode>
       <FileName>气象\Met.vb</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="DisPuff.CareReceptor">
     <Position X="5.25" Y="3.5" Width="1.5" />
@@ -117,6 +116,20 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAQAAAAA=</HashCode>
       <FileName>声明\Declaration.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.Source">
+    <Position X="3.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABACBAEAAAAAAAAhAAQgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>泄漏源\Source.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisPuff.IntialSource" Collapsed="true">
+    <Position X="4.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MDEAFAAkAAIHVigCwIeAIJAQwSECCAAgCMCCTFGgBCA=</HashCode>
+      <FileName>泄漏源\IntialSource.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="宋体" Size="9" />

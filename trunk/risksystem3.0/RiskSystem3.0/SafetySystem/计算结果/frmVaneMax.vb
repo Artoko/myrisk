@@ -68,38 +68,38 @@
             .SetData(0, 6, "泄漏速率[kg/s]") '设置泄漏口速率
             .SetData(0, 7, "预测时刻[min]")
 
-            Select Case Project0.Dis0.IntialSource.LeakType
+            'Select Case Project0.Dis0.IntialSource.LeakType
 
-                Case 0, 3, 10, 11, 12 '气体泄漏
-                    .SetData(0, 8, "最大浓度[mg/m^3]") '最大浓度
-                    .SetData(0, 9, "最大浓度出现的距离[m]") '最大浓度出现的距离
-                    '根据伤害范围的个数设置标题
+            '    Case 0, 3, 10, 11, 12 '气体泄漏
+            '        .SetData(0, 8, "最大浓度[mg/m^3]") '最大浓度
+            '        .SetData(0, 9, "最大浓度出现的距离[m]") '最大浓度出现的距离
+            '        '根据伤害范围的个数设置标题
 
-                    For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                        .SetData(0, 10 + n, Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
-                    Next
-                    If Project0.Dis0.IsCalUpVane Then
-                        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                            .SetData(0, 13 + n, "上风向" & Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
-                        Next
-                    End If
-                Case 1, 2, 4 '液体泄漏或两相流泄漏
-                    .SetData(0, 8, "泄漏口闪蒸挥发速率[kg/s]")
-                    .SetData(0, 9, "液池有效高度[m]")
-                    .SetData(0, 10, "液池蒸发平均速率[kg/s]")
-                    .SetData(0, 11, "最大浓度[mg/m^3]") '最大浓度
-                    .SetData(0, 12, "最大浓度出现的距离[m]") '最大浓度出现的距离
-                    '下风向浓度限值
-                    For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                        .SetData(0, 13 + n, Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
-                    Next
-                    '上风向
-                    If Project0.Dis0.IsCalUpVane Then
-                        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
-                            .SetData(0, 13 + n, "上风向" & Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
-                        Next
-                    End If
-            End Select
+            '        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+            '            .SetData(0, 10 + n, Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
+            '        Next
+            '        If Project0.Dis0.IsCalUpVane Then
+            '            For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+            '                .SetData(0, 13 + n, "上风向" & Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
+            '            Next
+            '        End If
+            '    Case 1, 2, 4 '液体泄漏或两相流泄漏
+            '        .SetData(0, 8, "泄漏口闪蒸挥发速率[kg/s]")
+            '        .SetData(0, 9, "液池有效高度[m]")
+            '        .SetData(0, 10, "液池蒸发平均速率[kg/s]")
+            '        .SetData(0, 11, "最大浓度[mg/m^3]") '最大浓度
+            '        .SetData(0, 12, "最大浓度出现的距离[m]") '最大浓度出现的距离
+            '        '下风向浓度限值
+            '        For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+            '            .SetData(0, 13 + n, Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
+            '        Next
+            '        '上风向
+            '        If Project0.Dis0.IsCalUpVane Then
+            '            For n As Integer = 0 To Project0.Dis0.Forecast.HurtConcentration.Length - 1
+            '                .SetData(0, 13 + n, "上风向" & Project0.Dis0.Forecast.HurtConcentration(n).Name & "范围[m]")
+            '            Next
+            '        End If
+            'End Select
         End With
         EFlexGeneral.AutoSizeCols()
     End Sub
