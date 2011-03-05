@@ -2,9 +2,14 @@
     Private m_post As DisPuff.PostCon
     Private Sub ListBox1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListBox1.SelectedIndexChanged
         If Me.ListBox1.SelectedIndex >= 0 Then
+            '根据用户的选择，先找出对应的污染源的ID
+            Dim frmMain As frmMain
+            frmMain = My.Application.ApplicationContext.MainForm
+            Dim Index As Integer = frmMain.frmResultMain.frmResultSolution.TreeView1.SelectedNode.Parent.Index
+            Dim ID As String = Project_Calculated.Dis0.ListLeakSource.IntialSource(Index).ID
             Dim path As String = Project_Calculated.GetProjWorkPath & "post\"
             Dim fileTime As Date = Project_Calculated.Dis0.Forecast.Met(Me.ListBox1.SelectedIndex).m_DateTime
-            Dim FileName As String = path & fileTime.Year.ToString & "-" & fileTime.Month.ToString & "-" & fileTime.Day.ToString & "-" & fileTime.Hour.ToString & ".pst"
+            Dim FileName As String = path & ID & "-" & fileTime.Year.ToString & "-" & fileTime.Month.ToString & "-" & fileTime.Day.ToString & "-" & fileTime.Hour.ToString & ".pst"
             m_post = DisPuff.PostCon.Open(FileName)
 
             Me.TrackBar1.Minimum = 0
